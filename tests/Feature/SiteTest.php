@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\AnalyticsDaily;
+use App\Models\Destination;
 use App\Models\Page;
 use App\Models\PageView;
 use App\Models\Post;
@@ -136,4 +137,13 @@ it('publishes scheduled posts when their time comes', function () {
     Post::create(['title' => 'F', 'slug' => 'f', 'status' => 'scheduled', 'published_at' => now()->addHour(), 'content' => '<p>x</p>']);
     $this->artisan('posts:publish-due')->assertSuccessful();
     expect(Post::where('slug', 's')->first()->status)->toBe('published')->and(Post::where('slug', 'f')->first()->status)->toBe('scheduled');
+});
+
+it('keeps a space before the title suffix even when the admin saved it without one', function () {
+    Settings::set('title_suffix', '| Tabernacle Ways');
+    Settings::forget();
+    $d = Destination::create(['name' => ['en' => 'Japan', 'id' => 'Jepang'], 'slug' => 'japan', 'region' => 'asia', 'is_active' => true]);
+    $html = $this->get('/destinations/japan?lang=id')->assertOk()->getContent();
+    preg_match('/<title>([^<]*)<\/title>/', $html, $m);
+    expect($m[1])->toContain(' | Tabernacle Ways')->not->toMatch('/\S\|/');
 });

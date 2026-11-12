@@ -75,11 +75,16 @@ class MediaUsage
 
         // images placed inside rich text are referenced by path, not by id
         $paths = DB::table('media')->pluck('path', 'id');
-        $texts = [
-            ...Post::pluck('content')->all(),
-            ...Section::pluck('data')->map(fn ($d) => (string) $d)->all(),
-            ...Tour::pluck('itinerary')->map(fn ($d) => (string) $d)->all(),
-        ];
+        // raw column values (JSON strings), not model attributes: casts would turn them into arrays
+        $texts = [];
+        foreach ([
+            'posts' => ['content'], 'sections' => ['data'], 'tours' => ['itinerary', 'terms', 'description'],
+            'destinations' => ['intro'], 'faqs' => ['answer'], 'team_members' => ['bio'],
+        ] as $table => $columns) {
+            foreach ($columns as $col) {
+                $texts = [...$texts, ...DB::table($table)->whereNotNull($col)->pluck($col)->all()];
+            }
+        }
         $blob = implode("\n", array_map(fn ($t) => str_replace('\/', '/', (string) $t), $texts));
         foreach ($paths as $id => $path) {
             if ($path && str_contains($blob, 'uploads/'.$path)) {

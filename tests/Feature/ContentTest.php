@@ -4,8 +4,11 @@ use App\Models\ActivityLog;
 use App\Models\Faq;
 use App\Models\Media;
 use App\Models\MenuItem;
+use App\Models\Page;
 use App\Models\Post;
 use App\Models\Testimonial;
+use App\Models\Tour;
+use App\Models\TourCategory;
 use App\Models\UiString;
 use App\Services\MediaService;
 use App\Support\ContentTools;
@@ -162,4 +165,22 @@ it('writes an activity log for changes made in the admin', function () {
     $log = ActivityLog::where('subject_type', 'Faq')->first();
     expect($log)->not->toBeNull()->and($log->user_id)->toBe($admin->id)->and($log->action)->toBe('created');
     $this->actingAs(adminUser('super_admin'))->get('/admin/activity')->assertOk();
+});
+
+it('finds media used inside page sections and package texts, and lists unused media without crashing', function () {
+    $this->actingAs(adminUser('admin'));
+    $svc = app(MediaService::class);
+    $inText = $svc->store(UploadedFile::fake()->image('in-text.jpg', 600, 400), 'umum', 'Dipakai di teks');
+    $inSection = $svc->store(UploadedFile::fake()->image('hero.jpg', 600, 400), 'umum', 'Hero');
+    $free = $svc->store(UploadedFile::fake()->image('free.jpg', 600, 400), 'umum', 'Bebas');
+    $page = Page::create(['key' => 'home', 'slug' => '/', 'title' => ['en' => 'Home', 'id' => 'Beranda'], 'is_active' => true, 'is_system' => true]);
+    $page->sections()->create(['type' => 'hero', 'sort' => 1, 'is_visible' => true, 'data' => ['image' => $inSection->id, 'line1' => ['en' => 'Hi', 'id' => 'Hai']]]);
+    $cat = TourCategory::create(['name' => ['en' => 'G', 'id' => 'G'], 'slug' => 'g', 'kind' => 'group']);
+    Tour::create(['category_id' => $cat->id, 'name' => 'T', 'slug' => 't', 'region' => 'asia', 'is_active' => true,
+        'itinerary' => [['n' => 1, 'title' => 'Day', 'text' => 'x']], 'terms' => '<p><img src="/uploads/'.$inText->path.'" alt="x"></p>']);
+
+    expect(MediaUsage::of($inSection->id))->not->toBeEmpty()->and(MediaUsage::of($inText->id))->not->toBeEmpty()
+        ->and(MediaUsage::of($free->id))->toBeEmpty();
+    $ids = collect($this->getJson('/admin/media/list?unused=1')->assertOk()->json('data'))->pluck('id')->all();
+    expect($ids)->toContain($free->id)->not->toContain($inSection->id)->not->toContain($inText->id);
 });

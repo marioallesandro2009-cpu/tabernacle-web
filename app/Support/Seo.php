@@ -17,7 +17,12 @@ class Seo
         if ($title === '') {
             $title = (string) setting('site_name', config('app.name')).' '.tr(['en' => 'Tour & Travel', 'id' => 'Tour & Travel']);
         } elseif (! $titleIsFinal) {
-            $title .= (string) setting('title_suffix', '');
+            // always one space before the suffix, whether or not the admin typed one
+            // (the settings form trims leading spaces)
+            $suffix = trim((string) setting('title_suffix', ''));
+            if ($suffix !== '') {
+                $title .= ' '.$suffix;
+            }
         }
         $description = trim(strip_tags((string) $description)) ?: tr(setting('default_description'));
         $imageUrl = media_url($image ?: setting('og_default_image'), 1600);
