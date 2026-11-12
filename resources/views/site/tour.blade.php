@@ -89,7 +89,7 @@
           <div class="tr-block-head"><p class="kicker mono">{{ t('tour.itinerary') }}</p>
             @if (count($tour->itinerary) > 2)<button type="button" class="tr-toggle-days mono" data-open="{{ t('tour.expand_all') }}" data-close="{{ t('tour.collapse_all') }}" aria-expanded="false">{{ t('tour.expand_all') }}</button>@endif
           </div>
-          @if (t('tour.itinerary_note') !== '' && t('tour.itinerary_note') !== 'tour.itinerary_note')<p class="tr-lang mono">{{ t('tour.itinerary_note') }}</p>@endif
+          @if (app()->getLocale() === 'en' && t('tour.itinerary_note') !== '' && t('tour.itinerary_note') !== 'tour.itinerary_note')<p class="tr-lang mono">{{ t('tour.itinerary_note') }}</p>@endif
           <ol class="days">
             @foreach ($tour->itinerary as $d)
               <li class="day">
