@@ -1,0 +1,98 @@
+[
+ {
+  "group": "umum",
+  "question": {"id": "Siapa Tabernacle Ways Tour & Travel?", "en": "Who is Tabernacle Ways Tour & Travel?"},
+  "answer": {
+   "id": "<p>Tabernacle Ways Tour & Travel adalah merek perjalanan dari <strong>PT Jalan Elyon Eskol Indowisata</strong>, yang disahkan dengan AHU-0056118.AH.01.01 Tahun 2024. Kami melayani perjalanan sejak 2019, untuk wisatawan pribadi maupun perusahaan, baik inbound maupun outbound.</p>",
+   "en": "<p>Tabernacle Ways Tour & Travel is the travel brand of <strong>PT Jalan Elyon Eskol Indowisata</strong>, incorporated under AHU-0056118.AH.01.01 Tahun 2024. We have been running trips since 2019, for individual travellers and companies, inbound and outbound.</p>"
+  }
+ },
+ {
+  "group": "umum",
+  "question": {"id": "Layanan apa saja yang tersedia?", "en": "What services do you offer?"},
+  "answer": {
+   "id": "<p>Paket tur domestik dan mancanegara, tiket pesawat, ziarah dan umrah, reservasi hotel, tiket kereta, kapal pesiar, sewa mobil dan bus wisata, pengurusan dokumen perjalanan (paspor, visa, asuransi), rail pass (Eropa dan Jepang), serta MICE: meeting, insentif, konvensi, dan pameran. Pemesanan tiket dan hotel kami proses melalui Galileo Reservation System.</p>",
+   "en": "<p>Domestic and international tour packages, airline tickets, pilgrimages and umrah, hotel reservations, train tickets, cruises, car and tour bus rental, travel documents (passports, visas, insurance), rail passes (Europe and Japan) and MICE: meetings, incentives, conventions and exhibitions. Ticket and hotel bookings run through the Galileo Reservation System.</p>"
+  }
+ },
+ {
+  "group": "pemesanan",
+  "question": {"id": "Bagaimana cara memesan paket?", "en": "How do I book a package?"},
+  "answer": {
+   "id": "<p>Pilih paket di halaman <a href=\"/packages\">Paket</a>, lalu klik <strong>Pesan lewat WhatsApp</strong> atau isi formulir pertanyaan di halaman paket tersebut. Tim kami akan mengonfirmasi ketersediaan tanggal, harga final, dan dokumen yang dibutuhkan. Kursi dipastikan setelah uang muka (DP) diterima.</p>",
+   "en": "<p>Choose a package on the <a href=\"/packages\">Packages</a> page, then tap <strong>Book on WhatsApp</strong> or fill in the enquiry form on that package page. Our team will confirm availability, the final price and the documents you need. Your seat is secured once the down payment is received.</p>"
+  }
+ },
+ {
+  "group": "pemesanan",
+  "question": {"id": "Apa bedanya tur grup dan FIT?", "en": "What is the difference between a group tour and FIT?"},
+  "answer": {
+   "id": "<p><strong>Tur grup</strong> berangkat bersama rombongan pada tanggal tertentu, sudah termasuk tiket pesawat dan didampingi tour leader dari Indonesia. <strong>FIT</strong> (free independent traveller) untuk grup kecil yang memesan tiket pesawat sendiri, dengan tanggal yang lebih fleksibel. Untuk paket FIT, tiket pesawat wajib dilampirkan saat membayar DP. Penjelasan lengkapnya ada di artikel <a href=\"/blog/tur-grup-atau-fit\">Tur Grup atau FIT?</a></p>",
+   "en": "<p>A <strong>group tour</strong> departs with a group on a fixed date, includes flights and is escorted by a tour leader from Indonesia. <strong>FIT</strong> (free independent traveller) is for small groups who book their own flights, with more flexible dates. For FIT packages, your flight ticket must be attached when you pay the deposit. Read more in our article <a href=\"/blog/tur-grup-atau-fit\">Group Tour or FIT?</a></p>"
+  }
+ },
+ {
+  "group": "pemesanan",
+  "question": {"id": "Apakah harga paket sudah termasuk semuanya?", "en": "Does the package price include everything?"},
+  "answer": {
+   "id": "<p>Harga dihitung per orang. Tipping, visa, dan asuransi perjalanan biasanya belum termasuk, dan beberapa tur grup juga memiliki airport tax atau kunjungan wajib ke toko. Rincian lengkapnya selalu tercantum di bagian <strong>Termasuk</strong> dan <strong>Tidak termasuk</strong> pada setiap halaman paket. Harga dapat berubah mengikuti ketersediaan dan kurs, dan harga final dikonfirmasi saat pemesanan.</p>",
+   "en": "<p>Prices are per person. Tipping, visas and travel insurance are usually not included, and some group tours also have airport tax or mandatory shopping stops. The full details are always listed under <strong>Included</strong> and <strong>Not included</strong> on each package page. Prices can change with availability and exchange rates, and the final price is confirmed when you book.</p>"
+  }
+ },
+ {
+  "group": "pembayaran",
+  "question": {"id": "Berapa uang muka (DP) dan apakah bisa dikembalikan?", "en": "How much is the down payment, and is it refundable?"},
+  "answer": {
+   "id": "<p>Besar DP berbeda untuk setiap paket dan tercantum di kotak harga pada halaman paket. DP tidak dapat dikembalikan, termasuk jika visa ditolak. Pelunasan dan kebijakan pembatalan mengikuti ketentuan masing-masing paket.</p>",
+   "en": "<p>The down payment differs for each package and is shown in the price box on the package page. Down payments are non-refundable, including if a visa is refused. Final payment and the cancellation policy follow each package's terms.</p>"
+  }
+ },
+ {
+  "group": "dokumen",
+  "question": {"id": "Apakah Tabernacle Ways membantu pengurusan visa?", "en": "Can you help with visas?"},
+  "answer": {
+   "id": "<p>Ya. Kami membantu pengurusan visa dan dokumen perjalanan, antara lain untuk Uni Eropa (Schengen), Inggris Raya, Jepang, Amerika Serikat, Tiongkok, dan Korea Selatan, serta negara lain sesuai permintaan. Pada beberapa tur grup, visa grup sudah termasuk dalam harga. Persetujuan visa tetap menjadi keputusan kedutaan.</p>",
+   "en": "<p>Yes. We help with visas and travel documents, including for the European Union (Schengen), the United Kingdom, Japan, the United States, China and South Korea, and other countries on request. On some group tours, a group visa is already included in the price. Visa approval always remains the embassy's decision.</p>"
+  }
+ },
+ {
+  "group": "dokumen",
+  "question": {"id": "Berapa lama masa berlaku paspor yang dibutuhkan?", "en": "How long must my passport be valid?"},
+  "answer": {
+   "id": "<p>Umumnya paspor harus berlaku minimal 6 bulan sejak tanggal kepulangan. Untuk program umrah kami, paspor harus berlaku minimal 12 bulan sebelum keberangkatan dengan nama minimal dua suku kata. Ketentuan tiap paket tercantum di halaman paketnya.</p>",
+   "en": "<p>In general, your passport must be valid for at least 6 months after your return date. For our umrah programme, it must be valid for at least 12 months before departure, with a name of at least two words. Each package's requirements are listed on its page.</p>"
+  }
+ },
+ {
+  "group": "umrah",
+  "question": {"id": "Apa saja persyaratan untuk ikut umrah?", "en": "What do I need for umrah?"},
+  "answer": {
+   "id": "<p>Paspor yang masih berlaku minimal 12 bulan, pas foto 4x6 berlatar putih, fotokopi KTP, Kartu Keluarga, dan buku nikah bagi pasangan suami istri, serta bukti vaksin meningitis dan polio (ICV atau e-ICV). Panduan lengkapnya ada di artikel <a href=\"/blog/persiapan-umrah-dokumen-vaksin-perlengkapan\">Persiapan Umrah</a>.</p>",
+   "en": "<p>A passport valid for at least 12 months, 4x6 photos with a white background, copies of your ID card, family card and, for married couples, marriage certificate, plus proof of meningitis and polio vaccination (ICV or e-ICV). See the full guide in our article <a href=\"/blog/persiapan-umrah-dokumen-vaksin-perlengkapan\">Umrah Preparation</a>.</p>"
+  }
+ },
+ {
+  "group": "korporat",
+  "question": {"id": "Apakah bisa membuat private trip atau perjalanan perusahaan?", "en": "Can you arrange private trips or company travel?"},
+  "answer": {
+   "id": "<p>Bisa. Private trip tersedia untuk grup 10 hingga lebih dari 100 orang dengan tanggal dan destinasi pilihan Anda. Kami juga menangani perjalanan korporat, team building, program insentif, dan kunjungan industri, seperti Immersion Program Tiongkok 2026 ke Tencent dan Huawei. Ceritakan kebutuhan Anda lewat <a href=\"/contact\">halaman kontak</a> untuk mendapatkan penawaran.</p>",
+   "en": "<p>Yes. Private trips are available for groups of 10 to more than 100 people, on your dates and to your destinations. We also handle corporate travel, team building, incentive programmes and industry visits, such as the 2026 China Immersion Program to Tencent and Huawei. Tell us what you need through the <a href=\"/contact\">contact page</a> to get a quote.</p>"
+  }
+ },
+ {
+  "group": "umum",
+  "question": {"id": "Apakah tanggal keberangkatan bisa berubah?", "en": "Can departure dates or itineraries change?"},
+  "answer": {
+   "id": "<p>Tur grup berangkat jika jumlah minimum peserta terpenuhi, yang tercantum di halaman paket. Urutan kota atau objek wisata dapat disesuaikan dengan kondisi di lapangan tanpa mengurangi isi program. Jika ada perubahan, tim kami akan memberi tahu Anda sesegera mungkin.</p>",
+   "en": "<p>Group tours depart once the minimum number of participants is reached, as stated on the package page. The order of cities or sights may be adjusted to conditions on the ground without reducing the programme. If anything changes, our team will let you know as soon as possible.</p>"
+  }
+ },
+ {
+  "group": "umum",
+  "question": {"id": "Di mana kantor Tabernacle Ways dan bagaimana menghubunginya?", "en": "Where is your office and how can I reach you?"},
+  "answer": {
+   "id": "<p>Kantor kami berada di Graha Global BSD Serpong, Ruko Golden Boulevard Blok E No 21-22, Lt. 1, Tangerang Selatan, Banten. Anda dapat menghubungi kami lewat WhatsApp di +62 812 9797 1563, email tabernaclewaystours@gmail.com, atau formulir di <a href=\"/contact\">halaman kontak</a>.</p>",
+   "en": "<p>Our office is at Graha Global BSD Serpong, Ruko Golden Boulevard Block E No 21-22, 1st floor, South Tangerang, Banten. You can reach us on WhatsApp at +62 812 9797 1563, by email at tabernaclewaystours@gmail.com, or through the form on the <a href=\"/contact\">contact page</a>.</p>"
+  }
+ }
+]

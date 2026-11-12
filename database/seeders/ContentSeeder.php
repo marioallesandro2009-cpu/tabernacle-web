@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Destination;
+use App\Models\Faq;
 use App\Models\Gallery;
 use App\Models\Media;
 use App\Models\MenuItem;
@@ -54,6 +55,53 @@ class ContentSeeder extends Seeder
         $this->importGalleries();
         $this->importPosts();
         $this->importEnglish();
+        $this->importFaqs();
+        Content::bump();
+    }
+
+    /**
+     * Starter FAQ (faqs.json), only when the FAQ list is still empty, so questions an
+     * admin edited or deleted are never brought back.
+     */
+    public function importFaqs(): int
+    {
+        $this->data ??= database_path('seed-data/');
+        if (Faq::exists()) {
+            return 0;
+        }
+        $made = 0;
+        foreach ($this->json('faqs.json') as $i => $f) {
+            Faq::create([
+                'question' => $f['question'],
+                'answer' => array_map(fn ($a) => clean_html((string) $a), $f['answer']),
+                'group' => $f['group'] ?? null, 'sort' => $i + 1, 'is_active' => true,
+            ]);
+            $made++;
+        }
+        Content::bump();
+
+        return $made;
+    }
+
+    /**
+     * Adds a FAQ section to the given pages (by page key) when the page has none, placed
+     * before the page's contact section if there is one, otherwise at the end.
+     *
+     * @param  array<int, string>  $keys
+     */
+    public function addFaqSection(array $keys): void
+    {
+        $this->data ??= database_path('seed-data/');
+        $data = collect($this->json('pages.json'))->flatMap(fn ($p) => $p['sections'])->firstWhere('type', 'faq')['data'] ?? [];
+        foreach (Page::whereIn('key', $keys)->get() as $page) {
+            if ($page->sections()->where('type', 'faq')->exists()) {
+                continue;
+            }
+            $before = $page->sections()->where('type', 'contact')->orderBy('sort')->first();
+            $sort = $before ? $before->sort : ((int) $page->sections()->max('sort') + 1);
+            $page->sections()->where('sort', '>=', $sort)->increment('sort');
+            $page->sections()->create(['type' => 'faq', 'name' => 'FAQ', 'data' => $data, 'sort' => $sort, 'is_visible' => true]);
+        }
         Content::bump();
     }
 

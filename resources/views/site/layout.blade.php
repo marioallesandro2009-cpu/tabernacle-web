@@ -27,6 +27,7 @@
 @stack('head')
 <link rel="stylesheet" href="{{ asset_v('assets/css/style.css') }}">
 <link rel="stylesheet" href="{{ asset_v('assets/css/site.css') }}">
+<link rel="stylesheet" href="{{ asset_v('assets/css/corporate.css') }}">
 <style>:root{--navy:{{ setting('color_navy', '#0b1a5c') }};--navy-deep:{{ setting('color_navy_deep', '#071140') }};--amber:{{ setting('color_amber', '#e8973f') }};--amber-deep:{{ setting('color_amber_deep', '#b8661c') }};--cream:{{ setting('color_cream', '#ffffff') }};--sand:{{ setting('color_sand', '#f4f5f7') }};--paper:{{ setting('color_paper', '#ffffff') }};--teal:{{ setting('color_teal', '#17a08c') }}}</style>
 <noscript><style>.gates{display:none}</style></noscript>
 {!! setting('tracking_head') !!}
@@ -139,10 +140,7 @@
 </div>
 
 <script>window.TW = @json($tw);</script>
-<script src="{{ asset('assets/js/vendor/gsap.min.js') }}"></script>
-<script src="{{ asset('assets/js/vendor/ScrollTrigger.min.js') }}"></script>
-<script src="{{ asset('assets/js/vendor/SplitText.min.js') }}"></script>
-<script src="{{ asset('assets/js/vendor/lenis.min.js') }}"></script>
+{{-- calm corporate look: the motion libraries (GSAP, Lenis) are no longer loaded; main.js then runs without animations --}}
 <script src="{{ asset_v('assets/js/main.js') }}"></script>
 @if (is_file(public_path('build/manifest.json')))
   @vite(['resources/js/site.js'])

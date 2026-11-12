@@ -816,6 +816,24 @@
     "is_visible": false
    },
    {
+    "type": "faq",
+    "name": "FAQ",
+    "data": {
+     "kicker": {
+      "en": "Questions & answers",
+      "id": "Tanya jawab"
+     },
+     "title_a": {
+      "en": "Frequently asked",
+      "id": "Pertanyaan yang"
+     },
+     "title_b": {
+      "en": "questions",
+      "id": "sering diajukan"
+     }
+    }
+   },
+   {
     "type": "contact",
     "name": "Kontak",
     "data": {
@@ -1510,6 +1528,24 @@
      "intro": {
       "en": "Leave your details and we will reply on WhatsApp.",
       "id": "Tinggalkan data Anda dan kami akan membalas lewat WhatsApp."
+     }
+    }
+   },
+   {
+    "type": "faq",
+    "name": "FAQ",
+    "data": {
+     "kicker": {
+      "en": "Questions & answers",
+      "id": "Tanya jawab"
+     },
+     "title_a": {
+      "en": "Frequently asked",
+      "id": "Pertanyaan yang"
+     },
+     "title_b": {
+      "en": "questions",
+      "id": "sering diajukan"
      }
     }
    }

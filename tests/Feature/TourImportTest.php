@@ -134,3 +134,34 @@ it('shows English articles and blog categories on the English site', function ()
     // the database still holds the Indonesian texts
     expect(Post::where('slug', 'persiapan-umrah-dokumen-vaksin-perlengkapan')->value('title'))->toStartWith('Persiapan Umrah');
 });
+
+it('imports the starter FAQ once and shows it on the home and contact pages', function () {
+    $seeder = new ContentSeeder;
+    foreach (json_decode(file_get_contents(database_path('seed-data/pages.json')), true) as $p) {
+        if (in_array($p['key'], ['home', 'contact'], true)) {
+            $page = Page::create(['key' => $p['key'], 'slug' => $p['slug'], 'title' => $p['title'], 'is_active' => true, 'is_system' => true]);
+            foreach ($p['sections'] as $i => $s) {
+                if ($s['type'] !== 'faq') {
+                    $page->sections()->create(['type' => $s['type'], 'name' => $s['name'], 'data' => [], 'sort' => $i + 1, 'is_visible' => false]);
+                }
+            }
+        }
+    }
+    expect($seeder->importFaqs())->toBe(12)->and($seeder->importFaqs())->toBe(0);
+    $seeder->addFaqSection(['home', 'contact']);
+    $seeder->addFaqSection(['home', 'contact']);
+    $home = Page::where('key', 'home')->first();
+    expect($home->sections()->where('type', 'faq')->count())->toBe(1)
+        ->and($home->sections()->orderBy('sort')->pluck('type')->slice(-2)->values()->all())->toBe(['faq', 'contact']);
+
+    $html = $this->get('/?lang=id')->assertOk()->getContent();
+    expect($html)->toContain('Siapa Tabernacle Ways Tour &amp; Travel?')->toContain('"@type":"FAQPage"');
+    $this->get('/?lang=en')->assertOk()->assertSee('What is the difference between a group tour and FIT?');
+    $this->get('/contact?lang=id')->assertOk()->assertSee('Di mana kantor Tabernacle Ways');
+});
+
+it('loads the calm corporate stylesheet and no motion libraries', function () {
+    Page::create(['key' => 'home', 'slug' => 'home', 'title' => ['en' => 'Home', 'id' => 'Beranda'], 'is_active' => true, 'is_system' => true]);
+    $html = $this->get('/?lang=id')->assertOk()->getContent();
+    expect($html)->toContain('assets/css/corporate.css')->not->toContain('gsap.min.js')->not->toContain('lenis.min.js');
+});
