@@ -27,7 +27,7 @@ return [
         // Used for everything typed in the admin editors (TipTap) and for translatable rich text.
         'default' => [
             'HTML.Doctype' => 'HTML 4.01 Transitional',
-            'HTML.Allowed' => 'p,br,hr,strong,b,em,i,u,s,sub,sup,mark,a[href|title|target|rel],ul,ol[start],li,blockquote,h2,h3,h4,pre,code,span,div,table,thead,tbody,tr,th[colspan|rowspan],td[colspan|rowspan],img[src|alt|width|height|title],figure,figcaption,iframe[src|width|height|allowfullscreen|frameborder|title]',
+            'HTML.Allowed' => 'p,br,hr,strong,b,em,i,u,s,sub,sup,mark,a[href|title|target|rel],ul,ol[start],li,blockquote,h2,h3,h4,pre,code,span,div,table,thead,tbody,tr,th[colspan|rowspan],td[colspan|rowspan],img[src|alt|width|height|title],figure,figcaption,iframe[src|width|height|allowfullscreen|frameborder|title],video[src|poster|controls|preload|width|height]',
             'HTML.SafeIframe' => true,
             'URI.SafeIframeRegexp' => '%^(https?:)?//(www\.youtube(-nocookie)?\.com/embed/|player\.vimeo\.com/video/)%',
             'Attr.AllowedFrameTargets' => ['_blank'],
@@ -52,7 +52,7 @@ return [
         ],
         'custom_definition' => [
             'id' => 'html5-definitions',
-            'rev' => 1,
+            'rev' => 2,
             'debug' => false,
             'elements' => [
                 // http://developers.whatwg.org/sections.html

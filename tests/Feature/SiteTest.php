@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\ActivityLog;
 use App\Models\AnalyticsDaily;
 use App\Models\Destination;
+use App\Models\Lead;
 use App\Models\Page;
 use App\Models\PageView;
 use App\Models\Post;
@@ -146,4 +148,20 @@ it('keeps a space before the title suffix even when the admin saved it without o
     $html = $this->get('/destinations/japan?lang=id')->assertOk()->getContent();
     preg_match('/<title>([^<]*)<\/title>/', $html, $m);
     expect($m[1])->toContain(' | Tabernacle Ways')->not->toMatch('/\S\|/');
+});
+
+it('lets only a super admin reset visitor statistics, after typing RESET, without touching leads', function () {
+    foreach (range(1, 3) as $i) {
+        PageView::create(['day' => now()->toDateString(), 'created_at' => now(), 'path' => '/', 'page_type' => 'page', 'visitor_hash' => 'h'.$i, 'is_entry' => true, 'source' => 'direct', 'device' => 'desktop']);
+    }
+    AnalyticsAggregator::store(now()->toDateString());
+    Lead::create(['type' => 'form', 'name' => 'Keep me', 'phone' => '6281200000000', 'status' => 'baru']);
+
+    $this->actingAs(adminUser('admin'))->post('/admin/stats/reset', ['confirm' => 'RESET'])->assertForbidden();
+    $this->actingAs(adminUser('super_admin'))->post('/admin/stats/reset', ['confirm' => 'reset'])->assertSessionHasErrors('confirm');
+    expect(PageView::count())->toBe(3);
+
+    $this->post('/admin/stats/reset', ['confirm' => 'RESET'])->assertRedirect('/admin')->assertSessionHas('success');
+    expect(PageView::count())->toBe(0)->and(AnalyticsDaily::count())->toBe(0)->and(Lead::count())->toBe(1)
+        ->and(ActivityLog::where('action', 'reset')->exists())->toBeTrue();
 });

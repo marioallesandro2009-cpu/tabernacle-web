@@ -3,17 +3,24 @@
 namespace Database\Seeders;
 
 use App\Models\Destination;
+use App\Models\Gallery;
 use App\Models\Media;
 use App\Models\MenuItem;
 use App\Models\Page;
+use App\Models\Post;
+use App\Models\PostCategory;
 use App\Models\Redirect;
 use App\Models\Setting;
+use App\Models\Tag;
 use App\Models\Tour;
 use App\Models\TourCategory;
 use App\Models\UiString;
 use App\Services\MediaService;
 use App\Support\Content;
+use App\Support\ContentTools;
+use App\Support\SeoAnalyzer;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 /**
  * Initial content, taken from the static website. Safe to run again: it never overwrites
@@ -44,6 +51,8 @@ class ContentSeeder extends Seeder
         $this->tours();
         $this->pages();
         $this->redirects();
+        $this->importGalleries();
+        $this->importPosts();
         Content::bump();
     }
 
@@ -174,7 +183,7 @@ class ContentSeeder extends Seeder
     {
         foreach ($this->json('pages.json') as $p) {
             $page = Page::firstOrCreate(['key' => $p['key']], [
-                'slug' => $p['slug'], 'title' => $p['title'], 'meta_title' => $p['meta_title'], 'meta_description' => $p['meta_description'], 'is_active' => true, 'is_system' => true,
+                'slug' => $p['slug'], 'title' => $p['title'], 'meta_title' => $p['meta_title'], 'meta_description' => $p['meta_description'], 'is_active' => true, 'is_system' => $p['is_system'] ?? true,
             ]);
             if ($page->sections()->exists()) {
                 continue;
@@ -183,6 +192,92 @@ class ContentSeeder extends Seeder
                 $page->sections()->create(['type' => $s['type'], 'name' => $s['name'], 'data' => $this->resolve($s['data']), 'sort' => $i + 1, 'is_visible' => $s['is_visible'] ?? true]);
             }
         }
+    }
+
+    /**
+     * Trip photo albums (galleries.json + seed-assets/gallery). Albums already present
+     * (same English title) are skipped, so an admin's deletions or edits are kept.
+     */
+    public function importGalleries(): int
+    {
+        $this->svc ??= app(MediaService::class);
+        $this->data ??= database_path('seed-data/');
+        $this->assets ??= database_path('seed-assets/');
+        $made = 0;
+        foreach ($this->json('galleries.json') as $g) {
+            if (Gallery::where('title->en', $g['title']['en'])->exists()) {
+                continue;
+            }
+            $items = [];
+            foreach ($g['items'] as $it) {
+                $id = $this->media($it['file'], 'galeri', $it['alt'] ?? null);
+                if ($id) {
+                    $items[] = ['media_id' => $id, 'caption' => $it['caption'] ?? null];
+                }
+            }
+            Gallery::create([
+                'title' => $g['title'], 'trip' => $g['trip'], 'description' => $g['description'] ?? null,
+                'cover_id' => $this->media($g['cover'], 'galeri', $g['items'][0]['alt'] ?? null), 'items' => $items,
+                'sort' => $g['sort'] ?? 0, 'is_active' => true,
+            ]);
+            $made++;
+        }
+        Content::bump();
+
+        return $made;
+    }
+
+    /**
+     * Starter blog articles (posts.json). Articles whose slug already exists are skipped,
+     * so edits and deletions in the admin are kept. SEO score and reading time are computed.
+     */
+    public function importPosts(): int
+    {
+        $this->svc ??= app(MediaService::class);
+        $this->data ??= database_path('seed-data/');
+        $this->assets ??= database_path('seed-assets/');
+        $made = 0;
+        foreach ($this->json('posts.json') as $p) {
+            if (Post::where('slug', $p['slug'])->exists()) {
+                continue;
+            }
+            $cat = PostCategory::firstOrCreate(['slug' => $p['category']['slug']], ['name' => $p['category']['name']]);
+            $folder = str_starts_with($p['cover'], 'gallery/') ? 'galeri' : 'paket';
+            $cover = $this->media($p['cover'], $folder, $p['title']);
+            $content = clean_html($p['content']);
+            $post = Post::create([
+                'title' => $p['title'], 'slug' => $p['slug'], 'excerpt' => $p['excerpt'], 'content' => $content,
+                'cover_id' => $cover, 'category_id' => $cat->id, 'status' => 'published', 'published_at' => now(),
+                'focus_keyword' => $p['focus_keyword'], 'meta_title' => $p['meta_title'], 'meta_description' => $p['meta_description'],
+                'faq' => $p['faq'] ?? null, 'reading_time' => ContentTools::readingTime($content),
+                'seo_score' => SeoAnalyzer::analyze(['title' => $p['title'], 'slug' => $p['slug'], 'focus_keyword' => $p['focus_keyword'],
+                    'meta_title' => $p['meta_title'], 'meta_description' => $p['meta_description'], 'content' => $content, 'cover_id' => $cover])['score'],
+            ]);
+            $post->tags()->sync(collect($p['tags'] ?? [])->map(fn ($t) => Tag::firstOrCreate(['slug' => Str::slug($t)], ['name' => $t])->id)->all());
+            $made++;
+        }
+        Content::bump();
+
+        return $made;
+    }
+
+    /** Pages added after the first install (e.g. Galeri), created only if missing. @param array<int, string> $keys */
+    public function importPages(array $keys): void
+    {
+        $this->svc ??= app(MediaService::class);
+        $this->data ??= database_path('seed-data/');
+        $this->assets ??= database_path('seed-assets/');
+        foreach ($this->json('pages.json') as $p) {
+            if (! in_array($p['key'], $keys, true) || Page::where('key', $p['key'])->exists() || Page::where('slug', $p['slug'])->exists()) {
+                continue;
+            }
+            $page = Page::create(['key' => $p['key'], 'slug' => $p['slug'], 'title' => $p['title'], 'meta_title' => $p['meta_title'] ?? null,
+                'meta_description' => $p['meta_description'] ?? null, 'is_active' => true, 'is_system' => $p['is_system'] ?? false]);
+            foreach ($p['sections'] as $i => $s) {
+                $page->sections()->create(['type' => $s['type'], 'name' => $s['name'], 'data' => $this->resolve($s['data']), 'sort' => $i + 1, 'is_visible' => $s['is_visible'] ?? true]);
+            }
+        }
+        Content::bump();
     }
 
     protected function redirects(): void

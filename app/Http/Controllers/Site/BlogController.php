@@ -71,6 +71,18 @@ class BlogController extends Controller
                 'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => $url], 'wordCount' => ContentTools::wordCount($post->content), 'keywords' => $post->tags->pluck('name')->implode(', ') ?: null,
             ]),
         ];
+        foreach (ContentTools::videos((string) $post->content) as $i => $v) {
+            // VideoObject: lets Google show the article with a video thumbnail
+            $schema[] = array_filter([
+                '@context' => 'https://schema.org', '@type' => 'VideoObject',
+                'name' => $post->title.($i ? ' ('.($i + 1).')' : ''),
+                'description' => $post->meta_description ?: ($post->excerpt ?: $post->title),
+                'thumbnailUrl' => [$v['poster'] ?: ($img ?: media_url(setting('og_default_image'), 1600))],
+                'uploadDate' => ($post->published_at ?? $post->created_at)?->toAtomString(),
+                'contentUrl' => $v['type'] === 'file' ? $v['src'] : null,
+                'embedUrl' => $v['type'] === 'youtube' ? $v['src'] : null,
+            ]);
+        }
         if (! empty($post->faq)) {
             $schema[] = ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => collect($post->faq)->filter(fn ($f) => ! empty($f['q']) && ! empty($f['a']))
                 ->map(fn ($f) => ['@type' => 'Question', 'name' => $f['q'], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f['a']]])->values()->all()];

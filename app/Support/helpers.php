@@ -194,6 +194,40 @@ if (! function_exists('nl')) {
 if (! function_exists('clean_html')) {
     function clean_html(?string $html, string $profile = 'default'): string
     {
-        return $html ? (string) Purifier::clean($html, $profile) : '';
+        if (! $html) {
+            return '';
+        }
+        $clean = (string) Purifier::clean($html, $profile);
+
+        // <video> is only allowed for files from this site's own media library (/uploads/...),
+        // never hot-linked from elsewhere; posters must be local too
+        if (stripos($clean, '<video') !== false) {
+            $isLocal = function (?string $u): bool {
+                if ($u === null || $u === '') {
+                    return false;
+                }
+                $path = (string) parse_url($u, PHP_URL_PATH);
+                $host = parse_url($u, PHP_URL_HOST);
+                $own = parse_url((string) config('app.url'), PHP_URL_HOST);
+
+                return str_starts_with($path, '/uploads/') && ($host === null || $host === $own || $host === request()->getHost());
+            };
+            $clean = (string) preg_replace_callback('#<video\b([^>]*)>(.*?)</video>#is', function ($m) use ($isLocal) {
+                preg_match('/\ssrc="([^"]*)"/i', $m[1], $src);
+                if (! $isLocal(html_entity_decode($src[1] ?? ''))) {
+                    return '';
+                }
+                $attrs = $m[1];
+                if (preg_match('/\sposter="([^"]*)"/i', $attrs, $poster) && ! $isLocal(html_entity_decode($poster[1]))) {
+                    $attrs = (string) preg_replace('/\sposter="[^"]*"/i', '', $attrs);
+                }
+                // always playable with controls, and only fetch the first frames until pressed
+                $attrs = (string) preg_replace('/\s(controls|preload)(="[^"]*")?(?=\s|$)/i', '', $attrs);
+
+                return '<video'.$attrs.' controls preload="metadata" playsinline></video>';
+            }, $clean);
+        }
+
+        return $clean;
     }
 }

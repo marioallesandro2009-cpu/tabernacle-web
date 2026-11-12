@@ -48,5 +48,7 @@
 .tiptap th, .tiptap td { @apply border border-stone-300 px-2 py-1; }
 .tiptap th { @apply bg-stone-100; }
 .tiptap iframe { @apply my-3 aspect-video w-full rounded-lg; }
+.tiptap video { @apply my-3 w-full rounded-lg bg-black; max-height: 480px; }
+.tiptap video.ProseMirror-selectednode { outline: 3px solid var(--color-accent); }
 
 .sortable-ghost { opacity: .4; }

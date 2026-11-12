@@ -27,6 +27,18 @@ class MediaService
 
     public const SIZES = [480, 960, 1600];
 
+    /** Upload limits in MB. Videos: 50 MB keeps pages fast; longer clips belong on YouTube. */
+    public const LIMITS_MB = ['video' => 50, 'pdf' => 30, 'image' => 12];
+
+    public static function limitMb(string $ext): int
+    {
+        return match (true) {
+            in_array($ext, self::VIDEO_EXT, true) => self::LIMITS_MB['video'],
+            $ext === 'pdf' => self::LIMITS_MB['pdf'],
+            default => self::LIMITS_MB['image'],
+        };
+    }
+
     public const MAX_WIDTH = 2000;
 
     public function disk(): Filesystem
@@ -59,7 +71,7 @@ class MediaService
         if (! $okMime) {
             return ['ok' => false, 'error' => 'Isi file tidak cocok dengan ekstensinya.'];
         }
-        $limitMb = in_array($ext, self::VIDEO_EXT, true) ? 100 : ($ext === 'pdf' ? 30 : 12);
+        $limitMb = self::limitMb($ext);
         if ($file->getSize() > $limitMb * 1024 * 1024) {
             return ['ok' => false, 'error' => 'Ukuran file maksimal '.$limitMb.' MB.'];
         }

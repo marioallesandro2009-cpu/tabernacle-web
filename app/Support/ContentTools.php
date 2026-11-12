@@ -80,4 +80,28 @@ class ContentTools
 
         return ['html' => $out, 'toc' => $toc];
     }
+
+    /**
+     * Videos placed in an article: uploaded files (<video>) and YouTube embeds.
+     *
+     * @return array<int, array{type: string, src: string, poster: ?string}>
+     */
+    public static function videos(string $html): array
+    {
+        $out = [];
+        if (preg_match_all('#<video\b[^>]*\ssrc="([^"]+)"[^>]*>#i', $html, $m, PREG_SET_ORDER)) {
+            foreach ($m as $v) {
+                preg_match('/\sposter="([^"]+)"/i', $v[0], $p);
+                $src = html_entity_decode($v[1]);
+                $out[] = ['type' => 'file', 'src' => str_starts_with($src, '/') ? url($src) : $src, 'poster' => isset($p[1]) ? url(html_entity_decode($p[1])) : null];
+            }
+        }
+        if (preg_match_all('#<iframe\b[^>]*\ssrc="([^"]*youtube(?:-nocookie)?\.com/embed/([A-Za-z0-9_-]{6,})[^"]*)"#i', $html, $m, PREG_SET_ORDER)) {
+            foreach ($m as $v) {
+                $out[] = ['type' => 'youtube', 'src' => html_entity_decode($v[1]), 'poster' => 'https://i.ytimg.com/vi/'.$v[2].'/hqdefault.jpg'];
+            }
+        }
+
+        return $out;
+    }
 }

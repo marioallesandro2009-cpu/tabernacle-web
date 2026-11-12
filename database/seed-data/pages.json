@@ -1594,5 +1594,64 @@
     }
    }
   ]
+ },
+ {
+  "key": "gallery",
+  "slug": "galeri",
+  "is_system": false,
+  "title": {
+   "en": "Gallery",
+   "id": "Galeri"
+  },
+  "meta_title": {
+   "en": "Trip Gallery | Tabernacle Ways Tour & Travel",
+   "id": "Galeri Perjalanan | Tabernacle Ways Tour & Travel"
+  },
+  "meta_description": {
+   "en": "Photos from journeys organised by Tabernacle Ways, including the 2026 China Immersion Program in Shenzhen, Chongqing and Wuhan.",
+   "id": "Foto perjalanan yang diselenggarakan Tabernacle Ways, termasuk Immersion Program Tiongkok 2026 di Shenzhen, Chongqing, dan Wuhan."
+  },
+  "sections": [
+   {
+    "type": "page_header",
+    "name": "Judul halaman",
+    "data": {
+     "kicker": {
+      "en": "Gallery",
+      "id": "Galeri"
+     },
+     "title_a": {
+      "en": "On the",
+      "id": "Di"
+     },
+     "title_b": {
+      "en": "road",
+      "id": "perjalanan"
+     },
+     "intro": {
+      "en": "Moments from the journeys we organise.",
+      "id": "Momen dari perjalanan yang kami selenggarakan."
+     }
+    }
+   },
+   {
+    "type": "albums",
+    "name": "Album galeri",
+    "data": {
+     "kicker": {
+      "en": "Albums",
+      "id": "Album"
+     },
+     "title_a": {
+      "en": "China Immersion",
+      "id": "Immersion Program"
+     },
+     "title_b": {
+      "en": "Program 2026",
+      "id": "Tiongkok 2026"
+     }
+    }
+   }
+  ]
  }
 ]

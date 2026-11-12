@@ -1,9 +1,12 @@
 <script setup>
-import { computed, reactive } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { computed, reactive, ref } from 'vue';
+import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import LineChart from '../../Components/LineChart.vue';
 
-const props = defineProps({ range: String, stats: Object, recent_leads: Array, counts: Object, analytics_enabled: Boolean });
+const props = defineProps({ range: String, stats: Object, recent_leads: Array, counts: Object, analytics_enabled: Boolean, can_reset: Boolean });
+const resetOpen = ref(false);
+const resetForm = useForm({ confirm: '' });
+const doReset = () => resetForm.post('/admin/stats/reset', { preserveScroll: true, onSuccess: () => { resetOpen.value = false; resetForm.reset(); } });
 
 const ranges = [['today', 'Hari ini'], ['yesterday', 'Kemarin'], ['7d', '7 hari'], ['30d', '30 hari'], ['90d', '90 hari'], ['custom', 'Kustom']];
 const custom = reactive({ from: props.stats?.from || '', to: props.stats?.to || '' });
@@ -30,7 +33,22 @@ const maxOf = (rows) => Math.max(1, ...rows.map((r) => r.views));
         <h1 class="text-2xl font-bold">Dashboard</h1>
         <div v-if="stats" class="flex flex-wrap items-center gap-1">
             <button v-for="r in ranges" :key="r[0]" class="btn btn-sm" :class="range === r[0] ? 'btn-primary' : ''" @click="setRange(r[0])">{{ r[1] }}</button>
+            <button v-if="can_reset" class="btn btn-sm text-red-600" title="Hapus semua statistik pengunjung" @click="resetOpen = true">Reset statistik</button>
         </div>
+    </div>
+
+    <div v-if="resetOpen" class="fixed inset-0 z-[70] flex items-center justify-center bg-black/50 p-4" @keydown.esc="resetOpen = false">
+        <form class="card w-full max-w-md p-5" role="dialog" aria-modal="true" aria-labelledby="reset-title" @submit.prevent="doReset">
+            <h2 id="reset-title" class="text-lg font-semibold">Reset statistik pengunjung?</h2>
+            <p class="mt-2 text-sm text-stone-600">Semua tayangan halaman, pengunjung, sumber trafik, dan grafik akan dihapus permanen, lalu penghitungan dimulai dari nol. <b>Data leads tidak ikut terhapus.</b> Tindakan ini tercatat di Log aktivitas.</p>
+            <label class="label mt-4" for="reset-confirm">Ketik <b>RESET</b> untuk melanjutkan</label>
+            <input id="reset-confirm" v-model="resetForm.confirm" class="input" autocomplete="off" autofocus>
+            <p v-if="resetForm.errors.confirm" class="err">{{ resetForm.errors.confirm }}</p>
+            <div class="mt-4 flex justify-end gap-2">
+                <button type="button" class="btn" @click="resetOpen = false">Batal</button>
+                <button class="btn btn-danger" :disabled="resetForm.confirm !== 'RESET' || resetForm.processing">Reset sekarang</button>
+            </div>
+        </form>
     </div>
 
     <div v-if="stats && range === 'custom'" class="mb-4 flex flex-wrap items-end gap-2">

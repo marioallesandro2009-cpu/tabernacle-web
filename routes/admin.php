@@ -126,6 +126,7 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
 
         // system
         Route::middleware('can:settings.manage')->group(function () {
+            Route::post('stats/reset', [DashboardController::class, 'resetStats']);
             Route::get('settings', [SettingsController::class, 'index']);
             Route::put('settings', [SettingsController::class, 'update']);
         });

@@ -72,6 +72,14 @@ async function send(files) {
     if (!files.length) return;
     const hasImage = files.some((f) => f.type.startsWith('image/') && f.type !== 'image/svg+xml');
     upload.errors = [];
+    // same limits as the server, checked before a long upload starts
+    const limitMb = (f) => (/^video\//.test(f.type) || /\.(mp4|webm)$/i.test(f.name) ? 50 : /\.pdf$/i.test(f.name) ? 30 : 12);
+    const tooBig = files.filter((f) => f.size > limitMb(f) * 1024 * 1024);
+    if (tooBig.length) {
+        upload.errors = tooBig.map((f) => `${f.name}: ${(f.size / 1048576).toFixed(1)} MB, maksimal ${limitMb(f)} MB. ${limitMb(f) === 50 ? 'Untuk video panjang, unggah ke YouTube lalu sisipkan tautannya.' : ''}`);
+        files = files.filter((f) => !tooBig.includes(f));
+        if (!files.length) return;
+    }
     if (hasImage && !upload.alt.trim()) {
         upload.errors = ['Isi teks alternatif (alt) dulu, wajib untuk gambar.'];
         return;
@@ -86,7 +94,7 @@ async function send(files) {
         data.data.forEach(remember);
         items.value = [...data.data, ...items.value];
         total.value += data.data.length;
-        upload.errors = data.errors || [];
+        upload.errors = [...upload.errors, ...(data.errors || [])];
         if (data.data.length) {
             upload.alt = '';
             if (props.select) data.data.forEach((m) => (props.multiple ? picked.value.push(m) : (picked.value = [m])));
@@ -94,7 +102,11 @@ async function send(files) {
         }
     } catch (e) {
         const d = e.response?.data;
-        upload.errors = d?.errors?.length ? d.errors : [d?.message || 'Upload gagal.', ...Object.values(d?.errors || {}).flat()].filter((x) => typeof x === 'string');
+        if (e.response?.status === 413) {
+            upload.errors = ['File terlalu besar untuk server. Batas: gambar 12 MB, PDF 30 MB, video 50 MB.'];
+        } else {
+            upload.errors = d?.errors?.length && Array.isArray(d.errors) ? d.errors : [d?.message || 'Upload gagal.', ...Object.values(d?.errors || {}).flat()].filter((x) => typeof x === 'string');
+        }
     } finally {
         upload.busy = false;
         if (fileInput.value) fileInput.value.value = '';
@@ -162,7 +174,7 @@ defineExpose({ picked, reload: load });
                 </button>
                 <input ref="fileInput" type="file" multiple class="hidden" :accept="accept" @change="send($event.target.files)">
             </div>
-            <p class="hint">Atau seret file ke sini. Gambar otomatis menjadi WebP dalam beberapa ukuran. Maksimal 50 MB per file.</p>
+            <p class="hint">Atau seret file ke sini. Gambar otomatis menjadi WebP dalam beberapa ukuran. Batas ukuran: gambar 12 MB, PDF 30 MB, video MP4/WebM 50 MB.</p>
             <ul v-if="upload.errors.length" class="mt-2 space-y-0.5 text-left">
                 <li v-for="(er, i) in upload.errors" :key="i" class="err">{{ er }}</li>
             </ul>

@@ -38,11 +38,29 @@
  {
   "location": "header",
   "label": {
+   "en": "Gallery",
+   "id": "Galeri"
+  },
+  "url": "/galeri",
+  "sort": 5
+ },
+ {
+  "location": "header",
+  "label": {
+   "en": "Blog",
+   "id": "Blog"
+  },
+  "url": "/blog",
+  "sort": 6
+ },
+ {
+  "location": "header",
+  "label": {
    "en": "Contact",
    "id": "Kontak"
   },
   "url": "/contact",
-  "sort": 5
+  "sort": 7
  },
  {
   "location": "footer",
@@ -83,10 +101,28 @@
  {
   "location": "footer",
   "label": {
+   "en": "Gallery",
+   "id": "Galeri"
+  },
+  "url": "/galeri",
+  "sort": 5
+ },
+ {
+  "location": "footer",
+  "label": {
+   "en": "Blog",
+   "id": "Blog"
+  },
+  "url": "/blog",
+  "sort": 6
+ },
+ {
+  "location": "footer",
+  "label": {
    "en": "Contact",
    "id": "Kontak"
   },
   "url": "/contact",
-  "sort": 5
+  "sort": 7
  }
 ]
