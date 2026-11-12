@@ -17,8 +17,6 @@ import { VideoFile } from '../lib/videoNode';
 const props = defineProps({ modelValue: { type: String, default: '' }, placeholder: { type: String, default: 'Mulai menulis…' }, minimal: { type: Boolean, default: false } });
 const emit = defineEmits(['update:modelValue']);
 const pickImage = ref(false);
-const pickVideo = ref(false);
-const videoMenu = ref(false);
 
 const editor = useEditor({
     content: props.modelValue || '',
@@ -61,16 +59,8 @@ function insertImage(list) {
     pickImage.value = false;
 }
 function addVideo() {
-    videoMenu.value = false;
-    const url = window.prompt('Tempel tautan video YouTube');
+    const url = window.prompt('Tempel tautan video YouTube (contoh: https://www.youtube.com/watch?v=...)');
     if (url) editor.value.chain().focus().setYoutubeVideo({ src: url }).run();
-}
-function insertVideo(list) {
-    list.forEach((m) => {
-        remember(m);
-        if (m.kind === 'video') editor.value.chain().focus().setVideoFile({ src: m.url }).run();
-    });
-    pickVideo.value = false;
 }
 const btn = (active) => ['rounded px-2 py-1 text-sm hover:bg-stone-200', active ? 'bg-stone-300 font-semibold' : ''];
 </script>
@@ -94,17 +84,7 @@ const btn = (active) => ['rounded px-2 py-1 text-sm hover:bg-stone-200', active 
             <button type="button" :class="btn(editor.isActive('link'))" title="Tautan" @click="setLink">Tautan</button>
             <template v-if="!minimal">
                 <button type="button" :class="btn(false)" title="Sisipkan gambar" @click="pickImage = true">Gambar</button>
-                <span class="relative">
-                    <button type="button" :class="btn(videoMenu)" title="Sisipkan video" :aria-expanded="videoMenu" @click="videoMenu = !videoMenu">Video ▾</button>
-                    <span v-if="videoMenu" class="absolute left-0 top-full z-20 mt-1 w-72 rounded-lg border border-stone-200 bg-white p-1 text-left shadow-lg">
-                        <button type="button" class="block w-full rounded px-3 py-2 text-left text-sm hover:bg-stone-100" @click="videoMenu = false; pickVideo = true">
-                            <b>Unggah / pilih dari Media</b><br><span class="text-xs text-stone-500">MP4 atau WebM, maksimal 50 MB (sekitar 1–2 menit 1080p)</span>
-                        </button>
-                        <button type="button" class="block w-full rounded px-3 py-2 text-left text-sm hover:bg-stone-100" @click="addVideo">
-                            <b>Tautan YouTube</b><br><span class="text-xs text-stone-500">Untuk video panjang, tanpa batas ukuran</span>
-                        </button>
-                    </span>
-                </span>
+                <button type="button" :class="btn(false)" title="Sisipkan video YouTube (tempel tautannya)" @click="addVideo">Video YouTube</button>
                 <button type="button" :class="btn(false)" title="Sisipkan tabel" @click="editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()">Tabel</button>
                 <template v-if="editor.isActive('table')">
                     <button type="button" :class="btn(false)" @click="editor.chain().focus().addRowAfter().run()">+Baris</button>
@@ -118,6 +98,5 @@ const btn = (active) => ['rounded px-2 py-1 text-sm hover:bg-stone-200', active 
         </div>
         <EditorContent :editor="editor" />
         <MediaDialog v-if="pickImage" kind="image" multiple @pick="insertImage" @close="pickImage = false" />
-        <MediaDialog v-if="pickVideo" kind="video" @pick="insertVideo" @close="pickVideo = false" />
     </div>
 </template>
