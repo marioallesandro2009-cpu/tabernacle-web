@@ -15,7 +15,38 @@ class Post extends Model
 
     protected $guarded = ['id'];
 
-    protected $casts = ['faq' => 'array', 'published_at' => 'datetime'];
+    protected $casts = ['faq' => 'array', 'faq_en' => 'array', 'published_at' => 'datetime'];
+
+    /** Texts that have an English version (column + "_en"). */
+    public const TRANSLATED = ['title', 'excerpt', 'content', 'meta_title', 'meta_description', 'faq'];
+
+    protected bool $localized = false;
+
+    /**
+     * On the English site, swaps in the English texts (when the article has an English title)
+     * for display only. Never save a localized model.
+     */
+    public function localize(): static
+    {
+        if ($this->localized || app()->getLocale() !== 'en') {
+            return $this;
+        }
+        $this->localized = true;
+        if (filled($this->title_en)) {
+            foreach (self::TRANSLATED as $k) {
+                $en = $this->getAttribute($k.'_en');
+                if (filled($en)) {
+                    $this->setAttribute($k, $en);
+                }
+            }
+            $this->syncOriginal();
+        }
+        if ($this->relationLoaded('category')) {
+            $this->category?->localize();
+        }
+
+        return $this;
+    }
 
     /** @return BelongsTo<PostCategory, $this> */
     public function category(): BelongsTo

@@ -8,14 +8,18 @@
     $spans = \App\Support\SiteData::SPANS;
     $gallery = collect($tour->gallery ?: [])->filter()->values();
     $trust = collect(setting('trust_points', []) ?: [])->map(fn ($r) => tr($r['text'] ?? null))->filter()->take(5)->values();
+    $itinerary = $tour->localItinerary();
+    $includes = $tour->localIncludes();
+    $excludes = $tour->localExcludes();
+    $terms = $tour->localTerms();
     $hasOverview = tr($tour->description) || ! empty($tour->highlights);
     $nav = array_filter([
         'overview' => $hasOverview ? t('tour.nav_overview') : null,
         'photos' => $gallery->isNotEmpty() ? t('tour.gallery') : null,
         'schedule' => $departures->isNotEmpty() ? t('tour.schedule') : null,
-        'itinerary' => ! empty($tour->itinerary) ? t('tour.itinerary') : null,
-        'included' => (! empty($tour->includes) || ! empty($tour->excludes)) ? t('tour.included') : null,
-        'terms' => $tour->terms ? t('tour.terms') : null,
+        'itinerary' => ! empty($itinerary) ? t('tour.itinerary') : null,
+        'included' => (! empty($includes) || ! empty($excludes)) ? t('tour.included') : null,
+        'terms' => $terms ? t('tour.terms') : null,
         'inquiry' => t('tour.nav_ask'),
     ]);
 @endphp
@@ -84,14 +88,14 @@
         </div>
       @endif
 
-      @if (! empty($tour->itinerary))
+      @if (! empty($itinerary))
         <div class="tr-block" id="itinerary">
           <div class="tr-block-head"><p class="kicker mono">{{ t('tour.itinerary') }}</p>
-            @if (count($tour->itinerary) > 2)<button type="button" class="tr-toggle-days mono" data-open="{{ t('tour.expand_all') }}" data-close="{{ t('tour.collapse_all') }}" aria-expanded="false">{{ t('tour.expand_all') }}</button>@endif
+            @if (count($itinerary) > 2)<button type="button" class="tr-toggle-days mono" data-open="{{ t('tour.expand_all') }}" data-close="{{ t('tour.collapse_all') }}" aria-expanded="false">{{ t('tour.expand_all') }}</button>@endif
           </div>
-          @if (app()->getLocale() === 'en' && t('tour.itinerary_note') !== '' && t('tour.itinerary_note') !== 'tour.itinerary_note')<p class="tr-lang mono">{{ t('tour.itinerary_note') }}</p>@endif
+          @if (app()->getLocale() === 'en' && $tour->itineraryUntranslated() && t('tour.itinerary_note') !== '' && t('tour.itinerary_note') !== 'tour.itinerary_note')<p class="tr-lang mono">{{ t('tour.itinerary_note') }}</p>@endif
           <ol class="days">
-            @foreach ($tour->itinerary as $d)
+            @foreach ($itinerary as $d)
               <li class="day">
                 <details @if ($loop->index < 2) open @endif>
                 <summary>
@@ -110,15 +114,15 @@
         </div>
       @endif
 
-      @if (! empty($tour->includes) || ! empty($tour->excludes))
+      @if (! empty($includes) || ! empty($excludes))
         <div class="tr-block tr-incl" id="included">
-          <div><h2 class="display h-m">{{ t('tour.included') }}</h2><ul class="ticks">@foreach ($tour->includes ?: [] as $x)<li>{{ $x }}</li>@endforeach</ul></div>
-          <div><h2 class="display h-m">{{ t('tour.excluded') }}</h2><ul class="crosses">@foreach ($tour->excludes ?: [] as $x)<li>{{ $x }}</li>@endforeach</ul></div>
+          <div><h2 class="display h-m">{{ t('tour.included') }}</h2><ul class="ticks">@foreach ($includes as $x)<li>{{ $x }}</li>@endforeach</ul></div>
+          <div><h2 class="display h-m">{{ t('tour.excluded') }}</h2><ul class="crosses">@foreach ($excludes as $x)<li>{{ $x }}</li>@endforeach</ul></div>
         </div>
       @endif
 
-      @if ($tour->terms)
-        <div class="tr-block" id="terms"><p class="kicker mono">{{ t('tour.terms') }}</p><div class="prose">{!! $tour->terms !!}</div></div>
+      @if ($terms)
+        <div class="tr-block" id="terms"><p class="kicker mono">{{ t('tour.terms') }}</p><div class="prose">{!! $terms !!}</div></div>
       @endif
       @if ($tour->has_shopping)<p class="tr-note">{{ t('tour.shopping_note') }}</p>@endif
     </div>
@@ -129,7 +133,7 @@
         <p class="tr-price">{{ $price ? rupiah($price) : t('tour.on_request') }}</p>
         <dl>
           @if ($tour->duration)<div><dt class="mono">{{ t('tour.duration') }}</dt><dd>{{ $tour->duration }}</dd></div>@endif
-          <div><dt class="mono">{{ t('tour.departure') }}</dt><dd>{{ $tour->dates_label ?: t('tour.on_request') }}</dd></div>
+          <div><dt class="mono">{{ t('tour.departure') }}</dt><dd>{{ $tour->localDatesLabel() ?: t('tour.on_request') }}</dd></div>
           @if ($tour->min_pax)<div><dt class="mono">{{ t('tour.minimum') }}</dt><dd>{{ t('tour.people', ['n' => $tour->min_pax]) }}</dd></div>@endif
           @if ($tour->dp_min)<div><dt class="mono">{{ t('tour.dp') }}</dt><dd>{{ rupiah($tour->dp_min) }}</dd></div>@endif
           <div><dt class="mono">{{ t('tour.type') }}</dt><dd>{{ t('tour.type.'.$kind) }}, {{ mb_strtolower($tour->flights_included ? t('tour.flights_included') : t('tour.flights_excluded')) }}</dd></div>

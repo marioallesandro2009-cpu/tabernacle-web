@@ -53,7 +53,61 @@ class ContentSeeder extends Seeder
         $this->redirects();
         $this->importGalleries();
         $this->importPosts();
+        $this->importEnglish();
         Content::bump();
+    }
+
+    /**
+     * English versions of package texts (tours_en.json) and articles / blog categories
+     * (the *_en keys in posts.json). Only fills English fields that are still empty, so
+     * anything an admin wrote is never overwritten.
+     */
+    public function importEnglish(): int
+    {
+        $this->data ??= database_path('seed-data/');
+        $filled = 0;
+        foreach ($this->json('tours_en.json') as $slug => $en) {
+            $tour = Tour::where('slug', $slug)->first();
+            if (! $tour) {
+                continue;
+            }
+            $set = [];
+            if (empty($tour->itinerary_en) && ! empty($en['itinerary'])) {
+                $set['itinerary_en'] = $en['itinerary'];
+            }
+            foreach (['includes', 'excludes'] as $k) {
+                if (empty($tour->{$k.'_en'}) && ! empty($en[$k])) {
+                    $set[$k.'_en'] = $en[$k];
+                }
+            }
+            if (! $tour->dates_label_en && ! empty($en['dates_label'])) {
+                $set['dates_label_en'] = $en['dates_label'];
+            }
+            if (! $tour->terms_en && ! empty($en['terms'])) {
+                $set['terms_en'] = clean_html($en['terms']);
+            }
+            if ($set) {
+                $tour->forceFill($set)->saveQuietly();
+                $filled++;
+            }
+        }
+        foreach ($this->json('posts.json') as $p) {
+            if (! empty($p['category']['name_en'])) {
+                PostCategory::where('slug', $p['category']['slug'])->whereNull('name_en')->update(['name_en' => $p['category']['name_en']]);
+            }
+            $post = Post::where('slug', $p['slug'])->first();
+            if (! $post || filled($post->title_en) || empty($p['title_en'])) {
+                continue;
+            }
+            $post->forceFill([
+                'title_en' => $p['title_en'], 'excerpt_en' => $p['excerpt_en'] ?? null, 'content_en' => clean_html($p['content_en'] ?? ''),
+                'meta_title_en' => $p['meta_title_en'] ?? null, 'meta_description_en' => $p['meta_description_en'] ?? null, 'faq_en' => $p['faq_en'] ?? null,
+            ])->saveQuietly();
+            $filled++;
+        }
+        Content::bump();
+
+        return $filled;
     }
 
     /** @return array<mixed> */

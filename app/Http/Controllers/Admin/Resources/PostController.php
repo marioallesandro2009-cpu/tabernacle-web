@@ -64,6 +64,13 @@ class PostController extends ResourceController
             F::textarea('meta_description', 'SEO: deskripsi (120–160 karakter)', ['max' => 400]),
             F::image('og_image_id', 'Gambar saat dibagikan (OG image)'),
             F::repeat('faq', 'FAQ artikel (muncul sebagai schema FAQPage)', [F::text('q', 'Pertanyaan', ['required' => true]), F::textarea('a', 'Jawaban', ['required' => true, 'max' => 2000])], ['item_label' => 'q', 'max' => 15]),
+            // English version, shown on the English site; empty = the Indonesian text is used
+            F::text('title_en', 'Judul (English)'),
+            F::textarea('excerpt_en', 'Ringkasan (English)', ['max' => 600]),
+            F::rich('content_en', 'Isi artikel (English)'),
+            F::text('meta_title_en', 'SEO: judul (English)', ['max' => 190]),
+            F::textarea('meta_description_en', 'SEO: deskripsi (English)', ['max' => 400]),
+            F::repeat('faq_en', 'FAQ (English)', [F::text('q', 'Question', ['required' => true]), F::textarea('a', 'Answer', ['required' => true, 'max' => 2000])], ['item_label' => 'q', 'max' => 15]),
         ];
     }
 

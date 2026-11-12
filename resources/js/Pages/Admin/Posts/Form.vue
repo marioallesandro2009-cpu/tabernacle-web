@@ -81,6 +81,19 @@ function addTag() {
                 <Field :field="f('faq')" :values="form" :errors="errors" />
             </div>
 
+            <details class="card p-5" :open="!!(form.title_en || form.content_en)">
+                <summary class="cursor-pointer font-semibold">Versi Inggris (English) <span class="text-sm font-normal text-stone-500">opsional</span></summary>
+                <p class="hint mt-2">Tampil saat pengunjung memilih bahasa English. Kalau Judul (English) kosong, situs Inggris menampilkan versi Indonesia.</p>
+                <div class="mt-4 space-y-5">
+                    <Field :field="f('title_en')" :values="form" :errors="errors" />
+                    <Field :field="f('excerpt_en')" :values="form" :errors="errors" />
+                    <Field :field="f('content_en')" :values="form" :errors="errors" />
+                    <Field :field="f('faq_en')" :values="form" :errors="errors" />
+                    <Field :field="f('meta_title_en')" :values="form" :errors="errors" />
+                    <Field :field="f('meta_description_en')" :values="form" :errors="errors" />
+                </div>
+            </details>
+
             <div class="card space-y-5 p-5">
                 <h2 class="font-semibold">SEO</h2>
                 <Field :field="f('focus_keyword')" :values="form" :errors="errors" />

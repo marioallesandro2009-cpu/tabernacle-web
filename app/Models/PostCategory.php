@@ -13,6 +13,17 @@ class PostCategory extends Model
 
     protected $guarded = ['id'];
 
+    /** Shows the English name on the English site (display only, never saved). */
+    public function localize(): static
+    {
+        if (app()->getLocale() === 'en' && filled($this->name_en) && $this->name !== $this->name_en) {
+            $this->setAttribute('name', $this->name_en);
+            $this->syncOriginal();
+        }
+
+        return $this;
+    }
+
     /** @return HasMany<Post, $this> */
     public function posts(): HasMany
     {

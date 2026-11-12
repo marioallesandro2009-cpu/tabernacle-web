@@ -19,6 +19,7 @@ class Tour extends Model
     protected $casts = [
         'area_label' => 'array', 'highlights' => 'array', 'description' => 'array', 'gallery' => 'array',
         'itinerary' => 'array', 'departures' => 'array', 'includes' => 'array', 'excludes' => 'array',
+        'itinerary_en' => 'array', 'includes_en' => 'array', 'excludes_en' => 'array',
         'promo_label' => 'array', 'meta_title' => 'array', 'meta_description' => 'array',
         'flights_included' => 'boolean', 'has_shopping' => 'boolean', 'is_featured' => 'boolean', 'is_active' => 'boolean',
         'available_until' => 'date',
@@ -68,6 +69,66 @@ class Tour extends Model
         $today = Today::date();
 
         return collect($this->departures ?: [])->filter(fn ($d) => ! empty($d['date']) && $d['date'] >= $today)->sortBy('date')->values()->all();
+    }
+
+    protected function english(): bool
+    {
+        return app()->getLocale() === 'en';
+    }
+
+    /**
+     * Itinerary in the visitor's language: on the English site each day takes its English
+     * title / text / hotel (matched by position) and falls back to Indonesian when empty.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function localItinerary(): array
+    {
+        $days = array_values($this->itinerary ?: []);
+        if (! $this->english()) {
+            return $days;
+        }
+        $en = array_values($this->itinerary_en ?: []);
+
+        return collect($days)->map(function ($d, $i) use ($en) {
+            foreach (['title', 'text', 'hotel'] as $k) {
+                if (! empty($en[$i][$k])) {
+                    $d[$k] = $en[$i][$k];
+                }
+            }
+
+            return $d;
+        })->all();
+    }
+
+    /** True when the English site still shows (part of) the itinerary in Indonesian. */
+    public function itineraryUntranslated(): bool
+    {
+        $en = array_values($this->itinerary_en ?: []);
+
+        return collect($this->itinerary ?: [])->values()->contains(fn ($d, $i) => ! empty($d['text']) && empty($en[$i]['text']));
+    }
+
+    /** @return array<int, string> */
+    public function localIncludes(): array
+    {
+        return ($this->english() && ! empty($this->includes_en)) ? $this->includes_en : ($this->includes ?: []);
+    }
+
+    /** @return array<int, string> */
+    public function localExcludes(): array
+    {
+        return ($this->english() && ! empty($this->excludes_en)) ? $this->excludes_en : ($this->excludes ?: []);
+    }
+
+    public function localDatesLabel(): ?string
+    {
+        return ($this->english() && $this->dates_label_en) ? $this->dates_label_en : $this->dates_label;
+    }
+
+    public function localTerms(): ?string
+    {
+        return ($this->english() && $this->terms_en) ? $this->terms_en : $this->terms;
     }
 
     /** Lowest adult price: the manual "from" price, else the cheapest open departure. */

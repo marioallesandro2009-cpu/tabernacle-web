@@ -20,7 +20,7 @@ class BlogController extends Controller
         abort_unless($page && $page->is_active, 404);
 
         $q = Post::query()->live()->with(['category', 'author'])->orderByDesc('published_at');
-        $category = $request->query('category') ? PostCategory::where('slug', $request->query('category'))->first() : null;
+        $category = $request->query('category') ? PostCategory::where('slug', $request->query('category'))->first()?->localize() : null;
         $tag = $request->query('tag') ? Tag::where('slug', $request->query('tag'))->first() : null;
         if ($category) {
             $q->where('category_id', $category->id);
@@ -29,13 +29,14 @@ class BlogController extends Controller
             $q->whereHas('tags', fn ($t) => $t->whereKey($tag->id));
         }
         $posts = $q->paginate(9)->withQueryString();
+        $posts->getCollection()->each->localize();
 
         $title = $category ? $category->name.' | Blog' : (tr($page->meta_title) ?: tr($page->title));
         $seo = Seo::make($title, tr($page->meta_description), $page->og_image_id, url('/blog'.($category ? '?category='.$category->slug : '')),
             noindex: (bool) ($page->noindex || $request->query('page', 1) > 1 || $tag), schema: [Seo::breadcrumbs([['Home', url('/')], [t('blog.title'), url('/blog')]])]);
 
         return view('site.blog-index', [
-            'page' => $page, 'posts' => $posts, 'categories' => PostCategory::withCount(['posts' => fn ($p) => $p->live()])->orderBy('name')->get(),
+            'page' => $page, 'posts' => $posts, 'categories' => PostCategory::withCount(['posts' => fn ($p) => $p->live()])->orderBy('name')->get()->each->localize(),
             'category' => $category, 'tag' => $tag, 'seo' => $seo, 'bodyClass' => 'page-blog',
         ]);
     }
@@ -52,11 +53,12 @@ class BlogController extends Controller
     public function render(Post $post, bool $preview = false): View
     {
         $post->loadMissing(['category', 'author', 'tags']);
+        $post->localize();
 
         $parsed = ContentTools::withToc($post->content);
         $related = Post::query()->live()->where('id', '!=', $post->id)
             ->when($post->category_id, fn ($q) => $q->orderByRaw('category_id = ? desc', [$post->category_id]))
-            ->orderByDesc('published_at')->limit(3)->get();
+            ->orderByDesc('published_at')->limit(3)->get()->each->localize();
         $tours = array_slice(SiteData::featuredCards(), 0, 3);
 
         $url = url('/blog/'.$post->slug);

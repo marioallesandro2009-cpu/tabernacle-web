@@ -4,7 +4,8 @@
   "title": "Persiapan Umrah: Dokumen, Vaksin, dan Perlengkapan yang Perlu Disiapkan",
   "category": {
    "name": "Ziarah & Umrah",
-   "slug": "ziarah-umrah"
+   "slug": "ziarah-umrah",
+   "name_en": "Pilgrimage & Umrah"
   },
   "tags": [
    "umrah",
@@ -30,14 +31,34 @@
     "q": "Kapan pelunasan biaya umrah harus dilakukan?",
     "a": "Pelunasan paling lambat satu bulan sebelum keberangkatan. Jika belum lunas, pendaftaran dianggap mengundurkan diri."
    }
-  ]
+  ],
+  "title_en": "Umrah Preparation: Documents, Vaccines and What to Pack",
+  "excerpt_en": "An umrah preparation checklist covering documents, vaccines, payments and packing, so you can focus on worship from day one.",
+  "meta_title_en": "Umrah Preparation: Documents, Vaccines & Packing List",
+  "meta_description_en": "Complete umrah preparation: passport, meningitis and polio vaccines, documents, payment deadlines and what to pack for a calm, focused pilgrimage.",
+  "faq_en": [
+   {
+    "q": "How long must my passport be valid for umrah?",
+    "a": "For our programme, your passport must be valid for at least 12 months before the departure date."
+   },
+   {
+    "q": "Which vaccines are needed for umrah?",
+    "a": "Pilgrims need meningitis and polio vaccinations, with proof on an ICV or e-ICV. Rules can change, so please check the latest requirements with our team."
+   },
+   {
+    "q": "When is the final payment for umrah due?",
+    "a": "Full payment is due no later than one month before departure. If it has not been paid, the registration is treated as withdrawn."
+   }
+  ],
+  "content_en": "<p>Good umrah preparation makes the pilgrimage feel much calmer. Many pilgrims only realise a document is missing when departure is close, yet most umrah preparation can be done well in advance. This article sums up what you need to prepare, from passport and vaccines to what goes in your suitcase, based on the requirements we use for our regular umrah programme.</p><h2>Documents you must have for umrah</h2><p>Documents are the part of umrah preparation that most often causes last-minute panic. For our programme, we ask for:</p><ul><li>A passport valid for at least 12 months before the departure date.</li><li>A name of at least two words in the passport, for example Ahmad Abyan.</li><li>Two 4 x 6 colour passport photos with a white background, the face filling about 80 percent of the frame.</li><li>Copies of your ID card (KTP), family card (Kartu Keluarga) and, for married couples, your marriage certificate.</li></ul><p>If the name in your passport is still a single word, arrange to add a name at the immigration office as soon as possible, because it takes time. Check your passport's expiry date now too, rather than waiting until you register.</p><h2>Vaccines and health before you go</h2><p>Pilgrims need meningitis and polio vaccinations, with proof on an ICV or e-ICV. Get vaccinated at an approved health facility and keep the certificate with your passport. Saudi health rules can change, so always ask our team for the latest requirements before you register.</p><p>As well as vaccines, talk to your doctor about your health, especially if you have a pre-existing condition. Worship and visits involve a lot of walking, so regular walking practice in the weeks before departure helps a great deal.</p><h2>Payments and the final payment date</h2><p>On our regular umrah programme, registration comes with a non-refundable booking fee of IDR 1,000,000 per person, followed by a down payment of IDR 10,000,000 per person. Full payment is due no later than one month before departure. Noting these dates from the start helps you avoid a cancellation because of a late payment.</p><p>Prices, room options and the cancellation policy for the next departure are on the <a href=\"/packages/9d7n-umrah-reguler-18-desember-2026\">Regular Umrah 18 December 2026 package</a> page, together with the full day-by-day itinerary file.</p><h2>What to pack</h2><p>The umrah kit, manasik (pre-departure training) and handling are already included in our programme. On top of that, pack these personal items for a more comfortable trip:</p><ul><li>Ihram garments for men and modest clothing for women, plus several changes of clothes.</li><li>Comfortable sandals or shoes that are already worn in, not newly bought.</li><li>Personal medicines with your doctor's prescription, and vitamins.</li><li>A water bottle, a small bag for your sandals when entering the mosque, and face masks.</li><li>A light warm layer, because nights can feel cool in some seasons.</li></ul><p>Pack only what you need. Zamzam water and souvenirs add weight on the way home, and excess baggage fees are not included in the package price.</p><h2>What a 9-day umrah trip looks like</h2><p>Knowing the flow of the trip makes umrah preparation more focused. On our regular programme, pilgrims fly to Jeddah, then go to Madinah for three nights of worship at the Prophet's Mosque and visits to Mount Uhud, Quba Mosque and Qiblatain Mosque. On day four, pilgrims travel to Makkah by high-speed train, take the miqat at Bir Ali and perform umrah on arrival in Makkah.</p><p>The following days are spent in worship at Masjidil Haram, visiting places in Makkah such as Jabal Rahmah and the Al-Wahyu Museum, and on a city tour to Taif. The trip ends with the farewell tawaf before returning to Jeddah and flying home to Jakarta.</p><h2>Quick checklist before you leave</h2><ul><li>Passport, ICV or e-ICV and document copies kept together in one waterproof folder.</li><li>Proof of full payment and our team's emergency contact saved on your phone.</li><li>Suitcases with name tags and within the airline's weight limit.</li><li>Personal medicines in your cabin bag, not your checked luggage.</li><li>Enough cash for personal needs and charity.</li></ul><h2>Manasik and preparing your heart</h2><p>Take the manasik seriously so you understand the order of worship before you reach the Holy Land. Throughout the trip, pilgrims are accompanied by an Indonesian-speaking mutawif who guides worship and visits. Umrah preparation is not only about documents and suitcases, but also about your intention and readiness of heart.</p><p>Have a question about documents or schedules? Contact our team through the <a href=\"/contact\">contact page</a> or the WhatsApp button on this site, and we will help you check everything one by one.</p>"
  },
  {
   "slug": "liburan-musim-dingin-ke-korea",
   "title": "Liburan Musim Dingin ke Korea: Panduan untuk Libur Akhir Tahun",
   "category": {
    "name": "Tips Perjalanan",
-   "slug": "tips-perjalanan"
+   "slug": "tips-perjalanan",
+   "name_en": "Travel Tips"
   },
   "tags": [
    "korea selatan",
@@ -63,14 +84,34 @@
     "q": "Kapan sebaiknya memesan paket akhir tahun?",
     "a": "Sedini mungkin, karena kursi dikonfirmasi setelah DP diterima dan musim liburan cepat penuh."
    }
-  ]
+  ],
+  "title_en": "A Winter Holiday in Korea: A Guide for the Year-End Break",
+  "excerpt_en": "Snow, Nami Island, ski resorts and year-end Seoul. Here is what to prepare for a winter holiday in Korea.",
+  "meta_title_en": "Winter Holiday in Korea: Your Year-End Travel Guide",
+  "meta_description_en": "A guide to a year-end winter holiday in Korea: weather, layered clothing, Nami Island, ski resorts, Everland and the Korean group visa.",
+  "faq_en": [
+   {
+    "q": "Do I need a visa for a holiday in Korea?",
+    "a": "Yes, Indonesian citizens need a Korean visa. On our group tour packages, the Korean group visa is already included in the price."
+   },
+   {
+    "q": "Is ski equipment included in the package?",
+    "a": "No. Ski equipment and clothing are not included and can be rented on site."
+   },
+   {
+    "q": "When should I book a year-end package?",
+    "a": "As early as possible, because seats are confirmed once the down payment is received and the holiday season fills up quickly."
+   }
+  ],
+  "content_en": "<p>A winter holiday in Korea is a favourite choice for Indonesian families over the year-end break. Snow we rarely see at home, Christmas and New Year in Seoul and warming Korean food make the trip feel special. To make your winter holiday in Korea comfortable, there are a few things worth knowing before you go.</p><h2>The weather on a winter holiday in Korea</h2><p>December is winter in South Korea. Temperatures in and around Seoul can fall below zero, especially in the morning and at night, and the cold wind makes it feel even sharper. For those of us used to a tropical climate, the difference is noticeable, so the right clothing is key.</p><h2>Clothing and gear</h2><p>Dress in layers so you can adapt easily between the cold outdoors and heated indoor spaces:</p><ul><li>A heat-retaining base layer, such as thermal wear or Heattech.</li><li>A sweater or fleece as the middle layer.</li><li>A windproof winter jacket, ideally with a hood.</li><li>Gloves, a scarf, a beanie and thick socks.</li><li>Comfortable, non-slip shoes for snowy streets.</li><li>Moisturiser and lip balm, because winter air tends to be dry.</li></ul><p>Ski equipment and clothing are usually not included in tour packages, so you can rent them on site if you want to try skiing.</p><h2>Places worth visiting in winter</h2><p>Places that often feature on a winter holiday in Korea include:</p><ul><li>A ski resort, to play in the snow first-hand.</li><li>Nami Island, famous as the filming location of the drama Winter Sonata.</li><li>Everland, the largest theme park in South Korea.</li><li>Suwon Hwaseong Fortress, a UNESCO World Heritage Site from the Joseon Dynasty, and Starfield Library Suwon.</li><li>Gyeongbokgung Palace, N Seoul Tower and the Myeongdong shopping district.</li></ul><p>All of these are covered in our <a href=\"/packages/6d4n-year-end-korea-winter-experience\">Year End Korea Winter Experience package</a>, with Malaysia Airlines flights and several departure dates in December. Want a different route? See also our <a href=\"/packages/7d5n-korea-winter-moments-busan-seoul\">Korea Winter Moments Busan and Seoul package</a>.</p><h2>A sample 6-day holiday</h2><p>To give you an idea, here is a summary of our year-end package. Day one, fly from Jakarta to Incheon via Kuala Lumpur. Day two, play in the snow at a ski resort, then visit Nami Island. Day three, enjoy Everland, Suwon Hwaseong Fortress and Starfield Library. Day four, a Seoul city tour to Gyeongbokgung Palace and the National Folk Museum, ending with the Painters show. Day five, try making kimbap, go up N Seoul Tower, then explore Itaewon and Myeongdong. Day six, shop for souvenirs before flying home.</p><p>A plan like this is full but still leaves time to soak up the atmosphere, so a winter holiday in Korea feels complete without being rushed. For families with children, Everland and the ski resort are usually the most anticipated parts.</p><h2>Warming food you must try</h2><p>Cold weather is the perfect excuse to try warm Korean food. Street snacks such as tteokbokki, odeng and hotteok are easy to find in Myeongdong. For dinner, Korean soups and barbecue are ideal for warming up. If you have dietary restrictions, let our team know from the start so they can be taken into account during the trip.</p><h2>Visas and documents</h2><p>Indonesian citizens need a visa to visit South Korea. On our group tour packages, the Korean group visa is included. If a participant is assessed as not meeting the group visa requirements, they will be asked to apply for an individual visa at extra cost. Make sure your passport is valid for at least six months after your return date.</p><h2>Staying healthy in Korea</h2><p>The extreme change from tropical heat to winter cold can tire the body quickly. Drink enough water even when you don't feel thirsty, get enough sleep every night and don't push yourself to stay outdoors too long. For children, bring spare gloves, as they often get wet while playing in the snow. Travel insurance is already included in our group tour packages.</p><h2>Tips for booking a year-end holiday</h2><p>Christmas and New Year are peak season. Flights and hotels fill up quickly, so the earlier you book, the better your chance of getting the dates you want. On our programme, seats are confirmed once the down payment is received, on a first-come, first-served basis.</p><p>Ready to plan your winter holiday in Korea? See <a href=\"/destinations/south-korea\">all our South Korea packages</a> or contact us on WhatsApp to choose the dates that suit your family best.</p>"
  },
  {
   "slug": "tur-grup-atau-fit",
   "title": "Tur Grup atau FIT? Cara Memilih Paket Liburan yang Pas",
   "category": {
    "name": "Tips Perjalanan",
-   "slug": "tips-perjalanan"
+   "slug": "tips-perjalanan",
+   "name_en": "Travel Tips"
   },
   "tags": [
    "tur grup",
@@ -92,14 +133,30 @@
     "q": "Mana yang lebih murah, tur grup atau FIT?",
     "a": "Tergantung destinasi dan tanggal. Bandingkan total biaya, termasuk tiket pesawat untuk FIT, agar perbandingannya adil."
    }
-  ]
+  ],
+  "title_en": "Group Tour or FIT? How to Choose the Right Holiday Package",
+  "excerpt_en": "Group tours and FIT are both great, but they suit different kinds of travellers. Here is how to choose.",
+  "meta_title_en": "Group Tour or FIT? How to Choose the Right Holiday",
+  "meta_description_en": "Not sure whether to choose a group tour or FIT? Compare flights, schedules, prices and flexibility, then pick the holiday package that suits you.",
+  "faq_en": [
+   {
+    "q": "What is the difference between a group tour and FIT?",
+    "a": "A group tour includes flights and a tour leader, with fixed dates. FIT is for small groups who book their own flights, with more flexible dates."
+   },
+   {
+    "q": "Which is cheaper, a group tour or FIT?",
+    "a": "It depends on the destination and dates. Compare the total cost, including flights for FIT, so the comparison is fair."
+   }
+  ],
+  "content_en": "<p>Looking through holiday packages, you may wonder: is a group tour or FIT better? Both take you to your dream destination, but the way you travel is different. Understanding the difference between a group tour and FIT from the start helps you choose a package that fits your travel style, budget and family schedule.</p><h2>What a group tour is and what FIT is</h2><p>A group tour is a trip with a group of other participants on a fixed departure date. On our group tour packages, flights and a tour leader are included, so all you need to do is turn up at the airport and enjoy the programme.</p><p>FIT stands for free independent traveller. FIT packages are designed for small groups, such as a family or friends, who book their own flights. At the destination you still get hotels, transport and a guide as per the programme, but departure dates are usually more flexible.</p><h2>Group tour vs FIT compared</h2><table><thead><tr><th>Aspect</th><th>Group tour</th><th>FIT</th></tr></thead><tbody><tr><td>Flights</td><td>Included</td><td>Booked by you</td></tr><tr><td>Schedule</td><td>Fixed departure dates</td><td>More flexible, some depart daily</td></tr><tr><td>Escort</td><td>Tour leader from Indonesia</td><td>Guide or driver at the destination</td></tr><tr><td>Group size</td><td>Larger group, with a minimum number of participants</td><td>Small group, lower minimum</td></tr><tr><td>Best for</td><td>First-time travellers, large families, older travellers</td><td>Experienced travellers, small families</td></tr></tbody></table><h2>When to choose a group tour</h2><p>Choose a group tour if you want a hassle-free trip without arranging flights and technical details. Group tours also suit a first trip abroad or travelling with older parents, as a tour leader accompanies you from Jakarta. Group tour prices usually cover many components, from flights to entrance tickets.</p><p>Examples of our group tours: <a href=\"/packages/6d4n-year-end-korea-winter-experience\">Year End Korea Winter Experience</a> and <a href=\"/packages/10d7n-new-year-turkiye-cappadocia-mt-uludag\">New Year Türkiye Cappadocia</a>.</p><h2>When to choose FIT</h2><p>Choose FIT if you want to set your own departure date, already have flights or airline points, or prefer to holiday with just your immediate family. FIT also leaves room to add free days in a particular city. Keep in mind that some costs on FIT packages, such as entrance tickets or mandatory fees on site, may be paid separately, so read the includes and excludes carefully.</p><p>Examples of our FIT packages: the <a href=\"/packages/6d5n-west-coast-usa-tour\">West Coast USA Tour</a> with daily departures and the <a href=\"/packages/6d5n-east-coast-usa-tour\">East Coast USA Tour</a>.</p><h2>Everyday examples</h2><p>A family with two children and grandparents visiting Europe for the first time will feel more at ease on a group tour: flights are arranged, a tour leader helps at the airport, and meals and hotels are fixed. On the other hand, a couple who travel often and have already bought promo tickets to Los Angeles might choose an FIT package and enjoy free days as they like before joining the tour.</p><p>Colleagues who want to travel together can choose either. If the group is large enough and wants a special route, a custom private trip can be a third option.</p><h2>Questions to ask before you book</h2><ul><li>Does the price include flights, airport tax and visas?</li><li>What is the minimum number of participants, and what happens if it is not reached?</li><li>How much is the down payment, and when is the final payment due?</li><li>Which costs are paid separately on site, such as tips or optional tickets?</li><li>What is the policy on cancellations and name changes?</li></ul><h2>Tips for deciding</h2><ul><li>Work out the total cost, including flights if you choose FIT, then compare fairly.</li><li>Check the minimum number of participants and the available departure dates.</li><li>Think about who is coming: young children and older travellers are usually more comfortable with full support.</li><li>Read the includes, excludes and cancellation terms before paying the down payment.</li></ul><p>In the end, choosing between a group tour or FIT comes down to who is travelling, how much time you have and how much you want to organise the trip yourself. There is no answer that is always right, only the choice that best fits your situation right now. One more thing that is often forgotten: watch the travel season. During school holidays, Christmas and New Year, group tours fill up fast and flight prices for FIT go up too. Booking early gives you more date options, whichever type of package you choose.</p><p>Still unsure whether to choose a group tour or FIT? Browse <a href=\"/packages\">all our packages</a>, use the package type filter, or ask us directly on WhatsApp. We will help you find the best fit.</p>"
  },
  {
   "slug": "immersion-program-tiongkok-2026",
   "title": "Immersion Program Tiongkok 2026: Dari Shenzhen hingga Wuhan",
   "category": {
    "name": "Cerita Perjalanan",
-   "slug": "cerita-perjalanan"
+   "slug": "cerita-perjalanan",
+   "name_en": "Travel Stories"
   },
   "tags": [
    "corporate travel",
@@ -121,6 +178,21 @@
     "q": "Apakah program kunjungan bisa disesuaikan?",
     "a": "Bisa. Rute, perusahaan yang dikunjungi, dan durasi disusun sesuai tujuan organisasi Anda."
    }
-  ]
+  ],
+  "title_en": "China Immersion Program 2026: From Shenzhen to Wuhan",
+  "excerpt_en": "Two groups, eight days of visits, from Tencent's offices in Shenzhen to Ezhou Huahu Airport in Hubei.",
+  "meta_title_en": "China Immersion Program 2026: Shenzhen to Wuhan Trip",
+  "meta_description_en": "Notes from the 2026 China immersion program: visits to Tencent, Huawei, Terminus and Hubei Culture Tourism Group with Tabernacle Ways.",
+  "faq_en": [
+   {
+    "q": "Does Tabernacle Ways organise corporate trips to China?",
+    "a": "Yes. We organise corporate visit programmes, including the 2026 China immersion program to Shenzhen, Chongqing and Wuhan."
+   },
+   {
+    "q": "Can a visit programme be customised?",
+    "a": "Yes. The route, the companies visited and the duration are planned around your organisation's goals."
+   }
+  ],
+  "content_en": "<p>In early 2026, Tabernacle Ways ran a China immersion program for two groups of corporate participants. The programme was designed so participants could learn first-hand from companies and districts driving innovation in China, not just go sightseeing. Here are short notes from the trip, with photos on our gallery page.</p><h2>China immersion program, batch 1: Shenzhen</h2><p>The first group left at the end of January 2026, focusing on Shenzhen and the surrounding area. Over four days, participants visited:</p><ul><li>27 January: Tencent and the Shenzhen Upperhills district.</li><li>28 January: Huawei.</li><li>29 January: Shenzhen International Airport and Guangdong Medical Valley.</li><li>30 January: OCT Group at Happy Valley Shenzhen.</li></ul><p>Each visit included a welcome session and discussion with the hosts, giving participants a direct picture of how these companies work.</p><h2>Batch 2: Chongqing and Wuhan</h2><p>The second group left in early February 2026 on a different route:</p><ul><li>2 February: Terminus in Chongqing, ending with a performance at the Grand Theatre Chongqing 1949.</li><li>3 February: CR MixC Lifestyle and the Kuixing Building.</li><li>4 February: Hubei Culture Tourism Group and the Jiang'an district of Wuhan.</li><li>5 February: Ezhou Huahu Airport with Hubei Airport Group, then Wuhan Tianhe International Airport.</li></ul><h2>Why Shenzhen, Chongqing and Wuhan</h2><p>Shenzhen is known as China's technology hub and is home to the headquarters of companies such as Tencent and Huawei. Chongqing is one of the largest cities in southwest China, with a distinctive landscape of hills and high-rise buildings. Wuhan, the capital of Hubei Province, is an important transport hub in central China. Together, the three cities give a varied picture of technology, tourism and infrastructure.</p><h2>Tips for preparing a corporate trip to China</h2><ul><li>Apply for visas early and make sure all participants' passports are valid long enough.</li><li>Set up the digital payment apps commonly used in China, as many places prefer cashless payment.</li><li>Remember that some Google services and social media cannot be accessed in China, so agree on how the team will communicate before you leave.</li><li>Bring business cards and small gifts for your hosts.</li><li>Leave buffer time in the schedule, because travel between locations in big cities can take a while.</li></ul><h2>What we arrange in an immersion program</h2><p>A corporate visit programme needs more than flights and hotels. Our team coordinates with the hosts, plans a full but realistic visit schedule, arranges transport between locations and accompanies the group throughout the trip. Details such as travel documents and participants' needs are also handled from the preparation stage.</p><p>With two groups so close together, the team's rhythm matters a great deal. The first group returned at the end of January, and only a few days later the second group set off on a completely different route. That is why we prepared each batch as a separate programme, with its own schedule, host contacts and participant needs managed separately.</p><p>We also pay attention to the small things that keep participants comfortable, such as rest time between visits, travel distances between locations and food choices. Details like these let participants focus on what they are learning without being distracted by logistics.</p><p>This experience shows that a business trip can also be a way to learn and to bring a team closer. For companies and institutions, the China immersion program format can also be tailored to the organisation's goals, for example a benchmarking visit in a particular industry.</p><h2>Who an immersion program suits</h2><p>The China immersion program format suits management teams, future company leaders and institutions that want to see best practice in a particular industry first-hand. The programme can focus on technology, tourism, healthcare, retail or transport infrastructure, as needed. Four days per batch, as above, gives enough time for several meaningful visits without keeping participants away from work for too long.</p><h2>See the trip photos</h2><p>Photos from both groups are on our <a href=\"/galeri\">Gallery page</a>, arranged by visit day.</p><p>Want to plan a similar visit programme or corporate trip for your team? Tell us what you need through the <a href=\"/contact\">contact page</a> or WhatsApp, and our team will put together a suitable programme proposal.</p>"
  }
 ]

@@ -26,7 +26,7 @@ class PostCategoryController extends ResourceController
 
     protected function fields(?Model $model = null): array
     {
-        return [F::text('name', 'Nama kategori', ['required' => true]), F::slug('slug', 'Slug', 'name'), F::textarea('description', 'Deskripsi')];
+        return [F::text('name', 'Nama kategori', ['required' => true]), F::text('name_en', 'Nama kategori (English, opsional)'), F::slug('slug', 'Slug', 'name'), F::textarea('description', 'Deskripsi')];
     }
 
     protected function columns(): array

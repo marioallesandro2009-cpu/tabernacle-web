@@ -71,6 +71,13 @@ class TourController extends ResourceController
             F::list('includes', 'Harga termasuk (satu per baris)'),
             F::list('excludes', 'Harga tidak termasuk (satu per baris)'),
             F::rich('terms', 'Catatan & syarat'),
+            F::repeat('itinerary_en', 'English: itinerary per hari (urutan sama dengan itinerary di atas; kosongkan agar situs Inggris memakai teks Indonesia)', [
+                F::text('title', 'Day title'), F::textarea('text', 'Description'), F::text('hotel', 'Hotel'),
+            ], ['item_label' => 'title']),
+            F::text('dates_label_en', 'English: keterangan tanggal keberangkatan'),
+            F::list('includes_en', 'English: harga termasuk (satu per baris)'),
+            F::list('excludes_en', 'English: harga tidak termasuk (satu per baris)'),
+            F::rich('terms_en', 'English: catatan & syarat'),
             F::toggle('has_shopping', 'Tur bersubsidi dengan kunjungan toko wajib'),
             F::t('promo_label', 'Label promo / early bird (contoh Early Bird)'),
             F::toggle('is_featured', 'Paket unggulan (tampil di halaman utama)'),
