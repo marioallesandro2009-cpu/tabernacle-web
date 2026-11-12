@@ -38,6 +38,11 @@ class SettingsRegistry
                 F::t('hours', 'Jam operasional'),
                 F::text('maps_url', 'Tautan Google Maps', ['max' => 800]),
             ]],
+            ['key' => 'kepercayaan', 'label' => 'Poin kepercayaan', 'fields' => [
+                F::repeat('trust_points', 'Poin singkat di kotak harga setiap paket (hanya fakta yang benar, maksimal 5)', [
+                    F::t('text', 'Teks', ['required' => true]),
+                ], ['item_label' => 'text', 'max' => 5]),
+            ]],
             ['key' => 'sosial', 'label' => 'Media sosial', 'fields' => [
                 F::url('social_instagram', 'Instagram'), F::url('social_tiktok', 'TikTok'),
                 F::url('social_facebook', 'Facebook'), F::url('social_youtube', 'YouTube'),

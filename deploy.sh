@@ -39,6 +39,8 @@ $PHP artisan migrate --force
 # instalasi pertama; menjalankannya lagi akan memunculkan kembali konten yang sudah Anda hapus.
 echo "==> Peran dan izin"
 $PHP artisan db:seed --class=RolesSeeder --force
+# Teks antarmuka/pengaturan baru dari versi terbaru (hanya yang belum ada, tidak menimpa editan admin)
+$PHP artisan db:seed --class=DefaultsSeeder --force
 
 echo "==> Membangun cache"
 $PHP artisan optimize:clear

@@ -688,5 +688,107 @@
   "group": "nav",
   "text_en": "Home",
   "text_id": "Beranda"
+ },
+ {
+  "key": "hero.find_label",
+  "group": "hero",
+  "text_en": "Where to?",
+  "text_id": "Mau ke mana?"
+ },
+ {
+  "key": "hero.find_any",
+  "group": "hero",
+  "text_en": "Any destination",
+  "text_id": "Semua tujuan"
+ },
+ {
+  "key": "hero.find_q",
+  "group": "hero",
+  "text_en": "City or place",
+  "text_id": "Kota atau tempat"
+ },
+ {
+  "key": "hero.find_q_ph",
+  "group": "hero",
+  "text_en": "e.g. Kyoto, Paris, Cappadocia",
+  "text_id": "mis. Kyoto, Paris, Cappadocia"
+ },
+ {
+  "key": "hero.find_btn",
+  "group": "hero",
+  "text_en": "Find trips",
+  "text_id": "Cari paket"
+ },
+ {
+  "key": "hero.find_aria",
+  "group": "hero",
+  "text_en": "Find a tour package",
+  "text_id": "Cari paket tour"
+ },
+ {
+  "key": "tour.nav_label",
+  "group": "tour",
+  "text_en": "On this page",
+  "text_id": "Di halaman ini"
+ },
+ {
+  "key": "tour.nav_overview",
+  "group": "tour",
+  "text_en": "Overview",
+  "text_id": "Ringkasan"
+ },
+ {
+  "key": "tour.nav_ask",
+  "group": "tour",
+  "text_en": "Ask us",
+  "text_id": "Tanya kami"
+ },
+ {
+  "key": "tour.gallery",
+  "group": "tour",
+  "text_en": "Photos",
+  "text_id": "Foto"
+ },
+ {
+  "key": "tour.expand_all",
+  "group": "tour",
+  "text_en": "Open all days",
+  "text_id": "Buka semua hari"
+ },
+ {
+  "key": "tour.collapse_all",
+  "group": "tour",
+  "text_en": "Close all days",
+  "text_id": "Tutup semua hari"
+ },
+ {
+  "key": "tour.ask_form",
+  "group": "tour",
+  "text_en": "Ask with the form",
+  "text_id": "Tanya lewat formulir"
+ },
+ {
+  "key": "tour.why",
+  "group": "tour",
+  "text_en": "Why book with us",
+  "text_id": "Kenapa pesan di kami"
+ },
+ {
+  "key": "tour.dp_note",
+  "group": "tour",
+  "text_en": "Hold your seat with a :amount deposit",
+  "text_id": "Amankan kursi dengan DP :amount"
+ },
+ {
+  "key": "tour.pdf_note",
+  "group": "tour",
+  "text_en": "Full day-by-day itinerary in PDF",
+  "text_id": "Itinerary lengkap per hari dalam PDF"
+ },
+ {
+  "key": "tour.per_person",
+  "group": "tour",
+  "text_en": "per person",
+  "text_id": "per orang"
  }
 ]

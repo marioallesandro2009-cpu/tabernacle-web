@@ -22,6 +22,7 @@ class SectionRegistry
                 F::tarea('text', 'Teks pengantar'),
                 F::t('btn1_label', 'Tombol utama, teks'), F::text('btn1_url', 'Tombol utama, tautan (isi "wa" untuk WhatsApp)'),
                 F::t('btn2_label', 'Tombol kedua, teks'), F::text('btn2_url', 'Tombol kedua, tautan'),
+                F::toggle('show_finder', 'Tampilkan kotak pencarian paket (Mau ke mana?)', ['default' => true]),
             ]],
             'intro' => ['label' => 'Perkenalan + angka singkat', 'fields' => [
                 F::t('kicker', 'Label kecil'), F::thtml('heading', 'Kalimat utama (boleh <em>miring</em>)', ['required' => true]),

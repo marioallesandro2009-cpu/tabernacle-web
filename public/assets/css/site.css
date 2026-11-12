@@ -143,3 +143,78 @@
 @media (max-width: 1100px) { .post-body { grid-template-columns: 1fr; } .post-content, .toc { grid-column: 1; max-width: none; position: static; } .toc { margin-bottom: 20px; } .post-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .post-grid { grid-template-columns: 1fr; } }
 .e404 .pk-intro { grid-column: 1 / 13; margin-top: 24px; }
+
+/* === v2: conversion improvements ================================== */
+
+/* home: quick finder under the hero headline */
+.hero-find { margin-top: clamp(22px, 2.6vw, 38px); display: grid; grid-template-columns: 5fr 6fr auto; background: rgba(255, 252, 246, .97); color: var(--navy); box-shadow: 0 24px 60px -30px rgba(0, 0, 0, .6); max-width: 1040px; }
+.hf-field { display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 12px 18px; border-right: 1px solid var(--rule); min-width: 0; cursor: pointer; }
+.hf-field:focus-within { background: #fff; box-shadow: inset 0 -3px 0 var(--amber); }
+.hf-field > .mono { color: var(--muted); }
+.hf-field select, .hf-field input { border: 0; background: none; padding: 4px 0; font-size: 17px; color: var(--navy); outline: none; min-width: 0; width: 100%; }
+.hf-field select { appearance: none; -webkit-appearance: none; cursor: pointer; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230b1a5c' stroke-width='1.5'/%3E%3C/svg%3E") right center no-repeat; padding-right: 20px; }
+.hero-find .btn { border-radius: 0; margin: 0; min-height: 64px; padding-inline: 26px; }
+@media (max-width: 860px) {
+  /* phones: destination + button on one row; free-text search lives on the packages page */
+  .hero-find { grid-template-columns: 1fr auto; margin-top: 18px; }
+  .hf-field { padding: 8px 14px; }
+  .hf-field:nth-of-type(2) { display: none; }
+  .hero-find .btn { min-height: 0; padding-inline: 16px; }
+  .hero-find .btn svg { display: none; }
+  .hero .hero-actions .btn + .btn { display: none; }
+}
+
+/* package page: sticky in-page navigation */
+.tr-nav { position: sticky; top: 74px; z-index: 40; background: var(--paper); border-bottom: 1px solid var(--rule); }
+.tr-nav ul { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.tr-nav ul::-webkit-scrollbar { display: none; }
+.tr-nav a { display: block; white-space: nowrap; padding: 16px 12px; color: var(--muted); border-bottom: 2px solid transparent; }
+.tr-nav a:hover, .tr-nav a[aria-current="true"] { color: var(--navy); border-bottom-color: var(--amber); }
+.tr-anchor, .tr-block[id], #inquiry { scroll-margin-top: 130px; }
+
+/* package page: photo gallery */
+.tr-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+.tr-gallery li { aspect-ratio: 1; overflow: hidden; background: var(--sand); }
+.tr-gallery li.wide { grid-column: span 2; grid-row: span 2; }
+.tr-gallery button { display: block; width: 100%; height: 100%; padding: 0; border: 0; cursor: zoom-in; }
+.tr-gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.tr-gallery button:hover img, .tr-gallery button:focus-visible img { transform: scale(1.05); }
+@media (max-width: 860px) { .tr-gallery { grid-template-columns: 1fr 1fr; } }
+
+/* package page: collapsible itinerary days */
+.tr-block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.tr-toggle-days { background: none; border: 0; padding: 4px 0; color: var(--navy); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.days .day { display: block; padding: 0; }
+.day summary { list-style: none; display: grid; grid-template-columns: 90px 1fr 24px; gap: 10px var(--gap); align-items: center; padding: 20px 0; cursor: pointer; }
+.day summary::-webkit-details-marker { display: none; }
+.day summary::after { content: "+"; font: 400 26px/1 var(--display); color: var(--amber-deep); text-align: right; transition: transform .3s var(--ease); }
+.day details[open] summary::after { transform: rotate(45deg); }
+.day summary:hover h3 { color: var(--amber-deep); }
+.day summary:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.day .day-body { padding: 0 0 22px calc(90px + var(--gap)); }
+.day .day-body > p:first-child { margin-top: 0; }
+@media (max-width: 860px) {
+  .day summary { grid-template-columns: 1fr 24px; }
+  .day summary .day-n { grid-column: 1 / -1; }
+  .day summary h3 { grid-column: 1; }
+  .day .day-body { padding-left: 0; }
+}
+
+/* package page: trust points next to the price */
+.tr-trust { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.tr-trust li { position: relative; padding: 6px 0 6px 26px; font-size: 14.5px; line-height: 1.4; }
+.tr-trust li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 12px; height: 7px; border-left: 2px solid var(--amber-deep); border-bottom: 2px solid var(--amber-deep); transform: rotate(-45deg); }
+
+/* package page: booking bar on phones once the price card has scrolled away */
+.tr-bar { display: none; }
+@media (max-width: 860px) {
+  .tr-bar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; align-items: center; justify-content: space-between; gap: 12px; padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom)); background: var(--paper); border-top: 3px solid var(--amber); box-shadow: 0 -10px 30px -18px rgba(0, 0, 0, .45); transform: translateY(110%); transition: transform .35s var(--ease); }
+  .tr-bar.on { transform: none; }
+  .tr-bar[hidden] { display: none; }
+  .tr-bar-price { display: flex; flex-direction: column; line-height: 1.1; }
+  .tr-bar-price .mono { color: var(--muted); }
+  .tr-bar-price b { font: 900 24px/1 var(--display); font-stretch: 66%; color: var(--navy); }
+  .tr-bar .btn { margin: 0; padding: 12px 16px; }
+  body.has-bar .foot { padding-bottom: 90px; }
+  .tr-nav { top: 64px; }
+}
