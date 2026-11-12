@@ -6,7 +6,7 @@
     <div class="wrap">
       <nav class="tr-crumb mono" aria-label="Breadcrumb"><a href="{{ url('/') }}">{{ t('common.home') }}</a> / <a href="{{ url('/blog') }}">{{ t('blog.title') }}</a>@if ($post->category) / <a href="{{ url('/blog') }}?category={{ $post->category->slug }}">{{ $post->category->name }}</a>@endif</nav>
       <h1 class="display h-l">{{ $post->title }}</h1>
-      <p class="post-meta mono">{{ $post->published_at->locale(app()->getLocale())->translatedFormat('d F Y') }} · {{ t('blog.min_read', ['n' => $post->reading_time]) }}@if ($post->author) · {{ t('blog.by', ['name' => $post->author->name]) }}@endif</p>
+      <p class="post-meta mono">{{ ($post->published_at ?? now())->locale(app()->getLocale())->translatedFormat('d F Y') }} · {{ t('blog.min_read', ['n' => $post->reading_time]) }}@if ($post->author) · {{ t('blog.by', ['name' => $post->author->name]) }}@endif</p>
       @if ($post->excerpt)<p class="lede post-lede">{{ $post->excerpt }}</p>@endif
     </div>
   </header>

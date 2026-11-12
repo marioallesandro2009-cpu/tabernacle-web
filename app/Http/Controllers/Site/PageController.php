@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
+use App\Models\Page;
 use App\Models\Tour;
 use App\Support\Seo;
 use App\Support\SiteData;
@@ -37,19 +38,46 @@ class PageController extends Controller
         return $this->render('destinations', 'site.destinations', crumbs: true);
     }
 
+    /** A page an admin created (Syarat & Ketentuan, Kebijakan Privasi, ...). */
+    public function custom(string $slug): View
+    {
+        $id = Page::where('slug', $slug)->where('is_system', false)->value('key');
+        abort_unless($id, 404);
+
+        return $this->render($id, crumbs: true);
+    }
+
     /** @param array<int, array<string, mixed>> $schema */
     protected function render(string $key, string $view = 'site.page', array $schema = [], bool $crumbs = false): View
     {
         $page = SiteData::page($key);
         abort_unless($page && $page->is_active, 404);
 
-        if ($crumbs) {
-            $schema[] = Seo::breadcrumbs([[tr(SiteData::page('home')?->title) ?: 'Home', url('/')], [tr($page->title), url()->current()]]);
-        }
-        $seo = Seo::make(tr($page->meta_title) ?: tr($page->title), tr($page->meta_description), $page->og_image_id, url($key === 'home' ? '/' : '/'.$page->slug),
-            noindex: (bool) $page->noindex, schema: $schema, titleIsFinal: (bool) tr($page->meta_title));
+        return $this->show($page, $view, $schema, $crumbs);
+    }
 
-        return view($view, ['page' => $page, 'seo' => $seo, 'bodyClass' => 'page-'.$key]);
+    /**
+     * Renders a page model. Used by the public routes and by the admin preview
+     * (which may show an inactive page, never indexed).
+     *
+     * @param  array<int, array<string, mixed>>  $schema
+     */
+    public function show(Page $page, string $view = 'site.page', array $schema = [], bool $crumbs = false, bool $preview = false): View
+    {
+        $key = $page->key;
+        if (! $page->is_system) {
+            $crumbs = true;
+        }
+        if ($key === 'destinations') {
+            $view = 'site.destinations';
+        }
+        if ($crumbs) {
+            $schema[] = Seo::breadcrumbs([[tr(SiteData::page('home')?->title) ?: 'Home', url('/')], [tr($page->title), $page->publicUrl()]]);
+        }
+        $seo = Seo::make(tr($page->meta_title) ?: tr($page->title), tr($page->meta_description), $page->og_image_id, $page->publicUrl(),
+            noindex: $preview || (bool) $page->noindex, schema: $schema, titleIsFinal: (bool) tr($page->meta_title));
+
+        return view($view, ['page' => $page, 'seo' => $seo, 'bodyClass' => 'page-'.($page->is_system ? $key : 'custom'), 'preview' => $preview]);
     }
 
     public function destination(string $slug, Request $request): View

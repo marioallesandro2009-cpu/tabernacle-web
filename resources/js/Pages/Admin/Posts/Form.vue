@@ -6,7 +6,7 @@ import Field from '../../../Components/Field.vue';
 import Icon from '../../../Components/Icon.vue';
 import { rememberAll } from '../../../lib/media';
 
-const props = defineProps({ resource: Object, fields: Array, values: Object, id: [Number, String], media: Object, site_url: String, all_tags: Array, preview_url: String });
+const props = defineProps({ resource: Object, fields: Array, values: Object, id: [Number, String], media: Object, site_url: String, all_tags: Array, preview_url: String, draft_preview_url: String });
 rememberAll(props.media);
 
 const form = useForm(JSON.parse(JSON.stringify(props.values)));
@@ -62,6 +62,7 @@ function addTag() {
             <h1 class="text-2xl font-bold">{{ isEdit ? 'Ubah artikel' : 'Tulis artikel' }}</h1>
         </div>
         <div class="flex gap-2">
+            <a v-if="draft_preview_url" :href="draft_preview_url" target="_blank" class="btn" :title="form.isDirty ? 'Pratinjau menampilkan versi yang sudah disimpan. Simpan dulu untuk melihat perubahan terbaru.' : 'Lihat artikel seperti yang akan dilihat pengunjung'"><Icon name="eye" class="h-4 w-4" /> Pratinjau<span v-if="form.isDirty" class="text-amber-600">*</span></a>
             <a v-if="preview_url" :href="preview_url" target="_blank" class="btn"><Icon name="external" class="h-4 w-4" /> Lihat</a>
             <button v-if="isEdit" class="btn text-red-600" @click="remove">Hapus</button>
             <button class="btn btn-primary" :disabled="form.processing" @click="save">{{ form.processing ? 'Menyimpan…' : 'Simpan' }}</button>

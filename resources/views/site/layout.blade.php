@@ -32,6 +32,10 @@
 {!! setting('tracking_head') !!}
 </head>
 <body class="{{ $bodyClass }}">
+@if (! empty($preview))
+  {{-- admin-only notice, never shown to visitors --}}
+  <div role="status" style="position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:9999;background:#111;color:#fff;font:600 13px/1.3 system-ui,sans-serif;padding:10px 16px;border-radius:999px;box-shadow:0 6px 24px rgba(0,0,0,.3)">Pratinjau admin: halaman ini belum tentu terlihat oleh pengunjung</div>
+@endif
 {!! setting('tracking_body') !!}
 <a class="skip" href="#main">{{ t('nav.skip') }}</a>
 

@@ -32,5 +32,9 @@ Route::get('/feed.xml', [SeoController::class, 'feed']);
 
 require __DIR__.'/admin.php';
 
+// Pages created in the admin (e.g. /syarat-ketentuan). Registered last so it never shadows the routes above.
+Route::get('/{slug}', [PageController::class, 'custom'])
+    ->where('slug', '(?!admin$)[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('track')->name('page.custom');
+
 // Unknown URLs still pass through the web middleware, so the redirect manager can catch old links.
 Route::fallback(fn () => abort(404));

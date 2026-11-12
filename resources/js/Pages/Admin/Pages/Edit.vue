@@ -33,6 +33,7 @@ onMounted(() =>
 
 const add = () => newType.value && router.post(`/admin/pages/${props.page.id}/sections`, { type: newType.value });
 const toggle = (s) => router.post(`/admin/sections/${s.id}/toggle`, {}, { preserveScroll: true });
+const removePage = () => confirm('Hapus halaman ini beserta semua section-nya? Tidak bisa dibatalkan.') && router.delete(`/admin/pages/${props.page.id}`);
 const remove = (s) => confirm('Hapus section ini beserta isinya?') && router.delete(`/admin/sections/${s.id}`, { preserveScroll: true });
 </script>
 
@@ -41,9 +42,14 @@ const remove = (s) => confirm('Hapus section ini beserta isinya?') && router.del
     <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
             <Link href="/admin/pages" class="text-sm text-stone-500 hover:text-brand">← Halaman</Link>
-            <h1 class="text-2xl font-bold">Halaman: {{ page.key }}</h1>
+            <h1 class="text-2xl font-bold">Halaman: {{ page.title }}</h1>
+            <p v-if="!page.is_active" class="text-sm text-amber-700">Belum aktif: pengunjung belum bisa membuka halaman ini.</p>
         </div>
-        <a :href="page.url" target="_blank" class="btn"><Icon name="external" class="h-4 w-4" /> Lihat di situs</a>
+        <div class="flex flex-wrap gap-2">
+            <a v-if="page.preview_url" :href="page.preview_url" target="_blank" class="btn"><Icon name="eye" class="h-4 w-4" /> Pratinjau</a>
+            <a v-if="page.is_active" :href="page.url" target="_blank" class="btn"><Icon name="external" class="h-4 w-4" /> Lihat di situs</a>
+            <button v-if="!page.is_system" type="button" class="btn text-red-600" @click="removePage">Hapus halaman</button>
+        </div>
     </div>
 
     <div class="card mb-6">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Resources;
 
 use App\Http\Controllers\Admin\ResourceController;
+use App\Http\Controllers\Site\BlogController;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\Tag;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -113,6 +115,7 @@ class PostController extends ResourceController
             'site_url' => url('/blog'),
             'all_tags' => Tag::orderBy('name')->pluck('name'),
             'preview_url' => $model && $model->status === 'published' ? url('/blog/'.$model->slug) : null,
+            'draft_preview_url' => $model ? url('/admin/posts/'.$model->getKey().'/preview') : null,
         ]);
     }
 
@@ -145,6 +148,12 @@ class PostController extends ResourceController
         /** @var Post $model */
         $ids = collect($this->tagNames)->map(fn ($name) => Tag::firstOrCreate(['slug' => Str::slug($name)], ['name' => $name])->id)->all();
         $model->tags()->sync($ids);
+    }
+
+    /** Shows the saved article as visitors would see it, whatever its status. Never indexed. */
+    public function preview(string $id): View
+    {
+        return app(BlogController::class)->render(Post::findOrFail($id), preview: true);
     }
 
     /** Live SEO panel: scores the current (unsaved) form. */

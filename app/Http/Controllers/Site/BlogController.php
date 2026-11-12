@@ -45,6 +45,14 @@ class BlogController extends Controller
         $post = Post::query()->live()->with(['category', 'author', 'tags'])->where('slug', $slug)->firstOrFail();
         $request->attributes->set('track_ref_id', $post->id);
 
+        return $this->render($post);
+    }
+
+    /** Shared by the public route and the admin preview (drafts, never indexed). */
+    public function render(Post $post, bool $preview = false): View
+    {
+        $post->loadMissing(['category', 'author', 'tags']);
+
         $parsed = ContentTools::withToc($post->content);
         $related = Post::query()->live()->where('id', '!=', $post->id)
             ->when($post->category_id, fn ($q) => $q->orderByRaw('category_id = ? desc', [$post->category_id]))
@@ -67,8 +75,8 @@ class BlogController extends Controller
             $schema[] = ['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => collect($post->faq)->filter(fn ($f) => ! empty($f['q']) && ! empty($f['a']))
                 ->map(fn ($f) => ['@type' => 'Question', 'name' => $f['q'], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f['a']]])->values()->all()];
         }
-        $seo = Seo::make($post->meta_title ?: $post->title.' | '.setting('site_name'), $post->meta_description ?: $post->excerpt, $post->og_image_id ?: $post->cover_id, $url, 'article', schema: $schema);
+        $seo = Seo::make($post->meta_title ?: $post->title.' | '.setting('site_name'), $post->meta_description ?: $post->excerpt, $post->og_image_id ?: $post->cover_id, $url, 'article', noindex: $preview, schema: $schema);
 
-        return view('site.blog-post', ['post' => $post, 'html' => $parsed['html'], 'toc' => $parsed['toc'], 'related' => $related, 'tours' => $tours, 'seo' => $seo, 'bodyClass' => 'page-post']);
+        return view('site.blog-post', ['post' => $post, 'html' => $parsed['html'], 'toc' => $parsed['toc'], 'related' => $related, 'tours' => $tours, 'seo' => $seo, 'bodyClass' => 'page-post', 'preview' => $preview]);
     }
 }

@@ -63,6 +63,7 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::middleware('can:'.$permission)->prefix($slug)->group(function () use ($controller) {
                 if ($controller === Resources\PostController::class) {
                     Route::post('analyze', [$controller, 'analyze']);
+                    Route::get('{id}/preview', [$controller, 'preview'])->whereNumber('id');
                 }
                 if ($controller === Resources\UserController::class) {
                     Route::post('{id}/reset-link', [$controller, 'resetLink'])->whereNumber('id');
@@ -81,6 +82,9 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
         // pages and sections
         Route::middleware('can:content.manage')->group(function () {
             Route::get('pages', [PageController::class, 'index']);
+            Route::post('pages', [PageController::class, 'store']);
+            Route::delete('pages/{id}', [PageController::class, 'destroy'])->whereNumber('id');
+            Route::get('pages/{id}/preview', [PageController::class, 'preview'])->whereNumber('id');
             Route::get('pages/{id}/edit', [PageController::class, 'edit'])->whereNumber('id');
             Route::put('pages/{id}', [PageController::class, 'update'])->whereNumber('id');
             Route::post('pages/{id}/sections', [PageController::class, 'sectionStore'])->whereNumber('id');

@@ -148,7 +148,7 @@ class ContentSeeder extends Seeder
     {
         foreach ($this->json('pages.json') as $p) {
             $page = Page::firstOrCreate(['key' => $p['key']], [
-                'slug' => $p['slug'], 'title' => $p['title'], 'meta_title' => $p['meta_title'], 'meta_description' => $p['meta_description'], 'is_active' => true,
+                'slug' => $p['slug'], 'title' => $p['title'], 'meta_title' => $p['meta_title'], 'meta_description' => $p['meta_description'], 'is_active' => true, 'is_system' => true,
             ]);
             if ($page->sections()->exists()) {
                 continue;
