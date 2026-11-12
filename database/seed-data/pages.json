@@ -908,19 +908,19 @@
    },
    {
     "type": "ceo",
-    "name": "Pendiri / CEO (contoh, ganti)",
+    "name": "Pendiri / CEO",
     "data": {
-     "photo": "@img/placeholder-ceo.webp",
+     "photo": "@img/ceo-vazia-telelepta.jpg",
      "photo_alt": {
-      "en": "Portrait of Daniel Hartono, Founder and CEO",
-      "id": "Potret Daniel Hartono, Pendiri dan CEO"
+      "en": "Vazia Telelepta, Founder and CEO, at the ancient ruins of Hierapolis, Pamukkale",
+      "id": "Vazia Telelepta, Pendiri dan CEO, di reruntuhan kuno Hierapolis, Pamukkale"
      },
      "kicker": {
       "en": "Founder & CEO",
       "id": "Pendiri & CEO"
      },
-     "first": "Daniel",
-     "last": "Hartono",
+     "first": "Vazia",
+     "last": "Telelepta",
      "quote": {
       "en": "\"A journey is a promise. Someone trusted us with their dream, so we walk every kilometre of it with them.\"",
       "id": "\"Perjalanan adalah janji. Seseorang memercayakan impiannya kepada kami, maka kami menempuh setiap kilometernya bersama mereka.\""
@@ -930,8 +930,8 @@
       "id": "<p>Kami memulai dengan satu rombongan kecil, satu itinerary, dan keyakinan sederhana bahwa agen perjalanan harus selalu bisa dihubungi. Perjalanan-perjalanan awal itu mengajarkan bahwa detail yang tidak terlihat justru yang paling penting.</p><p>Kini kami melayani para eksekutif, peziarah, dan keluarga dengan kepedulian yang sama. Tugas kami adalah membuka jalan di depan, agar mereka yang menempuhnya bisa menikmati perjalanan.</p>"
      },
      "sign": {
-      "en": "Daniel Hartono, Founder & CEO",
-      "id": "Daniel Hartono, Pendiri & CEO"
+      "en": "Vazia Telelepta, Founder & CEO",
+      "id": "Vazia Telelepta, Pendiri & CEO"
      }
     }
    },
