@@ -1,0 +1,272 @@
+[
+ {
+  "name": {
+   "en": "Australia",
+   "id": "Australia"
+  },
+  "slug": "australia",
+  "region": "oceania",
+  "sort": 1
+ },
+ {
+  "name": {
+   "en": "Austria",
+   "id": "Austria"
+  },
+  "slug": "austria",
+  "region": "europe",
+  "sort": 2
+ },
+ {
+  "name": {
+   "en": "Belgium",
+   "id": "Belgia"
+  },
+  "slug": "belgium",
+  "region": "europe",
+  "sort": 3
+ },
+ {
+  "name": {
+   "en": "China",
+   "id": "Tiongkok"
+  },
+  "slug": "china",
+  "region": "asia",
+  "sort": 4
+ },
+ {
+  "name": {
+   "en": "Czech Republic",
+   "id": "Ceko"
+  },
+  "slug": "czech-republic",
+  "region": "europe",
+  "sort": 5
+ },
+ {
+  "name": {
+   "en": "France",
+   "id": "Prancis"
+  },
+  "slug": "france",
+  "region": "europe",
+  "sort": 6
+ },
+ {
+  "name": {
+   "en": "Germany",
+   "id": "Jerman"
+  },
+  "slug": "germany",
+  "region": "europe",
+  "sort": 7
+ },
+ {
+  "name": {
+   "en": "Hong Kong",
+   "id": "Hong Kong"
+  },
+  "slug": "hong-kong",
+  "region": "asia",
+  "sort": 8
+ },
+ {
+  "name": {
+   "en": "Hungary",
+   "id": "Hungaria"
+  },
+  "slug": "hungary",
+  "region": "europe",
+  "sort": 9
+ },
+ {
+  "name": {
+   "en": "Italy",
+   "id": "Italia"
+  },
+  "slug": "italy",
+  "region": "europe",
+  "sort": 10
+ },
+ {
+  "name": {
+   "en": "Japan",
+   "id": "Jepang"
+  },
+  "slug": "japan",
+  "region": "asia",
+  "sort": 11
+ },
+ {
+  "name": {
+   "en": "Kazakhstan",
+   "id": "Kazakhstan"
+  },
+  "slug": "kazakhstan",
+  "region": "central-asia",
+  "sort": 12
+ },
+ {
+  "name": {
+   "en": "Kyrgyzstan",
+   "id": "Kirgistan"
+  },
+  "slug": "kyrgyzstan",
+  "region": "central-asia",
+  "sort": 13
+ },
+ {
+  "name": {
+   "en": "Luxembourg",
+   "id": "Luksemburg"
+  },
+  "slug": "luxembourg",
+  "region": "europe",
+  "sort": 14
+ },
+ {
+  "name": {
+   "en": "Macau",
+   "id": "Makau"
+  },
+  "slug": "macau",
+  "region": "asia",
+  "sort": 15
+ },
+ {
+  "name": {
+   "en": "Malaysia",
+   "id": "Malaysia"
+  },
+  "slug": "malaysia",
+  "region": "asia",
+  "sort": 16
+ },
+ {
+  "name": {
+   "en": "Netherlands",
+   "id": "Belanda"
+  },
+  "slug": "netherlands",
+  "region": "europe",
+  "sort": 17
+ },
+ {
+  "name": {
+   "en": "New Zealand",
+   "id": "Selandia Baru"
+  },
+  "slug": "new-zealand",
+  "region": "oceania",
+  "sort": 18
+ },
+ {
+  "name": {
+   "en": "Philippines",
+   "id": "Filipina"
+  },
+  "slug": "philippines",
+  "region": "asia",
+  "sort": 19
+ },
+ {
+  "name": {
+   "en": "Singapore",
+   "id": "Singapura"
+  },
+  "slug": "singapore",
+  "region": "asia",
+  "sort": 20
+ },
+ {
+  "name": {
+   "en": "South Korea",
+   "id": "Korea Selatan"
+  },
+  "slug": "south-korea",
+  "region": "asia",
+  "sort": 21
+ },
+ {
+  "name": {
+   "en": "Spain",
+   "id": "Spanyol"
+  },
+  "slug": "spain",
+  "region": "europe",
+  "sort": 22
+ },
+ {
+  "name": {
+   "en": "Switzerland",
+   "id": "Swiss"
+  },
+  "slug": "switzerland",
+  "region": "europe",
+  "sort": 23
+ },
+ {
+  "name": {
+   "en": "Taiwan",
+   "id": "Taiwan"
+  },
+  "slug": "taiwan",
+  "region": "asia",
+  "sort": 24
+ },
+ {
+  "name": {
+   "en": "Thailand",
+   "id": "Thailand"
+  },
+  "slug": "thailand",
+  "region": "asia",
+  "sort": 25
+ },
+ {
+  "name": {
+   "en": "Türkiye",
+   "id": "Türkiye"
+  },
+  "slug": "turkiye",
+  "region": "europe",
+  "sort": 26
+ },
+ {
+  "name": {
+   "en": "UAE",
+   "id": "Uni Emirat Arab"
+  },
+  "slug": "uae",
+  "region": "middle-east",
+  "sort": 27
+ },
+ {
+  "name": {
+   "en": "USA",
+   "id": "Amerika Serikat"
+  },
+  "slug": "usa",
+  "region": "america",
+  "sort": 28
+ },
+ {
+  "name": {
+   "en": "Uzbekistan",
+   "id": "Uzbekistan"
+  },
+  "slug": "uzbekistan",
+  "region": "central-asia",
+  "sort": 29
+ },
+ {
+  "name": {
+   "en": "Vietnam",
+   "id": "Vietnam"
+  },
+  "slug": "vietnam",
+  "region": "asia",
+  "sort": 30
+ }
+]

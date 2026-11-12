@@ -1,0 +1,1597 @@
+[
+ {
+  "key": "home",
+  "slug": "/",
+  "title": {
+   "en": "Home",
+   "id": "Beranda"
+  },
+  "meta_title": {
+   "en": "Tabernacle Ways Tour & Travel | PT Jalan Elyon Eskol Indowisata",
+   "id": "Tabernacle Ways Tour & Travel | PT Jalan Elyon Eskol Indowisata"
+  },
+  "meta_description": {
+   "en": "Tabernacle Ways Tour and Travel: tour packages, airline tickets, pilgrimages, visas, MICE and corporate travel, under PT Jalan Elyon Eskol Indowisata. BSD Serpong, South Tangerang.",
+   "id": "Tabernacle Ways Tour and Travel: paket tur, tiket pesawat, ziarah, visa, MICE, dan perjalanan korporat, di bawah PT Jalan Elyon Eskol Indowisata. BSD Serpong, Tangerang Selatan."
+  },
+  "sections": [
+   {
+    "type": "hero",
+    "name": "Hero",
+    "data": {
+     "image": "@img/hero-warm.webp",
+     "image_alt": {
+      "en": "Passenger aircraft at golden hour",
+      "id": "Pesawat penumpang saat senja"
+     },
+     "line1": {
+      "en": "Your dream,",
+      "id": "Impian Anda,"
+     },
+     "line2": {
+      "en": "is our dream",
+      "id": "impian kami"
+     },
+     "text": {
+      "en": "Tours, tickets, pilgrimages, visas and MICE for companies, ministries and the people who travel with them.",
+      "id": "Tur, tiket, ziarah, visa, dan MICE untuk perusahaan, kementerian, dan setiap orang yang bepergian bersama mereka."
+     },
+     "btn1_label": {
+      "en": "Plan a journey",
+      "id": "Rencanakan perjalanan"
+     },
+     "btn1_url": "wa",
+     "btn2_label": {
+      "en": "Watch the film",
+      "id": "Tonton filmnya"
+     },
+     "btn2_url": "#film"
+    }
+   },
+   {
+    "type": "intro",
+    "name": "Perkenalan",
+    "data": {
+     "kicker": {
+      "en": "Welcome to our company",
+      "id": "Selamat datang di perusahaan kami"
+     },
+     "heading": {
+      "en": "A trusted travel agent with a professional team and <em>more than five years</em> on the road, for business and personal journeys alike.",
+      "id": "Agen perjalanan tepercaya dengan tim profesional dan <em>lebih dari lima tahun</em> pengalaman, untuk perjalanan bisnis maupun pribadi."
+     },
+     "body": {
+      "en": "<p><strong>Tabernacle Ways Tour and Travel</strong> operates under <strong>PT. Jalan Elyon Eskol Indowisata</strong>, serving tour packages, airline tickets, entrance tickets, pilgrims, travel documents, MICE and travel consulting, inbound or outbound, regular and corporate, with customizable fees.</p>",
+      "id": "<p><strong>Tabernacle Ways Tour and Travel</strong> beroperasi di bawah <strong>PT. Jalan Elyon Eskol Indowisata</strong>, melayani paket tur, tiket pesawat, tiket masuk, ziarah, dokumen perjalanan, MICE, dan konsultasi perjalanan, inbound maupun outbound, reguler maupun korporat, dengan biaya yang dapat disesuaikan.</p>"
+     },
+     "link_label": {
+      "en": "Meet the company",
+      "id": "Kenali perusahaan kami"
+     },
+     "link_url": "/about",
+     "image": "@img/ref-china-1.webp",
+     "image_alt": {
+      "en": "Delegation group selfie on a city street in China",
+      "id": "Swafoto delegasi di jalan kota di Tiongkok"
+     },
+     "facts": [
+      {
+       "label": {
+        "en": "Years of experience",
+        "id": "Tahun pengalaman"
+       },
+       "value": "5+",
+       "count": true
+      },
+      {
+       "label": {
+        "en": "Services",
+        "id": "Layanan"
+       },
+       "value": "10",
+       "count": false
+      },
+      {
+       "label": {
+        "en": "Business & customers",
+        "id": "Bisnis & pelanggan"
+       },
+       "value": "B2B/B2C",
+       "count": false
+      }
+     ]
+    }
+   },
+   {
+    "type": "film",
+    "name": "Film perusahaan",
+    "data": {
+     "video": "@video/reel.mp4",
+     "poster": "@img/reel-poster.webp",
+     "kicker": {
+      "en": "Company film, 60 sec",
+      "id": "Film perusahaan, 60 detik"
+     },
+     "title_a": {
+      "en": "One door",
+      "id": "Satu pintu"
+     },
+     "title_b": {
+      "en": "for every journey",
+      "id": "untuk setiap perjalanan"
+     },
+     "play_label": {
+      "en": "Watch with sound",
+      "id": "Tonton dengan suara"
+     },
+     "aria": {
+      "en": "Tabernacle Ways company film",
+      "id": "Film perusahaan Tabernacle Ways"
+     }
+    }
+   },
+   {
+    "type": "services",
+    "name": "Layanan",
+    "data": {
+     "kicker": {
+      "en": "Scope of services",
+      "id": "Lingkup layanan"
+     },
+     "title_a": {
+      "en": "Ten ways",
+      "id": "Sepuluh cara"
+     },
+     "title_b": {
+      "en": "to get there",
+      "id": "menuju tujuan"
+     },
+     "intro": {
+      "en": "One team for every part of the trip, from the first ticket to the last transfer home.",
+      "id": "Satu tim untuk setiap bagian perjalanan, dari tiket pertama hingga perjalanan pulang."
+     },
+     "image": "@img/kf-jeep.webp",
+     "image_alt": {
+      "en": "Travellers waving from an orange off-road jeep",
+      "id": "Wisatawan melambai dari jip off-road oranye"
+     },
+     "items": [
+      {
+       "title": {
+        "en": "Tour program packages",
+        "id": "Paket program tur"
+       },
+       "text": {
+        "en": "Domestic and worldwide.",
+        "id": "Domestik dan mancanegara."
+       }
+      },
+      {
+       "title": {
+        "en": "Airfare",
+        "id": "Tiket pesawat"
+       },
+       "text": {
+        "en": "International airfare and domestic ticket sales.",
+        "id": "Penjualan tiket pesawat internasional dan domestik."
+       }
+      },
+      {
+       "title": {
+        "en": "Pilgrims",
+        "id": "Ziarah"
+       },
+       "text": {
+        "en": "Pilgrimage and travel packages.",
+        "id": "Paket ziarah dan perjalanan."
+       }
+      },
+      {
+       "title": {
+        "en": "Hotels",
+        "id": "Hotel"
+       },
+       "text": {
+        "en": "Domestic and overseas reservations.",
+        "id": "Reservasi dalam dan luar negeri."
+       }
+      },
+      {
+       "title": {
+        "en": "Trains",
+        "id": "Kereta"
+       },
+       "text": {
+        "en": "International and domestic ticket sales.",
+        "id": "Penjualan tiket internasional dan domestik."
+       }
+      },
+      {
+       "title": {
+        "en": "Cruise lines",
+        "id": "Kapal pesiar"
+       },
+       "text": {
+        "en": "International and domestic.",
+        "id": "Internasional dan domestik."
+       }
+      },
+      {
+       "title": {
+        "en": "Car rentals & tour buses",
+        "id": "Sewa mobil & bus wisata"
+       },
+       "text": {
+        "en": "Booked for your group.",
+        "id": "Dipesan untuk rombongan Anda."
+       }
+      },
+      {
+       "title": {
+        "en": "Travel documents",
+        "id": "Dokumen perjalanan"
+       },
+       "text": {
+        "en": "Passport, visa, insurance and more.",
+        "id": "Paspor, visa, asuransi, dan lainnya."
+       }
+      },
+      {
+       "title": {
+        "en": "Rail passes",
+        "id": "Rail pass"
+       },
+       "text": {
+        "en": "European Rail Passes and Japan Rail Passes.",
+        "id": "European Rail Pass dan Japan Rail Pass."
+       }
+      },
+      {
+       "title": {
+        "en": "MICE",
+        "id": "MICE"
+       },
+       "text": {
+        "en": "Meeting, incentive, convention and exhibition packages.",
+        "id": "Paket pertemuan, insentif, konvensi, dan pameran."
+       }
+      }
+     ],
+     "note": {
+      "en": "Every booking runs through the <strong>Galileo Reservation System</strong>, linked to the world's airlines and hotels.",
+      "id": "Setiap pemesanan berjalan melalui <strong>Galileo Reservation System</strong>, yang terhubung ke maskapai dan hotel di seluruh dunia."
+     }
+    }
+   },
+   {
+    "type": "packages_featured",
+    "name": "Paket unggulan",
+    "data": {
+     "kicker": {
+      "en": "Packages",
+      "id": "Paket"
+     },
+     "title_a": {
+      "en": "Ready",
+      "id": "Siap"
+     },
+     "title_b": {
+      "en": "to depart",
+      "id": "berangkat"
+     },
+     "intro": {
+      "en": "A few of our :n packages. Prices are per person and can change with availability.",
+      "id": "Sebagian dari :n paket kami. Harga per orang dan dapat berubah sesuai ketersediaan."
+     },
+     "all_label": {
+      "en": "See all :n packages",
+      "id": "Lihat semua :n paket"
+     }
+    }
+   },
+   {
+    "type": "terms_block",
+    "name": "Private trip dan catatan",
+    "data": {
+     "private_kicker": {
+      "en": "By request",
+      "id": "Sesuai permintaan"
+     },
+     "private_title_a": {
+      "en": "Private trips",
+      "id": "Private trip"
+     },
+     "private_title_b": {
+      "en": "your way",
+      "id": "sesuai keinginan"
+     },
+     "private_text": {
+      "en": "For groups of 10 to 100 or more, with your dates and your destinations.",
+      "id": "Untuk grup 10 hingga 100 orang lebih, dengan tanggal dan destinasi pilihan Anda."
+     },
+     "private_btn": {
+      "en": "Ask for a quote",
+      "id": "Minta penawaran"
+     },
+     "terms_title": {
+      "en": "Good to know",
+      "id": "Perlu diketahui"
+     },
+     "terms": [
+      {
+       "text": {
+        "en": "Prices are per person and can change with availability and exchange rates. The final price is confirmed when you book.",
+        "id": "Harga per orang dan dapat berubah sesuai ketersediaan dan kurs. Harga final dikonfirmasi saat pemesanan."
+       }
+      },
+      {
+       "text": {
+        "en": "Tipping, visas and travel insurance are usually not included. Some group tours also have airport tax or mandatory shopping stops.",
+        "id": "Tipping, visa, dan asuransi perjalanan biasanya belum termasuk. Beberapa tur grup juga memiliki airport tax atau kunjungan wajib ke toko."
+       }
+      },
+      {
+       "text": {
+        "en": "Down payments are non-refundable, including if a visa is refused.",
+        "id": "DP tidak dapat dikembalikan, termasuk jika visa ditolak."
+       }
+      },
+      {
+       "text": {
+        "en": "FIT packages do not include flights, and need your flight ticket when you pay the deposit.",
+        "id": "Paket FIT belum termasuk tiket pesawat, dan tiket pesawat wajib dilampirkan saat membayar DP."
+       }
+      }
+     ]
+    }
+   },
+   {
+    "type": "vision",
+    "name": "Visi dan misi",
+    "data": {
+     "kicker": {
+      "en": "Vision & mission",
+      "id": "Visi & misi"
+     },
+     "title_a": {
+      "en": "Pave the way",
+      "id": "Membuka jalan"
+     },
+     "title_b": {
+      "en": "for nations",
+      "id": "bagi bangsa-bangsa"
+     },
+     "text": {
+      "en": "A trusted, visionary travel agency partner, cooperating across business, industry, sectors and ministries within and outside Indonesia. The leading domestic and international travel agency, and a pioneer of digital travel worldwide, to bless Indonesia and nations.",
+      "id": "Mitra agen perjalanan yang tepercaya dan visioner, bekerja sama dengan berbagai bisnis, industri, sektor, dan kementerian di dalam dan luar Indonesia. Agen perjalanan domestik dan internasional terdepan, sekaligus pelopor perjalanan digital di dunia, untuk memberkati Indonesia dan bangsa-bangsa."
+     },
+     "mission": [
+      {
+       "title": {
+        "en": "Excellence",
+        "id": "Keunggulan"
+       },
+       "text": {
+        "en": "Provide consistent excellent services.",
+        "id": "Memberikan layanan terbaik secara konsisten."
+       }
+      },
+      {
+       "title": {
+        "en": "Networks",
+        "id": "Jaringan"
+       },
+       "text": {
+        "en": "Master networks with business sectors, agencies and ministries in Indonesia and abroad.",
+        "id": "Menguasai jaringan dengan sektor bisnis, lembaga, dan kementerian di Indonesia dan luar negeri."
+       }
+      },
+      {
+       "title": {
+        "en": "Full service",
+        "id": "Layanan lengkap"
+       },
+       "text": {
+        "en": "Master every travel agency service needed, from tour packages and tickets to MICE and incentives.",
+        "id": "Menguasai setiap layanan agen perjalanan yang dibutuhkan, dari paket tur dan tiket hingga MICE dan insentif."
+       }
+      },
+      {
+       "title": {
+        "en": "Digital",
+        "id": "Digital"
+       },
+       "text": {
+        "en": "Master digitalization in the travel agent sector throughout the world.",
+        "id": "Menguasai digitalisasi di sektor agen perjalanan di seluruh dunia."
+       }
+      }
+     ],
+     "image": "@img/kf-meeting.webp",
+     "image_alt": {
+      "en": "A speaker leading a team session",
+      "id": "Pembicara memandu sesi tim"
+     }
+    }
+   },
+   {
+    "type": "journeys",
+    "name": "Perjalanan kami",
+    "data": {
+     "kicker": {
+      "en": "Journeys",
+      "id": "Perjalanan"
+     },
+     "title_a": {
+      "en": "Already",
+      "id": "Sudah"
+     },
+     "title_b": {
+      "en": "on the road",
+      "id": "di perjalanan"
+     },
+     "intro": {
+      "en": "A few of the groups we have looked after, from team building in the hills of Bandung to executive programs in China.",
+      "id": "Beberapa rombongan yang pernah kami layani, dari team building di perbukitan Bandung hingga program eksekutif di Tiongkok."
+     },
+     "chapters": [
+      {
+       "title": {
+        "en": "Korn Ferry Indonesia",
+        "id": "Korn Ferry Indonesia"
+       },
+       "meta": {
+        "en": "Team Building Bandung 2026",
+        "id": "Team Building Bandung 2026"
+       },
+       "tiles": [
+        {
+         "image": "@img/kf-banner.webp",
+         "size": "g-a",
+         "caption": {
+          "en": "The whole team",
+          "id": "Seluruh tim"
+         },
+         "alt": {
+          "en": "Korn Ferry Indonesia team with their banner in a pine forest",
+          "id": "Tim Korn Ferry Indonesia dengan spanduknya di hutan pinus"
+         },
+         "modal_title": {
+          "en": "Korn Ferry Indonesia team building",
+          "id": "Team building Korn Ferry Indonesia"
+         },
+         "modal_meta": {
+          "en": "Bandung 2026",
+          "id": "Bandung 2026"
+         },
+         "focus": ""
+        },
+        {
+         "image": "@img/kf-flyingfox.webp",
+         "size": "g-b",
+         "caption": {
+          "en": "Flying fox",
+          "id": "Flying fox"
+         },
+         "alt": {
+          "en": "A participant on the flying fox above the trees",
+          "id": "Peserta meluncur dengan flying fox di atas pepohonan"
+         },
+         "modal_title": {
+          "en": "Flying fox",
+          "id": "Flying fox"
+         },
+         "modal_meta": {
+          "en": "Bandung 2026",
+          "id": "Bandung 2026"
+         },
+         "focus": "40% 40%"
+        },
+        {
+         "image": "@img/kf-bridge.webp",
+         "size": "g-c",
+         "caption": {
+          "en": "Rope bridge",
+          "id": "Jembatan tali"
+         },
+         "alt": {
+          "en": "Participants in helmets on a rope bridge",
+          "id": "Peserta berhelm di jembatan tali"
+         },
+         "modal_title": {
+          "en": "Rope bridge",
+          "id": "Jembatan tali"
+         },
+         "modal_meta": {
+          "en": "Bandung 2026",
+          "id": "Bandung 2026"
+         },
+         "focus": ""
+        },
+        {
+         "image": "@img/kf-matcha.webp",
+         "size": "g-b",
+         "caption": {
+          "en": "Matcha workshop",
+          "id": "Workshop matcha"
+         },
+         "alt": {
+          "en": "Participants at a long table during a matcha workshop",
+          "id": "Peserta di meja panjang saat workshop matcha"
+         },
+         "modal_title": {
+          "en": "Matcha workshop",
+          "id": "Workshop matcha"
+         },
+         "modal_meta": {
+          "en": "Bandung 2026",
+          "id": "Bandung 2026"
+         },
+         "focus": ""
+        },
+        {
+         "image": "@img/kf-dinner.webp",
+         "size": "g-b",
+         "caption": {
+          "en": "Dinner, day 1",
+          "id": "Makan malam, hari 1"
+         },
+         "alt": {
+          "en": "The group celebrating at dinner",
+          "id": "Rombongan merayakan saat makan malam"
+         },
+         "modal_title": {
+          "en": "Dinner, day 1",
+          "id": "Makan malam, hari 1"
+         },
+         "modal_meta": {
+          "en": "Bandung 2026",
+          "id": "Bandung 2026"
+         },
+         "focus": ""
+        },
+        {
+         "image": "@img/kf-meeting.webp",
+         "size": "g-b",
+         "caption": {
+          "en": "Team session",
+          "id": "Sesi tim"
+         },
+         "alt": {
+          "en": "A speaker with a microphone during the team session",
+          "id": "Pembicara dengan mikrofon saat sesi tim"
+         },
+         "modal_title": {
+          "en": "Team session",
+          "id": "Sesi tim"
+         },
+         "modal_meta": {
+          "en": "Bandung 2026",
+          "id": "Bandung 2026"
+         },
+         "focus": "30% 50%"
+        }
+       ]
+      },
+      {
+       "title": {
+        "en": "InJourney Danantara Indonesia",
+        "id": "InJourney Danantara Indonesia"
+       },
+       "meta": {
+        "en": "Immersion Program China 2026",
+        "id": "Immersion Program Tiongkok 2026"
+       },
+       "tiles": [
+        {
+         "image": "@img/ref-tencent.webp",
+         "size": "g-d",
+         "caption": {
+          "en": "InJourney at Tencent",
+          "id": "InJourney di Tencent"
+         },
+         "alt": {
+          "en": "InJourney delegation in front of the Tencent welcome screen",
+          "id": "Delegasi InJourney di depan layar sambutan Tencent"
+         },
+         "modal_title": {
+          "en": "Warmly welcoming InJourney to Tencent",
+          "id": "Sambutan hangat untuk InJourney di Tencent"
+         },
+         "modal_meta": {
+          "en": "Immersion Program China 2026",
+          "id": "Immersion Program Tiongkok 2026"
+         },
+         "focus": ""
+        },
+        {
+         "image": "@img/ref-huawei.webp",
+         "size": "g-e",
+         "caption": {
+          "en": "Huawei, 28 Jan 2026",
+          "id": "Huawei, 28 Jan 2026"
+         },
+         "alt": {
+          "en": "Group photo on the staircase at Huawei",
+          "id": "Foto bersama di tangga Huawei"
+         },
+         "modal_title": {
+          "en": "Huawei welcomes the InJourney Future Leaders Program",
+          "id": "Huawei menyambut InJourney Future Leaders Program"
+         },
+         "modal_meta": {
+          "en": "28 January 2026",
+          "id": "28 Januari 2026"
+         },
+         "focus": ""
+        },
+        {
+         "image": "@img/ref-china-5.webp",
+         "size": "g-e",
+         "caption": {
+          "en": "Between visits",
+          "id": "Di sela kunjungan"
+         },
+         "alt": {
+          "en": "Delegation group selfie in a city square",
+          "id": "Swafoto delegasi di alun-alun kota"
+         },
+         "modal_title": {
+          "en": "Delegation selfie, between visits",
+          "id": "Swafoto delegasi di sela kunjungan"
+         },
+         "modal_meta": {
+          "en": "Immersion Program China 2026",
+          "id": "Immersion Program Tiongkok 2026"
+         },
+         "focus": ""
+        }
+       ]
+      }
+     ]
+    }
+   },
+   {
+    "type": "visa",
+    "name": "Referensi visa",
+    "data": {
+     "kicker": {
+      "en": "Reference visa",
+      "id": "Referensi visa"
+     },
+     "title_a": {
+      "en": "Now",
+      "id": "Sedang"
+     },
+     "title_b": {
+      "en": "processing",
+      "id": "diproses"
+     },
+     "note": {
+      "en": "Visa references across Europe, Asia and North America.",
+      "id": "Referensi visa di Eropa, Asia, dan Amerika Utara."
+     },
+     "note_small": {
+      "en": "And more on request",
+      "id": "Dan lainnya sesuai permintaan"
+     },
+     "head_a": {
+      "en": "Destination",
+      "id": "Tujuan"
+     },
+     "head_b": {
+      "en": "Document",
+      "id": "Dokumen"
+     },
+     "doc_label": {
+      "en": "Visa",
+      "id": "Visa"
+     },
+     "rows": [
+      {
+       "flag": "@img/flag-eu.webp",
+       "country": {
+        "en": "European Union",
+        "id": "Uni Eropa"
+       }
+      },
+      {
+       "flag": "@img/flag-uk.webp",
+       "country": {
+        "en": "United Kingdom",
+        "id": "Inggris Raya"
+       }
+      },
+      {
+       "flag": "@img/flag-jp.webp",
+       "country": {
+        "en": "Japan",
+        "id": "Jepang"
+       }
+      },
+      {
+       "flag": "@img/flag-us.webp",
+       "country": {
+        "en": "United States",
+        "id": "Amerika Serikat"
+       }
+      },
+      {
+       "flag": "@img/flag-cn.webp",
+       "country": {
+        "en": "China",
+        "id": "Tiongkok"
+       }
+      },
+      {
+       "flag": "@img/flag-kr.webp",
+       "country": {
+        "en": "South Korea",
+        "id": "Korea Selatan"
+       }
+      }
+     ]
+    }
+   },
+   {
+    "type": "clients",
+    "name": "Klien",
+    "data": {
+     "kicker": {
+      "en": "Clients",
+      "id": "Klien"
+     },
+     "title_a": {
+      "en": "Companies that",
+      "id": "Perusahaan yang"
+     },
+     "title_b": {
+      "en": "travel with us",
+      "id": "bepergian bersama kami"
+     },
+     "logos": [
+      {
+       "image": "@img/logo-injourney.webp",
+       "name": "InJourney, Indonesia Aviation and Tourism"
+      },
+      {
+       "image": "@img/logo-kornferry.webp",
+       "name": "Korn Ferry"
+      },
+      {
+       "image": "@img/logo-angkasapura.webp",
+       "name": "Angkasa Pura Airports"
+      },
+      {
+       "image": "@img/logo-sarinah.webp",
+       "name": "Sarinah, an InJourney Retail"
+      },
+      {
+       "image": "@img/logo-twc.webp",
+       "name": "PT Taman Wisata Candi Borobudur, Prambanan and Ratu Boko"
+      }
+     ]
+    }
+   },
+   {
+    "type": "legal",
+    "name": "Legalitas",
+    "data": {
+     "title_a": {
+      "en": "Company",
+      "id": "Legalitas"
+     },
+     "title_b": {
+      "en": "legality",
+      "id": "perusahaan"
+     },
+     "rows": [
+      {
+       "label": "Akte Notaris oleh",
+       "value": "Ediarti, S.H., M.Kn",
+       "scramble": false
+      },
+      {
+       "label": "Nomor Induk Berusaha",
+       "value": "2707240023331",
+       "scramble": true
+      },
+      {
+       "label": "Pengesahan Menteri Kehakiman & HAM",
+       "value": "AHU-0056118.AH.01.01 Tahun 2024",
+       "scramble": true
+      },
+      {
+       "label": "Sertifikat Standar",
+       "value": "27072400233310001",
+       "scramble": true
+      },
+      {
+       "label": "Nomor Pokok Wajib Pajak (NPWP)",
+       "value": "21.433.789.1-453.000",
+       "scramble": true
+      }
+     ]
+    }
+   },
+   {
+    "type": "contact",
+    "name": "Kontak",
+    "data": {
+     "kicker": {
+      "en": "Contact us",
+      "id": "Hubungi kami"
+     },
+     "title_a": {
+      "en": "We look forward",
+      "id": "Kami menantikan"
+     },
+     "title_b": {
+      "en": "to working with you",
+      "id": "kerja sama dengan Anda"
+     },
+     "btn_wa": {
+      "en": "Chat on WhatsApp",
+      "id": "Chat lewat WhatsApp"
+     },
+     "btn_email": {
+      "en": "Send an email",
+      "id": "Kirim email"
+     },
+     "image": "@img/kf-forest.webp",
+     "image_alt": {
+      "en": "A large group smiling together among pine trees and tents",
+      "id": "Rombongan besar tersenyum bersama di antara pohon pinus dan tenda"
+     },
+     "show_form": false
+    }
+   }
+  ]
+ },
+ {
+  "key": "about",
+  "slug": "about",
+  "title": {
+   "en": "About us",
+   "id": "Tentang kami"
+  },
+  "meta_title": {
+   "en": "About us | Tabernacle Ways Tour & Travel",
+   "id": "Tentang kami | Tabernacle Ways Tour & Travel"
+  },
+  "meta_description": {
+   "en": "The company behind Tabernacle Ways Tour and Travel: leadership, milestones and portfolio.",
+   "id": "Perusahaan di balik Tabernacle Ways Tour and Travel: kepemimpinan, perjalanan, dan portofolio."
+  },
+  "sections": [
+   {
+    "type": "about_hero",
+    "name": "Pembuka",
+    "data": {
+     "line1": {
+      "en": "Built",
+      "id": "Dibangun"
+     },
+     "line2": {
+      "en": "to pave the way",
+      "id": "untuk membuka jalan"
+     },
+     "intro": {
+      "en": "Tabernacle Ways Tour and Travel is the travel brand of PT Jalan Elyon Eskol Indowisata, a partner to companies, ministries and travellers within and outside Indonesia.",
+      "id": "Tabernacle Ways Tour and Travel adalah merek perjalanan PT Jalan Elyon Eskol Indowisata, mitra bagi perusahaan, kementerian, dan wisatawan di dalam dan luar Indonesia."
+     },
+     "pics": [
+      {
+       "image": "@img/kf-wave.webp",
+       "alt": {
+        "en": "Korn Ferry Indonesia team waving behind their banner",
+        "id": "Tim Korn Ferry Indonesia melambai di belakang spanduknya"
+       },
+       "caption": {
+        "en": "Korn Ferry Indonesia, Bandung 2026",
+        "id": "Korn Ferry Indonesia, Bandung 2026"
+       }
+      },
+      {
+       "image": "@img/ref-china-1.webp",
+       "alt": {
+        "en": "Delegation group selfie on a city street in China",
+        "id": "Swafoto delegasi di jalan kota di Tiongkok"
+       },
+       "caption": {
+        "en": "Immersion Program China 2026",
+        "id": "Immersion Program Tiongkok 2026"
+       }
+      }
+     ]
+    }
+   },
+   {
+    "type": "ceo",
+    "name": "Pendiri / CEO (contoh, ganti)",
+    "data": {
+     "photo": "@img/placeholder-ceo.webp",
+     "photo_alt": {
+      "en": "Portrait of Daniel Hartono, Founder and CEO",
+      "id": "Potret Daniel Hartono, Pendiri dan CEO"
+     },
+     "kicker": {
+      "en": "Founder & CEO",
+      "id": "Pendiri & CEO"
+     },
+     "first": "Daniel",
+     "last": "Hartono",
+     "quote": {
+      "en": "\"A journey is a promise. Someone trusted us with their dream, so we walk every kilometre of it with them.\"",
+      "id": "\"Perjalanan adalah janji. Seseorang memercayakan impiannya kepada kami, maka kami menempuh setiap kilometernya bersama mereka.\""
+     },
+     "letter": {
+      "en": "<p>We started with a small group, one itinerary and a stubborn belief that travel agents should answer the phone. Those early journeys taught us that the details no one sees are the ones that matter most.</p><p>Today we move executives, pilgrims and families with the same care. Our work is to clear the road ahead, so the people on it can look up.</p>",
+      "id": "<p>Kami memulai dengan satu rombongan kecil, satu itinerary, dan keyakinan sederhana bahwa agen perjalanan harus selalu bisa dihubungi. Perjalanan-perjalanan awal itu mengajarkan bahwa detail yang tidak terlihat justru yang paling penting.</p><p>Kini kami melayani para eksekutif, peziarah, dan keluarga dengan kepedulian yang sama. Tugas kami adalah membuka jalan di depan, agar mereka yang menempuhnya bisa menikmati perjalanan.</p>"
+     },
+     "sign": {
+      "en": "Daniel Hartono, Founder & CEO",
+      "id": "Daniel Hartono, Pendiri & CEO"
+     }
+    }
+   },
+   {
+    "type": "numbers",
+    "name": "Angka (contoh, ganti)",
+    "data": {
+     "items": [
+      {
+       "value": 12500,
+       "suffix": "+",
+       "comma": true,
+       "label": {
+        "en": "Travellers carried",
+        "id": "Wisatawan dilayani"
+       }
+      },
+      {
+       "value": 480,
+       "suffix": "+",
+       "comma": false,
+       "label": {
+        "en": "Journeys run",
+        "id": "Perjalanan terlaksana"
+       }
+      },
+      {
+       "value": 36,
+       "suffix": "",
+       "comma": false,
+       "label": {
+        "en": "Countries reached",
+        "id": "Negara dijangkau"
+       }
+      }
+     ]
+    }
+   },
+   {
+    "type": "milestones",
+    "name": "Tonggak",
+    "data": {
+     "kicker": {
+      "en": "The road so far",
+      "id": "Perjalanan kami"
+     },
+     "title_a": {
+      "en": "Milestones,",
+      "id": "Tonggak,"
+     },
+     "title_b": {
+      "en": "one mile at a time",
+      "id": "selangkah demi selangkah"
+     },
+     "items": [
+      {
+       "year": "2019",
+       "title": {
+        "en": "First departures",
+        "id": "Keberangkatan pertama"
+       },
+       "text": {
+        "en": "A small team, a handful of group tours and a growing list of returning travellers.",
+        "id": "Tim kecil, beberapa tur rombongan, dan semakin banyak wisatawan yang kembali."
+       }
+      },
+      {
+       "year": "2022",
+       "title": {
+        "en": "Corporate desk",
+        "id": "Layanan korporat"
+       },
+       "text": {
+        "en": "Dedicated service for company travel, MICE and incentive programs.",
+        "id": "Layanan khusus untuk perjalanan perusahaan, MICE, dan program insentif."
+       }
+      },
+      {
+       "year": "2024",
+       "title": {
+        "en": "PT Jalan Elyon Eskol Indowisata",
+        "id": "PT Jalan Elyon Eskol Indowisata"
+       },
+       "text": {
+        "en": "Formal incorporation, approved under AHU-0056118.AH.01.01 Tahun 2024.",
+        "id": "Pendirian resmi, disahkan dengan AHU-0056118.AH.01.01 Tahun 2024."
+       }
+      },
+      {
+       "year": "2026",
+       "title": {
+        "en": "Immersion Program China",
+        "id": "Immersion Program Tiongkok"
+       },
+       "text": {
+        "en": "Carrying the InJourney Danantara Indonesia delegation to Tencent, Huawei and beyond.",
+        "id": "Mengantar delegasi InJourney Danantara Indonesia ke Tencent, Huawei, dan lainnya."
+       }
+      },
+      {
+       "year": "2026",
+       "title": {
+        "en": "Korn Ferry Indonesia",
+        "id": "Korn Ferry Indonesia"
+       },
+       "text": {
+        "en": "Team building in Bandung, from flying fox to matcha workshop.",
+        "id": "Team building di Bandung, dari flying fox hingga workshop matcha."
+       }
+      }
+     ]
+    }
+   },
+   {
+    "type": "portfolio",
+    "name": "Portofolio (sebagian contoh)",
+    "data": {
+     "kicker": {
+      "en": "Portfolio",
+      "id": "Portofolio"
+     },
+     "title_a": {
+      "en": "Places",
+      "id": "Tempat-tempat"
+     },
+     "title_b": {
+      "en": "we've taken people",
+      "id": "yang telah kami jelajahi"
+     },
+     "filter_aria": {
+      "en": "Filter journeys",
+      "id": "Saring perjalanan"
+     },
+     "filters": [
+      {
+       "key": "all",
+       "label": {
+        "en": "All",
+        "id": "Semua"
+       }
+      },
+      {
+       "key": "corporate",
+       "label": {
+        "en": "Corporate",
+        "id": "Korporat"
+       }
+      },
+      {
+       "key": "mice",
+       "label": {
+        "en": "MICE",
+        "id": "MICE"
+       }
+      },
+      {
+       "key": "leisure",
+       "label": {
+        "en": "Leisure",
+        "id": "Wisata"
+       }
+      }
+     ],
+     "items": [
+      {
+       "cats": "corporate",
+       "image": "@img/kf-banner.webp",
+       "place": {
+        "en": "Korn Ferry, Bandung",
+        "id": "Korn Ferry, Bandung"
+       },
+       "meta": {
+        "en": "Corporate / 2026",
+        "id": "Korporat / 2026"
+       },
+       "modal_title": {
+        "en": "Korn Ferry Indonesia team building",
+        "id": "Team building Korn Ferry Indonesia"
+       },
+       "modal_meta": {
+        "en": "Corporate / 2026",
+        "id": "Korporat / 2026"
+       },
+       "alt": {
+        "en": "Korn Ferry Indonesia team with their banner",
+        "id": "Tim Korn Ferry Indonesia dengan spanduknya"
+       }
+      },
+      {
+       "cats": "corporate",
+       "image": "@img/ref-tencent.webp",
+       "place": {
+        "en": "InJourney, China",
+        "id": "InJourney, Tiongkok"
+       },
+       "meta": {
+        "en": "Corporate / 2026",
+        "id": "Korporat / 2026"
+       },
+       "modal_title": {
+        "en": "InJourney at Tencent",
+        "id": "InJourney di Tencent"
+       },
+       "modal_meta": {
+        "en": "Corporate / 2026",
+        "id": "Korporat / 2026"
+       },
+       "alt": {
+        "en": "InJourney delegation at Tencent",
+        "id": "Delegasi InJourney di Tencent"
+       }
+      },
+      {
+       "cats": "corporate mice",
+       "image": "@img/kf-matcha.webp",
+       "place": {
+        "en": "Workshops & sessions",
+        "id": "Workshop & sesi"
+       },
+       "meta": {
+        "en": "MICE / 2026",
+        "id": "MICE / 2026"
+       },
+       "modal_title": {
+        "en": "Matcha workshop",
+        "id": "Workshop matcha"
+       },
+       "modal_meta": {
+        "en": "Corporate, MICE / 2026",
+        "id": "Korporat, MICE / 2026"
+       },
+       "alt": {
+        "en": "Participants at a matcha workshop",
+        "id": "Peserta workshop matcha"
+       }
+      },
+      {
+       "cats": "leisure",
+       "image": "@img/placeholder-trip-kyoto.webp",
+       "place": {
+        "en": "Kyoto",
+        "id": "Kyoto"
+       },
+       "meta": {
+        "en": "Leisure / 2025",
+        "id": "Wisata / 2025"
+       },
+       "modal_title": {
+        "en": "Kyoto in autumn",
+        "id": "Kyoto di musim gugur"
+       },
+       "modal_meta": {
+        "en": "Leisure / 2025",
+        "id": "Wisata / 2025"
+       },
+       "alt": {
+        "en": "Temple by a pond in Kyoto",
+        "id": "Kuil di tepi kolam di Kyoto"
+       }
+      },
+      {
+       "cats": "leisure",
+       "image": "@img/placeholder-trip-seoul.webp",
+       "place": {
+        "en": "Seoul",
+        "id": "Seoul"
+       },
+       "meta": {
+        "en": "Leisure / 2025",
+        "id": "Wisata / 2025"
+       },
+       "modal_title": {
+        "en": "Seoul palaces",
+        "id": "Istana-istana Seoul"
+       },
+       "modal_meta": {
+        "en": "Leisure / 2025",
+        "id": "Wisata / 2025"
+       },
+       "alt": {
+        "en": "Traditional roofline in Seoul",
+        "id": "Atap tradisional di Seoul"
+       }
+      },
+      {
+       "cats": "mice",
+       "image": "@img/placeholder-trip-shanghai.webp",
+       "place": {
+        "en": "Shanghai",
+        "id": "Shanghai"
+       },
+       "meta": {
+        "en": "MICE / 2024",
+        "id": "MICE / 2024"
+       },
+       "modal_title": {
+        "en": "Shanghai sales conference",
+        "id": "Konferensi penjualan Shanghai"
+       },
+       "modal_meta": {
+        "en": "MICE / 2024",
+        "id": "MICE / 2024"
+       },
+       "alt": {
+        "en": "Shanghai skyline",
+        "id": "Cakrawala Shanghai"
+       }
+      },
+      {
+       "cats": "leisure",
+       "image": "@img/placeholder-trip-venice.webp",
+       "place": {
+        "en": "Venice",
+        "id": "Venesia"
+       },
+       "meta": {
+        "en": "Leisure / 2023",
+        "id": "Wisata / 2023"
+       },
+       "modal_title": {
+        "en": "Venice and the Veneto",
+        "id": "Venesia dan Veneto"
+       },
+       "modal_meta": {
+        "en": "Leisure / 2023",
+        "id": "Wisata / 2023"
+       },
+       "alt": {
+        "en": "Venetian canal",
+        "id": "Kanal Venesia"
+       }
+      },
+      {
+       "cats": "mice",
+       "image": "@img/placeholder-trip-amsterdam.webp",
+       "place": {
+        "en": "Amsterdam",
+        "id": "Amsterdam"
+       },
+       "meta": {
+        "en": "MICE / 2022",
+        "id": "MICE / 2022"
+       },
+       "modal_title": {
+        "en": "Amsterdam dealer incentive",
+        "id": "Insentif dealer Amsterdam"
+       },
+       "modal_meta": {
+        "en": "MICE / 2022",
+        "id": "MICE / 2022"
+       },
+       "alt": {
+        "en": "Canal houses in Amsterdam",
+        "id": "Rumah kanal di Amsterdam"
+       }
+      },
+      {
+       "cats": "corporate",
+       "image": "@img/placeholder-trip-paris.webp",
+       "place": {
+        "en": "Paris",
+        "id": "Paris"
+       },
+       "meta": {
+        "en": "Corporate / 2022",
+        "id": "Korporat / 2022"
+       },
+       "modal_title": {
+        "en": "Paris board retreat",
+        "id": "Retret direksi di Paris"
+       },
+       "modal_meta": {
+        "en": "Corporate / 2022",
+        "id": "Korporat / 2022"
+       },
+       "alt": {
+        "en": "Bridge in Paris at dusk",
+        "id": "Jembatan di Paris saat senja"
+       }
+      }
+     ]
+    }
+   },
+   {
+    "type": "cta",
+    "name": "Ajakan",
+    "data": {
+     "title_a": {
+      "en": "Where should",
+      "id": "Ke mana"
+     },
+     "title_b": {
+      "en": "the road go next?",
+      "id": "jalan ini berikutnya?"
+     },
+     "btn_label": {
+      "en": "Plan a journey",
+      "id": "Rencanakan perjalanan"
+     },
+     "btn_url": "/contact"
+    }
+   }
+  ]
+ },
+ {
+  "key": "packages",
+  "slug": "packages",
+  "title": {
+   "en": "Packages",
+   "id": "Paket"
+  },
+  "meta_title": {
+   "en": "Packages | Tabernacle Ways Tour & Travel",
+   "id": "Paket | Tabernacle Ways Tour & Travel"
+  },
+  "meta_description": {
+   "en": "Group tours and FIT packages from Tabernacle Ways Tour and Travel: Japan, Korea, China, Europe, Türkiye, Australia, USA and more.",
+   "id": "Paket tur grup dan FIT dari Tabernacle Ways Tour and Travel: Jepang, Korea, Tiongkok, Eropa, Türkiye, Australia, Amerika, dan lainnya."
+  },
+  "sections": [
+   {
+    "type": "page_header",
+    "name": "Judul halaman",
+    "data": {
+     "kicker": {
+      "en": "Packages",
+      "id": "Paket"
+     },
+     "title_a": {
+      "en": "All",
+      "id": "Semua"
+     },
+     "title_b": {
+      "en": "packages",
+      "id": "paket"
+     },
+     "intro": {
+      "en": "<b>:n</b> ready-made journeys across :r regions. Group tours include flights and a tour leader. FIT packages are for small groups who book their own flights.",
+      "id": "<b>:n</b> paket perjalanan siap berangkat di :r wilayah. Tur grup sudah termasuk tiket pesawat dan tour leader. Paket FIT untuk grup kecil yang memesan tiket pesawat sendiri."
+     }
+    }
+   },
+   {
+    "type": "tour_list",
+    "name": "Daftar paket",
+    "data": {}
+   },
+   {
+    "type": "terms_block",
+    "name": "Private trip dan catatan",
+    "data": {
+     "private_kicker": {
+      "en": "By request",
+      "id": "Sesuai permintaan"
+     },
+     "private_title_a": {
+      "en": "Private trips",
+      "id": "Private trip"
+     },
+     "private_title_b": {
+      "en": "your way",
+      "id": "sesuai keinginan"
+     },
+     "private_text": {
+      "en": "For groups of 10 to 100 or more, with your dates and your destinations.",
+      "id": "Untuk grup 10 hingga 100 orang lebih, dengan tanggal dan destinasi pilihan Anda."
+     },
+     "private_btn": {
+      "en": "Ask for a quote",
+      "id": "Minta penawaran"
+     },
+     "terms_title": {
+      "en": "Good to know",
+      "id": "Perlu diketahui"
+     },
+     "terms": [
+      {
+       "text": {
+        "en": "Prices are per person and can change with availability and exchange rates. The final price is confirmed when you book.",
+        "id": "Harga per orang dan dapat berubah sesuai ketersediaan dan kurs. Harga final dikonfirmasi saat pemesanan."
+       }
+      },
+      {
+       "text": {
+        "en": "Tipping, visas and travel insurance are usually not included. Some group tours also have airport tax or mandatory shopping stops.",
+        "id": "Tipping, visa, dan asuransi perjalanan biasanya belum termasuk. Beberapa tur grup juga memiliki airport tax atau kunjungan wajib ke toko."
+       }
+      },
+      {
+       "text": {
+        "en": "Down payments are non-refundable, including if a visa is refused.",
+        "id": "DP tidak dapat dikembalikan, termasuk jika visa ditolak."
+       }
+      },
+      {
+       "text": {
+        "en": "FIT packages do not include flights, and need your flight ticket when you pay the deposit.",
+        "id": "Paket FIT belum termasuk tiket pesawat, dan tiket pesawat wajib dilampirkan saat membayar DP."
+       }
+      }
+     ]
+    }
+   },
+   {
+    "type": "tour_credits",
+    "name": "Kredit foto",
+    "data": {}
+   }
+  ]
+ },
+ {
+  "key": "contact",
+  "slug": "contact",
+  "title": {
+   "en": "Contact us",
+   "id": "Hubungi kami"
+  },
+  "meta_title": {
+   "en": "Contact us | Tabernacle Ways Tour & Travel",
+   "id": "Hubungi kami | Tabernacle Ways Tour & Travel"
+  },
+  "meta_description": {
+   "en": "Talk to Tabernacle Ways Tour and Travel about your next journey: tour packages, tickets, visas, MICE and private trips.",
+   "id": "Bicarakan perjalanan Anda berikutnya dengan Tabernacle Ways Tour and Travel: paket tur, tiket, visa, MICE, dan private trip."
+  },
+  "sections": [
+   {
+    "type": "contact",
+    "name": "Kontak",
+    "data": {
+     "kicker": {
+      "en": "Contact us",
+      "id": "Hubungi kami"
+     },
+     "title_a": {
+      "en": "We look forward",
+      "id": "Kami menantikan"
+     },
+     "title_b": {
+      "en": "to working with you",
+      "id": "kerja sama dengan Anda"
+     },
+     "btn_wa": {
+      "en": "Chat on WhatsApp",
+      "id": "Chat lewat WhatsApp"
+     },
+     "btn_email": {
+      "en": "Send an email",
+      "id": "Kirim email"
+     },
+     "image": "@img/kf-forest.webp",
+     "image_alt": {
+      "en": "A large group smiling together among pine trees and tents",
+      "id": "Rombongan besar tersenyum bersama di antara pohon pinus dan tenda"
+     },
+     "show_form": true
+    }
+   },
+   {
+    "type": "lead_form",
+    "name": "Formulir permintaan",
+    "data": {
+     "kicker": {
+      "en": "Inquiry",
+      "id": "Permintaan"
+     },
+     "title_a": {
+      "en": "Tell us",
+      "id": "Ceritakan"
+     },
+     "title_b": {
+      "en": "where you are headed",
+      "id": "tujuan Anda"
+     },
+     "intro": {
+      "en": "Leave your details and we will reply on WhatsApp.",
+      "id": "Tinggalkan data Anda dan kami akan membalas lewat WhatsApp."
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "blog",
+  "slug": "blog",
+  "title": {
+   "en": "Blog",
+   "id": "Blog"
+  },
+  "meta_title": {
+   "en": "Blog | Tabernacle Ways Tour & Travel",
+   "id": "Blog | Tabernacle Ways Tour & Travel"
+  },
+  "meta_description": {
+   "en": "Travel guides, tips and stories from Tabernacle Ways Tour and Travel.",
+   "id": "Panduan, tips, dan cerita perjalanan dari Tabernacle Ways Tour and Travel."
+  },
+  "sections": [
+   {
+    "type": "page_header",
+    "name": "Judul halaman",
+    "data": {
+     "kicker": {
+      "en": "Blog",
+      "id": "Blog"
+     },
+     "title_a": {
+      "en": "Travel",
+      "id": "Catatan"
+     },
+     "title_b": {
+      "en": "notes",
+      "id": "perjalanan"
+     },
+     "intro": {
+      "en": "Guides, tips and stories from the road.",
+      "id": "Panduan, tips, dan cerita dari perjalanan."
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "destinations",
+  "slug": "destinations",
+  "title": {
+   "en": "Destinations",
+   "id": "Destinasi"
+  },
+  "meta_title": {
+   "en": "Destinations | Tabernacle Ways Tour & Travel",
+   "id": "Destinasi | Tabernacle Ways Tour & Travel"
+  },
+  "meta_description": {
+   "en": "Browse Tabernacle Ways packages by country.",
+   "id": "Jelajahi paket Tabernacle Ways berdasarkan negara."
+  },
+  "sections": [
+   {
+    "type": "page_header",
+    "name": "Judul halaman",
+    "data": {
+     "kicker": {
+      "en": "Destinations",
+      "id": "Destinasi"
+     },
+     "title_a": {
+      "en": "Where",
+      "id": "Ke mana"
+     },
+     "title_b": {
+      "en": "to?",
+      "id": "tujuan Anda?"
+     },
+     "intro": {
+      "en": "Pick a country to see every package that goes there.",
+      "id": "Pilih negara untuk melihat semua paket ke sana."
+     }
+    }
+   }
+  ]
+ }
+]

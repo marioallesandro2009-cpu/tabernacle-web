@@ -1,0 +1,92 @@
+[
+ {
+  "location": "header",
+  "label": {
+   "en": "About us",
+   "id": "Tentang kami"
+  },
+  "url": "/about",
+  "sort": 1
+ },
+ {
+  "location": "header",
+  "label": {
+   "en": "Services",
+   "id": "Layanan"
+  },
+  "url": "/#services",
+  "sort": 2
+ },
+ {
+  "location": "header",
+  "label": {
+   "en": "Packages",
+   "id": "Paket"
+  },
+  "url": "/packages",
+  "sort": 3
+ },
+ {
+  "location": "header",
+  "label": {
+   "en": "Journeys",
+   "id": "Perjalanan"
+  },
+  "url": "/#journeys",
+  "sort": 4
+ },
+ {
+  "location": "header",
+  "label": {
+   "en": "Contact",
+   "id": "Kontak"
+  },
+  "url": "/contact",
+  "sort": 5
+ },
+ {
+  "location": "footer",
+  "label": {
+   "en": "About us",
+   "id": "Tentang kami"
+  },
+  "url": "/about",
+  "sort": 1
+ },
+ {
+  "location": "footer",
+  "label": {
+   "en": "Services",
+   "id": "Layanan"
+  },
+  "url": "/#services",
+  "sort": 2
+ },
+ {
+  "location": "footer",
+  "label": {
+   "en": "Packages",
+   "id": "Paket"
+  },
+  "url": "/packages",
+  "sort": 3
+ },
+ {
+  "location": "footer",
+  "label": {
+   "en": "Journeys",
+   "id": "Perjalanan"
+  },
+  "url": "/#journeys",
+  "sort": 4
+ },
+ {
+  "location": "footer",
+  "label": {
+   "en": "Contact",
+   "id": "Kontak"
+  },
+  "url": "/contact",
+  "sort": 5
+ }
+]

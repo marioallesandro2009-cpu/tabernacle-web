@@ -1,0 +1,686 @@
+[
+ {
+  "key": "nav.skip",
+  "group": "umum",
+  "text_en": "Skip to content",
+  "text_id": "Lewati ke konten"
+ },
+ {
+  "key": "nav.menu",
+  "group": "umum",
+  "text_en": "Menu",
+  "text_id": "Menu"
+ },
+ {
+  "key": "nav.main",
+  "group": "umum",
+  "text_en": "Main",
+  "text_id": "Utama"
+ },
+ {
+  "key": "nav.cta",
+  "group": "umum",
+  "text_en": "Plan a journey",
+  "text_id": "Rencanakan perjalanan"
+ },
+ {
+  "key": "brand.aria",
+  "group": "umum",
+  "text_en": "Tabernacle Ways Tour and Travel, home",
+  "text_id": "Tabernacle Ways Tour and Travel, beranda"
+ },
+ {
+  "key": "lang.choose",
+  "group": "umum",
+  "text_en": "Choose language",
+  "text_id": "Pilih bahasa"
+ },
+ {
+  "key": "common.close",
+  "group": "umum",
+  "text_en": "Close",
+  "text_id": "Tutup"
+ },
+ {
+  "key": "common.photo",
+  "group": "umum",
+  "text_en": "Photo",
+  "text_id": "Foto"
+ },
+ {
+  "key": "common.film",
+  "group": "umum",
+  "text_en": "Company film",
+  "text_id": "Film perusahaan"
+ },
+ {
+  "key": "common.home",
+  "group": "umum",
+  "text_en": "Home",
+  "text_id": "Beranda"
+ },
+ {
+  "key": "wa.plan",
+  "group": "whatsapp",
+  "text_en": "Hello Tabernacle Ways, I'd like to plan a journey.",
+  "text_id": "Halo Tabernacle Ways, saya ingin merencanakan perjalanan."
+ },
+ {
+  "key": "wa.pkg",
+  "group": "whatsapp",
+  "text_en": "Hello Tabernacle Ways, I'm interested in the :name package.",
+  "text_id": "Halo Tabernacle Ways, saya tertarik dengan paket :name."
+ },
+ {
+  "key": "tour.type.group",
+  "group": "paket",
+  "text_en": "Group tour",
+  "text_id": "Tur grup"
+ },
+ {
+  "key": "tour.type.fit",
+  "group": "paket",
+  "text_en": "FIT",
+  "text_id": "FIT"
+ },
+ {
+  "key": "tour.type.private",
+  "group": "paket",
+  "text_en": "Private trip",
+  "text_id": "Private trip"
+ },
+ {
+  "key": "tour.type.worship",
+  "group": "paket",
+  "text_en": "Worship tour",
+  "text_id": "Tur ziarah"
+ },
+ {
+  "key": "tour.flights_included",
+  "group": "paket",
+  "text_en": "Flights included",
+  "text_id": "Termasuk tiket pesawat"
+ },
+ {
+  "key": "tour.flights_excluded",
+  "group": "paket",
+  "text_en": "Flights not included",
+  "text_id": "Belum termasuk tiket pesawat"
+ },
+ {
+  "key": "tour.min_pax",
+  "group": "paket",
+  "text_en": "Min. :n people",
+  "text_id": "Min. :n orang"
+ },
+ {
+  "key": "tour.from",
+  "group": "paket",
+  "text_en": "From",
+  "text_id": "Mulai"
+ },
+ {
+  "key": "tour.on_request",
+  "group": "paket",
+  "text_en": "On request",
+  "text_id": "Hubungi kami"
+ },
+ {
+  "key": "region.asia",
+  "group": "paket",
+  "text_en": "Asia",
+  "text_id": "Asia"
+ },
+ {
+  "key": "region.europe",
+  "group": "paket",
+  "text_en": "Europe",
+  "text_id": "Eropa"
+ },
+ {
+  "key": "region.america",
+  "group": "paket",
+  "text_en": "Americas",
+  "text_id": "Amerika"
+ },
+ {
+  "key": "region.oceania",
+  "group": "paket",
+  "text_en": "Australia & New Zealand",
+  "text_id": "Australia & Selandia Baru"
+ },
+ {
+  "key": "region.middle-east",
+  "group": "paket",
+  "text_en": "Middle East",
+  "text_id": "Timur Tengah"
+ },
+ {
+  "key": "region.central-asia",
+  "group": "paket",
+  "text_en": "Central Asia",
+  "text_id": "Asia Tengah"
+ },
+ {
+  "key": "pk.search",
+  "group": "paket",
+  "text_en": "Search",
+  "text_id": "Cari"
+ },
+ {
+  "key": "pk.search_ph",
+  "group": "paket",
+  "text_en": "Country, city or place",
+  "text_id": "Negara, kota, atau tempat"
+ },
+ {
+  "key": "pk.search_aria",
+  "group": "paket",
+  "text_en": "Search packages",
+  "text_id": "Cari paket"
+ },
+ {
+  "key": "pk.country",
+  "group": "paket",
+  "text_en": "Country",
+  "text_id": "Negara"
+ },
+ {
+  "key": "pk.all_countries",
+  "group": "paket",
+  "text_en": "All countries",
+  "text_id": "Semua negara"
+ },
+ {
+  "key": "pk.all",
+  "group": "paket",
+  "text_en": "All",
+  "text_id": "Semua"
+ },
+ {
+  "key": "pk.all_regions",
+  "group": "paket",
+  "text_en": "All regions",
+  "text_id": "Semua wilayah"
+ },
+ {
+  "key": "pk.type_aria",
+  "group": "paket",
+  "text_en": "Package type",
+  "text_id": "Jenis paket"
+ },
+ {
+  "key": "pk.region_aria",
+  "group": "paket",
+  "text_en": "Region",
+  "text_id": "Wilayah"
+ },
+ {
+  "key": "pk.count",
+  "group": "paket",
+  "text_en": ":n packages",
+  "text_id": ":n paket"
+ },
+ {
+  "key": "pk.empty",
+  "group": "paket",
+  "text_en": "No packages match this filter yet. Ask us on WhatsApp and we will build one.",
+  "text_id": "Belum ada paket untuk pilihan ini. Tanyakan lewat WhatsApp, kami siapkan untuk Anda."
+ },
+ {
+  "key": "pk.credits",
+  "group": "paket",
+  "text_en": "Photo credits",
+  "text_id": "Kredit foto"
+ },
+ {
+  "key": "pk.credits_note",
+  "group": "paket",
+  "text_en": "Wikimedia Commons, used under the licenses shown.",
+  "text_id": "Wikimedia Commons, digunakan sesuai lisensi yang tertera."
+ },
+ {
+  "key": "pk.see_all",
+  "group": "paket",
+  "text_en": "See all :n packages",
+  "text_id": "Lihat semua :n paket"
+ },
+ {
+  "key": "tour.highlights",
+  "group": "paket",
+  "text_en": "Highlights",
+  "text_id": "Sorotan"
+ },
+ {
+  "key": "tour.itinerary",
+  "group": "paket",
+  "text_en": "Itinerary",
+  "text_id": "Itinerary"
+ },
+ {
+  "key": "tour.itinerary_note",
+  "group": "paket",
+  "text_en": "Itinerary details are written in Bahasa Indonesia.",
+  "text_id": ""
+ },
+ {
+  "key": "tour.day",
+  "group": "paket",
+  "text_en": "Day :n",
+  "text_id": "Hari :n"
+ },
+ {
+  "key": "meal.MP",
+  "group": "paket",
+  "text_en": "Breakfast",
+  "text_id": "Sarapan"
+ },
+ {
+  "key": "meal.MS",
+  "group": "paket",
+  "text_en": "Lunch",
+  "text_id": "Makan siang"
+ },
+ {
+  "key": "meal.MM",
+  "group": "paket",
+  "text_en": "Dinner",
+  "text_id": "Makan malam"
+ },
+ {
+  "key": "tour.hotel",
+  "group": "paket",
+  "text_en": "Hotel",
+  "text_id": "Hotel"
+ },
+ {
+  "key": "tour.included",
+  "group": "paket",
+  "text_en": "Included",
+  "text_id": "Termasuk"
+ },
+ {
+  "key": "tour.excluded",
+  "group": "paket",
+  "text_en": "Not included",
+  "text_id": "Tidak termasuk"
+ },
+ {
+  "key": "tour.shopping_note",
+  "group": "paket",
+  "text_en": "This is a subsidised group tour with shopping stops. A penalty applies to guests who skip them. Ask us for the details.",
+  "text_id": "Tur ini merupakan tur bersubsidi dengan kunjungan wajib ke toko. Peserta yang tidak ikut dikenakan penalti. Tanyakan detailnya kepada kami."
+ },
+ {
+  "key": "tour.from_pp",
+  "group": "paket",
+  "text_en": "From, per person",
+  "text_id": "Mulai, per orang"
+ },
+ {
+  "key": "tour.duration",
+  "group": "paket",
+  "text_en": "Duration",
+  "text_id": "Durasi"
+ },
+ {
+  "key": "tour.departure",
+  "group": "paket",
+  "text_en": "Departure",
+  "text_id": "Keberangkatan"
+ },
+ {
+  "key": "tour.minimum",
+  "group": "paket",
+  "text_en": "Minimum",
+  "text_id": "Minimum"
+ },
+ {
+  "key": "tour.people",
+  "group": "paket",
+  "text_en": ":n people",
+  "text_id": ":n orang"
+ },
+ {
+  "key": "tour.type",
+  "group": "paket",
+  "text_en": "Type",
+  "text_id": "Jenis"
+ },
+ {
+  "key": "tour.book_wa",
+  "group": "paket",
+  "text_en": "Book on WhatsApp",
+  "text_id": "Pesan lewat WhatsApp"
+ },
+ {
+  "key": "tour.download_pdf",
+  "group": "paket",
+  "text_en": "Download itinerary (PDF)",
+  "text_id": "Unduh itinerary (PDF)"
+ },
+ {
+  "key": "tour.price_note",
+  "group": "paket",
+  "text_en": "Prices follow the itinerary PDF and can change. We confirm the final price when you book.",
+  "text_id": "Harga mengikuti PDF itinerary dan dapat berubah. Harga final kami konfirmasi saat pemesanan."
+ },
+ {
+  "key": "tour.related",
+  "group": "paket",
+  "text_en": "You may also like",
+  "text_id": "Paket lainnya"
+ },
+ {
+  "key": "tour.all_packages",
+  "group": "paket",
+  "text_en": "All packages",
+  "text_id": "Semua paket"
+ },
+ {
+  "key": "tour.crumb",
+  "group": "paket",
+  "text_en": "Packages",
+  "text_id": "Paket"
+ },
+ {
+  "key": "tour.schedule",
+  "group": "paket",
+  "text_en": "Departure schedule",
+  "text_id": "Jadwal keberangkatan"
+ },
+ {
+  "key": "tour.adult",
+  "group": "paket",
+  "text_en": "Adult",
+  "text_id": "Dewasa"
+ },
+ {
+  "key": "tour.child",
+  "group": "paket",
+  "text_en": "Child",
+  "text_id": "Anak"
+ },
+ {
+  "key": "tour.single_supp",
+  "group": "paket",
+  "text_en": "Single supplement",
+  "text_id": "Single supplement"
+ },
+ {
+  "key": "tour.dp",
+  "group": "paket",
+  "text_en": "Minimum down payment",
+  "text_id": "DP minimal"
+ },
+ {
+  "key": "tour.seats_left",
+  "group": "paket",
+  "text_en": ":n seats left",
+  "text_id": "Sisa :n kursi"
+ },
+ {
+  "key": "seat.available",
+  "group": "paket",
+  "text_en": "Available",
+  "text_id": "Tersedia"
+ },
+ {
+  "key": "seat.limited",
+  "group": "paket",
+  "text_en": "Almost full",
+  "text_id": "Hampir penuh"
+ },
+ {
+  "key": "seat.full",
+  "group": "paket",
+  "text_en": "Full",
+  "text_id": "Penuh"
+ },
+ {
+  "key": "tour.terms",
+  "group": "paket",
+  "text_en": "Notes & terms",
+  "text_id": "Catatan & syarat"
+ },
+ {
+  "key": "tour.inquiry",
+  "group": "paket",
+  "text_en": "Ask about this trip",
+  "text_id": "Tanyakan paket ini"
+ },
+ {
+  "key": "lead.name",
+  "group": "form",
+  "text_en": "Full name",
+  "text_id": "Nama lengkap"
+ },
+ {
+  "key": "lead.phone",
+  "group": "form",
+  "text_en": "WhatsApp number",
+  "text_id": "Nomor WhatsApp"
+ },
+ {
+  "key": "lead.email",
+  "group": "form",
+  "text_en": "Email (optional)",
+  "text_id": "Email (opsional)"
+ },
+ {
+  "key": "lead.tour",
+  "group": "form",
+  "text_en": "Package of interest",
+  "text_id": "Paket yang diminati"
+ },
+ {
+  "key": "lead.tour_any",
+  "group": "form",
+  "text_en": "Not sure yet",
+  "text_id": "Belum tahu"
+ },
+ {
+  "key": "lead.pax",
+  "group": "form",
+  "text_en": "Participants",
+  "text_id": "Jumlah peserta"
+ },
+ {
+  "key": "lead.date",
+  "group": "form",
+  "text_en": "Planned date",
+  "text_id": "Rencana tanggal"
+ },
+ {
+  "key": "lead.message",
+  "group": "form",
+  "text_en": "Message",
+  "text_id": "Pesan"
+ },
+ {
+  "key": "lead.send",
+  "group": "form",
+  "text_en": "Send inquiry",
+  "text_id": "Kirim permintaan"
+ },
+ {
+  "key": "lead.sending",
+  "group": "form",
+  "text_en": "Sending…",
+  "text_id": "Mengirim…"
+ },
+ {
+  "key": "lead.success",
+  "group": "form",
+  "text_en": "Thank you! We have received your inquiry and will contact you on WhatsApp soon.",
+  "text_id": "Terima kasih! Permintaan Anda sudah kami terima dan kami akan segera menghubungi Anda lewat WhatsApp."
+ },
+ {
+  "key": "lead.error",
+  "group": "form",
+  "text_en": "Something went wrong. Please check the form and try again.",
+  "text_id": "Terjadi kesalahan. Periksa formulir lalu coba lagi."
+ },
+ {
+  "key": "lead.phone_invalid",
+  "group": "form",
+  "text_en": "Please enter a valid Indonesian phone number.",
+  "text_id": "Masukkan nomor telepon Indonesia yang valid."
+ },
+ {
+  "key": "lead.throttle",
+  "group": "form",
+  "text_en": "Too many requests. Please try again in a minute.",
+  "text_id": "Terlalu banyak permintaan. Coba lagi sebentar lagi."
+ },
+ {
+  "key": "blog.title",
+  "group": "blog",
+  "text_en": "Blog",
+  "text_id": "Blog"
+ },
+ {
+  "key": "blog.read",
+  "group": "blog",
+  "text_en": "Read article",
+  "text_id": "Baca artikel"
+ },
+ {
+  "key": "blog.min_read",
+  "group": "blog",
+  "text_en": ":n min read",
+  "text_id": ":n menit baca"
+ },
+ {
+  "key": "blog.toc",
+  "group": "blog",
+  "text_en": "In this article",
+  "text_id": "Dalam artikel ini"
+ },
+ {
+  "key": "blog.related",
+  "group": "blog",
+  "text_en": "Related articles",
+  "text_id": "Artikel terkait"
+ },
+ {
+  "key": "blog.by",
+  "group": "blog",
+  "text_en": "By :name",
+  "text_id": "Oleh :name"
+ },
+ {
+  "key": "blog.all",
+  "group": "blog",
+  "text_en": "All",
+  "text_id": "Semua"
+ },
+ {
+  "key": "blog.related_packages",
+  "group": "blog",
+  "text_en": "Packages you may like",
+  "text_id": "Paket yang mungkin Anda suka"
+ },
+ {
+  "key": "blog.empty",
+  "group": "blog",
+  "text_en": "No articles yet.",
+  "text_id": "Belum ada artikel."
+ },
+ {
+  "key": "blog.faq",
+  "group": "blog",
+  "text_en": "Frequently asked questions",
+  "text_id": "Pertanyaan yang sering diajukan"
+ },
+ {
+  "key": "blog.tags",
+  "group": "blog",
+  "text_en": "Tags",
+  "text_id": "Tag"
+ },
+ {
+  "key": "dest.title",
+  "group": "destinasi",
+  "text_en": "Destinations",
+  "text_id": "Destinasi"
+ },
+ {
+  "key": "dest.tours",
+  "group": "destinasi",
+  "text_en": "Packages in :name",
+  "text_id": "Paket di :name"
+ },
+ {
+  "key": "dest.empty",
+  "group": "destinasi",
+  "text_en": "No packages for this destination yet.",
+  "text_id": "Belum ada paket untuk destinasi ini."
+ },
+ {
+  "key": "faq.title",
+  "group": "faq",
+  "text_en": "Questions",
+  "text_id": "Pertanyaan"
+ },
+ {
+  "key": "e404.title",
+  "group": "umum",
+  "text_en": "Page not found",
+  "text_id": "Halaman tidak ditemukan"
+ },
+ {
+  "key": "e404.text",
+  "group": "umum",
+  "text_en": "The page you are looking for has moved or does not exist.",
+  "text_id": "Halaman yang Anda cari sudah dipindahkan atau tidak ada."
+ },
+ {
+  "key": "e404.back",
+  "group": "umum",
+  "text_en": "Back to home",
+  "text_id": "Kembali ke beranda"
+ },
+ {
+  "key": "contact.office",
+  "group": "kontak",
+  "text_en": "Office",
+  "text_id": "Kantor"
+ },
+ {
+  "key": "contact.phone",
+  "group": "kontak",
+  "text_en": "Phone & WhatsApp",
+  "text_id": "Telepon & WhatsApp"
+ },
+ {
+  "key": "contact.email",
+  "group": "kontak",
+  "text_en": "Email",
+  "text_id": "Email"
+ },
+ {
+  "key": "contact.instagram",
+  "group": "kontak",
+  "text_en": "Instagram",
+  "text_id": "Instagram"
+ },
+ {
+  "key": "contact.hours",
+  "group": "kontak",
+  "text_en": "Opening hours",
+  "text_id": "Jam operasional"
+ },
+ {
+  "key": "contact.maps",
+  "group": "kontak",
+  "text_en": "Open in Google Maps",
+  "text_id": "Buka di Google Maps"
+ },
+ {
+  "key": "contact.social",
+  "group": "kontak",
+  "text_en": "Follow us",
+  "text_id": "Ikuti kami"
+ }
+]

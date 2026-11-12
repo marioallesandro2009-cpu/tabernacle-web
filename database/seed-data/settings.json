@@ -1,0 +1,46 @@
+{
+ "site_name": "Tabernacle Ways",
+ "site_suffix": "TOUR & TRAVEL",
+ "company_name": "PT Jalan Elyon Eskol Indowisata",
+ "tagline": {
+  "en": "Your dream, is our dream",
+  "id": "Impian Anda, impian kami"
+ },
+ "default_description": {
+  "en": "Tabernacle Ways Tour and Travel: tour packages, airline tickets, pilgrimages, visas, MICE and corporate travel, under PT Jalan Elyon Eskol Indowisata. BSD Serpong, South Tangerang.",
+  "id": "Tabernacle Ways Tour and Travel: paket tur, tiket pesawat, ziarah, visa, MICE, dan perjalanan korporat, di bawah PT Jalan Elyon Eskol Indowisata. BSD Serpong, Tangerang Selatan."
+ },
+ "title_suffix": " | Tabernacle Ways Tour & Travel",
+ "logo_light": null,
+ "logo_dark": null,
+ "favicon": "@img/favicon.svg",
+ "og_default_image": "@img/hero-warm.webp",
+ "color_navy": "#0b1a5c",
+ "color_navy_deep": "#071140",
+ "color_amber": "#e8973f",
+ "color_amber_deep": "#b8661c",
+ "color_cream": "#f6efe4",
+ "color_teal": "#17a08c",
+ "wa_number": "6281297971563",
+ "wa_display": "+62 812 9797 1563",
+ "contact_email": "tabernaclewaystours@gmail.com",
+ "address": {
+  "en": "Graha Global BSD Serpong, Ruko Golden Boulevard, Jl. Pahlawan Seribu No.22, Blok E No 21-22, Lt. 1, Lengkong Karya, Serpong Utara, Tangerang Selatan, Banten 15310",
+  "id": "Graha Global BSD Serpong, Ruko Golden Boulevard, Jl. Pahlawan Seribu No.22, Blok E No 21-22, Lt. 1, Lengkong Karya, Serpong Utara, Tangerang Selatan, Banten 15310"
+ },
+ "address_footer": "Graha Global BSD Serpong\nRuko Golden Boulevard, Blok E No 21-22, Lt. 1\nTangerang Selatan, Banten 15310",
+ "hours": {
+  "en": "",
+  "id": ""
+ },
+ "maps_url": "",
+ "social_instagram": "https://instagram.com/tabernaclewaystour",
+ "social_tiktok": "",
+ "social_facebook": "",
+ "social_youtube": "",
+ "tracking_head": "",
+ "tracking_body": "",
+ "robots_txt": "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /admin/*\n",
+ "lead_notify_enabled": true,
+ "analytics_enabled": true
+}

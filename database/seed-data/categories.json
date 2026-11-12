@@ -1,0 +1,42 @@
+[
+ {
+  "name": {
+   "en": "Group tour (consortium)",
+   "id": "Tur grup (konsorsium)"
+  },
+  "slug": "konsorsium",
+  "kind": "group",
+  "flights_included": true,
+  "sort": 1
+ },
+ {
+  "name": {
+   "en": "FIT (small groups)",
+   "id": "FIT (grup kecil)"
+  },
+  "slug": "fit",
+  "kind": "fit",
+  "flights_included": false,
+  "sort": 2
+ },
+ {
+  "name": {
+   "en": "Private trip by request",
+   "id": "Private trip sesuai permintaan"
+  },
+  "slug": "private",
+  "kind": "private",
+  "flights_included": false,
+  "sort": 3
+ },
+ {
+  "name": {
+   "en": "Pilgrimage / worship tour",
+   "id": "Ziarah / tur rohani"
+  },
+  "slug": "ziarah",
+  "kind": "worship",
+  "flights_included": false,
+  "sort": 4
+ }
+]
