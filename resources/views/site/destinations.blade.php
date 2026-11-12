@@ -7,7 +7,8 @@
 
 <section class="sec pk-list dest-sec">
   <div class="wrap">
-    @foreach (\App\Support\SiteData::destinations()->groupBy('region') as $region => $items)
+    {{-- destinations whose packages have all expired are left out --}}
+    @foreach (\App\Support\SiteData::destinations()->filter(fn ($d) => $d->tours_count > 0)->groupBy('region') as $region => $items)
       <div class="chapter"><b>{{ t('region.'.$region) }}</b><span class="mono">{{ $items->count() }}</span></div>
       <div class="dest-grid">
         @foreach ($items as $d)

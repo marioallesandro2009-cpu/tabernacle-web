@@ -4,7 +4,7 @@
     $kind = $tour->category?->kind ?? ($tour->flights_included ? 'group' : 'fit');
     $price = $tour->fromPrice();
     $fullName = trim(($tour->duration ? $tour->duration.' ' : '').$tour->name);
-    $departures = collect($tour->departures ?: [])->filter(fn ($d) => ! empty($d['date']))->sortBy('date')->values();
+    $departures = collect($tour->upcomingDepartures());
     $spans = \App\Support\SiteData::SPANS;
     $gallery = collect($tour->gallery ?: [])->filter()->values();
     $trust = collect(setting('trust_points', []) ?: [])->map(fn ($r) => tr($r['text'] ?? null))->filter()->take(5)->values();

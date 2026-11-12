@@ -133,7 +133,8 @@ abstract class ResourceController extends Controller
         foreach ($this->filters() as $f) {
             $v = $request->query($f['key']);
             if ($v !== null && $v !== '') {
-                $q->where($f['key'], $v);
+                // a filter may bring its own query (e.g. "expired"), otherwise it matches a column
+                isset($f['apply']) ? $f['apply']($q, $v) : $q->where($f['key'], $v);
             }
         }
         $this->scope($q, $request);
@@ -157,7 +158,7 @@ abstract class ResourceController extends Controller
         return Inertia::render('Admin/Resource/Index', [
             'resource' => $this->meta(),
             'columns' => $columns->map(fn ($c) => Arr::except($c, ['get']))->values(),
-            'filters' => $this->filters(),
+            'filters' => collect($this->filters())->map(fn ($f) => Arr::except($f, ['apply']))->values(),
             'rows' => $rows,
             'query' => $request->only(['q', ...array_column($this->filters(), 'key')]),
         ]);

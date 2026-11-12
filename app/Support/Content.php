@@ -24,6 +24,8 @@ class Content
 
     public static function remember(string $key, \Closure $callback, int $seconds = 86400): mixed
     {
-        return Cache::remember('c'.self::version().':'.$key, $seconds, $callback);
+        // the date (WIB) is part of every key so date-based content, such as packages that
+        // expire at midnight, refreshes by itself without anyone saving in the admin
+        return Cache::remember('c'.self::version().':'.Today::date().':'.$key, $seconds, $callback);
     }
 }

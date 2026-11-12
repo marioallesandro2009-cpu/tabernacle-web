@@ -103,7 +103,8 @@ class Schema
                     $out[$k] = (bool) $v;
                     break;
                 case 'number':
-                    $out[$k] = ($v === null || $v === '') ? null : (str_contains((string) $v, '.') ? (float) $v : (int) $v);
+                    // an emptied number falls back to its default (columns like featured_sort / rating are NOT NULL)
+                    $out[$k] = ($v === null || $v === '') ? ($f['default'] ?? null) : (str_contains((string) $v, '.') ? (float) $v : (int) $v);
                     break;
                 case 'rich':
                     $out[$k] = ($v === null || $v === '') ? null : clean_html((string) $v);

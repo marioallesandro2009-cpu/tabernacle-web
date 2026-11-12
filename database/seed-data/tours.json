@@ -94,7 +94,8 @@
   ],
   "sort": 1,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-31"
  },
  {
   "no": 2,
@@ -201,7 +202,8 @@
   ],
   "sort": 2,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-29"
  },
  {
   "no": 3,
@@ -286,7 +288,8 @@
   ],
   "sort": 3,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-31"
  },
  {
   "no": 4,
@@ -371,7 +374,8 @@
   ],
   "sort": 4,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-31"
  },
  {
   "no": 5,
@@ -453,7 +457,8 @@
   ],
   "sort": 5,
   "is_featured": true,
-  "featured_sort": 5
+  "featured_sort": 5,
+  "available_until": "2027-04-30"
  },
  {
   "no": 6,
@@ -541,7 +546,8 @@
   ],
   "sort": 6,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-04-30"
  },
  {
   "no": 7,
@@ -626,7 +632,8 @@
   ],
   "sort": 7,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-31"
  },
  {
   "no": 8,
@@ -715,7 +722,8 @@
   ],
   "sort": 8,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-31"
  },
  {
   "no": 9,
@@ -791,7 +799,8 @@
   ],
   "sort": 9,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-31"
  },
  {
   "no": 10,
@@ -898,7 +907,8 @@
   ],
   "sort": 10,
   "is_featured": true,
-  "featured_sort": 6
+  "featured_sort": 6,
+  "available_until": "2027-03-31"
  },
  {
   "no": 11,
@@ -979,7 +989,8 @@
   ],
   "sort": 11,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-31"
  },
  {
   "no": 12,
@@ -1064,7 +1075,8 @@
   ],
   "sort": 12,
   "is_featured": true,
-  "featured_sort": 7
+  "featured_sort": 7,
+  "available_until": "2026-12-31"
  },
  {
   "no": 13,
@@ -1163,7 +1175,8 @@
   ],
   "sort": 13,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-31"
  },
  {
   "no": 14,
@@ -1257,7 +1270,8 @@
   ],
   "sort": 14,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-31"
  },
  {
   "no": 15,
@@ -1357,7 +1371,8 @@
   ],
   "sort": 15,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-31"
  },
  {
   "no": 16,
@@ -1439,7 +1454,8 @@
   ],
   "sort": 16,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-10-31"
  },
  {
   "no": 17,
@@ -1525,7 +1541,8 @@
   ],
   "sort": 17,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-10-31"
  },
  {
   "no": 18,
@@ -1640,7 +1657,8 @@
   ],
   "sort": 18,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-23"
  },
  {
   "no": 19,
@@ -1768,7 +1786,8 @@
   ],
   "sort": 19,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-15"
  },
  {
   "no": 20,
@@ -1884,7 +1903,8 @@
   ],
   "sort": 20,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-25"
  },
  {
   "no": 21,
@@ -1982,7 +2002,8 @@
   ],
   "sort": 21,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-11-30"
  },
  {
   "no": 22,
@@ -2090,7 +2111,8 @@
   ],
   "sort": 22,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-29"
  },
  {
   "no": 23,
@@ -2207,7 +2229,8 @@
   ],
   "sort": 23,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-18"
  },
  {
   "no": 24,
@@ -2333,7 +2356,8 @@
   ],
   "sort": 24,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-01-31"
  },
  {
   "no": 25,
@@ -2438,7 +2462,8 @@
   ],
   "sort": 25,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-11-29"
  },
  {
   "no": 26,
@@ -2583,7 +2608,8 @@
   ],
   "sort": 26,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-08"
  },
  {
   "no": 27,
@@ -2680,7 +2706,8 @@
   ],
   "sort": 27,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-31"
  },
  {
   "no": 28,
@@ -2779,7 +2806,8 @@
   ],
   "sort": 28,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-31"
  },
  {
   "no": 29,
@@ -2874,7 +2902,8 @@
   ],
   "sort": 29,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-31"
  },
  {
   "no": 30,
@@ -2988,7 +3017,8 @@
   ],
   "sort": 30,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-13"
  },
  {
   "no": 31,
@@ -3110,7 +3140,8 @@
   ],
   "sort": 31,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-03-12"
  },
  {
   "no": 32,
@@ -3230,7 +3261,8 @@
   ],
   "sort": 32,
   "is_featured": true,
-  "featured_sort": 1
+  "featured_sort": 1,
+  "available_until": "2026-12-25"
  },
  {
   "no": 33,
@@ -3343,7 +3375,8 @@
   ],
   "sort": 33,
   "is_featured": true,
-  "featured_sort": 2
+  "featured_sort": 2,
+  "available_until": "2026-12-28"
  },
  {
   "no": 35,
@@ -3462,7 +3495,8 @@
   ],
   "sort": 35,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-22"
  },
  {
   "no": 36,
@@ -3592,7 +3626,8 @@
   ],
   "sort": 36,
   "is_featured": true,
-  "featured_sort": 3
+  "featured_sort": 3,
+  "available_until": "2026-12-24"
  },
  {
   "no": 37,
@@ -3724,7 +3759,8 @@
   ],
   "sort": 37,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-05"
  },
  {
   "no": 38,
@@ -3830,7 +3866,8 @@
   ],
   "sort": 38,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2027-01-01"
  },
  {
   "no": 39,
@@ -3963,7 +4000,8 @@
   ],
   "sort": 39,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-24"
  },
  {
   "no": 40,
@@ -4094,7 +4132,8 @@
   ],
   "sort": 40,
   "is_featured": true,
-  "featured_sort": 4
+  "featured_sort": 4,
+  "available_until": "2026-12-30"
  },
  {
   "no": 41,
@@ -4231,7 +4270,8 @@
   ],
   "sort": 0,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-18"
  },
  {
   "no": 42,
@@ -4424,7 +4464,8 @@
   ],
   "sort": 0,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-31"
  },
  {
   "no": 43,
@@ -4526,6 +4567,7 @@
   ],
   "sort": 0,
   "is_featured": false,
-  "featured_sort": 0
+  "featured_sort": 0,
+  "available_until": "2026-12-14"
  }
 ]

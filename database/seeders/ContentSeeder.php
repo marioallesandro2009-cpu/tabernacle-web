@@ -161,7 +161,7 @@ class ContentSeeder extends Seeder
                 'flights_included' => $t['flights_included'], 'includes' => $t['includes'], 'excludes' => $t['excludes'], 'has_shopping' => $t['has_shopping'],
                 'is_featured' => $t['is_featured'], 'featured_sort' => $t['featured_sort'], 'is_active' => true, 'sort' => $t['sort'],
                 'departures' => $t['departures'] ?? null, 'dp_min' => $t['dp_min'] ?? null, 'terms' => isset($t['terms']) ? clean_html($t['terms']) : null,
-                'description' => $t['description'] ?? null,
+                'description' => $t['description'] ?? null, 'available_until' => $t['available_until'] ?? null,
             ]);
             $tour->destinations()->sync(collect($t['countries'])->map(fn ($s) => $dests[$s] ?? null)->filter()->values()->all());
         }

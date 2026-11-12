@@ -9,6 +9,7 @@ use App\Support\Analytics;
 use App\Support\Permissions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -80,7 +81,7 @@ class LoginHistoryController extends Controller
 
     /**
      * @param  iterable<int, User>  $users
-     * @param  \Illuminate\Support\Collection<int|string, ActivityLog>  $lastLogins
+     * @param  Collection<int|string, ActivityLog>  $lastLogins
      * @return array<int, array<string, mixed>>
      */
     protected function accounts(iterable $users, $lastLogins): array

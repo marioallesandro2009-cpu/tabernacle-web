@@ -43,7 +43,9 @@ onMounted(() => {
 
 const remove = (r) => confirm('Hapus data ini? Tindakan ini tidak bisa dibatalkan.') && router.delete(`${props.resource.url}/${r.id}`, { preserveScroll: true });
 const toggle = (r) => router.post(`${props.resource.url}/${r.id}/toggle`, {}, { preserveScroll: true });
-const scoreClass = (s) => (s >= 80 ? 'bg-emerald-100 text-emerald-800' : s >= 50 ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800');
+// warning colours for package expiry ("Kedaluwarsa ...", "Belum diisi")
+const badgeTone = (v) => (typeof v !== 'string' ? '' : v.startsWith('Kedaluwarsa') ? 'bg-red-100 text-red-800' : v === 'Belum diisi' ? 'bg-amber-100 text-amber-800' : '');
+const scoreClass =(s) => (s >= 80 ? 'bg-emerald-100 text-emerald-800' : s >= 50 ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-800');
 </script>
 
 <template>
@@ -80,7 +82,7 @@ const scoreClass = (s) => (s >= 80 ? 'bg-emerald-100 text-emerald-800' : s >= 50
                         <td v-if="resource.sortable" class="td drag cursor-grab text-stone-400"><Icon name="drag" class="h-4 w-4" /></td>
                         <td v-for="c in columns" :key="c.key" class="td">
                             <img v-if="c.type === 'image'" :src="r[c.key]" alt="" class="h-10 w-14 rounded object-cover bg-stone-100" :class="r[c.key] ? '' : 'invisible'">
-                            <span v-else-if="c.type === 'badge'" class="badge">{{ r[c.key] || '–' }}</span>
+                            <span v-else-if="c.type === 'badge'" class="badge" :class="badgeTone(r[c.key])">{{ r[c.key] || '–' }}</span>
                             <span v-else-if="c.type === 'bool'" :class="r[c.key] ? 'text-emerald-600' : 'text-stone-400'">{{ r[c.key] ? '✓' : '–' }}</span>
                             <span v-else-if="c.type === 'score'" class="badge" :class="scoreClass(r[c.key])">{{ r[c.key] }}</span>
                             <Link v-else-if="c === columns.find((x) => !['image', 'badge', 'bool'].includes(x.type))" :href="`${resource.url}/${r.id}/edit`" class="font-medium text-brand hover:underline">{{ r[c.key] || '(tanpa judul)' }}</Link>

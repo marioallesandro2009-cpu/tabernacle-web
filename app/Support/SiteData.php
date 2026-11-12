@@ -68,7 +68,7 @@ class SiteData
     public static function destinations(): Collection
     {
         return Content::remember('destinations', fn () => Destination::query()->where('is_active', true)
-            ->withCount(['tours as tours_count' => fn ($q) => $q->where('is_active', true)])->orderBy('sort')->orderBy('id')->get());
+            ->withCount(['tours as tours_count' => fn ($q) => $q->active()])->orderBy('sort')->orderBy('id')->get());
     }
 
     /** @return Collection<int, Faq> */
