@@ -44,7 +44,7 @@ trait LogsActivity
                 'subject_id' => $this->getKey(),
                 'subject_label' => $this->activityLabel(),
                 'changes' => $changes ?: null,
-                'ip' => request()->ip(),
+                ...ActivityLog::client(),
                 'created_at' => now(),
             ]);
         } catch (\Throwable) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Resources;
 
 use App\Http\Controllers\Admin\ResourceController;
+use App\Models\ActivityLog;
 use App\Models\User;
 use App\Support\F;
 use App\Support\Permissions;
@@ -132,6 +133,7 @@ class UserController extends ResourceController
     {
         $user = User::findOrFail($id);
         Password::sendResetLink(['email' => $user->email]);
+        ActivityLog::auth('reset_link_sent', $user, $user->email, auth()->id());
 
         return back()->with('success', 'Tautan reset password dikirim ke '.$user->email.'.');
     }

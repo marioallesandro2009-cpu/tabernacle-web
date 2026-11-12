@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
@@ -58,6 +59,7 @@ class ProfileController extends Controller
             throw ValidationException::withMessages(['current_password' => 'Password saat ini salah.']);
         }
         $request->user()->update(['password' => $data['password']]);
+        ActivityLog::auth('password_changed', $request->user());
 
         return back()->with('success', 'Password diubah.');
     }
@@ -77,6 +79,7 @@ class ProfileController extends Controller
             throw ValidationException::withMessages(['code' => 'Kode salah. Pastikan jam ponsel Anda akurat.']);
         }
         $request->user()->forceFill(['two_factor_secret' => $secret, 'two_factor_confirmed_at' => now()])->save();
+        ActivityLog::auth('two_factor_enabled', $request->user());
         $request->session()->forget('2fa.setup');
 
         return back()->with('success', 'Verifikasi dua langkah aktif.');
@@ -89,6 +92,7 @@ class ProfileController extends Controller
             throw ValidationException::withMessages(['password' => 'Password salah.']);
         }
         $request->user()->forceFill(['two_factor_secret' => null, 'two_factor_confirmed_at' => null])->save();
+        ActivityLog::auth('two_factor_disabled', $request->user());
 
         return back()->with('success', 'Verifikasi dua langkah dimatikan.');
     }

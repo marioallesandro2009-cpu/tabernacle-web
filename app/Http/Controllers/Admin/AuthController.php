@@ -33,16 +33,18 @@ class AuthController extends Controller
         // 5 tries per minute per email and address
         if (RateLimiter::tooManyAttempts($key, 5)) {
             $s = RateLimiter::availableIn($key);
+            ActivityLog::auth('login_throttled', User::where('email', $data['email'])->first(), $data['email']);
             throw ValidationException::withMessages(['email' => "Terlalu banyak percobaan. Coba lagi dalam {$s} detik."]);
         }
 
         $user = User::where('email', $data['email'])->first();
         if (! $user || ! Hash::check($data['password'], $user->password)) {
             RateLimiter::hit($key, 60);
-            ActivityLog::create(['user_id' => $user?->id, 'action' => 'login_failed', 'subject_label' => $data['email'], 'ip' => $request->ip(), 'created_at' => now()]);
+            ActivityLog::auth('login_failed', $user, $data['email']);
             throw ValidationException::withMessages(['email' => 'Email atau password salah.']);
         }
         if (! $user->is_active) {
+            ActivityLog::auth('login_blocked', $user);
             throw ValidationException::withMessages(['email' => 'Akun ini dinonaktifkan. Hubungi super admin.']);
         }
         RateLimiter::clear($key);
@@ -75,10 +77,12 @@ class AuthController extends Controller
         }
         $key = '2fa|'.$user->id.'|'.$request->ip();
         if (RateLimiter::tooManyAttempts($key, 5)) {
+            ActivityLog::auth('login_throttled', $user, $user->email.' (2FA)');
             throw ValidationException::withMessages(['code' => 'Terlalu banyak percobaan. Tunggu sebentar.']);
         }
         if (! (new Google2FA)->verifyKey((string) $user->two_factor_secret, preg_replace('/\D/', '', $request->input('code')) ?: '000000')) {
             RateLimiter::hit($key, 60);
+            ActivityLog::auth('two_factor_failed', $user);
             throw ValidationException::withMessages(['code' => 'Kode salah atau sudah kedaluwarsa.']);
         }
         RateLimiter::clear($key);
@@ -93,14 +97,14 @@ class AuthController extends Controller
         Auth::login($user, $remember);
         $request->session()->regenerate();
         $user->forceFill(['last_login_at' => now()])->saveQuietly();
-        ActivityLog::create(['user_id' => $user->id, 'action' => 'login', 'subject_label' => $user->email, 'ip' => $request->ip(), 'created_at' => now()]);
+        ActivityLog::auth('login', $user, $user->email.($user->hasTwoFactor() ? ' (dengan 2FA)' : ''));
 
         return redirect()->intended('/admin');
     }
 
     public function logout(Request $request): RedirectResponse
     {
-        ActivityLog::create(['user_id' => $request->user()?->id, 'action' => 'logout', 'subject_label' => $request->user()?->email, 'ip' => $request->ip(), 'created_at' => now()]);
+        ActivityLog::auth('logout', $request->user());
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -121,6 +125,7 @@ class AuthController extends Controller
             throw ValidationException::withMessages(['email' => 'Terlalu banyak permintaan. Coba lagi nanti.']);
         }
         RateLimiter::hit($key, 300);
+        ActivityLog::auth('password_reset_requested', User::where('email', $request->input('email'))->first(), (string) $request->input('email'));
         // same answer whether the email exists or not
         Password::sendResetLink($request->only('email'));
 
@@ -141,6 +146,7 @@ class AuthController extends Controller
         $status = Password::reset($data, function (User $user, string $password) {
             $user->forceFill(['password' => $password, 'remember_token' => Str::random(60)])->save();
             event(new PasswordReset($user));
+            ActivityLog::auth('password_reset', $user);
         });
         if ($status !== Password::PASSWORD_RESET) {
             throw ValidationException::withMessages(['email' => 'Tautan tidak valid atau sudah kedaluwarsa.']);

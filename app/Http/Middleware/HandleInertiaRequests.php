@@ -65,6 +65,7 @@ class HandleInertiaRequests extends Middleware
             ['label' => 'Sistem', 'items' => [
                 ['label' => 'Pengaturan situs', 'url' => '/admin/settings', 'can' => 'settings.manage', 'icon' => 'cog'],
                 ['label' => 'Akun admin', 'url' => '/admin/users', 'can' => 'users.manage', 'icon' => 'users'],
+                ['label' => 'Riwayat login', 'url' => '/admin/logins', 'can' => 'logs.view', 'icon' => 'users'],
                 ['label' => 'Log aktivitas', 'url' => '/admin/activity', 'can' => 'logs.view', 'icon' => 'clock'],
                 ['label' => 'Backup database', 'url' => '/admin/backup', 'can' => 'backup.manage', 'icon' => 'db'],
             ]],

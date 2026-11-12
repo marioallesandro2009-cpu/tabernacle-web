@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LeadController;
+use App\Http\Controllers\Admin\LoginHistoryController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -129,6 +130,8 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::put('settings', [SettingsController::class, 'update']);
         });
         Route::get('activity', [ActivityController::class, 'index'])->middleware('can:logs.view');
+        Route::get('logins', [LoginHistoryController::class, 'index'])->middleware('can:logs.view');
+        Route::get('logins/export', [LoginHistoryController::class, 'export'])->middleware('can:logs.view');
         Route::middleware('can:backup.manage')->prefix('backup')->group(function () {
             Route::get('/', [BackupController::class, 'index']);
             Route::post('/', [BackupController::class, 'store']);
