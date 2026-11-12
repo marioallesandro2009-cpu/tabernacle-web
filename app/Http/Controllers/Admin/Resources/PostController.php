@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ResourceController;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\Tag;
+use App\Models\Tour;
 use App\Models\User;
 use App\Support\ContentTools;
 use App\Support\F;
@@ -71,7 +72,8 @@ class PostController extends ResourceController
             ['key' => 'title', 'label' => 'Judul', 'type' => 'text'],
             ['key' => 'category', 'label' => 'Kategori', 'type' => 'badge', 'get' => fn (Post $p) => $p->category?->name],
             ['key' => 'status', 'label' => 'Status', 'type' => 'badge', 'get' => fn (Post $p) => match ($p->status) {
-                'published' => 'Terbit', 'scheduled' => 'Terjadwal '.$p->published_at?->format('d M H:i'), default => 'Draft'}],
+                'published' => 'Terbit', 'scheduled' => 'Terjadwal '.$p->published_at?->format('d M H:i'), default => 'Draft'
+            }],
             ['key' => 'seo_score', 'label' => 'Skor SEO', 'type' => 'score'],
             ['key' => 'views', 'label' => 'Dibaca', 'type' => 'text'],
             ['key' => 'published_at', 'label' => 'Tanggal', 'type' => 'date'],
@@ -159,7 +161,7 @@ class PostController extends ResourceController
         // internal link ideas: tours and other articles related to the focus keyword
         $kw = trim((string) ($p['focus_keyword'] ?? ''));
         $like = $kw !== '' ? '%'.$kw.'%' : null;
-        $tours = \App\Models\Tour::query()->where('is_active', true)->when($like, fn ($q) => $q->where('name', 'like', $like))->orderByDesc('is_featured')->limit(5)->get(['name', 'slug']);
+        $tours = Tour::query()->where('is_active', true)->when($like, fn ($q) => $q->where('name', 'like', $like))->orderByDesc('is_featured')->limit(5)->get(['name', 'slug']);
         $posts = Post::query()->live()->when($like, fn ($q) => $q->where('title', 'like', $like))->when($request->input('id'), fn ($q, $id) => $q->whereKeyNot($id))->latest('published_at')->limit(5)->get(['title', 'slug']);
         $result['suggestions'] = [
             ...$tours->map(fn ($t) => ['label' => 'Paket: '.$t->name, 'url' => '/packages/'.$t->slug])->all(),

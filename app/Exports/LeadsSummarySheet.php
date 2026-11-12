@@ -3,12 +3,10 @@
 namespace App\Exports;
 
 use App\Models\Lead;
-use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
-use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class LeadsSummarySheet implements FromArray, ShouldAutoSize, WithStyles, WithTitle

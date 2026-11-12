@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Media;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -28,7 +29,7 @@ class MediaService
 
     public const MAX_WIDTH = 2000;
 
-    public function disk(): \Illuminate\Contracts\Filesystem\Filesystem
+    public function disk(): Filesystem
     {
         return Storage::disk('uploads');
     }

@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Media;
+use App\Support\Content;
+use App\Support\MediaInfo;
 use App\Support\Schema;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -170,7 +173,7 @@ abstract class ResourceController extends Controller
             'image' => $v ? media_url($v, 480) : null,
             'bool' => (bool) $v,
             'money' => $v ? rupiah($v) : '',
-            'date' => $v ? \Illuminate\Support\Carbon::parse($v)->translatedFormat('d M Y H:i') : '',
+            'date' => $v ? Carbon::parse($v)->translatedFormat('d M Y H:i') : '',
             default => is_array($v) ? json_encode($v) : $v,
         };
     }
@@ -223,7 +226,7 @@ abstract class ResourceController extends Controller
 
     protected function mediaIn(array $fields, array $values): array
     {
-        return \App\Support\MediaInfo::for($fields, $values);
+        return MediaInfo::for($fields, $values);
     }
 
     public function store(Request $request): RedirectResponse
@@ -316,14 +319,14 @@ abstract class ResourceController extends Controller
         return null;
     }
 
-    public function reorder(Request $request): \Illuminate\Http\JsonResponse
+    public function reorder(Request $request): JsonResponse
     {
         abort_unless($this->sortable, 404);
         $ids = array_map('intval', (array) $request->input('ids', []));
         foreach ($ids as $i => $id) {
             ($this->model)::whereKey($id)->update([$this->sortColumn => $i + 1]);
         }
-        \App\Support\Content::bump();
+        Content::bump();
 
         return response()->json(['ok' => true]);
     }

@@ -6,6 +6,7 @@ use App\Models\User;
 use Database\Seeders\RolesSeeder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\text;
@@ -19,7 +20,7 @@ class CreateSuperAdmin extends Command
     public function handle(): int
     {
         // roles may not exist yet on a brand new install
-        if (! \Spatie\Permission\Models\Role::where('name', 'super_admin')->exists()) {
+        if (! Role::where('name', 'super_admin')->exists()) {
             (new RolesSeeder)->run();
         }
 

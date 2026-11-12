@@ -16,7 +16,7 @@ class SetLocale
             $lang = $request->cookie('lang');
         }
         if (! in_array($lang, ['id', 'en'], true)) {
-            $lang = str_starts_with(strtolower((string) $request->getPreferredLanguage(['id', 'en'])), 'id') ? 'id' : 'en';
+            $lang = str_starts_with(strtolower((string) $request->getPreferredLanguage(['en', 'id'])), 'id') ? 'id' : 'en';
         }
         app()->setLocale($lang);
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\RateLimiter;
 
@@ -46,7 +47,7 @@ it('sends a password reset link by email for known accounts', function () {
     Notification::fake();
     $u = adminUser('admin');
     $this->post('/admin/forgot-password', ['email' => $u->email])->assertRedirect();
-    Notification::assertSentTo($u, \App\Notifications\ResetPasswordNotification::class);
+    Notification::assertSentTo($u, ResetPasswordNotification::class);
 });
 
 it('enforces roles: editor only gets blog and media', function () {

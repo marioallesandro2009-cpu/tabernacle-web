@@ -7,8 +7,10 @@ use App\Models\Post;
 use App\Models\Redirect;
 use App\Models\Tour;
 use App\Models\TourCategory;
+use App\Support\Analytics;
 use App\Support\AnalyticsAggregator;
 use App\Support\Settings;
+use Illuminate\Http\Request;
 
 function makePage(string $key, ?string $slug = null): Page
 {
@@ -104,10 +106,10 @@ it('records tours as tour views with device and source', function () {
 });
 
 it('hashes visitors per day so they cannot be followed across days', function () {
-    $req = Illuminate\Http\Request::create('/', 'GET', [], [], [], ['REMOTE_ADDR' => '203.0.113.9', 'HTTP_USER_AGENT' => 'UA']);
-    $a = App\Support\Analytics::visitorHash($req);
+    $req = Request::create('/', 'GET', [], [], [], ['REMOTE_ADDR' => '203.0.113.9', 'HTTP_USER_AGENT' => 'UA']);
+    $a = Analytics::visitorHash($req);
     $this->travel(1)->day();
-    $b = App\Support\Analytics::visitorHash($req);
+    $b = Analytics::visitorHash($req);
     expect($a)->not->toBe($b)->and(strlen($a))->toBe(64);
 });
 

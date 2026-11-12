@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Support\F;
 use App\Support\Permissions;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rule;
@@ -127,7 +128,7 @@ class UserController extends ResourceController
     }
 
     /** Send a reset link to the account's email. */
-    public function resetLink(string $id): \Illuminate\Http\RedirectResponse
+    public function resetLink(string $id): RedirectResponse
     {
         $user = User::findOrFail($id);
         Password::sendResetLink(['email' => $user->email]);

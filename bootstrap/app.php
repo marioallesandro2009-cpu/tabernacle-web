@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Middleware\EnsureActiveAdmin;
+use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\HandleRedirects;
 use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetLocale;
+use App\Http\Middleware\TrackVisit;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -19,9 +22,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo(fn () => '/admin/login');
         $middleware->redirectUsersTo('/admin');
         $middleware->alias([
-            'active.admin' => \App\Http\Middleware\EnsureActiveAdmin::class,
-            'inertia.admin' => \App\Http\Middleware\HandleInertiaRequests::class,
-            'track' => \App\Http\Middleware\TrackVisit::class,
+            'active.admin' => EnsureActiveAdmin::class,
+            'inertia.admin' => HandleInertiaRequests::class,
+            'track' => TrackVisit::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

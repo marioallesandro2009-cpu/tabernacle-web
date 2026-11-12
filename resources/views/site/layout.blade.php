@@ -91,6 +91,9 @@
 
 <div class="menu">
   <ul>
+    @unless (request()->is('/'))
+      <li><a class="big" href="{{ url('/') }}">{{ t('nav.home') }}</a></li>
+    @endunless
     @foreach (\App\Support\SiteData::menu('header') as $item)
       <li><a class="big" href="{{ $item->url }}" @if ($item->new_tab) target="_blank" rel="noopener" @endif>{{ tr($item->label) }}</a></li>
     @endforeach
@@ -108,6 +111,9 @@
       <p class="foot-tag">"{{ tr(setting('tagline')) }}"</p>
       <p class="foot-addr">{!! nl2br(e((string) setting('address_footer', ''))) !!}</p>
       <div class="foot-nav mono">
+        @unless (request()->is('/'))
+          <a href="{{ url('/') }}">{{ t('nav.home') }}</a>
+        @endunless
         @foreach (\App\Support\SiteData::menu('footer') as $item)
           <a href="{{ $item->url }}" @if ($item->new_tab) target="_blank" rel="noopener" @endif>{{ tr($item->label) }}</a>
         @endforeach

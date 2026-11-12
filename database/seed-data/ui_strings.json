@@ -682,5 +682,11 @@
   "group": "kontak",
   "text_en": "Follow us",
   "text_id": "Ikuti kami"
+ },
+ {
+  "key": "nav.home",
+  "group": "nav",
+  "text_en": "Home",
+  "text_id": "Beranda"
  }
 ]

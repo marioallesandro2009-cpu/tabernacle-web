@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\User;
-use Database\Seeders\DatabaseSeeder;
+use App\Services\DatabaseBackup;
 use Database\Seeders\RolesSeeder;
 
 it('creates the first super admin interactively and never from a seeder', function () {
@@ -41,5 +41,5 @@ it('seeds no user accounts and no passwords', function () {
 it('backs up and prunes without needing mysqldump', function () {
     // the dump uses MySQL-only SQL, so this only checks the command is registered and the dir logic
     expect(array_keys(Artisan::all()))->toContain('db:backup', 'analytics:aggregate', 'posts:publish-due', 'app:create-super-admin');
-    expect(app(App\Services\DatabaseBackup::class)->prune(8))->toBeInt();
+    expect(app(DatabaseBackup::class)->prune(8))->toBeInt();
 });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use App\Services\DatabaseBackup;
 use App\Support\AnalyticsAggregator;
 use App\Support\Content;
@@ -22,7 +23,7 @@ Artisan::command('analytics:aggregate {--day= : YYYY-MM-DD, default yesterday an
 })->purpose('Rangkum page_views menjadi statistik harian');
 
 Artisan::command('posts:publish-due', function () {
-    $n = \App\Models\Post::where('status', 'scheduled')->where('published_at', '<=', now())->update(['status' => 'published']);
+    $n = Post::where('status', 'scheduled')->where('published_at', '<=', now())->update(['status' => 'published']);
     if ($n) {
         Content::bump();
     }

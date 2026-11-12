@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use App\Models\Tour;
-use App\Support\Content;
 use App\Support\Seo;
 use App\Support\SiteData;
 use Illuminate\Http\Request;

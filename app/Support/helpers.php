@@ -4,6 +4,7 @@ use App\Models\Media;
 use App\Support\Content;
 use App\Support\Settings;
 use App\Support\Ui;
+use Mews\Purifier\Facades\Purifier;
 
 if (! function_exists('lang_id')) {
     /** True when the visitor is reading the Indonesian version. */
@@ -193,6 +194,6 @@ if (! function_exists('nl')) {
 if (! function_exists('clean_html')) {
     function clean_html(?string $html, string $profile = 'default'): string
     {
-        return $html ? (string) \Mews\Purifier\Facades\Purifier::clean($html, $profile) : '';
+        return $html ? (string) Purifier::clean($html, $profile) : '';
     }
 }

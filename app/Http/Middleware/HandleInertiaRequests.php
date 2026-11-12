@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Lead;
+use App\Support\Permissions;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -22,7 +23,7 @@ class HandleInertiaRequests extends Middleware
                 'id' => $user->id, 'name' => $user->name, 'email' => $user->email,
                 'avatar' => $user->avatar_id ? media_url($user->avatar_id, 160) : null,
                 'roles' => $user->getRoleNames()->all(),
-                'permissions' => $user->isSuperAdmin() ? array_keys(\App\Support\Permissions::ALL) : $user->getAllPermissions()->pluck('name')->all(),
+                'permissions' => $user->isSuperAdmin() ? array_keys(Permissions::ALL) : $user->getAllPermissions()->pluck('name')->all(),
                 'two_factor' => $user->hasTwoFactor(),
             ] : null,
             'flash' => fn () => ['success' => $request->session()->get('success'), 'error' => $request->session()->get('error')],

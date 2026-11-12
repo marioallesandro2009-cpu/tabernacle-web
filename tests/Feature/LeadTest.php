@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\LeadsSheet;
 use App\Jobs\SendLeadNotification;
 use App\Mail\NewLeadMail;
 use App\Models\Lead;
@@ -131,6 +132,6 @@ it('filters leads and exports csv, xlsx and pdf', function () {
 
 it('prevents spreadsheet formula injection in exports', function () {
     Lead::create(['type' => 'form', 'name' => '=HYPERLINK("http://evil.test")', 'phone' => '6281297971563', 'status' => 'baru']);
-    $sheet = new App\Exports\LeadsSheet(Lead::with('tour')->get());
+    $sheet = new LeadsSheet(Lead::with('tour')->get());
     expect($sheet->array()[1][2])->toStartWith("'=");
 });

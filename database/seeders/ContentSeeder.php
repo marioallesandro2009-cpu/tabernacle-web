@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Destination;
-use App\Models\MenuItem;
 use App\Models\Media;
+use App\Models\MenuItem;
 use App\Models\Page;
 use App\Models\Redirect;
 use App\Models\Setting;

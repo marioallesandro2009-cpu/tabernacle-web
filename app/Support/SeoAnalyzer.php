@@ -31,7 +31,14 @@ class SeoAnalyzer
 
         $doc = ContentTools::dom($html);
         $xp = $doc ? new DOMXPath($doc) : null;
-        $h2 = []; $levels = []; $imgs = 0; $imgsNoAlt = 0; $internal = 0; $external = 0; $paras = []; $h1 = 0;
+        $h2 = [];
+        $levels = [];
+        $imgs = 0;
+        $imgsNoAlt = 0;
+        $internal = 0;
+        $external = 0;
+        $paras = [];
+        $h1 = 0;
         if ($xp) {
             foreach ($xp->query('//h1|//h2|//h3|//h4|//h5|//h6') ?: [] as $h) {
                 /** @var DOMElement $h */

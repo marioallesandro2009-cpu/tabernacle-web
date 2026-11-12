@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\ActivityLog;
 use App\Models\Faq;
 use App\Models\Media;
+use App\Models\MenuItem;
 use App\Models\Post;
 use App\Models\Testimonial;
 use App\Models\UiString;
@@ -135,7 +137,7 @@ it('runs simple CRUD with validation: faq, testimonial, ui string', function () 
 it('keeps menus within two levels and refuses a parent that is its own child', function () {
     $this->actingAs(adminUser('admin'));
     $this->post('/admin/menu-items', ['location' => 'header', 'label' => ['en' => 'Tours', 'id' => 'Tur'], 'url' => '/packages', 'is_active' => true])->assertSessionHasNoErrors();
-    $parent = App\Models\MenuItem::first();
+    $parent = MenuItem::first();
     $this->post('/admin/menu-items', ['location' => 'header', 'label' => ['en' => 'Asia', 'id' => 'Asia'], 'url' => '/packages?r=asia', 'parent_id' => $parent->id, 'is_active' => true])->assertSessionHasNoErrors();
     $this->delete("/admin/menu-items/{$parent->id}")->assertSessionHas('error');
 });
@@ -157,7 +159,7 @@ it('writes an activity log for changes made in the admin', function () {
     $admin = adminUser('admin');
     $this->actingAs($admin);
     $this->post('/admin/faqs', ['question' => ['en' => 'Q', 'id' => 'Q'], 'answer' => ['en' => 'A', 'id' => 'A'], 'is_active' => true]);
-    $log = App\Models\ActivityLog::where('subject_type', 'Faq')->first();
+    $log = ActivityLog::where('subject_type', 'Faq')->first();
     expect($log)->not->toBeNull()->and($log->user_id)->toBe($admin->id)->and($log->action)->toBe('created');
     $this->actingAs(adminUser('super_admin'))->get('/admin/activity')->assertOk();
 });
