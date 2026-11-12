@@ -147,7 +147,7 @@
 /* === v2: conversion improvements ================================== */
 
 /* home: quick finder under the hero headline */
-.hero-find { margin-top: clamp(22px, 2.6vw, 38px); display: grid; grid-template-columns: 5fr 6fr auto; background: rgba(255, 252, 246, .97); color: var(--navy); box-shadow: 0 24px 60px -30px rgba(0, 0, 0, .6); max-width: 1040px; }
+.hero-find { margin-top: clamp(22px, 2.6vw, 38px); display: grid; grid-template-columns: 5fr 6fr auto; background: color-mix(in srgb, var(--paper) 97%, transparent); color: var(--navy); box-shadow: 0 24px 60px -30px rgba(0, 0, 0, .6); max-width: 1040px; }
 .hf-field { display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 12px 18px; border-right: 1px solid var(--rule); min-width: 0; cursor: pointer; }
 .hf-field:focus-within { background: #fff; box-shadow: inset 0 -3px 0 var(--amber); }
 .hf-field > .mono { color: var(--muted); }

@@ -13,9 +13,9 @@
 :root {
   --navy: #0b1a5c;
   --navy-deep: #071140;
-  --cream: #f6efe4;
-  --sand: #ecdfca;
-  --paper: #fffcf6;
+  --cream: #ffffff;
+  --sand: #f4f5f7;
+  --paper: #ffffff;
   --ink: #1d1813;
   --muted: #6a5f53;
   --amber: #e8973f;
@@ -109,7 +109,7 @@ a.pic:hover img, button.pic:hover img, .tile:hover img { transform: scale(1.04);
 /* --- nav ----------------------------------------------------------------- */
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; color: #fff; transition: background .4s, color .4s, box-shadow .4s; }
 .nav-in { display: flex; align-items: center; justify-content: space-between; height: 74px; }
-.nav.solid { background: rgba(246, 239, 228, .94); color: var(--navy); box-shadow: 0 1px 0 var(--rule); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.nav.solid { background: color-mix(in srgb, var(--cream) 94%, transparent); color: var(--navy); box-shadow: 0 1px 0 var(--rule); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 .brand { display: flex; align-items: center; gap: 11px; line-height: 1; }
 .brand svg { width: 34px; height: 34px; flex: none; }
 .brand b { display: block; font: 700 13px/1 var(--display); font-stretch: 125%; letter-spacing: .13em; }

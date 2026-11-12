@@ -26,7 +26,9 @@ class SettingsRegistry
                 F::color('color_navy_deep', 'Warna utama, lebih gelap', ['required' => true]),
                 F::color('color_amber', 'Warna aksen (amber)', ['required' => true]),
                 F::color('color_amber_deep', 'Warna aksen, lebih gelap', ['required' => true]),
-                F::color('color_cream', 'Warna latar krem', ['required' => true]),
+                F::color('color_cream', 'Warna latar halaman', ['required' => true]),
+                F::color('color_sand', 'Warna latar bagian selang-seling (sedikit lebih gelap dari latar halaman)'),
+                F::color('color_paper', 'Warna kartu dan kotak (harga, formulir, pencarian)'),
                 F::color('color_teal', 'Warna pelengkap (teal)', ['required' => true]),
             ]],
             ['key' => 'kontak', 'label' => 'Kontak', 'fields' => [
