@@ -812,7 +812,8 @@
        "scramble": true
       }
      ]
-    }
+    },
+    "is_visible": false
    },
    {
     "type": "contact",

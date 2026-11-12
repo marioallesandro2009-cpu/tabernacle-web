@@ -4095,5 +4095,437 @@
   "sort": 40,
   "is_featured": true,
   "featured_sort": 4
+ },
+ {
+  "no": 41,
+  "type": "worship",
+  "name": "Umrah Reguler 18 Desember 2026",
+  "slug": "9d7n-umrah-reguler-18-desember-2026",
+  "duration": "9D7N",
+  "route": "Madinah – Makkah – Thaif",
+  "region": "middle-east",
+  "area_label": {
+   "en": "Saudi Arabia",
+   "id": "Arab Saudi"
+  },
+  "highlights": [
+   "Masjid Nabawi",
+   "Jabal Uhud",
+   "Masjid Quba",
+   "Masjidil Haram",
+   "Museum Al-Wahyu",
+   "Jabal Rahmah",
+   "City Tour Thaif"
+  ],
+  "cover": "tours/9d7n-umrah-reguler-18-desember-2026.webp",
+  "cover_alt": "Masjid Nabawi di Madinah",
+  "cover_credit": "Al-Masjid An-Nabawi (Bird's Eye View) (Konevi, CC0) | https://commons.wikimedia.org/wiki/File:Al-Masjid_An-Nabawi_(Bird%27s_Eye_View).jpg",
+  "pdf": "pdf/9d7n-umrah-reguler-18-desember-2026.pdf",
+  "itinerary": [
+   {
+    "n": 1,
+    "title": "JAKARTA – JEDDAH – MADINAH",
+    "meals": "",
+    "hotel": "Golden Tulip Al Ansar *3 / Setaraf",
+    "text": "Jamaah berkumpul 4 jam sebelum keberangkatan dengan mengenakan batik travel dan menyerahkan koper kepada tim airport handling, sekaligus pembagian paspor, tiket, name tag koper, ID card, dan syal. Setelah proses imigrasi, terbang dengan Qatar Airways/Etihad Airways menuju Jeddah melalui bandara transit. Setibanya di Jeddah dan selesai imigrasi serta pengambilan bagasi, jamaah diantar ke Madinah untuk check in hotel dan beristirahat."
+   },
+   {
+    "n": 2,
+    "title": "MADINAH",
+    "meals": "MP,MS,MM",
+    "hotel": "Golden Tulip Al Ansar *3 / Setaraf",
+    "text": "Setelah sholat subuh, jamaah berziarah di sekitar Masjid Nabawi. Setelah sholat Isya dan makan malam, berziarah ke Makam Rasulullah SAW dan para sahabat, didampingi mutawifah untuk jamaah wanita dan muthawif untuk jamaah laki-laki. Dilanjutkan sholat sunah dan berdoa di Raudhah (menyesuaikan jadwal tasreh). Selebihnya memperbanyak ibadah di Masjid Nabawi (program bebas)."
+   },
+   {
+    "n": 3,
+    "title": "MADINAH",
+    "meals": "MP,MS,MM",
+    "hotel": "Golden Tulip Al Ansar *3 / Setaraf",
+    "text": "Setelah sarapan, ziarah kota Madinah mengunjungi Jabal Uhud, Masjid Quba, Masjid Qiblatain, dan Pasar Kurma. Kembali ke hotel dan memperbanyak ibadah di Masjid Nabawi."
+   },
+   {
+    "n": 4,
+    "title": "MADINAH – MAKKAH",
+    "meals": "MP,MS,MM",
+    "hotel": "Masyan Al Maqam *3 / Setaraf",
+    "text": "Setelah sarapan, mandi sunah ihram dan check out. Setelah sholat Dzuhur dan makan siang, berangkat ke Makkah dengan kereta cepat. Mengambil miqat di Masjid Bir Ali dan berniat umrah. Tiba di Makkah, menyimpan barang di hotel dan makan malam, lalu melaksanakan ibadah umrah. Selesai umrah, kembali ke hotel untuk beristirahat."
+   },
+   {
+    "n": 5,
+    "title": "MAKKAH",
+    "meals": "MP,MS,MM",
+    "hotel": "Masyan Al Maqam *3 / Setaraf",
+    "text": "Setelah sarapan, memperbanyak ibadah di Masjidil Haram (program bebas)."
+   },
+   {
+    "n": 6,
+    "title": "MAKKAH",
+    "meals": "MP,MS,MM",
+    "hotel": "Masyan Al Maqam *3 / Setaraf",
+    "text": "Setelah sarapan, ziarah kota Makkah mengunjungi Jabal Nur, Jabal Rahmah, Muzdalifah, Mina, Jabal Tsur, Masjid Namirah, Museum Al-Wahyu, dan Masjid Ja'ranah, berakhir di Masjid Tan'im (Aisyah) bagi yang akan mengambil miqat untuk umrah kedua. Bagi yang tidak mengikuti umrah kedua, memperbanyak ibadah di Masjidil Haram."
+   },
+   {
+    "n": 7,
+    "title": "MAKKAH – THAIF",
+    "meals": "MP,MS,MM",
+    "hotel": "Masyan Al Maqam *3 / Setaraf",
+    "text": "City tour ke kota Thaif. Malam hari jamaah berkemas untuk kepulangan esok hari."
+   },
+   {
+    "n": 8,
+    "title": "MAKKAH – JEDDAH",
+    "meals": "MP",
+    "hotel": "",
+    "text": "Setelah sholat subuh dan thawaf wada', check out hotel. Empat jam sebelum keberangkatan, jamaah menuju Bandara Jeddah untuk penerbangan ke Jakarta (makan di pesawat)."
+   },
+   {
+    "n": 9,
+    "title": "TIBA DI JAKARTA",
+    "meals": "",
+    "hotel": "",
+    "text": "InsyaAllah tiba dengan selamat di Jakarta. Terima kasih telah mempercayakan Tabernacle Ways Tour and Travel untuk perjalanan ibadah Anda. Semoga menjadi umrah yang mabrur."
+   }
+  ],
+  "dates_label": "18 Desember 2026",
+  "price_from": 38450000,
+  "min_pax": 35,
+  "flights_included": true,
+  "dp_min": 11000000,
+  "departures": [
+   {
+    "date": "2026-12-18",
+    "price_adult": 38450000,
+    "price_child": null,
+    "single_supp": null,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": "Quad (1 kamar ber-4). Triple Rp40.600.000, Double Rp44.150.000"
+   }
+  ],
+  "includes": [
+   "Tiket penerbangan internasional Qatar Airways / Etihad Airways / setaraf, kelas ekonomi (non refund, non endorsable, non reroutable)",
+   "Akomodasi hotel sesuai program",
+   "Driver dan transportasi untuk ziarah, tour, dan transfer di Arab Saudi",
+   "Fullboard makan sesuai acara perjalanan",
+   "Muthawwif / pembimbing ibadah berbahasa Indonesia",
+   "Air Zamzam 5 liter per jamaah (apabila kondisi diizinkan)",
+   "Visa umrah",
+   "Asuransi perjalanan umrah",
+   "Perlengkapan umrah, manasik, dan handling",
+   "Bonus kereta cepat 1x",
+   "City tour Thaif",
+   "PPh 2%"
+  ],
+  "excludes": [
+   "Pengeluaran pribadi seperti mini bar, telepon, layanan kamar, laundry, tambahan makan di luar acara perjalanan, dan pengeluaran pribadi lainnya",
+   "Biaya kelebihan bagasi",
+   "Bea masuk barang di Indonesia dan negara yang dikunjungi",
+   "Biaya pembuatan paspor dan vaksin meningitis",
+   "Kereta gantung Teleferic"
+  ],
+  "terms": "<h3>Persyaratan peserta</h3><ul><li>Semua usia bisa berumrah</li><li>Pendaftaran wajib disertai booking fee Rp1.000.000/orang (non refundable), ditambah uang muka Rp10.000.000/orang</li><li>Pelunasan paling lambat 1 bulan sebelum keberangkatan; jika tidak dilunasi dianggap mengundurkan diri</li><li>Paspor berlaku minimal 12 bulan sebelum jadwal keberangkatan, nama minimal 2 suku kata</li><li>Pas foto 4x6 berwarna latar putih (wajah 80%) 2 lembar, fotokopi KTP, KK, dan buku nikah bagi suami istri</li><li>Suntik meningitis dan polio dengan melampirkan ICV / e-ICV</li></ul><h3>Kebijakan pembatalan</h3><ul><li>Lebih dari 35 hari sebelum keberangkatan: potongan Rp5.000.000/peserta atau 25% dari harga paket (mana yang lebih besar)</li><li>35–21 hari sebelum keberangkatan: 50% dari harga paket</li><li>20–15 hari sebelum keberangkatan: 75% dari harga paket</li><li>14 hari sebelum keberangkatan hingga hari H: 100% dari harga paket</li><li>Jika visa ditolak, biaya visa hangus dan tetap dikenakan biaya pembatalan maskapai serta hotel</li><li>Jika tour dibatalkan oleh penyelenggara, seluruh biaya dikembalikan 100%</li><li>Peserta yang tidak hadir pada hari keberangkatan (no show) dianggap mengundurkan diri dan biaya hangus</li></ul><h3>Jumlah peserta</h3><ul><li>Minimum keberangkatan 35 peserta dewasa. Jika kurang, ada penyesuaian biaya:</li><li>10–14 peserta: tambahan Rp5.000.000/orang</li><li>15–20 peserta: tambahan Rp2.500.000/orang</li><li>21–30 peserta: tambahan Rp1.500.000/orang</li></ul><p>Airport tax, fuel surcharge, jadwal, hotel, maskapai, dan harga dapat berubah sewaktu-waktu menyesuaikan keadaan.</p>",
+  "has_shopping": false,
+  "countries": [
+   "saudi-arabia"
+  ],
+  "sort": 0,
+  "is_featured": false,
+  "featured_sort": 0
+ },
+ {
+  "no": 42,
+  "type": "group",
+  "name": "Year End Korea Winter Experience",
+  "slug": "6d4n-year-end-korea-winter-experience",
+  "duration": "6D4N",
+  "route": "Nami Island – Everland – Suwon – Seoul",
+  "region": "asia",
+  "area_label": {
+   "en": "South Korea",
+   "id": "Korea Selatan"
+  },
+  "description": {
+   "en": "<p>A year-end winter holiday in Korea with Everland, a ski resort visit and the Painters Show, flying Malaysia Airlines.</p>",
+   "id": "<p>Liburan akhir tahun di musim dingin Korea, termasuk Everland, bermain salju di Ski Resort, dan pertunjukan Painters Show, dengan penerbangan Malaysia Airlines.</p>"
+  },
+  "highlights": [
+   "Namsan Seoul Tower",
+   "Nami Island",
+   "Suwon Hwaseong Fortress",
+   "Suwon Starfield Library",
+   "Gyeongbok Palace"
+  ],
+  "cover": "tours/6d4n-year-end-korea-winter-experience.webp",
+  "cover_alt": "Atap istana Gyeongbokgung tertutup salju di Seoul",
+  "cover_credit": "KOCIS Korea Snowfall in Gyeongbokgung 19 (Korea.net / Korean Culture and Information Service, CC BY-SA 2.0) | https://commons.wikimedia.org/wiki/File:KOCIS_Korea_Snowfall_in_Gyeongbokgung_19_(11318862306).jpg",
+  "pdf": "pdf/6d4n-year-end-korea-winter-experience.pdf",
+  "itinerary": [
+   {
+    "n": 1,
+    "title": "JAKARTA – KUALA LUMPUR – INCHEON",
+    "meals": "",
+    "hotel": "",
+    "text": "Peserta berkumpul di Bandara Internasional Soekarno-Hatta Terminal 3 untuk berangkat ke Seoul melalui Kuala Lumpur dengan Malaysia Airlines (CGK 12:15 – KUL 15:20 MH716 atau CGK 18:25 – KUL 21:35 MH722, lalu KUL 23:15 – ICN 06:30+1 MH066)."
+   },
+   {
+    "n": 2,
+    "title": "INCHEON – SKI RESORT – NAMI ISLAND",
+    "meals": "MS,MM",
+    "hotel": "",
+    "text": "Setibanya di Incheon International Airport, menuju Ski Resort untuk menikmati pengalaman bermain salju khas musim dingin Korea (peralatan dan pakaian ski tidak termasuk). Setelah itu mengunjungi Nami Island, pulau cantik lokasi syuting drama Winter Sonata."
+   },
+   {
+    "n": 3,
+    "title": "EVERLAND – SUWON",
+    "meals": "MP",
+    "hotel": "",
+    "text": "Mengunjungi Everland Theme Park, taman hiburan terbesar di Korea Selatan. Dilanjutkan ke Suwon Hwaseong Fortress, situs Warisan Dunia UNESCO peninggalan Dinasti Joseon, lalu Starfield Library Suwon yang megah. Sore hari kembali ke Seoul untuk beristirahat."
+   },
+   {
+    "n": 4,
+    "title": "SEOUL CITY TOUR",
+    "meals": "MP,MS",
+    "hotel": "",
+    "text": "Setelah sarapan, mengunjungi National Ginseng Museum dan K-Cosmetic Shop. City tour ke Gyeongbokgung Palace dan National Folk Museum. Sore hari berbelanja di Dongdaemun Fashion Town sebelum menyaksikan pertunjukan Painters Show."
+   },
+   {
+    "n": 5,
+    "title": "SEOUL EXPERIENCE",
+    "meals": "MP,MS",
+    "hotel": "",
+    "text": "Kunjungan ke Healthcare Shop (Red Pine) dan Amethyst Shop, lalu Making Kimbap Experience. Dilanjutkan ke N Seoul Tower (area observasi luar), Itaewon, Duty Free Shop, dan suasana Myeongdong Street."
+   },
+   {
+    "n": 6,
+    "title": "INCHEON – JAKARTA",
+    "meals": "MP",
+    "hotel": "",
+    "text": "Setelah sarapan, mampir ke supermarket lokal untuk oleh-oleh khas Korea, lalu diantar ke bandara (ICN 11:05 – KUL 16:45 MH067, lalu KUL 17:55 – CGK 19:05 MH725 atau KUL 22:30 – CGK 23:40 MH727)."
+   }
+  ],
+  "dates_label": "Desember 2026: 20, 22, 24, 25, 26, 29, 30, 31",
+  "price_from": 19200000,
+  "min_pax": 25,
+  "flights_included": true,
+  "dp_min": 6000000,
+  "departures": [
+   {
+    "date": "2026-12-20",
+    "price_adult": 19200000,
+    "price_child": 18250000,
+    "single_supp": 7450000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   },
+   {
+    "date": "2026-12-22",
+    "price_adult": 19500000,
+    "price_child": 18550000,
+    "single_supp": 7450000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   },
+   {
+    "date": "2026-12-24",
+    "price_adult": 19700000,
+    "price_child": 18850000,
+    "single_supp": 7450000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   },
+   {
+    "date": "2026-12-25",
+    "price_adult": 19700000,
+    "price_child": 18850000,
+    "single_supp": 7450000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   },
+   {
+    "date": "2026-12-26",
+    "price_adult": 19700000,
+    "price_child": 18850000,
+    "single_supp": 7450000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   },
+   {
+    "date": "2026-12-29",
+    "price_adult": 20200000,
+    "price_child": 19300000,
+    "single_supp": 7450000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   },
+   {
+    "date": "2026-12-30",
+    "price_adult": 20000000,
+    "price_child": 18850000,
+    "single_supp": 7450000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   },
+   {
+    "date": "2026-12-31",
+    "price_adult": 19200000,
+    "price_child": 18250000,
+    "single_supp": 7450000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   }
+  ],
+  "includes": [
+   "Tiket internasional Jakarta – Incheon – Jakarta dengan Malaysia Airlines, kelas ekonomi (non refund, non endorsable, non reroutable)",
+   "Airport tax dan fuel surcharge (dapat berubah)",
+   "Bagasi sesuai ketentuan maskapai",
+   "Hotel lokal bintang 3 atau setaraf (twin/triple)",
+   "Transportasi bus pariwisata dan tiket masuk objek wisata",
+   "Acara tour dan makan sesuai itinerary",
+   "Tour guide",
+   "Tour leader",
+   "Travel insurance (sampai usia 84 tahun)",
+   "Luggage tag",
+   "1 botol air mineral/orang/hari",
+   "Group visa Korea (jika tidak memenuhi syarat, diarahkan ke visa individual Rp1.300.000)",
+   "PPh 2%"
+  ],
+  "excludes": [
+   "Pengeluaran pribadi seperti mini bar, telepon, layanan kamar, laundry, tambahan makan di luar acara perjalanan, dan pengeluaran pribadi lainnya",
+   "Tour tambahan di luar program (optional tour)",
+   "Biaya kelebihan bagasi",
+   "Bea masuk barang di Indonesia dan negara yang dikunjungi",
+   "Biaya pembuatan dokumen perjalanan seperti paspor",
+   "Biaya tambahan menempati 1 kamar sendiri (single supplement)",
+   "Rental WiFi portable / SIM card",
+   "Tipping tour leader, guide, dan driver Rp1.000.000/orang",
+   "Peralatan dan pakaian ski"
+  ],
+  "terms": "<ul><li>Minimum keberangkatan 25 peserta dewasa</li><li>Kolom Anak pada jadwal = anak tanpa kasur (maks. 6 tahun). Anak dengan extra bed (maks. 12 tahun) sama dengan harga dewasa. Bayi (di bawah 23 bulan) Rp6.950.000</li><li>Program series group tour (konsorsium) gabungan beberapa biro perjalanan, reservasi first come first served</li><li>DP Rp6.000.000/orang disertai salinan paspor berlaku minimal 6 bulan sejak tanggal kepulangan</li><li>Peserta di atas 69 tahun atau dengan keterbatasan fisik/mental wajib didampingi, dan membayar premi asuransi tambahan</li><li>Tour bersubsidi dengan kunjungan shopping stop; penalti dikenakan bagi peserta yang tidak mengunjungi shopping stop</li><li>Jika visa Korea ditolak, dikenakan biaya pembatalan sesuai ketentuan</li><li>Airport tax, fuel surcharge, tipping, visa, jadwal, dan harga dapat berubah sewaktu-waktu</li></ul>",
+  "has_shopping": true,
+  "countries": [
+   "south-korea"
+  ],
+  "sort": 0,
+  "is_featured": false,
+  "featured_sort": 0
+ },
+ {
+  "no": 43,
+  "type": "fit",
+  "name": "West Coast USA Tour",
+  "slug": "6d5n-west-coast-usa-tour",
+  "duration": "6D5N",
+  "route": "Los Angeles – 17-Mile Drive – San Francisco – Yosemite National Park",
+  "region": "america",
+  "area_label": {
+   "en": "USA",
+   "id": "Amerika Serikat"
+  },
+  "highlights": [
+   "Golden Gate Bridge",
+   "Pebble Beach",
+   "17-Mile Drive",
+   "Palace of Fine Arts",
+   "Lombard Street & Fisherman's Wharf",
+   "San Francisco City Tour",
+   "Yosemite National Park"
+  ],
+  "cover": "tours/6d5n-west-coast-usa-tour.webp",
+  "cover_alt": "Golden Gate Bridge di San Francisco",
+  "cover_credit": "GoldenGateBridge-001 (Rich Niewiroski Jr., CC BY 2.5) | https://commons.wikimedia.org/wiki/File:GoldenGateBridge-001.jpg",
+  "pdf": "pdf/6d5n-west-coast-usa-tour.pdf",
+  "itinerary": [
+   {
+    "n": 1,
+    "title": "LOS ANGELES (LAX) – PENJEMPUTAN",
+    "meals": "",
+    "hotel": "Lincoln Hotel Monterey Park/Los Angeles atau Hartford Hotel, BW Signature Collection / Setaraf",
+    "text": "Setibanya di Los Angeles International Airport (LAX), Anda disambut perwakilan kami dan diantar ke hotel untuk check in dan beristirahat sebelum menjelajahi Los Angeles."
+   },
+   {
+    "n": 2,
+    "title": "LOS ANGELES",
+    "meals": "",
+    "hotel": "Lincoln Hotel Monterey Park/Los Angeles atau Hartford Hotel, BW Signature Collection / Setaraf",
+    "text": "Waktu bebas menikmati Los Angeles: bersantai, menjelajah kota secara mandiri, atau mengikuti optional tour ke destinasi ikonik di Los Angeles dan sekitarnya."
+   },
+   {
+    "n": 3,
+    "title": "LOS ANGELES",
+    "meals": "",
+    "hotel": "Lincoln Hotel Monterey Park/Los Angeles atau Hartford Hotel, BW Signature Collection / Setaraf",
+    "text": "Waktu bebas menikmati Los Angeles: bersantai, menjelajah kota secara mandiri, atau mengikuti optional tour ke destinasi ikonik di Los Angeles dan sekitarnya."
+   },
+   {
+    "n": 4,
+    "title": "LOS ANGELES – 17-MILE DRIVE – SAN FRANCISCO",
+    "meals": "",
+    "hotel": "Wild Palms, a JDV by Hyatt Hotel / Setaraf",
+    "text": "Pagi hari berangkat melintasi dataran pertanian subur California Tengah. Sore hari tiba di Monterey Peninsula dan menyusuri California State Route 1 dengan panorama pesisir yang menakjubkan, termasuk 17-Mile Drive. Tiba di San Francisco pada malam hari."
+   },
+   {
+    "n": 5,
+    "title": "SAN FRANCISCO CITY TOUR – YOSEMITE",
+    "meals": "",
+    "hotel": "Holiday Inn Express & Suites Chowchilla – Yosemite Park Area atau Ramada by Wyndham Modesto Yosemite / Setaraf",
+    "text": "Mengunjungi Golden Gate Bridge yang ikonik dan kawasan Fisherman's Wharf, lalu Palace of Fine Arts dan Lombard Street yang berkelok-kelok. Tersedia San Francisco Bay Cruise (opsional)."
+   },
+   {
+    "n": 6,
+    "title": "YOSEMITE NATIONAL PARK – LOS ANGELES (LAX DROP-OFF)",
+    "meals": "MP",
+    "hotel": "",
+    "text": "Pagi hari mengunjungi Yosemite National Park, Situs Warisan Dunia UNESCO di pegunungan Sierra Nevada. Setelah tour, diantar ke Los Angeles International Airport (LAX). Disarankan memesan penerbangan setelah pukul 20:00 (domestik) atau 21:00 (internasional)."
+   }
+  ],
+  "dates_label": "01 Juli – 14 Desember 2026 (keberangkatan setiap hari)",
+  "price_from": 11750000,
+  "min_pax": 2,
+  "flights_included": false,
+  "dp_min": 5000000,
+  "departures": [],
+  "includes": [
+   "Akomodasi hotel berbintang selama 4 malam sesuai program",
+   "Sarapan pagi sesuai itinerary",
+   "Transportasi selama tour",
+   "Supir dan pemandu wisata profesional berbahasa Mandarin dan Inggris (atau supir merangkap pemandu)",
+   "Penjemputan bandara LAX 1x di hari pertama (setiap 2 jam, 10:00–22:00)",
+   "PPh 2%"
+  ],
+  "excludes": [
+   "Tiket penerbangan internasional PP",
+   "Pengeluaran pribadi seperti mini bar, telepon, layanan kamar, laundry, tambahan makan di luar acara perjalanan, dan pengeluaran pribadi lainnya",
+   "Biaya wajib dibayar di tempat: mandatory fee USD 50, service fee guide & driver USD 15/orang/hari, fuel surcharge USD 5/orang/hari",
+   "Tiket masuk objek wisata dan optional tour (dibeli melalui pemandu)",
+   "Biaya pembuatan visa dan paspor",
+   "Travel insurance",
+   "Makan yang tidak disebutkan dalam itinerary",
+   "Tipping guide dan driver minimal USD 15/orang/hari"
+  ],
+  "terms": "<p>Harga per orang: Quad Rp11.750.000, Triple Rp12.750.000, Double Rp14.400.000, Single Rp21.200.000.</p><ul><li>Minimum keberangkatan 2 orang</li><li>DP Rp5.000.000/orang dan wajib melampirkan tiket pesawat saat reservasi</li><li>Visa Amerika Serikat yang masih berlaku wajib dimiliki sebelum keberangkatan</li><li>Harga hotel dynamic rate dan dapat berubah sesuai tingkat hunian; harga juga menyesuaikan jumlah peserta dan high season surcharge</li><li>Konfirmasi hotel malam pertama dan kontak pemandu diberikan H-1/H-2; hotel berikutnya diinformasikan selama tour</li><li>Jika penjemputan tidak dapat dilakukan karena keterlambatan atau perubahan penerbangan, biaya transportasi ke hotel ditanggung peserta</li><li>Tidak ada refund untuk layanan yang tidak digunakan</li></ul>",
+  "has_shopping": false,
+  "countries": [
+   "usa"
+  ],
+  "sort": 0,
+  "is_featured": false,
+  "featured_sort": 0
  }
 ]

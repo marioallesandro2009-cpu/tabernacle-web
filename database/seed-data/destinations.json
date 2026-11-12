@@ -268,5 +268,14 @@
   "slug": "vietnam",
   "region": "asia",
   "sort": 30
+ },
+ {
+  "name": {
+   "en": "Saudi Arabia",
+   "id": "Arab Saudi"
+  },
+  "slug": "saudi-arabia",
+  "region": "middle-east",
+  "sort": 31
  }
 ]

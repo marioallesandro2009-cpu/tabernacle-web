@@ -125,12 +125,33 @@ class ContentSeeder extends Seeder
 
     protected function tours(): void
     {
+        $this->importTours();
+    }
+
+    /**
+     * Imports packages from tours.json that do not exist yet. With $only, just those slugs
+     * (used by data migrations so packages an admin deleted are never brought back).
+     *
+     * @param  array<int, string>  $only
+     */
+    public function importTours(array $only = []): int
+    {
+        $this->svc ??= app(MediaService::class);
+        $this->data ??= database_path('seed-data/');
+        $this->assets ??= database_path('seed-assets/');
+        if ($only) {
+            foreach ($this->json('destinations.json') as $row) {
+                Destination::firstOrCreate(['slug' => $row['slug']], $row + ['is_active' => true]);
+            }
+        }
         $cats = TourCategory::pluck('id', 'kind');
         $dests = Destination::pluck('id', 'slug');
+        $made = 0;
         foreach ($this->json('tours.json') as $t) {
-            if (Tour::where('slug', $t['slug'])->exists()) {
+            if (($only && ! in_array($t['slug'], $only, true)) || Tour::where('slug', $t['slug'])->exists()) {
                 continue;
             }
+            $made++;
             $cover = $this->media($t['cover'], 'paket', $t['cover_alt'], $t['slug'].'.webp');
             $pdf = $this->media($t['pdf'], 'itinerary-pdf', null, $t['slug'].'.pdf');
             $tour = Tour::create([
@@ -139,9 +160,14 @@ class ContentSeeder extends Seeder
                 'pdf_id' => $pdf, 'itinerary' => $t['itinerary'], 'dates_label' => $t['dates_label'], 'price_from' => $t['price_from'], 'min_pax' => $t['min_pax'],
                 'flights_included' => $t['flights_included'], 'includes' => $t['includes'], 'excludes' => $t['excludes'], 'has_shopping' => $t['has_shopping'],
                 'is_featured' => $t['is_featured'], 'featured_sort' => $t['featured_sort'], 'is_active' => true, 'sort' => $t['sort'],
+                'departures' => $t['departures'] ?? null, 'dp_min' => $t['dp_min'] ?? null, 'terms' => isset($t['terms']) ? clean_html($t['terms']) : null,
+                'description' => $t['description'] ?? null,
             ]);
             $tour->destinations()->sync(collect($t['countries'])->map(fn ($s) => $dests[$s] ?? null)->filter()->values()->all());
         }
+        Content::bump();
+
+        return $made;
     }
 
     protected function pages(): void
@@ -154,7 +180,7 @@ class ContentSeeder extends Seeder
                 continue;
             }
             foreach ($p['sections'] as $i => $s) {
-                $page->sections()->create(['type' => $s['type'], 'name' => $s['name'], 'data' => $this->resolve($s['data']), 'sort' => $i + 1, 'is_visible' => true]);
+                $page->sections()->create(['type' => $s['type'], 'name' => $s['name'], 'data' => $this->resolve($s['data']), 'sort' => $i + 1, 'is_visible' => $s['is_visible'] ?? true]);
             }
         }
     }
