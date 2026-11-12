@@ -1,11 +1,13 @@
 <?php
 
+use App\Mail\BackupMail;
 use App\Models\Post;
 use App\Services\DatabaseBackup;
 use App\Support\AnalyticsAggregator;
 use App\Support\Content;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schedule;
 
 /*
@@ -30,11 +32,23 @@ Artisan::command('posts:publish-due', function () {
     $this->info("$n artikel terbit");
 })->purpose('Menerbitkan artikel terjadwal yang waktunya sudah tiba');
 
-Artisan::command('db:backup {--keep=8}', function (DatabaseBackup $backup) {
+Artisan::command('db:backup {--keep=14} {--no-mail : jangan kirim salinan ke email}', function (DatabaseBackup $backup) {
     $path = $backup->create();
     $backup->prune((int) $this->option('keep'));
     $this->info('Backup: '.$path);
-})->purpose('Backup database ke storage/app/backups');
+
+    // a copy outside the server: emailed to the address set in Pengaturan (optional)
+    $to = trim((string) setting('backup_email', ''));
+    if ($to !== '' && ! $this->option('no-mail')) {
+        try {
+            Mail::to($to)->send(new BackupMail($path));
+            $this->info('Salinan dikirim ke '.$to);
+        } catch (Throwable $e) {
+            report($e);
+            $this->error('Email backup gagal: '.$e->getMessage());
+        }
+    }
+})->purpose('Backup database ke storage/app/backups (dan salinan ke email jika diatur)');
 
 /*
 | Every task runs inside the schedule:run process (Schedule::call + Artisan::call).
@@ -46,7 +60,7 @@ $task = fn (string $name, array $args = []) => Schedule::call(fn () => Artisan::
 $task('analytics:aggregate')->hourly();
 Schedule::call(fn () => Artisan::call('analytics:aggregate', ['--day' => now()->subDay()->toDateString()]))->name('analytics:aggregate yesterday')->dailyAt('00:10');
 $task('posts:publish-due')->everyFiveMinutes();
-$task('db:backup')->weeklyOn(0, '02:00');
+$task('db:backup')->dailyAt('02:00')->timezone('Asia/Jakarta'); // every night, last 14 kept on the server
 // No queue daemon on shared hosting: drain the queue every minute instead (lead emails go out within a minute).
 $task('queue:work', ['--stop-when-empty' => true, '--max-time' => 50, '--tries' => 3])->everyMinute()->withoutOverlapping(10);
 $task('queue:prune-failed', ['--hours' => 720])->daily();

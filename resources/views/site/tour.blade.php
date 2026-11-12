@@ -3,7 +3,7 @@
 @php
     $kind = $tour->category?->kind ?? ($tour->flights_included ? 'group' : 'fit');
     $price = $tour->fromPrice();
-    $fullName = trim(($tour->duration ? $tour->duration.' ' : '').$tour->name);
+    $fullName = trim(($tour->duration ? $tour->duration.' ' : '').$tour->displayName());
     $departures = collect($tour->upcomingDepartures());
     $spans = \App\Support\SiteData::SPANS;
     $gallery = collect($tour->gallery ?: [])->filter()->values();
@@ -26,12 +26,12 @@
 
 @section('content')
 <section class="tr-hero">
-  <div class="tr-bg"><img {!! media_attrs($tour->cover_id, '100vw', $tour->name) !!} fetchpriority="high"></div>
+  <div class="tr-bg"><img {!! media_attrs($tour->cover_id, '100vw', $tour->displayName()) !!} fetchpriority="high"></div>
   <div class="wrap tr-hero-in">
     <p class="tr-crumb mono"><a href="{{ url('/packages') }}">{{ t('tour.crumb') }}</a> / <span>{{ t('region.'.$tour->region) }}</span></p>
     <p class="tr-tags mono"><span class="tag">{{ t('tour.type.'.$kind) }}</span>@if ($tour->duration)<span class="tag">{{ $tour->duration }}</span>@endif @foreach ($tour->destinations as $d)<a class="tag" href="{{ url('/packages') }}?country={{ $d->slug }}">{{ tr($d->name) }}</a>@endforeach
       @if (tr($tour->promo_label))<span class="tag tag-promo">{{ tr($tour->promo_label) }}</span>@endif</p>
-    <h1 class="display h-l">{{ $tour->name }}</h1>
+    <h1 class="display h-l">{{ $tour->displayName() }}</h1>
     @if ($tour->route)<p class="tr-route">{{ $tour->route }}</p>@endif
   </div>
 </section>
@@ -60,7 +60,7 @@
           <p class="kicker mono">{{ t('tour.gallery') }}</p>
           <ul class="tr-gallery">
             @foreach ($gallery as $mid)
-              <li @class(['wide' => $loop->first])><button type="button" data-full="{{ media_url($mid, 1600) }}" data-title="{{ media_alt($mid) ?: $tour->name }}" data-meta="{{ $loop->iteration }} / {{ $gallery->count() }}" aria-label="{{ t('tour.gallery') }} {{ $loop->iteration }}"><img {!! media_attrs($mid, $loop->first ? '(max-width: 860px) 100vw, 60vw' : '(max-width: 860px) 50vw, 25vw', $tour->name) !!} loading="lazy"></button></li>
+              <li @class(['wide' => $loop->first])><button type="button" data-full="{{ media_url($mid, 1600) }}" data-title="{{ media_alt($mid) ?: $tour->displayName() }}" data-meta="{{ $loop->iteration }} / {{ $gallery->count() }}" aria-label="{{ t('tour.gallery') }} {{ $loop->iteration }}"><img {!! media_attrs($mid, $loop->first ? '(max-width: 860px) 100vw, 60vw' : '(max-width: 860px) 50vw, 25vw', $tour->displayName()) !!} loading="lazy"></button></li>
             @endforeach
           </ul>
         </div>

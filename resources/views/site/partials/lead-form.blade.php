@@ -1,5 +1,5 @@
 @php
-    $leadTours = collect(\App\Support\SiteData::tourCards())->map(fn ($c) => ['id' => $c['id'], 'label' => trim($c['duration'].' '.$c['name'])])->values()->all();
+    $leadTours = collect(\App\Support\SiteData::tourCards())->map(fn ($c) => ['id' => $c['id'], 'label' => trim($c['duration'].' '.tr($c['name']))])->values()->all();
     $leadProps = [
         'endpoint' => url('/leads'), 'csrf' => csrf_token(), 'tourId' => $tourId ?? null, 'tours' => $leadTours, 'today' => now()->toDateString(),
         'labels' => [

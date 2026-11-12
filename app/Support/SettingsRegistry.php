@@ -57,6 +57,7 @@ class SettingsRegistry
                 F::textarea('robots_txt', 'Isi robots.txt', ['max' => 5000]),
                 F::toggle('lead_notify_enabled', 'Kirim email notifikasi saat ada lead baru', ['default' => true]),
                 F::toggle('analytics_enabled', 'Aktifkan analitik pengunjung bawaan', ['default' => true]),
+                F::email('backup_email', 'Kirim salinan backup database harian ke email ini (opsional; simpanan di luar server, dikirim tiap malam pukul 02.00 WIB)'),
             ]],
         ];
     }

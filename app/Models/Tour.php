@@ -76,6 +76,12 @@ class Tour extends Model
         return app()->getLocale() === 'en';
     }
 
+    /** Package name in the visitor's language (English name when set, else the Indonesian one). */
+    public function displayName(): string
+    {
+        return (string) ($this->english() && filled($this->name_en) ? $this->name_en : $this->name);
+    }
+
     /**
      * Itinerary in the visitor's language: on the English site each day takes its English
      * title / text / hotel (matched by position) and falls back to Indonesian when empty.

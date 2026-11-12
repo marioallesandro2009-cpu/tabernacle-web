@@ -120,6 +120,9 @@ class ContentSeeder extends Seeder
                 continue;
             }
             $set = [];
+            if (! $tour->name_en && ! empty($en['name']) && $en['name'] !== $tour->name) {
+                $set['name_en'] = $en['name'];
+            }
             if (empty($tour->itinerary_en) && ! empty($en['itinerary'])) {
                 $set['itinerary_en'] = $en['itinerary'];
             }

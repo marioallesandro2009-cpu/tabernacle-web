@@ -38,6 +38,7 @@ class TourController extends ResourceController
 
         return [
             F::text('name', 'Nama paket', ['required' => true]),
+            F::text('name_en', 'Nama paket (English, opsional; kosongkan jika sama)'),
             F::slug('slug', 'Slug (alamat halaman)', 'name'),
             F::select('category_id', 'Kategori', $cats, ['required' => true]),
             F::text('duration', 'Durasi, contoh 6D5N'),

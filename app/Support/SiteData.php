@@ -43,11 +43,11 @@ class SiteData
         return Content::remember('tour_cards', function () {
             return Tour::query()->active()->with(['category', 'destinations'])->orderBy('sort')->orderBy('id')->get()->map(function (Tour $t) {
                 $countries = $t->destinations->pluck('slug')->all();
-                $searchParts = [$t->name, $t->route, tr($t->area_label, 'en'), ...$t->destinations->map(fn ($d) => tr($d->name, 'en'))->all(),
+                $searchParts = [$t->name, (string) $t->name_en, $t->route, tr($t->area_label, 'en'), ...$t->destinations->map(fn ($d) => tr($d->name, 'en'))->all(),
                     ...($t->highlights ?: []), ...collect($t->itinerary ?: [])->pluck('title')->all()];
 
                 return [
-                    'id' => $t->id, 'slug' => $t->slug, 'name' => $t->name, 'duration' => $t->duration, 'area' => $t->area_label,
+                    'id' => $t->id, 'slug' => $t->slug, 'name' => ['id' => $t->name, 'en' => $t->name_en ?: $t->name], 'duration' => $t->duration, 'area' => $t->area_label,
                     'kind' => ($t->category_id ? $t->category->kind : null) ?? ($t->flights_included ? 'group' : 'fit'), 'region' => $t->region,
                     'countries' => $countries, 'search' => self::norm(implode(' ', $searchParts)),
                     'price' => $t->fromPrice(), 'min_pax' => $t->min_pax, 'flights' => (bool) $t->flights_included,

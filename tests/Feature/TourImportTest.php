@@ -1,14 +1,20 @@
 <?php
 
+use App\Mail\BackupMail;
 use App\Models\Destination;
 use App\Models\Gallery;
 use App\Models\Media;
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\Setting;
 use App\Models\Tour;
 use App\Models\TourCategory;
+use App\Services\DatabaseBackup;
+use App\Support\Content;
 use App\Support\ContentTools;
 use Database\Seeders\ContentSeeder;
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Mail;
 
 beforeEach(function () {
     config(['filesystems.disks.uploads.root' => sys_get_temp_dir().'/tw-uploads-'.uniqid()]);
@@ -164,4 +170,39 @@ it('loads the calm corporate stylesheet and no motion libraries', function () {
     Page::create(['key' => 'home', 'slug' => 'home', 'title' => ['en' => 'Home', 'id' => 'Beranda'], 'is_active' => true, 'is_system' => true]);
     $html = $this->get('/?lang=id')->assertOk()->getContent();
     expect($html)->toContain('assets/css/corporate.css')->not->toContain('gsap.min.js')->not->toContain('lenis.min.js');
+});
+
+it('shows the English package name on the English site only', function () {
+    $seeder = new ContentSeeder;
+    $seeder->importTours(['9d7n-umrah-reguler-18-desember-2026']);
+    $seeder->importEnglish();
+    expect(Tour::where('slug', '9d7n-umrah-reguler-18-desember-2026')->value('name_en'))->toBe('Regular Umrah 18 December 2026');
+    $this->get('/packages/9d7n-umrah-reguler-18-desember-2026?lang=en')->assertOk()->assertSee('Regular Umrah 18 December 2026');
+    $this->get('/packages/9d7n-umrah-reguler-18-desember-2026?lang=id')->assertOk()->assertSee('Umrah Reguler 18 Desember 2026')->assertDontSee('Regular Umrah 18 December 2026');
+});
+
+it('backs up the database every night and emails a copy when an address is set', function () {
+    Mail::fake();
+    // the real dump needs MySQL; tests run on sqlite, so a stand-in writes a small file
+    app()->instance(DatabaseBackup::class, new class extends DatabaseBackup
+    {
+        public function create(): string
+        {
+            $p = sys_get_temp_dir().'/tw-backup-test.sql.gz';
+            file_put_contents($p, gzencode('-- test'));
+
+            return $p;
+        }
+
+        public function prune(int $keep = 8): int
+        {
+            return 0;
+        }
+    });
+    Setting::updateOrCreate(['key' => 'backup_email'], ['value' => json_encode('backup@example.com')]);
+    Content::bump();
+    $this->artisan('db:backup', ['--keep' => 2])->assertSuccessful();
+    Mail::assertSent(BackupMail::class, fn ($m) => $m->hasTo('backup@example.com'));
+    $events = collect(app(Schedule::class)->events())->filter(fn ($e) => str_contains((string) $e->description, 'db:backup'));
+    expect($events->first()->expression)->toBe('0 2 * * *')->and($events->first()->timezone)->toBe('Asia/Jakarta');
 });

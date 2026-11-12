@@ -103,7 +103,7 @@ class PageController extends Controller
         if ($related->count() < 3) {
             $related = $related->concat($cards->where('id', '!=', $tour->id)->whereNotIn('id', $related->pluck('id'))->take(3 - $related->count()));
         }
-        $name = $tour->name;
+        $name = $tour->displayName();
         $price = $tour->fromPrice();
         $schema = [
             Seo::breadcrumbs([['Home', url('/')], [t('tour.crumb'), url('/packages')], [$name, url()->current()]]),
