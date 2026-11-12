@@ -118,6 +118,17 @@ php83 composer.phar install --no-dev --optimize-autoloader
 
 (Jika `composer` sudah tersedia: `composer install --no-dev --optimize-autoloader`.)
 
+> **Server Rumahweb mematikan `proc_open`.** Akibatnya skrip otomatis Composer gagal dengan pesan
+> "The Process class relies on proc_open". Itu tidak merusak instalasi. Jalankan dengan `--no-scripts`
+> lalu satu perintah tambahan:
+>
+> ```bash
+> php83 composer.phar install --no-dev --optimize-autoloader --no-scripts
+> php83 artisan package:discover
+> ```
+>
+> Tugas terjadwal di aplikasi ini sudah dibuat agar tetap berjalan tanpa `proc_open`.
+
 ---
 
 ## 6. Atur `.env`

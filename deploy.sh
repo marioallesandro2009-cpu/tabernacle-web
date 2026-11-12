@@ -9,7 +9,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 # Pakai PHP yang sama dengan situs. Ubah jika versi PHP Anda berbeda.
-PHP="${PHP_BIN:-/opt/cpanel/ea-php83/root/usr/bin/php}"
+PHP="${PHP_BIN:-/opt/cpanel/ea-php84/root/usr/bin/php}"
 [ -x "$PHP" ] || PHP="$(command -v php)"
 
 # Composer: composer global kalau ada, kalau tidak pakai composer.phar di folder ini.
@@ -28,7 +28,9 @@ if [ -d .git ]; then
 fi
 
 echo "==> Memasang dependensi (tanpa paket pengembangan)"
-$COMPOSER install --no-dev --optimize-autoloader --no-interaction
+# --no-scripts: hosting ini mematikan proc_open, jadi skrip Composer dijalankan manual di bawah
+$COMPOSER install --no-dev --optimize-autoloader --no-interaction --no-scripts
+$PHP artisan package:discover --ansi
 
 echo "==> Migrasi database"
 $PHP artisan migrate --force

@@ -36,10 +36,17 @@ Artisan::command('db:backup {--keep=8}', function (DatabaseBackup $backup) {
     $this->info('Backup: '.$path);
 })->purpose('Backup database ke storage/app/backups');
 
-Schedule::command('analytics:aggregate')->hourly();
-Schedule::command('analytics:aggregate --day='.now()->subDay()->toDateString())->dailyAt('00:10');
-Schedule::command('posts:publish-due')->everyFiveMinutes();
-Schedule::command('db:backup')->weeklyOn(0, '02:00');
-// Shared hosting has no queue daemon: drain the queue every minute instead.
-Schedule::command('queue:work --stop-when-empty --max-time=50 --tries=3')->everyMinute()->withoutOverlapping();
-Schedule::command('queue:prune-failed --hours=720')->daily();
+/*
+| Every task runs inside the schedule:run process (Schedule::call + Artisan::call).
+| Shared hosting such as Rumahweb disables proc_open, and Schedule::command() needs it
+| to start each task as a separate process, so those tasks would never run there.
+*/
+$task = fn (string $name, array $args = []) => Schedule::call(fn () => Artisan::call($name, $args))->name($name.' '.json_encode($args));
+
+$task('analytics:aggregate')->hourly();
+Schedule::call(fn () => Artisan::call('analytics:aggregate', ['--day' => now()->subDay()->toDateString()]))->name('analytics:aggregate yesterday')->dailyAt('00:10');
+$task('posts:publish-due')->everyFiveMinutes();
+$task('db:backup')->weeklyOn(0, '02:00');
+// No queue daemon on shared hosting: drain the queue every minute instead (lead emails go out within a minute).
+$task('queue:work', ['--stop-when-empty' => true, '--max-time' => 50, '--tries' => 3])->everyMinute()->withoutOverlapping(10);
+$task('queue:prune-failed', ['--hours' => 720])->daily();
