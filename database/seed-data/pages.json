@@ -955,6 +955,24 @@
     }
    },
    {
+    "type": "team",
+    "name": "Jajaran petinggi",
+    "data": {
+     "kicker": {
+      "en": "Our team",
+      "id": "Tim kami"
+     },
+     "title_a": {
+      "en": "Our",
+      "id": "Jajaran"
+     },
+     "title_b": {
+      "en": "leadership",
+      "id": "petinggi"
+     }
+    }
+   },
+   {
     "type": "numbers",
     "name": "Angka (contoh, ganti)",
     "data": {
