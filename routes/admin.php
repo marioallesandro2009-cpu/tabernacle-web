@@ -147,6 +147,10 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::get('import/{id}/mapping', [Outreach\ImportController::class, 'mapping'])->whereNumber('id');
             Route::post('import/{id}/run', [Outreach\ImportController::class, 'run'])->whereNumber('id');
             Route::get('import/{id}', [Outreach\ImportController::class, 'show'])->whereNumber('id');
+            Route::get('replies', [Outreach\ReplyController::class, 'index']);
+            Route::post('replies/poll', [Outreach\ReplyController::class, 'poll']);
+            Route::post('replies/{id}/label', [Outreach\ReplyController::class, 'label'])->whereNumber('id');
+            Route::post('replies/{id}/lead', [Outreach\ReplyController::class, 'lead'])->whereNumber('id');
             Route::get('templates', [Outreach\TemplateController::class, 'index']);
             Route::post('templates', [Outreach\TemplateController::class, 'store']);
             Route::post('templates/preview', [Outreach\TemplateController::class, 'preview']);

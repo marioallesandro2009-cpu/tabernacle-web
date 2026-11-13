@@ -78,7 +78,7 @@ class SendOutreachMessage implements ShouldQueue
         return match (true) {
             $campaign->status !== 'running' => 'Kampanye sedang tidak berjalan.',
             ! $campaign->inWindow() => 'Di luar jam kirim.',
-            ! in_array($cc->status, ['queued', 'sent'], true) => 'Kontak sudah tidak perlu dikirimi.',
+            ! in_array($cc->status, ['queued', 'sent', 'auto_replied'], true) => 'Kontak sudah tidak perlu dikirimi.',
             ! $contact->isSendable() => 'Email kontak tidak valid atau kontak berhenti.',
             $cc->current_step + 1 !== (int) $m->step => 'Langkah ini sudah terkirim atau berubah.',
             ! $account->is_active => 'Akun pengirim tidak aktif.',
@@ -94,7 +94,7 @@ class SendOutreachMessage implements ShouldQueue
         $first = $cc->first_sent_at ?? now();
         $next = $campaign->steps->where('template_id', '!=', null)->firstWhere('step', $step + 1);
         $cc->update([
-            'status' => 'sent', 'current_step' => $step, 'first_sent_at' => $first, 'last_sent_at' => now(),
+            'status' => $cc->status === 'auto_replied' ? 'auto_replied' : 'sent', 'current_step' => $step, 'first_sent_at' => $first, 'last_sent_at' => now(),
             'root_message_id' => $cc->root_message_id ?: $messageId,
             'next_send_at' => $next ? $first->copy()->addDays((int) $next->day_offset) : null,
         ]);

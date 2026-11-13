@@ -68,7 +68,7 @@ class CampaignScheduler
     protected function nextContact(Campaign $campaign, Account $account, int $stepCount, Carbon $now): ?CampaignContact
     {
         $noPending = fn ($m) => $m->whereIn('status', ['scheduled', 'sending']);
-        $followUp = CampaignContact::where('campaign_id', $campaign->id)->where('account_id', $account->id)->where('status', 'sent')
+        $followUp = CampaignContact::where('campaign_id', $campaign->id)->where('account_id', $account->id)->whereIn('status', ['sent', 'auto_replied'])
             ->where('current_step', '<', $stepCount)->where('next_send_at', '<=', $now)
             ->whereDoesntHave('messages', $noPending)->orderBy('next_send_at')->first();
         if ($followUp) {
@@ -127,7 +127,7 @@ class CampaignScheduler
     protected function completeIfDone(Campaign $campaign): void
     {
         $open = CampaignContact::where('campaign_id', $campaign->id)->where(function ($q) {
-            $q->where('status', 'queued')->orWhere(fn ($w) => $w->where('status', 'sent')->whereNotNull('next_send_at'));
+            $q->where('status', 'queued')->orWhere(fn ($w) => $w->whereIn('status', ['sent', 'auto_replied'])->whereNotNull('next_send_at'));
         })->exists();
         if (! $open && ! Message::where('campaign_id', $campaign->id)->whereIn('status', ['scheduled', 'sending'])->exists()) {
             $campaign->update(['status' => 'completed', 'completed_at' => now()]);

@@ -16,7 +16,7 @@ class CampaignContact extends Model
     protected $casts = ['next_send_at' => 'datetime', 'first_sent_at' => 'datetime', 'last_sent_at' => 'datetime'];
 
     /** Statuses after which no further email is ever sent. */
-    public const STOPPED = ['replied', 'bounced', 'auto_replied', 'unsubscribed', 'invalid', 'failed'];
+    public const STOPPED = ['replied', 'bounced', 'unsubscribed', 'invalid', 'failed'];
 
     /** @return BelongsTo<Campaign, $this> */
     public function campaign(): BelongsTo

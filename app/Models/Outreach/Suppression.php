@@ -28,7 +28,7 @@ class Suppression extends Model
         static::firstOrCreate(['email' => $email], ['reason' => $reason, 'note' => $note, 'created_at' => now()]);
         Contact::where('email', $email)->whereNull('suppressed_at')->update(['suppressed_at' => now(), 'suppressed_reason' => $reason]);
         $ids = Contact::where('email', $email)->pluck('id');
-        CampaignContact::whereIn('contact_id', $ids)->whereIn('status', ['queued', 'sent'])
+        CampaignContact::whereIn('contact_id', $ids)->whereIn('status', ['queued', 'sent', 'auto_replied'])
             ->update(['status' => $reason === 'bounced' ? 'bounced' : 'unsubscribed', 'next_send_at' => null]);
     }
 }

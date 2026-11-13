@@ -24,6 +24,7 @@ class AccountController extends Controller
             'username' => $a->username, 'daily_limit' => $a->daily_limit, 'is_active' => $a->is_active,
             'smtp_ok' => $a->smtp_ok, 'smtp_error' => $a->smtp_error, 'smtp_tested_at' => $a->smtp_tested_at?->locale('id')->diffForHumans(),
             'imap_ok' => $a->imap_ok, 'imap_error' => $a->imap_error, 'imap_tested_at' => $a->imap_tested_at?->locale('id')->diffForHumans(),
+            'imap_polled_at' => $a->imap_polled_at?->locale('id')->diffForHumans(),
         ]);
 
         return Inertia::render('Admin/Outreach/Accounts', ['accounts' => $accounts, 'presets' => Account::PRESETS]);

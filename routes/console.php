@@ -4,6 +4,7 @@ use App\Mail\BackupMail;
 use App\Models\Post;
 use App\Services\DatabaseBackup;
 use App\Services\Outreach\CampaignScheduler;
+use App\Services\Outreach\ReplyPoller;
 use App\Support\AnalyticsAggregator;
 use App\Support\Content;
 use Illuminate\Support\Facades\Artisan;
@@ -51,6 +52,11 @@ Artisan::command('db:backup {--keep=14} {--no-mail : jangan kirim salinan ke ema
     }
 })->purpose('Backup database ke storage/app/backups (dan salinan ke email jika diatur)');
 
+Artisan::command('outreach:poll-replies', function (ReplyPoller $poller) {
+    $r = $poller->pollAll();
+    $this->info("{$r['accounts']} akun dicek, {$r['stored']} pesan baru, {$r['errors']} gagal dibaca");
+})->purpose('Baca balasan dan bounce dari kotak masuk akun pengirim Outreach');
+
 Artisan::command('outreach:tick', function (CampaignScheduler $scheduler) {
     $this->info($scheduler->tick().' email dijadwalkan');
 })->purpose('Jadwalkan email berikutnya untuk kampanye Outreach yang berjalan');
@@ -66,6 +72,7 @@ $task('analytics:aggregate')->hourly();
 Schedule::call(fn () => Artisan::call('analytics:aggregate', ['--day' => now()->subDay()->toDateString()]))->name('analytics:aggregate yesterday')->dailyAt('00:10');
 $task('posts:publish-due')->everyFiveMinutes();
 $task('outreach:tick')->everyMinute()->withoutOverlapping(5); // sends the next outreach emails inside each campaign's hours
+$task('outreach:poll-replies')->everyTenMinutes()->withoutOverlapping(15); // reads replies and bounces from each sender inbox
 $task('db:backup')->dailyAt('02:00')->timezone('Asia/Jakarta'); // every night, last 14 kept on the server
 // No queue daemon on shared hosting: drain the queue every minute instead (lead emails go out within a minute).
 $task('queue:work', ['--stop-when-empty' => true, '--max-time' => 50, '--tries' => 3])->everyMinute()->withoutOverlapping(10);

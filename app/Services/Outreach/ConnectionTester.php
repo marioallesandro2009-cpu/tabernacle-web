@@ -58,7 +58,7 @@ class ConnectionTester
         }
     }
 
-    protected function friendly(Throwable $e): string
+    public function friendly(Throwable $e): string
     {
         $m = $e->getMessage();
         if (preg_match('/authenticat|535|login|credential|AUTHENTICATIONFAILED|invalid/i', $m)) {

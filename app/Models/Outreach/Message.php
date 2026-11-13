@@ -14,6 +14,12 @@ class Message extends Model
 
     protected $casts = ['scheduled_at' => 'datetime', 'sent_at' => 'datetime'];
 
+    /** @return BelongsTo<Campaign, $this> */
+    public function campaign(): BelongsTo
+    {
+        return $this->belongsTo(Campaign::class, 'campaign_id');
+    }
+
     /** @return BelongsTo<CampaignContact, $this> */
     public function campaignContact(): BelongsTo
     {

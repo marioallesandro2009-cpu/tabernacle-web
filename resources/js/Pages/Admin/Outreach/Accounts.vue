@@ -103,7 +103,7 @@ const word = (ok) => (ok === null || ok === undefined ? 'Belum dites' : ok ? 'Te
                     <div v-if="a.imap_error" class="mt-1 text-xs text-rose-600">{{ a.imap_error }}</div>
                 </div>
             </div>
-            <p v-if="a.smtp_tested_at" class="mt-2 text-xs text-slate-400">Dites {{ a.smtp_tested_at }}</p>
+            <p v-if="a.smtp_tested_at || a.imap_polled_at" class="mt-2 text-xs text-slate-400"><span v-if="a.smtp_tested_at">Dites {{ a.smtp_tested_at }}</span><span v-if="a.smtp_tested_at && a.imap_polled_at"> · </span><span v-if="a.imap_polled_at">Balasan terakhir dicek {{ a.imap_polled_at }}</span></p>
 
             <div class="mt-4 flex flex-wrap gap-2 border-t border-slate-100 pt-4">
                 <button class="o-btn o-btn-sm" :disabled="testing === a.id" @click="test(a)">
