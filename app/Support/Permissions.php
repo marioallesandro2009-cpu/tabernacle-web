@@ -17,11 +17,12 @@ class Permissions
         'settings.manage' => 'Kelola pengaturan situs dan sistem',
         'logs.view' => 'Lihat log aktivitas',
         'backup.manage' => 'Backup database',
+        'outreach.manage' => 'Kelola Outreach (kampanye email B2B: akun pengirim, kontak, template, kampanye, balasan)',
     ];
 
     public const ROLES = [
         'super_admin' => ['*'],
-        'admin' => ['content.manage', 'tours.manage', 'blog.manage', 'media.manage', 'leads.manage', 'leads.export', 'analytics.view'],
+        'admin' => ['content.manage', 'tours.manage', 'blog.manage', 'media.manage', 'leads.manage', 'leads.export', 'analytics.view', 'outreach.manage'],
         'editor' => ['blog.manage', 'media.manage'],
     ];
 

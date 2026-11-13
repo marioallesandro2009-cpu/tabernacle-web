@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\LoginHistoryController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\Outreach;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RecipientController;
@@ -122,6 +123,30 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::put('recipients/{id}', [RecipientController::class, 'update'])->whereNumber('id');
             Route::post('recipients/{id}/test', [RecipientController::class, 'test'])->whereNumber('id');
             Route::delete('recipients/{id}', [RecipientController::class, 'destroy'])->whereNumber('id');
+        });
+
+        // outreach (cold email campaigns): Super Admin and Admin
+        Route::middleware('can:outreach.manage')->prefix('outreach')->group(function () {
+            Route::get('/', fn () => redirect('/admin/outreach/contacts'));
+            Route::get('accounts', [Outreach\AccountController::class, 'index']);
+            Route::post('accounts', [Outreach\AccountController::class, 'store']);
+            Route::put('accounts/{id}', [Outreach\AccountController::class, 'update'])->whereNumber('id');
+            Route::post('accounts/{id}/test', [Outreach\AccountController::class, 'test'])->whereNumber('id');
+            Route::delete('accounts/{id}', [Outreach\AccountController::class, 'destroy'])->whereNumber('id');
+            Route::get('segments', [Outreach\SegmentController::class, 'index']);
+            Route::post('segments', [Outreach\SegmentController::class, 'store']);
+            Route::put('segments/{id}', [Outreach\SegmentController::class, 'update'])->whereNumber('id');
+            Route::delete('segments/{id}', [Outreach\SegmentController::class, 'destroy'])->whereNumber('id');
+            Route::get('contacts', [Outreach\ContactController::class, 'index']);
+            Route::post('contacts', [Outreach\ContactController::class, 'store']);
+            Route::post('contacts/bulk', [Outreach\ContactController::class, 'bulk']);
+            Route::put('contacts/{id}', [Outreach\ContactController::class, 'update'])->whereNumber('id');
+            Route::delete('contacts/{id}', [Outreach\ContactController::class, 'destroy'])->whereNumber('id');
+            Route::get('import', [Outreach\ImportController::class, 'create']);
+            Route::post('import', [Outreach\ImportController::class, 'store']);
+            Route::get('import/{id}/mapping', [Outreach\ImportController::class, 'mapping'])->whereNumber('id');
+            Route::post('import/{id}/run', [Outreach\ImportController::class, 'run'])->whereNumber('id');
+            Route::get('import/{id}', [Outreach\ImportController::class, 'show'])->whereNumber('id');
         });
 
         // system

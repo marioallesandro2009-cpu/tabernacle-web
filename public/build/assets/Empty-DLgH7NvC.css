@@ -1,0 +1,1 @@
+.o-modal-enter-active,.o-modal-leave-active{transition:opacity .15s ease}.o-modal-enter-active .o-modal-card,.o-modal-leave-active .o-modal-card{transition:transform .18s ease}.o-modal-enter-from,.o-modal-leave-to{opacity:0}.o-modal-enter-from .o-modal-card,.o-modal-leave-to .o-modal-card{transform:translateY(12px)}

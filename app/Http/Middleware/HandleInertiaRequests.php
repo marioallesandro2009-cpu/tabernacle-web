@@ -41,6 +41,11 @@ class HandleInertiaRequests extends Middleware
                 ['label' => 'Leads', 'url' => '/admin/leads', 'can' => 'leads.manage', 'icon' => 'inbox', 'badge' => 'leads'],
                 ['label' => 'Penerima notifikasi', 'url' => '/admin/recipients', 'can' => 'leads.manage', 'icon' => 'mail'],
             ]],
+            ['label' => 'Outreach', 'items' => [
+                ['label' => 'Kontak', 'url' => '/admin/outreach/contacts', 'can' => 'outreach.manage', 'icon' => 'users'],
+                ['label' => 'Segmen', 'url' => '/admin/outreach/segments', 'can' => 'outreach.manage', 'icon' => 'tag'],
+                ['label' => 'Akun pengirim', 'url' => '/admin/outreach/accounts', 'can' => 'outreach.manage', 'icon' => 'mail'],
+            ]],
             ['label' => 'Paket tour', 'items' => [
                 ['label' => 'Paket tour', 'url' => '/admin/tours', 'can' => 'tours.manage', 'icon' => 'plane'],
                 ['label' => 'Destinasi', 'url' => '/admin/destinations', 'can' => 'tours.manage', 'icon' => 'map'],
