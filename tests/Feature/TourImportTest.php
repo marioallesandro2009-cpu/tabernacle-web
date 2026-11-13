@@ -206,3 +206,23 @@ it('backs up the database every night and emails a copy when an address is set',
     $events = collect(app(Schedule::class)->events())->filter(fn ($e) => str_contains((string) $e->description, 'db:backup'));
     expect($events->first()->expression)->toBe('0 2 * * *')->and($events->first()->timezone)->toBe('Asia/Jakarta');
 });
+
+it('adds the Türkiye chapter to the Journeys section once, with its photos', function () {
+    $seeder = new ContentSeeder;
+    $seed = collect(json_decode(file_get_contents(database_path('seed-data/pages.json')), true))->firstWhere('key', 'home');
+    $journeys = collect($seed['sections'])->firstWhere('type', 'journeys');
+    $old = $journeys['data'];
+    $old['chapters'] = array_slice($old['chapters'], 0, 2); // the site as it was before the new chapter
+    $page = Page::create(['key' => 'home', 'slug' => 'home', 'title' => ['en' => 'Home', 'id' => 'Beranda'], 'is_active' => true, 'is_system' => true]);
+    $page->sections()->create(['type' => 'journeys', 'name' => 'Perjalanan', 'data' => $old, 'sort' => 1, 'is_visible' => true]);
+
+    expect($seeder->addJourneyChapters())->toBe(1)->and($seeder->addJourneyChapters())->toBe(0);
+    $chapters = $page->sections()->first()->data['chapters'];
+    $last = end($chapters);
+    expect(count($chapters))->toBe(3)->and($last['title']['en'])->toBe('Seven Churches, Türkiye')->and(count($last['tiles']))->toBe(9)
+        ->and(collect($last['tiles'])->every(fn ($t) => is_int($t['image']) && Media::whereKey($t['image'])->exists()))->toBeTrue();
+
+    $html = $this->get('/?lang=id')->assertOk()->getContent();
+    expect($html)->toContain('7 Churches, Turki')->toContain('Perpustakaan Celsus, Efesus');
+    expect($this->get('/?lang=en')->getContent())->toContain('Seven Churches, Türkiye')->toContain('Library of Celsus, Ephesus');
+});

@@ -84,6 +84,41 @@ class ContentSeeder extends Seeder
     }
 
     /**
+     * Appends chapters from pages.json's Journeys section (home page) that the live section does
+     * not have yet (matched by English title), importing their photos first. Chapters an admin
+     * edited or removed are left alone, and existing chapters are never changed.
+     */
+    public function addJourneyChapters(): int
+    {
+        $this->svc ??= app(MediaService::class);
+        $this->data ??= database_path('seed-data/');
+        $this->assets ??= database_path('seed-assets/');
+        $section = Page::where('key', 'home')->first()?->sections()->where('type', 'journeys')->first();
+        $seed = collect($this->json('pages.json'))->firstWhere('key', 'home');
+        $seedSection = collect($seed['sections'] ?? [])->firstWhere('type', 'journeys');
+        if (! $section || ! $seedSection) {
+            return 0;
+        }
+        $this->importMedia();
+        $data = $section->data ?: [];
+        $have = collect($data['chapters'] ?? [])->map(fn ($c) => $c['title']['en'] ?? null)->all();
+        $added = 0;
+        foreach ($seedSection['data']['chapters'] ?? [] as $ch) {
+            if (in_array($ch['title']['en'] ?? null, $have, true)) {
+                continue;
+            }
+            $data['chapters'][] = $this->resolve($ch);
+            $added++;
+        }
+        if ($added) {
+            $section->update(['data' => $data]);
+            Content::bump();
+        }
+
+        return $added;
+    }
+
+    /**
      * Adds a FAQ section to the given pages (by page key) when the page has none, placed
      * before the page's contact section if there is one, otherwise at the end.
      *

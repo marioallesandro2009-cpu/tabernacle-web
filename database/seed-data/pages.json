@@ -647,6 +647,207 @@
          "focus": ""
         }
        ]
+      },
+      {
+       "title": {
+        "id": "7 Churches, Turki",
+        "en": "Seven Churches, Türkiye"
+       },
+       "meta": {
+        "id": "Tur Turki 2026",
+        "en": "Türkiye Tour 2026"
+       },
+       "tiles": [
+        {
+         "image": "@img/turki-celsus-group.webp",
+         "size": "g-a",
+         "caption": {
+          "id": "Perpustakaan Celsus, Efesus",
+          "en": "Library of Celsus, Ephesus"
+         },
+         "alt": {
+          "id": "Rombongan Tabernacle Ways berfoto dengan spanduk \"Türkiye Tour\" di depan Perpustakaan Celsus",
+          "en": "The Tabernacle Ways group with the \"Türkiye Tour\" banner in front of the Library of Celsus"
+         },
+         "modal_title": {
+          "id": "Perpustakaan Celsus, Efesus",
+          "en": "Library of Celsus, Ephesus"
+         },
+         "modal_meta": {
+          "id": "Efesus",
+          "en": "Ephesus"
+         },
+         "focus": "50% 60%"
+        },
+        {
+         "image": "@img/turki-arrival.webp",
+         "size": "g-b",
+         "caption": {
+          "id": "Tiba di Turki",
+          "en": "Arriving in Türkiye"
+         },
+         "alt": {
+          "id": "Rombongan berfoto bersama di bandara saat tiba di Turki",
+          "en": "The group posing together at the airport on arrival in Türkiye"
+         },
+         "modal_title": {
+          "id": "Tiba di Turki",
+          "en": "Arriving in Türkiye"
+         },
+         "modal_meta": {
+          "id": "Turki 2026",
+          "en": "Türkiye 2026"
+         },
+         "focus": "50% 55%"
+        },
+        {
+         "image": "@img/turki-group-ruins.webp",
+         "size": "g-c",
+         "caption": {
+          "id": "Foto bersama di situs bersejarah",
+          "en": "Group photo at a historic site"
+         },
+         "alt": {
+          "id": "Rombongan berfoto di antara reruntuhan kuno",
+          "en": "The group posing among ancient ruins"
+         },
+         "modal_title": {
+          "id": "Foto bersama di situs bersejarah",
+          "en": "Group photo at a historic site"
+         },
+         "modal_meta": {
+          "id": "Turki 2026",
+          "en": "Türkiye 2026"
+         },
+         "focus": "50% 60%"
+        },
+        {
+         "image": "@img/turki-red-basilica-group.webp",
+         "size": "g-d",
+         "caption": {
+          "id": "Basilika Merah, Pergamon",
+          "en": "Red Basilica, Pergamon"
+         },
+         "alt": {
+          "id": "Rombongan berfoto di dalam reruntuhan Basilika Merah yang menjulang",
+          "en": "The group posing inside the towering ruins of the Red Basilica"
+         },
+         "modal_title": {
+          "id": "Basilika Merah, Pergamon",
+          "en": "Red Basilica, Pergamon"
+         },
+         "modal_meta": {
+          "id": "Pergamon",
+          "en": "Pergamon"
+         },
+         "focus": "50% 68%"
+        },
+        {
+         "image": "@img/turki-red-basilica.webp",
+         "size": "g-e",
+         "caption": {
+          "id": "Reruntuhan bata merah",
+          "en": "Red-brick ruins"
+         },
+         "alt": {
+          "id": "Dinding bata merah Basilika Merah dengan jendela berlengkung",
+          "en": "The red-brick wall of the Red Basilica with its arched windows"
+         },
+         "modal_title": {
+          "id": "Reruntuhan bata merah",
+          "en": "Red-brick ruins"
+         },
+         "modal_meta": {
+          "id": "Pergamon",
+          "en": "Pergamon"
+         },
+         "focus": "50% 40%"
+        },
+        {
+         "image": "@img/turki-marble-street.webp",
+         "size": "g-e",
+         "caption": {
+          "id": "Jalan marmer kuno",
+          "en": "Ancient marble street"
+         },
+         "alt": {
+          "id": "Jalan marmer kuno yang membentang di antara reruntuhan",
+          "en": "An ancient marble street running between the ruins"
+         },
+         "modal_title": {
+          "id": "Jalan marmer kuno",
+          "en": "Ancient marble street"
+         },
+         "modal_meta": {
+          "id": "Efesus",
+          "en": "Ephesus"
+         },
+         "focus": "50% 50%"
+        },
+        {
+         "image": "@img/turki-group-agora.webp",
+         "size": "g-b",
+         "caption": {
+          "id": "Menjelajah bersama",
+          "en": "Exploring together"
+         },
+         "alt": {
+          "id": "Rombongan berfoto di situs bersejarah dengan latar bangunan kota",
+          "en": "The group posing at a historic site with city buildings behind"
+         },
+         "modal_title": {
+          "id": "Menjelajah bersama",
+          "en": "Exploring together"
+         },
+         "modal_meta": {
+          "id": "Turki 2026",
+          "en": "Türkiye 2026"
+         },
+         "focus": "50% 62%"
+        },
+        {
+         "image": "@img/turki-guide-briefing.webp",
+         "size": "g-b",
+         "caption": {
+          "id": "Penjelasan dari pemandu",
+          "en": "A briefing from the guide"
+         },
+         "alt": {
+          "id": "Pemandu memberi penjelasan kepada rombongan di situs bersejarah",
+          "en": "The guide briefing the group at a historic site"
+         },
+         "modal_title": {
+          "id": "Penjelasan dari pemandu",
+          "en": "A briefing from the guide"
+         },
+         "modal_meta": {
+          "id": "Turki 2026",
+          "en": "Türkiye 2026"
+         },
+         "focus": "50% 60%"
+        },
+        {
+         "image": "@img/turki-flag.webp",
+         "size": "g-b",
+         "caption": {
+          "id": "Bendera Tabernacle Ways",
+          "en": "The Tabernacle Ways flag"
+         },
+         "alt": {
+          "id": "Bendera Tabernacle Ways dikibarkan di antara reruntuhan kuno",
+          "en": "The Tabernacle Ways flag held up among ancient ruins"
+         },
+         "modal_title": {
+          "id": "Bendera Tabernacle Ways",
+          "en": "The Tabernacle Ways flag"
+         },
+         "modal_meta": {
+          "id": "Turki 2026",
+          "en": "Türkiye 2026"
+         },
+         "focus": "50% 30%"
+        }
+       ]
       }
      ]
     }
