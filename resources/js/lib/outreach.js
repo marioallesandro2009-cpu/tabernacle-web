@@ -21,3 +21,25 @@ export const encryptionOptions = [
     { value: 'tls', label: 'STARTTLS (port 587 / 143)' },
     { value: 'none', label: 'Tanpa enkripsi (tidak disarankan)' },
 ];
+
+export const campaignStatus = {
+    draft: { label: 'Draft', tone: 'slate' },
+    running: { label: 'Berjalan', tone: 'green' },
+    paused: { label: 'Dijeda', tone: 'amber' },
+    completed: { label: 'Selesai', tone: 'blue' },
+};
+
+// state of one contact inside a campaign
+export const sendStatus = {
+    queued: { label: 'Antre', tone: 'slate' },
+    sent: { label: 'Terkirim', tone: 'blue' },
+    replied: { label: 'Dibalas', tone: 'green' },
+    bounced: { label: 'Bounce', tone: 'red' },
+    auto_replied: { label: 'Balasan otomatis', tone: 'amber' },
+    unsubscribed: { label: 'Berhenti langganan', tone: 'violet' },
+    invalid: { label: 'Tidak valid', tone: 'amber' },
+    failed: { label: 'Gagal kirim', tone: 'red' },
+};
+
+// the CSRF cookie Laravel sets, for the few requests made with fetch()
+export const xsrf = () => decodeURIComponent((document.cookie.split('; ').find((c) => c.startsWith('XSRF-TOKEN=')) || '').split('=')[1] || '');

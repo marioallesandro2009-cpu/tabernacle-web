@@ -19,6 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(prepend: [HandleRedirects::class]);
         $middleware->web(append: [SetLocale::class, SecurityHeaders::class]);
+        // the unsubscribe button of mail clients posts to /u/{token} without a CSRF token (RFC 8058)
+        $middleware->validateCsrfTokens(except: ['u/*']);
         $middleware->redirectGuestsTo(fn () => '/admin/login');
         $middleware->redirectUsersTo('/admin');
         $middleware->alias([

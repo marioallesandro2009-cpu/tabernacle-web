@@ -5,6 +5,7 @@ use App\Http\Controllers\Site\LangController;
 use App\Http\Controllers\Site\LeadController;
 use App\Http\Controllers\Site\PageController;
 use App\Http\Controllers\Site\SeoController;
+use App\Http\Controllers\Site\UnsubscribeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,10 @@ Route::middleware('track')->group(function () {
 Route::get('/lang/{lang}', [LangController::class, 'switch'])->name('lang');
 Route::post('/leads', [LeadController::class, 'store'])->middleware('throttle:lead')->name('leads.store');
 Route::post('/track/wa', [LeadController::class, 'waClick'])->middleware('throttle:wa')->name('track.wa');
+
+// unsubscribe link in outreach emails
+Route::get('/u/{token}', [UnsubscribeController::class, 'show'])->where('token', '[A-Za-z0-9]{40}')->middleware('throttle:30,1');
+Route::post('/u/{token}', [UnsubscribeController::class, 'confirm'])->where('token', '[A-Za-z0-9]{40}')->middleware('throttle:30,1');
 
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap']);
 Route::get('/robots.txt', [SeoController::class, 'robots']);

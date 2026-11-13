@@ -147,6 +147,21 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::get('import/{id}/mapping', [Outreach\ImportController::class, 'mapping'])->whereNumber('id');
             Route::post('import/{id}/run', [Outreach\ImportController::class, 'run'])->whereNumber('id');
             Route::get('import/{id}', [Outreach\ImportController::class, 'show'])->whereNumber('id');
+            Route::get('templates', [Outreach\TemplateController::class, 'index']);
+            Route::post('templates', [Outreach\TemplateController::class, 'store']);
+            Route::post('templates/preview', [Outreach\TemplateController::class, 'preview']);
+            Route::put('templates/{id}', [Outreach\TemplateController::class, 'update'])->whereNumber('id');
+            Route::delete('templates/{id}', [Outreach\TemplateController::class, 'destroy'])->whereNumber('id');
+            Route::get('campaigns', [Outreach\CampaignController::class, 'index']);
+            Route::get('campaigns/create', [Outreach\CampaignController::class, 'create']);
+            Route::post('campaigns', [Outreach\CampaignController::class, 'store']);
+            Route::get('campaigns/{id}', [Outreach\CampaignController::class, 'show'])->whereNumber('id');
+            Route::get('campaigns/{id}/edit', [Outreach\CampaignController::class, 'edit'])->whereNumber('id');
+            Route::put('campaigns/{id}', [Outreach\CampaignController::class, 'update'])->whereNumber('id');
+            Route::post('campaigns/{id}/start', [Outreach\CampaignController::class, 'start'])->whereNumber('id');
+            Route::post('campaigns/{id}/pause', [Outreach\CampaignController::class, 'pause'])->whereNumber('id');
+            Route::post('campaigns/{id}/resume', [Outreach\CampaignController::class, 'resume'])->whereNumber('id');
+            Route::delete('campaigns/{id}', [Outreach\CampaignController::class, 'destroy'])->whereNumber('id');
         });
 
         // system

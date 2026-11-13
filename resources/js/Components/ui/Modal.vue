@@ -3,7 +3,7 @@ import { onBeforeUnmount, onMounted, watch } from 'vue';
 
 const props = defineProps({ open: Boolean, title: String, subtitle: String, size: { type: String, default: 'md' } });
 const emit = defineEmits(['close']);
-const widths = { sm: 'max-w-md', md: 'max-w-xl', lg: 'max-w-3xl' };
+const widths = { sm: 'max-w-md', md: 'max-w-xl', lg: 'max-w-3xl', xl: 'max-w-5xl' };
 
 const onKey = (e) => e.key === 'Escape' && props.open && emit('close');
 onMounted(() => window.addEventListener('keydown', onKey));
