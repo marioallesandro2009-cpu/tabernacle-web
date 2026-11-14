@@ -90,6 +90,36 @@ class CampaignService
     }
 
     /**
+     * The A/B subject test: per subject, how many people got it and how many replied. Empty when the
+     * campaign has no second subject and never had one.
+     *
+     * @return array<int, array{variant: string, subject: string, started: int, replied: int, rate: float, best: bool}>
+     */
+    public function variants(Campaign $c): array
+    {
+        $rows = CampaignContact::where('campaign_id', $c->id)->whereNotNull('variant')->whereNotNull('first_sent_at')
+            ->selectRaw("variant, count(*) as started, sum(case when status = 'replied' then 1 else 0 end) as replied")
+            ->groupBy('variant')->get()->keyBy('variant');
+        if (blank($c->subject_b) && $rows->isEmpty()) {
+            return [];
+        }
+        $first = $c->steps()->where('step', 1)->with('template:id,subject')->first();
+        $subjects = ['A' => (string) $first?->template?->subject, 'B' => (string) $c->subject_b];
+        $out = [];
+        foreach (['A', 'B'] as $v) {
+            $started = (int) data_get($rows->get($v), 'started', 0);
+            $replied = (int) data_get($rows->get($v), 'replied', 0);
+            $out[] = ['variant' => $v, 'subject' => $subjects[$v], 'started' => $started, 'replied' => $replied, 'rate' => $started ? round($replied / $started * 100, 1) : 0.0, 'best' => false];
+        }
+        // name a winner only once both sides have something to compare
+        if ($out[0]['started'] >= 20 && $out[1]['started'] >= 20 && $out[0]['rate'] !== $out[1]['rate']) {
+            $out[$out[0]['rate'] > $out[1]['rate'] ? 0 : 1]['best'] = true;
+        }
+
+        return $out;
+    }
+
+    /**
      * The numbers shown on the campaign page.
      *
      * @return array<string, int|float>

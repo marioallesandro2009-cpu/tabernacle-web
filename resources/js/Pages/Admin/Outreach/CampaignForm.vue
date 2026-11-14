@@ -9,6 +9,7 @@ const props = defineProps({ campaign: Object, segments: Array, accounts: Array, 
 const c = props.campaign;
 const form = useForm({
     name: c?.name || '',
+    subject_b: c?.subject_b || '',
     segment_id: c?.segment_id || '',
     account_ids: c?.account_ids || props.accounts.filter((a) => a.is_active).slice(0, 1).map((a) => a.id),
     window_start: c?.window_start || '08:00',
@@ -74,6 +75,12 @@ function save() {
                     </div>
                 </div>
                 <p v-if="form.errors.steps" class="o-err mt-2">{{ form.errors.steps }}</p>
+                <div class="mt-4 rounded-2xl border border-dashed border-slate-200 p-4">
+                    <label class="o-label" for="f-subb">Uji A/B: subjek kedua untuk email pertama (opsional)</label>
+                    <input id="f-subb" v-model="form.subject_b" class="o-input" placeholder="Contoh: {nama}, rencana ziarah jemaat tahun depan?">
+                    <p class="mt-1 text-xs text-slate-500">Kalau diisi, separuh kontak menerima subjek dari template (A) dan separuhnya subjek ini (B). Isi emailnya sama. Hasilnya, mana yang lebih banyak dibalas, tampil di halaman kampanye. Variabel seperti {nama} boleh dipakai.</p>
+                    <p v-if="form.errors.subject_b" class="o-err">{{ form.errors.subject_b }}</p>
+                </div>
                 <p v-if="!templates.length" class="mt-3 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800">Belum ada template. <Link href="/admin/outreach/templates" class="font-semibold underline">Buat template dulu</Link>.</p>
             </section>
 

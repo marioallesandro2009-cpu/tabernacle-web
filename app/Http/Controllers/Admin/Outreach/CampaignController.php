@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Outreach;
 
+use App\Exports\CampaignResultsSheet;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\Outreach\Account;
@@ -11,13 +12,18 @@ use App\Models\Outreach\Segment;
 use App\Models\Outreach\Template;
 use App\Services\Outreach\CampaignScheduler;
 use App\Services\Outreach\CampaignService;
+use App\Services\Outreach\TemplateRenderer;
 use DomainException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
+use Maatwebsite\Excel\Excel as ExcelFormat;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class CampaignController extends Controller
 {
@@ -106,8 +112,17 @@ class CampaignController extends Controller
                 'steps' => $steps->map(fn ($s) => ['step' => $s->step, 'template' => $s->template?->name, 'day_offset' => $s->day_offset])->values(),
                 'accounts' => $campaign->accounts->map(fn (Account $a) => ['id' => $a->id, 'name' => $a->name, 'email' => $a->email, 'is_active' => $a->is_active, 'today' => $scheduler->sentToday($a), 'limit' => $a->daily_limit])->values(),
             ],
-            'stats' => $service->stats($campaign), 'rows' => $rows, 'filter' => $status,
+            'stats' => $service->stats($campaign), 'variants' => $service->variants($campaign), 'rows' => $rows, 'filter' => $status,
         ]);
+    }
+
+    /** Excel file with one row per person: what was sent and how they responded. */
+    public function export(string $id): BinaryFileResponse
+    {
+        $campaign = Campaign::findOrFail($id);
+        $name = 'kampanye-'.(Str::slug($campaign->name) ?: $campaign->id).'-'.now()->timezone(Campaign::TIMEZONE)->format('Ymd');
+
+        return Excel::download(new CampaignResultsSheet($campaign), $name.'.xlsx', ExcelFormat::XLSX);
     }
 
     public function start(string $id, CampaignService $service): RedirectResponse
@@ -157,7 +172,7 @@ class CampaignController extends Controller
 
         return Inertia::render('Admin/Outreach/CampaignForm', [
             'campaign' => $campaign ? [
-                'id' => $campaign->id, 'name' => $campaign->name, 'segment_id' => $campaign->segment_id, 'account_ids' => $campaign->accounts->pluck('id')->all(),
+                'id' => $campaign->id, 'name' => $campaign->name, 'subject_b' => $campaign->subject_b, 'segment_id' => $campaign->segment_id, 'account_ids' => $campaign->accounts->pluck('id')->all(),
                 'window_start' => $campaign->window_start, 'window_end' => $campaign->window_end, 'send_days' => $campaign->send_days,
                 'gap_min' => intdiv($campaign->gap_min_seconds, 60), 'gap_max' => (int) ceil($campaign->gap_max_seconds / 60),
                 'steps' => collect([1, 2, 3])->map(fn ($n) => ['template_id' => data_get($stepOf($n), 'template_id'), 'day_offset' => data_get($stepOf($n), 'day_offset', [1 => 0, 2 => 4, 3 => 10][$n])])->all(),
@@ -174,6 +189,7 @@ class CampaignController extends Controller
     {
         $d = $request->validate([
             'name' => ['required', 'string', 'max:150'],
+            'subject_b' => ['nullable', 'string', 'max:500'],
             'segment_id' => ['nullable', 'integer', 'exists:outreach_segments,id'],
             'account_ids' => ['required', 'array', 'min:1'], 'account_ids.*' => ['integer', 'exists:outreach_accounts,id'],
             'window_start' => ['required', 'date_format:H:i'], 'window_end' => ['required', 'date_format:H:i', 'after:window_start'],
@@ -186,6 +202,10 @@ class CampaignController extends Controller
             'send_days.required' => 'Pilih minimal satu hari kirim.', 'window_end.after' => 'Jam selesai harus setelah jam mulai.',
             'gap_max.gte' => 'Jeda maksimal tidak boleh lebih kecil dari jeda minimal.',
         ]);
+        $subjectB = trim((string) ($d['subject_b'] ?? '')) ?: null;
+        if ($subjectB && ($unknown = app(TemplateRenderer::class)->unknownVariables($subjectB))) {
+            throw ValidationException::withMessages(['subject_b' => 'Variabel tidak dikenal: {'.implode('}, {', $unknown).'}.']);
+        }
         $steps = [];
         foreach (array_values($d['steps']) as $i => $s) {
             if (! empty($s['template_id'])) {
@@ -206,7 +226,7 @@ class CampaignController extends Controller
 
         return [
             'campaign' => [
-                'name' => $d['name'], 'segment_id' => $d['segment_id'] ?? null, 'window_start' => $d['window_start'], 'window_end' => $d['window_end'],
+                'name' => $d['name'], 'subject_b' => $subjectB, 'segment_id' => $d['segment_id'] ?? null, 'window_start' => $d['window_start'], 'window_end' => $d['window_end'],
                 'send_days' => array_values(array_unique(array_map('intval', $d['send_days']))), 'gap_min_seconds' => $d['gap_min'] * 60, 'gap_max_seconds' => $d['gap_max'] * 60,
             ],
             'account_ids' => array_map('intval', $d['account_ids']), 'steps' => $steps,

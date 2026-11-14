@@ -167,6 +167,7 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::get('campaigns/{id}', [Outreach\CampaignController::class, 'show'])->whereNumber('id');
             Route::get('campaigns/{id}/edit', [Outreach\CampaignController::class, 'edit'])->whereNumber('id');
             Route::put('campaigns/{id}', [Outreach\CampaignController::class, 'update'])->whereNumber('id');
+            Route::get('campaigns/{id}/export', [Outreach\CampaignController::class, 'export'])->whereNumber('id');
             Route::post('campaigns/{id}/start', [Outreach\CampaignController::class, 'start'])->whereNumber('id');
             Route::post('campaigns/{id}/pause', [Outreach\CampaignController::class, 'pause'])->whereNumber('id');
             Route::post('campaigns/{id}/resume', [Outreach\CampaignController::class, 'resume'])->whereNumber('id');

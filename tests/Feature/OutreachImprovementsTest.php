@@ -2,16 +2,19 @@
 
 require_once __DIR__.'/../Helpers/OutreachHelpers.php';
 
+use App\Exports\CampaignResultsSheet;
 use App\Jobs\Outreach\SendReplyAlert;
 use App\Mail\OutreachReplyMail;
 use App\Models\LeadRecipient;
 use App\Models\Outreach\Account;
 use App\Models\Outreach\BlockedDomain;
+use App\Models\Outreach\Campaign;
 use App\Models\Outreach\CampaignContact;
 use App\Models\Outreach\Contact;
 use App\Models\Outreach\ContactImport;
 use App\Models\Outreach\Message;
 use App\Models\Outreach\Suppression;
+use App\Models\Outreach\Template;
 use App\Services\Outreach\CampaignScheduler;
 use App\Services\Outreach\CampaignService;
 use App\Services\Outreach\ContactImporter;
@@ -218,4 +221,81 @@ it('adds and releases single addresses; opt-outs and bounces cannot be released'
 
 it('keeps the block list for Super Admin and Admin only', function () {
     $this->actingAs(adminUser('editor', ['email' => 'ed@kita.test']))->get('/admin/outreach/blocklist')->assertForbidden();
+});
+
+// --- A/B subject test ----------------------------------------------------------------------
+
+it('sends subject A to half the people and subject B to the other half, and counts replies per subject', function () {
+    Queue::fake();
+    $a = oAccount(['daily_limit' => 100]);
+    $c = oCampaign([$a], 2);
+    $c->update(['subject_b' => 'Pertanyaan singkat untuk {organisasi}']);
+    foreach (range(1, 4) as $i) {
+        oContact("ab$i@gereja.test", ['organization' => "Gereja $i"]);
+    }
+    app(CampaignService::class)->start($c);
+    sendRounds(8);
+
+    $subjects = collect(FakeSmtp::$sent)->map(fn ($m) => $m->getSubject());
+    expect($subjects)->toHaveCount(4)
+        ->and($subjects->filter(fn ($s) => str_starts_with($s, 'Halo '))->count())->toBe(2)
+        ->and($subjects->filter(fn ($s) => str_starts_with($s, 'Pertanyaan singkat untuk Gereja'))->count())->toBe(2)
+        ->and(CampaignContact::pluck('variant')->sort()->values()->all())->toBe(['A', 'A', 'B', 'B']);
+
+    CampaignContact::where('variant', 'B')->first()->update(['status' => 'replied']);
+    $v = collect(app(CampaignService::class)->variants($c->fresh()))->keyBy('variant');
+    expect($v['A'])->toMatchArray(['subject' => 'Halo {nama}', 'started' => 2, 'replied' => 0, 'rate' => 0.0, 'best' => false])
+        ->and($v['B'])->toMatchArray(['subject' => 'Pertanyaan singkat untuk {organisasi}', 'started' => 2, 'replied' => 1, 'rate' => 50.0, 'best' => false]); // too few to name a winner
+
+    // the follow-up keeps the template subject for everyone
+    Carbon::setTestNow(Carbon::parse('2026-11-20 13:00', 'Asia/Jakarta'));
+    FakeSmtp::$sent = [];
+    sendRounds(10);
+    $follow = collect(FakeSmtp::$sent)->map(fn ($m) => $m->getSubject());
+    expect($follow)->toHaveCount(3)->and($follow->every(fn ($s) => str_starts_with($s, 'Menyusul untuk Gereja')))->toBeTrue();
+});
+
+it('leaves A/B out when there is no second subject, and checks its variables in the form', function () {
+    $a = oAccount();
+    $c = oCampaign([$a], 1);
+    expect(app(CampaignService::class)->variants($c))->toBe([]);
+
+    $this->actingAs(adminUser());
+    $t = Template::first();
+    $payload = ['name' => 'AB', 'account_ids' => [$a->id], 'window_start' => '08:00', 'window_end' => '17:00', 'send_days' => [1, 2], 'gap_min' => 1, 'gap_max' => 4,
+        'steps' => [['template_id' => $t->id, 'day_offset' => 0], ['template_id' => null, 'day_offset' => 4], ['template_id' => null, 'day_offset' => 10]]];
+    $this->post('/admin/outreach/campaigns', $payload + ['subject_b' => 'Halo {namaa}'])->assertSessionHasErrors('subject_b');
+    $this->post('/admin/outreach/campaigns', $payload + ['subject_b' => '  Untuk {nama}  '])->assertSessionHasNoErrors();
+    $new = Campaign::latest('id')->first();
+    expect($new->subject_b)->toBe('Untuk {nama}');
+    $this->get('/admin/outreach/campaigns/'.$new->id.'/edit')->assertOk()->assertSee('Untuk {nama}');
+    $this->get('/admin/outreach/campaigns/'.$new->id)->assertOk()->assertSee('"variants":[{"variant":"A"', false);
+});
+
+// --- Excel export --------------------------------------------------------------------------
+
+it('exports one row per person with what was sent and how they answered', function () {
+    Queue::fake();
+    $a = oAccount();
+    $c = oCampaign([$a], 2);
+    oContact('jawab@gereja.test', ['name' => 'Pdt. Jawab', 'organization' => '=HYPERLINK("x")']);
+    oContact('diam@gereja.test', ['name' => 'Bu Diam']);
+    oContact('rusak', ['validation_status' => 'invalid_format']);
+    app(CampaignService::class)->start($c);
+    sendRounds(3);
+    $cc = CampaignContact::whereHas('contact', fn ($q) => $q->where('email', 'jawab@gereja.test'))->first();
+    $reply = app(ReplyProcessor::class)->process($a, replyFrom('jawab@gereja.test', 'Boleh, kirim proposalnya.'));
+    $reply->update(['label' => 'interested']);
+
+    $rows = (new CampaignResultsSheet($c))->array();
+    expect($rows[0])->toContain('Nama')->toContain('Status')->toContain('Isi balasan')->not->toContain('Versi subjek')->and($rows)->toHaveCount(4);
+    $byEmail = collect($rows)->slice(1)->keyBy(3);
+    expect($byEmail['jawab@gereja.test'])->toContain('Pdt. Jawab')->toContain('Dibalas')->toContain('Tertarik')->toContain('Boleh, kirim proposalnya.')->toContain("'=HYPERLINK(\"x\")")
+        ->and($byEmail['jawab@gereja.test'][6])->toBe(1)
+        ->and($byEmail['diam@gereja.test'])->toContain('Terkirim')
+        ->and($byEmail['rusak'])->toContain('Tidak valid');
+
+    $this->actingAs(adminUser());
+    $res = $this->get('/admin/outreach/campaigns/'.$c->id.'/export')->assertOk();
+    expect($res->headers->get('content-disposition'))->toContain('kampanye-tur-turki-')->toContain('.xlsx');
 });

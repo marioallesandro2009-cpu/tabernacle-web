@@ -9,7 +9,7 @@ import Chip from '../../../Components/ui/Chip.vue';
 import Empty from '../../../Components/ui/Empty.vue';
 import { campaignStatus, sendStatus } from '../../../lib/outreach';
 
-const props = defineProps({ campaign: Object, stats: Object, rows: Object, filter: String });
+const props = defineProps({ campaign: Object, stats: Object, variants: { type: Array, default: () => [] }, rows: Object, filter: String });
 
 const post = (action, confirmText) => {
     if (confirmText && !confirm(confirmText)) return;
@@ -35,6 +35,7 @@ const filters = ['queued', 'sent', 'replied', 'bounced', 'auto_replied', 'unsubs
         <button v-if="campaign.status === 'running'" class="o-btn" @click="post('pause')">Jeda</button>
         <button v-if="campaign.status === 'paused'" class="o-btn o-btn-primary" @click="post('resume')">Lanjutkan</button>
         <button v-if="campaign.status === 'draft'" class="o-btn o-btn-primary" @click="post('start', 'Mulai kampanye ini? Email pertama dikirim bertahap di dalam jam kirim.')">Mulai kampanye</button>
+        <a :href="`/admin/outreach/campaigns/${campaign.id}/export`" class="o-btn"><Icon name="download" class="h-4 w-4" /> Unduh Excel</a>
         <Link v-if="campaign.status !== 'running'" :href="`/admin/outreach/campaigns/${campaign.id}/edit`" class="o-btn">Ubah</Link>
         <button v-if="campaign.status !== 'running'" class="o-btn o-btn-danger" aria-label="Hapus" @click="remove"><Icon name="trash" class="h-4 w-4" /></button>
     </PageHeader>
@@ -53,6 +54,26 @@ const filters = ['queued', 'sent', 'replied', 'bounced', 'auto_replied', 'unsubs
         <StatCard label="Reply rate" :value="stats.reply_rate + '%'" tone="green" hint="Dibalas dari yang dikirimi" />
         <StatCard label="Bounce" :value="stats.bounced" tone="red" :hint="`${stats.auto_replied} balasan otomatis`" />
         <StatCard label="Berhenti" :value="stats.unsubscribed" tone="violet" :hint="`${stats.invalid} tidak valid`" />
+    </div>
+
+    <div v-if="variants.length" class="o-card mb-5 p-5">
+        <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+            <h2 class="text-sm font-semibold text-slate-900">Uji A/B subjek email pertama</h2>
+            <span class="text-xs text-slate-500">Pemenang ditentukan setelah tiap versi dikirim ke minimal 20 orang.</span>
+        </div>
+        <div class="grid gap-3 md:grid-cols-2">
+            <div v-for="v in variants" :key="v.variant" class="rounded-2xl p-4 ring-1" :class="v.best ? 'bg-emerald-50 ring-emerald-200' : 'bg-slate-50 ring-slate-100'">
+                <div class="mb-2 flex items-center gap-2">
+                    <span class="flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold text-white" :class="v.best ? 'bg-emerald-600' : 'bg-slate-500'">{{ v.variant }}</span>
+                    <span class="min-w-0 flex-1 truncate text-sm font-medium text-slate-800" :title="v.subject">{{ v.subject || '—' }}</span>
+                    <Chip v-if="v.best" tone="green">Lebih banyak dibalas</Chip>
+                </div>
+                <div class="flex items-end gap-6">
+                    <div><div class="text-2xl font-semibold tabular-nums text-slate-900">{{ v.rate }}%</div><div class="text-xs text-slate-500">reply rate</div></div>
+                    <div class="text-sm text-slate-600"><b class="tabular-nums">{{ v.replied }}</b> dibalas dari <b class="tabular-nums">{{ v.started }}</b> orang</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="mb-5 grid gap-4 lg:grid-cols-2">

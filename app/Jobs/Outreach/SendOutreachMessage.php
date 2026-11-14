@@ -62,7 +62,9 @@ class SendOutreachMessage implements ShouldQueue
 
             return;
         }
-        [$subject, $body] = $renderer->render($template->subject, $template->body, $contact, $account);
+        $variant = (int) $message->step === 1 ? self::variantFor($campaign, $cc) : $cc->variant;
+        $subjectText = (int) $message->step === 1 && $variant === 'B' && filled($campaign->subject_b) ? (string) $campaign->subject_b : $template->subject;
+        [$subject, $body] = $renderer->render($subjectText, $template->body, $contact, $account);
         $messageId = Str::uuid()->toString().'@'.(substr(strrchr($account->email, '@') ?: '@localhost', 1));
         try {
             $mailer->send($account, $contact, $subject, $body, $messageId, $renderer->unsubscribeUrl($contact), $message->step > 1 ? $cc->root_message_id : null);
@@ -71,7 +73,17 @@ class SendOutreachMessage implements ShouldQueue
 
             return;
         }
-        $this->sent($message, $cc, $campaign, $subject, $body, $messageId);
+        $this->sent($message, $cc, $campaign, $subject, $body, $messageId, $variant);
+    }
+
+    /** With a second subject set, people alternate between A and B (by their place in the campaign). */
+    public static function variantFor(Campaign $campaign, CampaignContact $cc): ?string
+    {
+        if ($cc->variant) {
+            return $cc->variant;
+        }
+
+        return filled($campaign->subject_b) ? ($cc->id % 2 === 0 ? 'B' : 'A') : null;
     }
 
     protected function blocker(Message $m, CampaignContact $cc, Campaign $campaign, Account $account, Contact $contact, CampaignScheduler $scheduler): ?string
@@ -89,7 +101,7 @@ class SendOutreachMessage implements ShouldQueue
         };
     }
 
-    protected function sent(Message $message, CampaignContact $cc, Campaign $campaign, string $subject, string $body, string $messageId): void
+    protected function sent(Message $message, CampaignContact $cc, Campaign $campaign, string $subject, string $body, string $messageId, ?string $variant = null): void
     {
         $step = (int) $message->step;
         if (! $message->account?->warmup_started_on) {
@@ -100,7 +112,7 @@ class SendOutreachMessage implements ShouldQueue
         $next = $campaign->steps->where('template_id', '!=', null)->firstWhere('step', $step + 1);
         $cc->update([
             'status' => $cc->status === 'auto_replied' ? 'auto_replied' : 'sent', 'current_step' => $step, 'first_sent_at' => $first, 'last_sent_at' => now(),
-            'root_message_id' => $cc->root_message_id ?: $messageId,
+            'root_message_id' => $cc->root_message_id ?: $messageId, 'variant' => $variant,
             'next_send_at' => $next ? $first->copy()->addDays((int) $next->day_offset) : null,
         ]);
     }
