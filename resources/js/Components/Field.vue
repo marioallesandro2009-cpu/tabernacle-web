@@ -1,10 +1,11 @@
 <script setup>
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import TransField from './TransField.vue';
 import RichEditor from './RichEditor.vue';
 import MediaPicker from './MediaPicker.vue';
 import Icon from './Icon.vue';
 import { blankRow } from '../lib/schema';
+import { translate, hasText, KEEP } from '../lib/translate';
 
 // `values` is the object that holds this field's value; `errors` is the flat Inertia error bag.
 const props = defineProps({
@@ -45,6 +46,47 @@ function rowTitle(row, i) {
     return (v && String(v).replace(/<[^>]+>/g, '').slice(0, 70)) || `Item ${i + 1}`;
 }
 
+// "Terjemahkan dari Indonesia": an English field next to its Indonesian source (name_en ← name, text_en ← text_id)
+const sourceKey = computed(() => {
+    const k = props.field.key;
+    if (k === 'text_en') return 'text_id';
+    return k.endsWith('_en') ? k.slice(0, -3) : null;
+});
+const canTranslate = computed(() => sourceKey.value && sourceKey.value in props.values && ['text', 'textarea', 'rich', 'list', 'repeater'].includes(type.value));
+const sourceFilled = computed(() => canTranslate.value && hasText(props.values[sourceKey.value]));
+const translating = ref(false);
+const translated = ref(false);
+async function translateFromSource() {
+    const src = props.values[sourceKey.value];
+    if (hasText(val.value) && !window.confirm('Isi bahasa Inggris yang sekarang akan diganti hasil terjemahan otomatis. Lanjutkan?')) return;
+    translating.value = true;
+    try {
+        if (type.value === 'list') {
+            const items = (src || []).map((t) => ({ text: t || '', html: false }));
+            val.value = items.length ? await translate(items) : [];
+        } else if (type.value === 'repeater') {
+            // translate the matching sub-fields of every row; names (hotel …) are copied
+            const subs = props.field.fields;
+            const jobs = [];
+            (src || []).forEach((row, r) => subs.forEach((f) => {
+                const v = row?.[f.key];
+                if (typeof v === 'string' && !KEEP.includes(f.key) && hasText(v)) jobs.push({ r, key: f.key, text: v, html: f.type === 'rich' });
+            }));
+            const out = jobs.length ? await translate(jobs.map(({ text, html }) => ({ text, html }))) : [];
+            const rows = (src || []).map((row) => Object.fromEntries(subs.map((f) => [f.key, KEEP.includes(f.key) ? (row?.[f.key] ?? '') : ''])));
+            jobs.forEach((j, i) => (rows[j.r][j.key] = out[i]));
+            val.value = rows;
+        } else {
+            [val.value] = await translate([{ text: src || '', html: type.value === 'rich' }]);
+        }
+        translated.value = true;
+    } catch {
+        // the message was already shown
+    } finally {
+        translating.value = false;
+    }
+}
+
 // simple string list
 const list = computed(() => props.values[props.field.key] || []);
 const listAdd = () => {
@@ -74,6 +116,12 @@ function toggleMulti(v) {
         </label>
 
         <template v-else>
+            <div v-if="canTranslate" class="-mb-1 flex justify-end">
+                <button type="button" class="rounded-md px-2 py-0.5 text-xs font-medium text-brand hover:bg-brand/10 disabled:opacity-40" :disabled="translating || !sourceFilled"
+                    :title="sourceFilled ? 'Isi dari versi Indonesia dengan terjemahan otomatis (periksa lagi hasilnya)' : 'Versi Indonesia masih kosong'" @click="translateFromSource">
+                    {{ translating ? 'Menerjemahkan…' : 'Terjemahkan dari Indonesia' }}
+                </button>
+            </div>
             <label v-if="type !== 'repeater'" class="label" :for="'f-' + path">{{ field.label }}<span v-if="field.required" class="text-red-500"> *</span></label>
 
             <TransField v-if="isTrans && type !== 't_rich'" :model-value="val" :type="type" :error="err" />
@@ -135,6 +183,7 @@ function toggleMulti(v) {
                 </div>
                 <button type="button" class="btn btn-sm mt-2" @click="addRow"><Icon name="plus" class="h-4 w-4" /> Tambah item</button>
             </div>
+            <p v-if="translated" class="hint text-amber-700">Hasil terjemahan otomatis. Periksa dan rapikan sebelum disimpan.</p>
             <p v-if="field.hint" class="hint">{{ field.hint }}</p>
             <p v-if="err && !isTrans" class="err">{{ err }}</p>
         </template>

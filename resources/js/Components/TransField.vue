@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import RichEditor from './RichEditor.vue';
+import { translate } from '../lib/translate';
 
 // modelValue = { en: '', id: '' }
 const props = defineProps({
@@ -12,7 +13,23 @@ const props = defineProps({
 const lang = ref('id');
 const langs = [{ k: 'id', label: 'Indonesia' }, { k: 'en', label: 'English' }];
 const set = (k, v) => (props.modelValue[k] = v);
-const filled = (k) => !!(props.modelValue?.[k] || '').trim();
+const filled = (k) => !!(props.modelValue?.[k] || '').replace(/<[^>]+>/g, '').trim();
+const busy = ref(false);
+const justTranslated = ref(false);
+async function autoTranslate() {
+    if (filled('en') && !window.confirm('Teks bahasa Inggris yang sekarang akan diganti hasil terjemahan otomatis. Lanjutkan?')) return;
+    busy.value = true;
+    try {
+        const [en] = await translate([{ text: props.modelValue.id || '', html: props.type === 't_rich' || props.type === 't_html' }]);
+        set('en', en);
+        lang.value = 'en';
+        justTranslated.value = true;
+    } catch {
+        // the message was already shown
+    } finally {
+        busy.value = false;
+    }
+}
 </script>
 
 <template>
@@ -24,7 +41,12 @@ const filled = (k) => !!(props.modelValue?.[k] || '').trim();
                 :class="lang === l.k ? 'bg-brand text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'"
                 @click="lang = l.k"
             >{{ l.label }}<span v-if="!filled(l.k)" class="ml-1 text-amber-400" title="Belum diisi">●</span></button>
+            <button
+                v-if="filled('id')" type="button" class="ml-auto rounded-md px-2 py-1 text-xs font-medium text-brand hover:bg-brand/10 disabled:opacity-50"
+                :disabled="busy" title="Isi versi Inggris dari teks Indonesia (terjemahan otomatis, periksa lagi hasilnya)" @click="autoTranslate"
+            >{{ busy ? 'Menerjemahkan…' : 'Terjemahkan ke Inggris' }}</button>
         </div>
+        <p v-if="lang === 'en' && filled('en') && justTranslated" class="hint">Hasil terjemahan otomatis. Periksa dan rapikan sebelum disimpan.</p>
         <template v-for="l in langs" :key="l.k">
             <div v-show="lang === l.k">
                 <input v-if="type === 't_text' || type === 't_html'" :value="modelValue[l.k]" class="input" :placeholder="placeholder" @input="set(l.k, $event.target.value)">

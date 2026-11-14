@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\QuotationController;
 use App\Http\Controllers\Admin\RecipientController;
 use App\Http\Controllers\Admin\Resources;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\TranslateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +45,9 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
         Route::post('profile/2fa', [ProfileController::class, 'startTwoFactor']);
         Route::post('profile/2fa/confirm', [ProfileController::class, 'confirmTwoFactor']);
         Route::delete('profile/2fa', [ProfileController::class, 'disableTwoFactor']);
+
+        // "Terjemahkan ke Inggris" buttons in the forms
+        Route::post('translate', [TranslateController::class, 'store'])->middleware('throttle:20,1');
 
         // generic CRUD modules: slug => [controller, permission]
         $modules = [

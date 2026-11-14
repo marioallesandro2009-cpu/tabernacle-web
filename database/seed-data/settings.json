@@ -72,5 +72,6 @@
     "quote_signatory_name": "",
     "quote_signatory_title": "",
     "quote_payment_info": "",
-    "quote_terms": ""
+    "quote_terms": "",
+    "translate_email": ""
 }
