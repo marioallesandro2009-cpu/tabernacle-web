@@ -12,7 +12,7 @@
       <div class="chapter"><b>{{ t('region.'.$region) }}</b><span class="mono">{{ $items->count() }}</span></div>
       <div class="dest-grid">
         @foreach ($items as $d)
-          <a class="dest" href="{{ url('/destinations/'.$d->slug) }}"><b>{{ tr($d->name) }}</b><span class="mono">{{ $d->tours_count }} {{ trim(str_replace(':n', '', t('pk.count'))) }}</span></a>
+          <a class="dest" href="{{ lurl('/destinations/'.$d->slug) }}"><b>{{ tr($d->name) }}</b><span class="mono">{{ $d->tours_count }} {{ trim(str_replace(':n', '', t('pk.count'))) }}</span></a>
         @endforeach
       </div>
     @endforeach

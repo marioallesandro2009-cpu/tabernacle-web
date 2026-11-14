@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\RecipientController;
 use App\Http\Controllers\Admin\Resources;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\TranslateController;
+use App\Http\Controllers\Admin\TranslationStatusController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,6 +53,7 @@ Route::prefix(config('admin.path'))->middleware('inertia.admin')->group(function
 
         // "Terjemahkan ke Inggris" buttons in the forms
         Route::post('translate', [TranslateController::class, 'store'])->middleware('throttle:20,1');
+        Route::get('translations', [TranslationStatusController::class, 'index'])->middleware('can:content.manage');
 
         // generic CRUD modules: slug => [controller, permission]
         $modules = [

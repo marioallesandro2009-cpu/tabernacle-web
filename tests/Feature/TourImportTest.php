@@ -38,7 +38,7 @@ it('imports only the requested packages, with departures, deposit, terms, cover 
     expect($umrah->destinations->pluck('slug')->all())->toBe(['saudi-arabia'])->and(Destination::where('slug', 'saudi-arabia')->exists())->toBeTrue()
         ->and(count($umrah->itinerary))->toBe(9);
 
-    $this->get('/packages/'.$korea->slug.'?lang=id')->assertOk()->assertSee('20 Des 2026')->assertSee('Rp6.000.000');
+    $this->get('/packages/'.$korea->slug)->assertOk()->assertSee('20 Des 2026')->assertSee('Rp6.000.000');
 });
 
 it('never brings back a package an admin deleted', function () {
@@ -67,7 +67,7 @@ it('imports the trip photo albums once, with alt text, and shows them on the Gal
     $seeder->importPages(['gallery']);
     $seeder->importPages(['gallery']);
     expect(Page::where('key', 'gallery')->count())->toBe(1)->and(Page::where('key', 'gallery')->first()->is_system)->toBeFalse();
-    $html = $this->get('/galeri?lang=id')->assertOk()->getContent();
+    $html = $this->get('/galeri')->assertOk()->getContent();
     expect($html)->toContain('Tencent &amp; Shenzhen Upperhills')->toContain('Immersion Program Tiongkok 2026 · Batch 2')->toContain('data-full=');
 });
 
@@ -106,11 +106,11 @@ it('shows the English package texts on the English site and Indonesian on the In
     expect($seeder->importEnglish())->toBe(1)->and($seeder->importEnglish())->toBe(0);
     $slug = '/packages/9d7n-umrah-reguler-18-desember-2026';
 
-    $en = $this->get($slug.'?lang=en')->assertOk()->getContent();
+    $en = $this->get('/en'.$slug)->assertOk()->getContent();
     expect($en)->toContain('After the dawn (Subuh) prayer')->toContain('Umrah visa')->toContain('Cancellation policy')
         ->toContain('18 December 2026')->not->toContain('Setelah sholat subuh')->not->toContain('Itinerary details are written in Bahasa Indonesia');
 
-    $id = $this->get($slug.'?lang=id')->assertOk()->getContent();
+    $id = $this->get($slug)->assertOk()->getContent();
     expect($id)->toContain('Setelah sholat subuh')->toContain('Kebijakan pembatalan')->not->toContain('After the dawn (Subuh) prayer');
 
     // an admin's own English text is never overwritten
@@ -121,7 +121,7 @@ it('shows the English package texts on the English site and Indonesian on the In
 
 it('falls back to Indonesian with a note when a package has no English itinerary', function () {
     (new ContentSeeder)->importTours(['6d5n-west-coast-usa-tour']);
-    $html = $this->get('/packages/6d5n-west-coast-usa-tour?lang=en')->assertOk()->getContent();
+    $html = $this->get('/en/packages/6d5n-west-coast-usa-tour')->assertOk()->getContent();
     expect($html)->toContain('Waktu bebas menikmati Los Angeles');
 });
 
@@ -131,12 +131,12 @@ it('shows English articles and blog categories on the English site', function ()
     $seeder->importPosts();
     $seeder->importEnglish();
 
-    $this->get('/blog?lang=en')->assertOk()->assertSee('Umrah Preparation: Documents, Vaccines and What to Pack')->assertSee('Travel Tips')->assertDontSee('Tips Perjalanan');
-    $html = $this->get('/blog/persiapan-umrah-dokumen-vaksin-perlengkapan?lang=en')->assertOk()->getContent();
+    $this->get('/en/blog')->assertOk()->assertSee('Umrah Preparation: Documents, Vaccines and What to Pack')->assertSee('Travel Tips')->assertDontSee('Tips Perjalanan');
+    $html = $this->get('/en/blog/persiapan-umrah-dokumen-vaksin-perlengkapan')->assertOk()->getContent();
     expect($html)->toContain('Good umrah preparation makes the pilgrimage feel much calmer')->toContain('How long must my passport be valid for umrah?')
         ->not->toContain('Persiapan umrah yang matang');
-    $this->get('/blog/persiapan-umrah-dokumen-vaksin-perlengkapan?lang=id')->assertOk()->assertSee('Persiapan umrah yang matang')->assertSee('Ziarah &amp; Umrah', false);
-    expect($this->get('/feed.xml?lang=en')->getContent())->toContain('China Immersion Program 2026');
+    $this->get('/blog/persiapan-umrah-dokumen-vaksin-perlengkapan')->assertOk()->assertSee('Persiapan umrah yang matang')->assertSee('Ziarah &amp; Umrah', false);
+    expect($this->get('/en/feed.xml')->getContent())->toContain('China Immersion Program 2026')->toContain('/en/blog/');
     // the database still holds the Indonesian texts
     expect(Post::where('slug', 'persiapan-umrah-dokumen-vaksin-perlengkapan')->value('title'))->toStartWith('Persiapan Umrah');
 });
@@ -160,15 +160,15 @@ it('imports the starter FAQ once and shows it on the home and contact pages', fu
     expect($home->sections()->where('type', 'faq')->count())->toBe(1)
         ->and($home->sections()->orderBy('sort')->pluck('type')->slice(-2)->values()->all())->toBe(['faq', 'contact']);
 
-    $html = $this->get('/?lang=id')->assertOk()->getContent();
+    $html = $this->get('/')->assertOk()->getContent();
     expect($html)->toContain('Siapa Tabernacle Ways Tour &amp; Travel?')->toContain('"@type":"FAQPage"');
-    $this->get('/?lang=en')->assertOk()->assertSee('What is the difference between a group tour and FIT?');
-    $this->get('/contact?lang=id')->assertOk()->assertSee('Di mana kantor Tabernacle Ways');
+    $this->get('/en')->assertOk()->assertSee('What is the difference between a group tour and FIT?');
+    $this->get('/contact')->assertOk()->assertSee('Di mana kantor Tabernacle Ways');
 });
 
 it('loads the calm corporate stylesheet and no motion libraries', function () {
     Page::create(['key' => 'home', 'slug' => 'home', 'title' => ['en' => 'Home', 'id' => 'Beranda'], 'is_active' => true, 'is_system' => true]);
-    $html = $this->get('/?lang=id')->assertOk()->getContent();
+    $html = $this->get('/')->assertOk()->getContent();
     expect($html)->toContain('assets/css/corporate.css')->not->toContain('gsap.min.js')->not->toContain('lenis.min.js');
 });
 
@@ -177,8 +177,8 @@ it('shows the English package name on the English site only', function () {
     $seeder->importTours(['9d7n-umrah-reguler-18-desember-2026']);
     $seeder->importEnglish();
     expect(Tour::where('slug', '9d7n-umrah-reguler-18-desember-2026')->value('name_en'))->toBe('Regular Umrah 18 December 2026');
-    $this->get('/packages/9d7n-umrah-reguler-18-desember-2026?lang=en')->assertOk()->assertSee('Regular Umrah 18 December 2026');
-    $this->get('/packages/9d7n-umrah-reguler-18-desember-2026?lang=id')->assertOk()->assertSee('Umrah Reguler 18 Desember 2026')->assertDontSee('Regular Umrah 18 December 2026');
+    $this->get('/en/packages/9d7n-umrah-reguler-18-desember-2026')->assertOk()->assertSee('Regular Umrah 18 December 2026');
+    $this->get('/packages/9d7n-umrah-reguler-18-desember-2026')->assertOk()->assertSee('Umrah Reguler 18 Desember 2026')->assertDontSee('Regular Umrah 18 December 2026');
 });
 
 it('backs up the database every night and emails a copy when an address is set', function () {
@@ -222,7 +222,7 @@ it('adds the Türkiye chapter to the Journeys section once, with its photos', fu
     expect(count($chapters))->toBe(3)->and($last['title']['en'])->toBe('Seven Churches, Türkiye')->and(count($last['tiles']))->toBe(9)
         ->and(collect($last['tiles'])->every(fn ($t) => is_int($t['image']) && Media::whereKey($t['image'])->exists()))->toBeTrue();
 
-    $html = $this->get('/?lang=id')->assertOk()->getContent();
+    $html = $this->get('/')->assertOk()->getContent();
     expect($html)->toContain('7 Churches, Turki')->toContain('Perpustakaan Celsus, Efesus');
-    expect($this->get('/?lang=en')->getContent())->toContain('Seven Churches, Türkiye')->toContain('Library of Celsus, Ephesus');
+    expect($this->get('/en')->getContent())->toContain('Seven Churches, Türkiye')->toContain('Library of Celsus, Ephesus');
 });

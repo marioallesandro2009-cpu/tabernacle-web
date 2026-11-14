@@ -4,7 +4,7 @@
 <article class="post">
   <header class="post-head">
     <div class="wrap">
-      <nav class="tr-crumb mono" aria-label="Breadcrumb"><a href="{{ url('/') }}">{{ t('common.home') }}</a> / <a href="{{ url('/blog') }}">{{ t('blog.title') }}</a>@if ($post->category) / <a href="{{ url('/blog') }}?category={{ $post->category->slug }}">{{ $post->category->name }}</a>@endif</nav>
+      <nav class="tr-crumb mono" aria-label="Breadcrumb"><a href="{{ lurl('/') }}">{{ t('common.home') }}</a> / <a href="{{ lurl('/blog') }}">{{ t('blog.title') }}</a>@if ($post->category) / <a href="{{ lurl('/blog') }}?category={{ $post->category->slug }}">{{ $post->category->name }}</a>@endif</nav>
       <h1 class="display h-l">{{ $post->title }}</h1>
       <p class="post-meta mono">{{ ($post->published_at ?? now())->locale(app()->getLocale())->translatedFormat('d F Y') }} · {{ t('blog.min_read', ['n' => $post->reading_time]) }}@if ($post->author) · {{ t('blog.by', ['name' => $post->author->name]) }}@endif</p>
       @if ($post->excerpt)<p class="lede post-lede">{{ $post->excerpt }}</p>@endif
@@ -27,14 +27,14 @@
     </div>
   @endif
   @if ($post->tags->isNotEmpty())
-    <div class="wrap post-tags"><span class="mono">{{ t('blog.tags') }}</span> @foreach ($post->tags as $tag)<a class="chip-link" href="{{ url('/blog') }}?tag={{ $tag->slug }}">#{{ $tag->name }}</a>@endforeach</div>
+    <div class="wrap post-tags"><span class="mono">{{ t('blog.tags') }}</span> @foreach ($post->tags as $tag)<a class="chip-link" href="{{ lurl('/blog') }}?tag={{ $tag->slug }}">#{{ $tag->name }}</a>@endforeach</div>
   @endif
 </article>
 
 @if (count($tours))
 <section class="sec on-sand">
   <div class="wrap">
-    <div class="chapter"><b>{{ t('blog.related_packages') }}</b><a class="mono" href="{{ url('/packages') }}">{{ t('tour.all_packages') }}</a></div>
+    <div class="chapter"><b>{{ t('blog.related_packages') }}</b><a class="mono" href="{{ lurl('/packages') }}">{{ t('tour.all_packages') }}</a></div>
     <div class="pkgs">@foreach ($tours as $c)@include('site.partials.tour-tile', ['c' => $c, 'span' => 4])@endforeach</div>
   </div>
 </section>
@@ -42,10 +42,10 @@
 @if ($related->isNotEmpty())
 <section class="sec on-paper">
   <div class="wrap">
-    <div class="chapter"><b>{{ t('blog.related') }}</b><a class="mono" href="{{ url('/blog') }}">{{ t('blog.all') }}</a></div>
+    <div class="chapter"><b>{{ t('blog.related') }}</b><a class="mono" href="{{ lurl('/blog') }}">{{ t('blog.all') }}</a></div>
     <div class="post-grid">
       @foreach ($related as $p)
-        <a class="post-card" href="{{ url('/blog/'.$p->slug) }}"><div class="pic">@if ($p->cover_id)<img {!! media_attrs($p->cover_id, '(max-width: 860px) 100vw, 33vw', $p->title) !!} loading="lazy">@endif</div><p class="mono">{{ $p->published_at->locale(app()->getLocale())->translatedFormat('d M Y') }}</p><h3>{{ $p->title }}</h3></a>
+        <a class="post-card" href="{{ lurl('/blog/'.$p->slug) }}"><div class="pic">@if ($p->cover_id)<img {!! media_attrs($p->cover_id, '(max-width: 860px) 100vw, 33vw', $p->title) !!} loading="lazy">@endif</div><p class="mono">{{ $p->published_at->locale(app()->getLocale())->translatedFormat('d M Y') }}</p><h3>{{ $p->title }}</h3></a>
       @endforeach
     </div>
   </div>

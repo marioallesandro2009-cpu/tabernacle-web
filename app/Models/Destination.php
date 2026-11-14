@@ -22,4 +22,13 @@ class Destination extends Model
     {
         return $this->belongsToMany(Tour::class);
     }
+
+    /** English name, and the English intro when there is an intro at all. */
+    public function hasEnglish(): bool
+    {
+        $intro = (array) ($this->intro ?? []);
+        $hasIntro = trim(strip_tags((string) ($intro['id'] ?? ''))) !== '';
+
+        return trim((string) ($this->name['en'] ?? '')) !== '' && (! $hasIntro || trim(strip_tags((string) ($intro['en'] ?? ''))) !== '');
+    }
 }

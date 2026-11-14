@@ -3,7 +3,7 @@
 @section('content')
 <section class="pk-hero">
   <div class="wrap grid">
-    <p class="kicker mono"><a href="{{ url('/destinations') }}">{{ t('dest.title') }}</a> / {{ t('region.'.$dest->region) }}</p>
+    <p class="kicker mono"><a href="{{ lurl('/destinations') }}">{{ t('dest.title') }}</a> / {{ t('region.'.$dest->region) }}</p>
     <h1 class="display h-xl"><span class="ln"><span>{{ tr($dest->name) }}</span></span></h1>
     @if (tr($dest->intro))<div class="pk-intro prose" data-fade>{!! tr($dest->intro) !!}</div>@endif
   </div>

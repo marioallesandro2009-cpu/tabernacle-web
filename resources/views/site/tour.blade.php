@@ -28,8 +28,8 @@
 <section class="tr-hero">
   <div class="tr-bg"><img {!! media_attrs($tour->cover_id, '100vw', $tour->displayName()) !!} fetchpriority="high"></div>
   <div class="wrap tr-hero-in">
-    <p class="tr-crumb mono"><a href="{{ url('/packages') }}">{{ t('tour.crumb') }}</a> / <span>{{ t('region.'.$tour->region) }}</span></p>
-    <p class="tr-tags mono"><span class="tag">{{ t('tour.type.'.$kind) }}</span>@if ($tour->duration)<span class="tag">{{ $tour->duration }}</span>@endif @foreach ($tour->destinations as $d)<a class="tag" href="{{ url('/packages') }}?country={{ $d->slug }}">{{ tr($d->name) }}</a>@endforeach
+    <p class="tr-crumb mono"><a href="{{ lurl('/packages') }}">{{ t('tour.crumb') }}</a> / <span>{{ t('region.'.$tour->region) }}</span></p>
+    <p class="tr-tags mono"><span class="tag">{{ t('tour.type.'.$kind) }}</span>@if ($tour->duration)<span class="tag">{{ $tour->duration }}</span>@endif @foreach ($tour->destinations as $d)<a class="tag" href="{{ lurl('/packages') }}?country={{ $d->slug }}">{{ tr($d->name) }}</a>@endforeach
       @if (tr($tour->promo_label))<span class="tag tag-promo">{{ tr($tour->promo_label) }}</span>@endif</p>
     <h1 class="display h-l">{{ $tour->displayName() }}</h1>
     @if ($tour->route)<p class="tr-route">{{ $tour->route }}</p>@endif
@@ -169,7 +169,7 @@
 
 <section class="sec tr-more on-paper">
   <div class="wrap">
-    <div class="chapter"><b>{{ t('tour.related') }}</b><a class="mono" href="{{ url('/packages') }}">{{ t('tour.all_packages') }}</a></div>
+    <div class="chapter"><b>{{ t('tour.related') }}</b><a class="mono" href="{{ lurl('/packages') }}">{{ t('tour.all_packages') }}</a></div>
     <div class="pkgs">
       @foreach ($related as $c)
         @include('site.partials.tour-tile', ['c' => $c, 'span' => 4])

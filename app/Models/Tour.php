@@ -147,4 +147,10 @@ class Tour extends Model
 
         return $prices->min();
     }
+
+    /** The English page has real English content: the itinerary or the description was translated. */
+    public function hasEnglish(): bool
+    {
+        return ! empty($this->itinerary_en) || trim(strip_tags((string) ($this->description['en'] ?? ''))) !== '';
+    }
 }

@@ -71,4 +71,10 @@ class Post extends Model
     {
         $q->whereIn('status', ['published', 'scheduled'])->where('published_at', '<=', now());
     }
+
+    /** An article is English once its title and body have English versions. */
+    public function hasEnglish(): bool
+    {
+        return trim((string) $this->getAttribute('title_en')) !== '' && trim(strip_tags((string) $this->getAttribute('content_en'))) !== '';
+    }
 }

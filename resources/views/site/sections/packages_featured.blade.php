@@ -15,6 +15,6 @@
         @include('site.partials.tour-tile', ['c' => $c, 'span' => $spans[$i % count($spans)]])
       @endforeach
     </div>
-    <p class="pk-all"><a class="btn btn-navy" href="{{ url('/packages') }}">{{ nl(tr($s['all_label'] ?? null), ['n' => $total]) }} <svg aria-hidden="true"><use href="#arrow"/></svg></a></p>
+    <p class="pk-all"><a class="btn btn-navy" href="{{ lurl('/packages') }}">{{ nl(tr($s['all_label'] ?? null), ['n' => $total]) }} <svg aria-hidden="true"><use href="#arrow"/></svg></a></p>
   </div>
 </section>

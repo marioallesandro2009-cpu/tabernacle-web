@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use App\Models\Page;
 use App\Models\Tour;
+use App\Support\Locale;
 use App\Support\Seo;
 use App\Support\SiteData;
 use Illuminate\Http\Request;
@@ -52,6 +53,7 @@ class PageController extends Controller
     {
         $page = SiteData::page($key);
         abort_unless($page && $page->is_active, 404);
+        Locale::translated($page->hasEnglish());
 
         return $this->show($page, $view, $schema, $crumbs);
     }
@@ -72,7 +74,7 @@ class PageController extends Controller
             $view = 'site.destinations';
         }
         if ($crumbs) {
-            $schema[] = Seo::breadcrumbs([[tr(SiteData::page('home')?->title) ?: 'Home', url('/')], [tr($page->title), $page->publicUrl()]]);
+            $schema[] = Seo::breadcrumbs([[tr(SiteData::page('home')?->title) ?: 'Home', lurl('/')], [tr($page->title), $page->publicUrl()]]);
         }
         $seo = Seo::make(tr($page->meta_title) ?: tr($page->title), tr($page->meta_description), $page->og_image_id, $page->publicUrl(),
             noindex: $preview || (bool) $page->noindex, schema: $schema, titleIsFinal: (bool) tr($page->meta_title));
@@ -83,11 +85,12 @@ class PageController extends Controller
     public function destination(string $slug, Request $request): View
     {
         $dest = Destination::where('slug', $slug)->where('is_active', true)->firstOrFail();
+        Locale::translated($dest->hasEnglish());
         $request->attributes->set('track_ref_id', $dest->id);
         $cards = collect(SiteData::tourCards())->filter(fn ($c) => in_array($dest->slug, $c['countries'], true))->values()->all();
         $name = tr($dest->name);
-        $seo = Seo::make(tr($dest->meta_title) ?: t('dest.tours', ['name' => $name]), tr($dest->meta_description) ?: strip_tags(tr($dest->intro)), $dest->cover_id, url('/destinations/'.$dest->slug), titleIsFinal: (bool) tr($dest->meta_title), schema: [
-            Seo::breadcrumbs([['Home', url('/')], [t('dest.title'), url('/destinations')], [$name, url()->current()]]),
+        $seo = Seo::make(tr($dest->meta_title) ?: t('dest.tours', ['name' => $name]), tr($dest->meta_description) ?: strip_tags(tr($dest->intro)), $dest->cover_id, lurl('/destinations/'.$dest->slug), titleIsFinal: (bool) tr($dest->meta_title), schema: [
+            Seo::breadcrumbs([['Home', lurl('/')], [t('dest.title'), lurl('/destinations')], [$name, url()->current()]]),
         ]);
 
         return view('site.destination', ['dest' => $dest, 'cards' => $cards, 'seo' => $seo, 'bodyClass' => 'page-destination']);
@@ -96,6 +99,7 @@ class PageController extends Controller
     public function tour(string $slug, Request $request): View
     {
         $tour = Tour::query()->active()->with(['category', 'destinations'])->where('slug', $slug)->firstOrFail();
+        Locale::translated($tour->hasEnglish());
         $request->attributes->set('track_ref_id', $tour->id);
 
         $cards = collect(SiteData::tourCards());
@@ -106,18 +110,18 @@ class PageController extends Controller
         $name = $tour->displayName();
         $price = $tour->fromPrice();
         $schema = [
-            Seo::breadcrumbs([['Home', url('/')], [t('tour.crumb'), url('/packages')], [$name, url()->current()]]),
+            Seo::breadcrumbs([['Home', lurl('/')], [t('tour.crumb'), lurl('/packages')], [$name, url()->current()]]),
             array_filter([
                 '@context' => 'https://schema.org', '@type' => 'TouristTrip', 'name' => trim($tour->duration.' '.$name), 'description' => tr($tour->description) ?: ($tour->route ?: $name),
                 'image' => media_url($tour->cover_id, 1600), 'url' => url()->current(), 'touristType' => $tour->flights_included ? 'Group tour' : 'FIT',
                 'itinerary' => $tour->route ? ['@type' => 'ItemList', 'itemListElement' => collect(explode('–', str_replace('-', '–', $tour->route)))->map(fn ($p, $i) => ['@type' => 'ListItem', 'position' => $i + 1, 'item' => ['@type' => 'Place', 'name' => trim($p)]])->values()->all()] : null,
-                'provider' => ['@type' => 'TravelAgency', 'name' => setting('site_name'), 'url' => url('/')],
+                'provider' => ['@type' => 'TravelAgency', 'name' => setting('site_name'), 'url' => lurl('/')],
                 'offers' => $price ? ['@type' => 'Offer', 'priceCurrency' => 'IDR', 'price' => $price, 'availability' => 'https://schema.org/InStock', 'url' => url()->current()] : null,
             ]),
         ];
         $title = tr($tour->meta_title) ?: trim(($tour->duration ? $tour->duration.' ' : '').$name).' | '.trim(setting('site_name', '').' '.ucwords(strtolower((string) setting('site_suffix', ''))));
         $desc = tr($tour->meta_description) ?: trim(($tour->duration ? $tour->duration.' ' : '').$name.($tour->route ? ' ('.$tour->route.')' : '').'. '.($price ? t('tour.from').' '.rupiah($price).'. ' : '').tr(setting('default_description')));
-        $seo = Seo::make($title, $desc, $tour->og_image_id ?: $tour->cover_id, url('/packages/'.$tour->slug), 'website', schema: $schema);
+        $seo = Seo::make($title, $desc, $tour->og_image_id ?: $tour->cover_id, lurl('/packages/'.$tour->slug), 'website', schema: $schema);
 
         return view('site.tour', ['tour' => $tour, 'related' => $related->values()->all(), 'seo' => $seo, 'bodyClass' => 'page-tour']);
     }

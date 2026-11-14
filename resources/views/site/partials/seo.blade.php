@@ -2,6 +2,9 @@
 <title>{{ $seo['title'] }}</title>
 <meta name="description" content="{{ $seo['description'] }}">
 <link rel="canonical" href="{{ $seo['canonical'] }}">
+@foreach (\App\Support\Locale::alternates($seo['canonical']) as $hl => $href)
+<link rel="alternate" hreflang="{{ $hl }}" href="{{ $href }}">
+@endforeach
 @if (! empty($seo['noindex']))
 <meta name="robots" content="noindex, follow">
 @else
@@ -22,7 +25,7 @@
 @if (! empty($seo['image']))
 <meta name="twitter:image" content="{{ $seo['image'] }}">
 @endif
-<link rel="alternate" type="application/rss+xml" title="{{ setting('site_name') }} Blog" href="{{ url('/feed.xml') }}">
+<link rel="alternate" type="application/rss+xml" title="{{ setting('site_name') }} Blog" href="{{ lurl('/feed.xml') }}">
 @foreach ($seo['schema'] ?? [] as $schema)
 <script type="application/ld+json" nonce="{{ csp_nonce() }}">{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>
 @endforeach

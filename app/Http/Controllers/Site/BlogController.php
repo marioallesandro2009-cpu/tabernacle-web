@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\Tag;
 use App\Support\ContentTools;
+use App\Support\Locale;
 use App\Support\Seo;
 use App\Support\SiteData;
 use Illuminate\Http\Request;
@@ -32,8 +33,8 @@ class BlogController extends Controller
         $posts->getCollection()->each->localize();
 
         $title = $category ? $category->name.' | Blog' : (tr($page->meta_title) ?: tr($page->title));
-        $seo = Seo::make($title, tr($page->meta_description), $page->og_image_id, url('/blog'.($category ? '?category='.$category->slug : '')),
-            noindex: (bool) ($page->noindex || $request->query('page', 1) > 1 || $tag), schema: [Seo::breadcrumbs([['Home', url('/')], [t('blog.title'), url('/blog')]])]);
+        $seo = Seo::make($title, tr($page->meta_description), $page->og_image_id, lurl('/blog'.($category ? '?category='.$category->slug : '')),
+            noindex: (bool) ($page->noindex || $request->query('page', 1) > 1 || $tag), schema: [Seo::breadcrumbs([['Home', lurl('/')], [t('blog.title'), lurl('/blog')]])]);
 
         return view('site.blog-index', [
             'page' => $page, 'posts' => $posts, 'categories' => PostCategory::withCount(['posts' => fn ($p) => $p->live()])->orderBy('name')->get()->each->localize(),
@@ -53,6 +54,7 @@ class BlogController extends Controller
     public function render(Post $post, bool $preview = false): View
     {
         $post->loadMissing(['category', 'author', 'tags']);
+        Locale::translated($post->hasEnglish());
         $post->localize();
 
         $parsed = ContentTools::withToc($post->content);
@@ -61,10 +63,10 @@ class BlogController extends Controller
             ->orderByDesc('published_at')->limit(3)->get()->each->localize();
         $tours = array_slice(SiteData::featuredCards(), 0, 3);
 
-        $url = url('/blog/'.$post->slug);
+        $url = lurl('/blog/'.$post->slug);
         $img = media_url($post->og_image_id ?: $post->cover_id, 1600);
         $schema = [
-            Seo::breadcrumbs([['Home', url('/')], [t('blog.title'), url('/blog')], [$post->title, $url]]),
+            Seo::breadcrumbs([['Home', lurl('/')], [t('blog.title'), lurl('/blog')], [$post->title, $url]]),
             array_filter([
                 '@context' => 'https://schema.org', '@type' => 'Article', 'headline' => $post->title, 'description' => $post->meta_description ?: $post->excerpt,
                 'image' => $img ? [$img] : null, 'datePublished' => $post->published_at?->toAtomString(), 'dateModified' => $post->updated_at?->toAtomString(),

@@ -60,7 +60,7 @@
 
 <header class="nav" @if (! empty($solidNav)) data-solid @endif>
   <div class="wrap nav-in">
-    <a class="brand" href="{{ url('/') }}" aria-label="{{ t('brand.aria') }}">
+    <a class="brand" href="{{ lurl('/') }}" aria-label="{{ t('brand.aria') }}">
       @if ($logoLight || $logoDark)
         @if ($logoLight)<img class="logo-img logo-light" {!! media_attrs($logoLight, '160px', $siteName) !!}>@endif
         @if ($logoDark)<img class="logo-img logo-dark" {!! media_attrs($logoDark, '160px', $siteName) !!}>@endif
@@ -73,11 +73,11 @@
       <ul>
         @foreach (\App\Support\SiteData::menu('header') as $item)
           <li @if ($item->children->isNotEmpty()) class="has-sub" @endif>
-            <a class="nav-link" href="{{ $item->url }}" @if ($item->new_tab) target="_blank" rel="noopener" @endif @if (rtrim(parse_url($item->url, PHP_URL_PATH) ?: '', '/') === rtrim(request()->getPathInfo(), '/') && ! str_contains($item->url, '#')) aria-current="page" @endif>{{ tr($item->label) }}</a>
+            <a class="nav-link" href="{{ \App\Support\Locale::link($item->url) }}" @if ($item->new_tab) target="_blank" rel="noopener" @endif @if (rtrim(parse_url(\App\Support\Locale::link($item->url), PHP_URL_PATH) ?: '', '/') === rtrim(request()->getPathInfo(), '/') && ! str_contains($item->url, '#')) aria-current="page" @endif>{{ tr($item->label) }}</a>
             @if ($item->children->isNotEmpty())
               <ul class="sub">
                 @foreach ($item->children as $child)
-                  <li><a href="{{ $child->url }}" @if ($child->new_tab) target="_blank" rel="noopener" @endif>{{ tr($child->label) }}</a></li>
+                  <li><a href="{{ \App\Support\Locale::link($child->url) }}" @if ($child->new_tab) target="_blank" rel="noopener" @endif>{{ tr($child->label) }}</a></li>
                 @endforeach
               </ul>
             @endif
@@ -97,10 +97,10 @@
 <div class="menu">
   <ul>
     @unless (request()->is('/'))
-      <li><a class="big" href="{{ url('/') }}">{{ t('nav.home') }}</a></li>
+      <li><a class="big" href="{{ lurl('/') }}">{{ t('nav.home') }}</a></li>
     @endunless
     @foreach (\App\Support\SiteData::menu('header') as $item)
-      <li><a class="big" href="{{ $item->url }}" @if ($item->new_tab) target="_blank" rel="noopener" @endif>{{ tr($item->label) }}</a></li>
+      <li><a class="big" href="{{ \App\Support\Locale::link($item->url) }}" @if ($item->new_tab) target="_blank" rel="noopener" @endif>{{ tr($item->label) }}</a></li>
     @endforeach
   </ul>
   <p class="mono">{{ setting('wa_display') }}<br>{{ setting('contact_email') }}</p>
@@ -117,10 +117,10 @@
       <p class="foot-addr">{!! nl2br(e((string) setting('address_footer', ''))) !!}</p>
       <div class="foot-nav mono">
         @unless (request()->is('/'))
-          <a href="{{ url('/') }}">{{ t('nav.home') }}</a>
+          <a href="{{ lurl('/') }}">{{ t('nav.home') }}</a>
         @endunless
         @foreach (\App\Support\SiteData::menu('footer') as $item)
-          <a href="{{ $item->url }}" @if ($item->new_tab) target="_blank" rel="noopener" @endif>{{ tr($item->label) }}</a>
+          <a href="{{ \App\Support\Locale::link($item->url) }}" @if ($item->new_tab) target="_blank" rel="noopener" @endif>{{ tr($item->label) }}</a>
         @endforeach
       </div>
     </div>

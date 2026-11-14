@@ -78,7 +78,8 @@ it('refuses redirect loops and javascript targets in the admin', function () {
 
 it('switches language with a cookie', function () {
     makePage('contact');
-    $this->get('/lang/en?back=/contact')->assertRedirect('/contact')->assertCookie('lang', 'en');
+    $this->get('/lang/en?back=/contact')->assertRedirect('/en/contact')->assertCookie('lang', 'en');
+    $this->get('/lang/id?back=/en/contact')->assertRedirect('/contact')->assertCookie('lang', 'id');
 });
 
 it('sends security headers', function () {
@@ -145,7 +146,7 @@ it('keeps a space before the title suffix even when the admin saved it without o
     Settings::set('title_suffix', '| Tabernacle Ways');
     Settings::forget();
     $d = Destination::create(['name' => ['en' => 'Japan', 'id' => 'Jepang'], 'slug' => 'japan', 'region' => 'asia', 'is_active' => true]);
-    $html = $this->get('/destinations/japan?lang=id')->assertOk()->getContent();
+    $html = $this->get('/destinations/japan')->assertOk()->getContent();
     preg_match('/<title>([^<]*)<\/title>/', $html, $m);
     expect($m[1])->toContain(' | Tabernacle Ways')->not->toMatch('/\S\|/');
 });

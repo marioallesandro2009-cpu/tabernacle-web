@@ -20,7 +20,7 @@ it('lets an admin create a custom page that starts inactive with a text section'
     // not public until activated
     $this->get('/terms-conditions')->assertNotFound();
     $page->update(['is_active' => true]);
-    $this->get('/terms-conditions')->assertOk()->assertSee('Terms &amp; Conditions', false);
+    $this->get('/en/terms-conditions')->assertOk()->assertSee('Terms &amp; Conditions', false);
     expect(PageView::where('path', '/terms-conditions')->exists())->toBeFalse(); // admin visits are not counted
 });
 
@@ -28,8 +28,8 @@ it('serves an active custom page to visitors and counts the view', function () {
     systemPage('home');
     $page = Page::create(['key' => 'c-privasi', 'slug' => 'kebijakan-privasi', 'title' => ['en' => 'Privacy', 'id' => 'Privasi'], 'is_active' => true, 'is_system' => false]);
     $page->sections()->create(['type' => 'text_block', 'sort' => 1, 'is_visible' => true, 'data' => ['title_a' => ['en' => 'Privacy policy', 'id' => 'Kebijakan privasi'], 'body' => ['en' => '<p>We keep your data safe.</p>', 'id' => '<p>Data Anda aman.</p>']]]);
-    $this->get('/kebijakan-privasi?lang=en')->assertOk()->assertSee('We keep your data safe.');
-    expect(PageView::where('path', '/kebijakan-privasi')->count())->toBe(1);
+    $this->get('/en/kebijakan-privasi')->assertOk()->assertSee('We keep your data safe.');
+    expect(PageView::where('path', '/en/kebijakan-privasi')->count())->toBe(1);
     expect($this->get('/sitemap.xml')->getContent())->toContain('/kebijakan-privasi');
 });
 

@@ -2,6 +2,7 @@
 
 use App\Models\Media;
 use App\Support\Content;
+use App\Support\Locale;
 use App\Support\Settings;
 use App\Support\Ui;
 use Illuminate\Support\Facades\Vite;
@@ -66,6 +67,14 @@ if (! function_exists('with_nonce')) {
         }
 
         return (string) preg_replace('/<script\b(?![^>]*\bnonce=)/i', '<script nonce="'.$nonce.'"', $html);
+    }
+}
+
+if (! function_exists('lurl')) {
+    /** A link to a public page in the language being shown: lurl('/packages') → "/en/packages" on the English site. */
+    function lurl(string $path = '/', ?string $locale = null): string
+    {
+        return url(Locale::path($path, $locale ?? app()->getLocale()));
     }
 }
 

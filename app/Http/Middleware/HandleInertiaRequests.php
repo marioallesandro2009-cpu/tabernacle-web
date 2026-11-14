@@ -69,6 +69,7 @@ class HandleInertiaRequests extends Middleware
                 ['label' => 'FAQ', 'url' => admin_path().'/faqs', 'can' => 'content.manage', 'icon' => 'help'],
                 ['label' => 'Tim', 'url' => admin_path().'/team', 'can' => 'content.manage', 'icon' => 'users'],
                 ['label' => 'Teks antarmuka', 'url' => admin_path().'/ui-strings', 'can' => 'content.manage', 'icon' => 'text'],
+                ['label' => 'Terjemahan belum lengkap', 'url' => admin_path().'/translations', 'can' => 'content.manage', 'icon' => 'help'],
                 ['label' => 'Redirect', 'url' => admin_path().'/redirects', 'can' => 'content.manage', 'icon' => 'redirect'],
             ]],
             ['label' => 'Media', 'items' => [['label' => 'Media library', 'url' => admin_path().'/media', 'can' => 'media.manage', 'icon' => 'image']]],

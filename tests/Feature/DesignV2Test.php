@@ -33,17 +33,17 @@ it('shows the home quick finder with destinations that have trips, and can be sw
     Destination::create(['name' => ['en' => 'Peru', 'id' => 'Peru'], 'slug' => 'peru', 'region' => 'america', 'is_active' => true]);
     v2Tour()->destinations()->attach($jp);
 
-    $html = $this->get('/?lang=en')->assertOk()->getContent();
+    $html = $this->get('/en')->assertOk()->getContent();
     expect($html)->toContain('class="hero-find"')->toContain('value="japan"')->not->toContain('value="peru"')
-        ->toContain('action="'.url('/packages').'#list"');
+        ->toContain('action="'.url('/en/packages').'#list"');
 
     $section->update(['data' => ['line1' => ['en' => 'Your dream', 'id' => 'Impian'], 'show_finder' => false]]);
-    expect($this->get('/?lang=en')->getContent())->not->toContain('class="hero-find"');
+    expect($this->get('/en')->getContent())->not->toContain('class="hero-find"');
 });
 
 it('adds section navigation, collapsible days and the mobile booking bar to a package page', function () {
     $t = v2Tour();
-    $html = $this->get('/packages/'.$t->slug.'?lang=en')->assertOk()->getContent();
+    $html = $this->get('/en/packages/'.$t->slug)->assertOk()->getContent();
     expect($html)->toContain('class="tr-nav"')->toContain('href="#itinerary"')->toContain('href="#included"')->toContain('href="#inquiry"')
         ->not->toContain('href="#schedule"')->not->toContain('href="#photos"')
         ->and(substr_count($html, '<details'))->toBe(3)
@@ -56,7 +56,7 @@ it('renders the tour photo gallery that admins fill in, with a lightbox', functi
     $a = $svc->store(UploadedFile::fake()->image('a.jpg', 1200, 800), 'tours', 'Torii gate in Kyoto');
     $b = $svc->store(UploadedFile::fake()->image('b.jpg', 1200, 800), 'tours', 'Mount Fuji');
     $t = v2Tour(['gallery' => [$a->id, $b->id]]);
-    $html = $this->get('/packages/'.$t->slug.'?lang=en')->assertOk()->getContent();
+    $html = $this->get('/en/packages/'.$t->slug)->assertOk()->getContent();
     expect($html)->toContain('id="photos"')->toContain('href="#photos"')->toContain('data-full=')->toContain('Torii gate in Kyoto')->toContain('Mount Fuji');
 });
 
@@ -64,9 +64,9 @@ it('lists deposit, pdf and editable trust points next to the price', function ()
     Settings::set('trust_points', [['text' => ['en' => 'Licensed travel agent', 'id' => 'Biro perjalanan berizin']], ['text' => ['en' => '', 'id' => '']]]);
     Settings::forget();
     $t = v2Tour();
-    $html = $this->get('/packages/'.$t->slug.'?lang=id')->assertOk()->getContent();
+    $html = $this->get('/packages/'.$t->slug)->assertOk()->getContent();
     expect($html)->toContain('class="tr-trust"')->toContain('Biro perjalanan berizin')->toContain('5.000.000');
-    $this->get('/packages/'.$t->slug.'?lang=en')->assertSee('Licensed travel agent');
+    $this->get('/en/packages/'.$t->slug)->assertSee('Licensed travel agent');
 });
 
 it('lets the admin edit trust points (max 5)', function () {

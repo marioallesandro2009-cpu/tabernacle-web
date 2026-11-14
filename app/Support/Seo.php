@@ -30,7 +30,7 @@ class Seo
         return [
             'title' => $title,
             'description' => Str::limit($description, 300, ''),
-            'canonical' => $canonical ?: url()->current(),
+            'canonical' => Locale::canonical($canonical ?: url()->current()),
             'image' => $imageUrl,
             'type' => $type,
             'noindex' => $noindex,

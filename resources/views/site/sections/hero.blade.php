@@ -15,7 +15,7 @@
     @if ($s['show_finder'] ?? true)
       @php $finderDests = \App\Support\SiteData::destinations()->filter(fn ($d) => $d->tours_count > 0)->sortBy(fn ($d) => tr($d->name))->values(); @endphp
       {{-- quick finder: hands off to the packages page filters (?country= / ?q=) --}}
-      <form class="hero-find" action="{{ url('/packages') }}#list" method="get" role="search" aria-label="{{ t('hero.find_aria') }}">
+      <form class="hero-find" action="{{ lurl('/packages') }}#list" method="get" role="search" aria-label="{{ t('hero.find_aria') }}">
         <label class="hf-field">
           <span class="mono">{{ t('hero.find_label') }}</span>
           <select name="country">

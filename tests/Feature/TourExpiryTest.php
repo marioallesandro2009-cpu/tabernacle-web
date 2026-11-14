@@ -35,9 +35,9 @@ it('hides a package everywhere once its date has passed (WIB), and keeps it on i
     Carbon::setTestNow(Carbon::parse('2026-12-18 17:30:00', 'UTC'));
     $this->get('/packages/sakura-trip')->assertNotFound();
     expect(Tour::active()->pluck('slug')->all())->toBe(['long-trip']);
-    $this->get('/packages?lang=en')->assertOk()->assertDontSee('/packages/sakura-trip')->assertSee('/packages/long-trip');
+    $this->get('/en/packages')->assertOk()->assertDontSee('/packages/sakura-trip')->assertSee('/packages/long-trip');
     expect($this->get('/sitemap.xml')->getContent())->not->toContain('sakura-trip')->toContain('long-trip');
-    $this->get('/destinations?lang=en')->assertDontSee('/destinations/japan');
+    $this->get('/en/destinations')->assertDontSee('/destinations/japan');
     expect($keep->fresh()->isExpired())->toBeFalse()->and($t->fresh()->isExpired())->toBeTrue();
 });
 
@@ -49,7 +49,7 @@ it('hides past departure dates on the package page and prices from the next one'
         ['date' => '2026-12-29', 'price_adult' => 20200000, 'status' => 'available'],
     ]]);
     expect($t->fromPrice())->toBe(19500000)->and(count($t->upcomingDepartures()))->toBe(2);
-    $html = $this->get('/packages/korea-winter?lang=id')->assertOk()->getContent();
+    $html = $this->get('/packages/korea-winter')->assertOk()->getContent();
     expect($html)->not->toContain('20 Des 2026')->toContain('22 Des 2026')->toContain('29 Des 2026');
 });
 
