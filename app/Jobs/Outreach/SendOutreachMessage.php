@@ -92,7 +92,7 @@ class SendOutreachMessage implements ShouldQueue
             $campaign->status !== 'running' => 'Kampanye sedang tidak berjalan.',
             ! $campaign->inWindow() => 'Di luar jam kirim.',
             ! in_array($cc->status, ['queued', 'sent', 'auto_replied'], true) => 'Kontak sudah tidak perlu dikirimi.',
-            ! $contact->isSendable() => 'Email kontak tidak valid atau kontak berhenti.',
+            ! $contact->isSendable((bool) $campaign->allow_catch_all) => 'Email kontak tidak valid, belum lolos verifikasi, atau kontak berhenti.',
             BlockedDomain::blocks($contact->email) => 'Domain kontak ada di daftar blokir.',
             $cc->current_step + 1 !== (int) $m->step => 'Langkah ini sudah terkirim atau berubah.',
             ! $account->is_active => 'Akun pengirim tidak aktif.',

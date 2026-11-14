@@ -8,11 +8,12 @@ import StatCard from '../../../Components/ui/StatCard.vue';
 import Chip from '../../../Components/ui/Chip.vue';
 import Modal from '../../../Components/ui/Modal.vue';
 import Empty from '../../../Components/ui/Empty.vue';
-import { contactStatus } from '../../../lib/outreach';
+import { contactStatus, verifyStatus } from '../../../lib/outreach';
 
-const props = defineProps({ contacts: Object, filters: Object, segments: Array, organizations: Array, counts: Object, recentImports: Array });
+const props = defineProps({ contacts: Object, filters: Object, segments: Array, organizations: Array, counts: Object, recentImports: Array, verifier: String, verifyError: String });
 
-const f = reactive({ q: '', segment: '', status: '', org: '', ...props.filters });
+const f = reactive({ q: '', segment: '', status: '', org: '', verify: '', role: '', ...props.filters });
+const verifyOne = (c) => router.post('/admin/outreach/contacts/verify', { contact_id: c.id }, { preserveScroll: true });
 const selected = ref([]);
 const bulkSegment = ref('');
 const newSegment = ref('');
@@ -76,6 +77,8 @@ onBeforeUnmount(() => clearInterval(poll));
         <button class="o-btn o-btn-primary" @click="add"><Icon name="plus" class="h-4 w-4" /> Tambah kontak</button>
     </PageHeader>
 
+    <div v-if="verifyError" class="mb-4 rounded-2xl bg-rose-50 px-4 py-3 text-sm text-rose-800 ring-1 ring-rose-100">Layanan verifikasi berhenti di tengah jalan: {{ verifyError }} Hasil cek dasar tetap tersimpan.</div>
+    <p class="mb-3 text-xs text-slate-500">Verifikasi: {{ verifier ? 'format, domain, MX, email sekali pakai, alamat peran, plus layanan ' + verifier : 'format, domain, MX, email sekali pakai, dan alamat peran (layanan verifikasi belum diatur di Pengaturan)' }}. Server ini tidak pernah mengetes kotak email penerima secara langsung.</p>
     <div class="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatCard label="Total kontak" :value="counts.total" />
         <StatCard label="Siap kirim" :value="counts.sendable" tone="green" hint="Email valid dan tidak berhenti" />
@@ -89,15 +92,19 @@ onBeforeUnmount(() => clearInterval(poll));
     </div>
 
     <div class="o-card mb-4 p-3">
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_auto]">
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr_auto]">
             <div class="relative">
                 <Icon name="search" class="pointer-events-none absolute left-3 top-3 h-4 w-4 text-slate-400" />
                 <input v-model="f.q" class="o-input pl-9" placeholder="Cari nama, email, organisasi…" aria-label="Cari" @keydown.enter.prevent="apply">
             </div>
             <select v-model="f.segment" class="o-input" aria-label="Segmen" @change="apply"><option value="">Semua segmen</option><option value="none">Tanpa segmen</option><option v-for="s in segments" :key="s.id" :value="s.id">{{ s.name }}</option></select>
             <select v-model="f.status" class="o-input" aria-label="Status" @change="apply">
-                <option value="">Semua status</option><option value="sendable">Siap kirim</option><option value="pending">Sedang dicek</option><option value="invalid_format">Format salah</option><option value="no_mx">Domain tak aktif</option><option value="empty">Tanpa email</option><option value="suppressed">Jangan dikirimi</option>
+                <option value="">Semua status</option><option value="sendable">Siap kirim</option><option value="pending">Sedang dicek</option><option value="invalid_format">Format salah</option><option value="no_mx">Domain tak aktif</option><option value="empty">Tanpa email</option><option value="disposable">Email sekali pakai</option><option value="suppressed">Jangan dikirimi</option>
             </select>
+            <select v-model="f.verify" class="o-input" aria-label="Hasil verifikasi" @change="apply">
+                <option value="">Semua hasil verifikasi</option><option value="valid">Terverifikasi valid</option><option value="catch_all">Catch-all</option><option value="unknown">Tidak pasti</option><option value="invalid">Tidak valid</option><option value="disposable">Sekali pakai</option><option value="none">Belum diverifikasi</option>
+            </select>
+            <label class="flex items-center gap-2 text-sm text-slate-600"><input v-model="f.role" type="checkbox" true-value="1" false-value="" class="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand" @change="apply"> Alamat peran ({{ counts.role }})</label>
             <select v-model="f.org" class="o-input" aria-label="Organisasi" @change="apply"><option value="">Semua organisasi</option><option v-for="o in organizations" :key="o" :value="o">{{ o }}</option></select>
             <button v-if="filtered" class="o-btn" @click="reset"><Icon name="x" class="h-4 w-4" /> Reset</button>
         </div>
@@ -110,7 +117,7 @@ onBeforeUnmount(() => clearInterval(poll));
             <input v-model="newSegment" class="o-input !w-44" placeholder="atau segmen baru…" aria-label="Nama segmen baru">
             <button class="o-btn o-btn-sm" :disabled="!bulkSegment && !newSegment" @click="bulk('move')">Pindahkan</button>
             <span class="mx-1 hidden h-5 w-px bg-slate-200 sm:block" />
-            <button class="o-btn o-btn-sm" @click="bulk('revalidate')">Cek ulang email</button>
+            <button class="o-btn o-btn-sm" @click="bulk('verify')">Verifikasi ulang</button>
             <button class="o-btn o-btn-sm" @click="bulk('suppress')">Jangan dikirimi</button>
             <button class="o-btn o-btn-sm o-btn-danger" @click="bulk('delete')"><Icon name="trash" class="h-3.5 w-3.5" /> Hapus</button>
             <button class="o-btn o-btn-sm o-btn-ghost ml-auto" @click="selected = []">Batal pilih</button>
@@ -133,8 +140,11 @@ onBeforeUnmount(() => clearInterval(poll));
                         <td class="o-td text-slate-600">{{ c.organization || '—' }}</td>
                         <td class="o-td"><div class="text-slate-700">{{ c.email || '—' }}</div><div v-if="c.phone" class="text-xs text-slate-400">{{ c.phone }}</div></td>
                         <td class="o-td"><span v-if="c.segment" class="rounded-lg bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600">{{ c.segment }}</span><span v-else class="text-xs text-slate-400">—</span></td>
-                        <td class="o-td"><Chip :tone="contactStatus[c.status]?.tone">{{ contactStatus[c.status]?.label || c.status }}</Chip><div v-if="c.note && c.status !== 'valid'" class="mt-1 text-[11px] text-slate-400">{{ c.note }}</div></td>
+                        <td class="o-td"><Chip :tone="contactStatus[c.status]?.tone">{{ contactStatus[c.status]?.label || c.status }}</Chip>
+                            <div class="mt-1 flex flex-wrap gap-1"><Chip v-if="c.verify_status" :tone="verifyStatus[c.verify_status]?.tone" :dot="false" :title="c.verify_note">{{ verifyStatus[c.verify_status]?.label }}</Chip><Chip v-if="c.is_role" tone="amber" :dot="false" title="Alamat bersama seperti info@ atau sales@: boleh dikirimi, tapi biasanya lebih jarang dibalas">Alamat peran</Chip></div>
+                            <div v-if="c.note && c.status !== 'valid'" class="mt-1 text-[11px] text-slate-400">{{ c.note }}</div></td>
                         <td class="o-td text-right">
+                            <button class="o-btn o-btn-sm o-btn-ghost" aria-label="Verifikasi ulang" title="Verifikasi ulang" :disabled="!c.email" @click="verifyOne(c)"><Icon name="check" class="h-4 w-4" /></button>
                             <button class="o-btn o-btn-sm o-btn-ghost" aria-label="Ubah kontak" @click="edit(c)"><Icon name="edit" class="h-4 w-4" /></button>
                         </td>
                     </tr>

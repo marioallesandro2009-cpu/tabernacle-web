@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Cache;
 class EmailValidator
 {
     /** @param (callable(string): (array<int, array<string, mixed>>|false))|null $resolver returns MX records, [] when none, false when DNS itself failed */
-    public function __construct(protected $resolver = null)
+    public function __construct(protected $resolver = null, protected ?EmailChecks $checks = null)
     {
+        $this->checks ??= new EmailChecks;
         $this->resolver ??= fn (string $domain) => @dns_get_record($domain.'.', DNS_MX);
     }
 
-    /** @return array{0: string, 1: ?string} [status, note] where status is valid | empty | invalid_format | no_mx | pending */
+    /** @return array{0: string, 1: ?string} [status, note] where status is valid | empty | invalid_format | disposable | no_mx | pending */
     public function validate(?string $email): array
     {
         $email = trim((string) $email);
@@ -26,6 +27,9 @@ class EmailValidator
         }
         if (mb_strlen($email) > 190 || ! filter_var($email, FILTER_VALIDATE_EMAIL) || ! str_contains(explode('@', $email)[1] ?? '', '.')) {
             return ['invalid_format', 'Format email salah'];
+        }
+        if ($this->checks?->isDisposable($email)) {
+            return ['disposable', 'Layanan email sekali pakai'];
         }
         $domain = strtolower(explode('@', $email)[1]);
         $has = $this->hasMx($domain);

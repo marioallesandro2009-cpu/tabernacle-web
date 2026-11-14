@@ -16,7 +16,7 @@ class Campaign extends Model
 
     protected $guarded = ['id'];
 
-    protected $casts = ['send_days' => 'array', 'started_at' => 'datetime', 'completed_at' => 'datetime'];
+    protected $casts = ['send_days' => 'array', 'started_at' => 'datetime', 'completed_at' => 'datetime', 'allow_catch_all' => 'boolean'];
 
     /** @return BelongsTo<Segment, $this> */
     public function segment(): BelongsTo

@@ -70,13 +70,14 @@ class CampaignScheduler
         $noPending = fn ($m) => $m->whereIn('status', ['scheduled', 'sending']);
         $followUp = CampaignContact::where('campaign_id', $campaign->id)->where('account_id', $account->id)->whereIn('status', ['sent', 'auto_replied'])
             ->where('current_step', '<', $stepCount)->where('next_send_at', '<=', $now)
+            ->whereHas('contact', fn ($c) => $c->sendable((bool) $campaign->allow_catch_all)) // e.g. found invalid by a later verification
             ->whereDoesntHave('messages', $noPending)->orderBy('next_send_at')->first();
         if ($followUp) {
             return $followUp;
         }
         $first = CampaignContact::where('campaign_id', $campaign->id)->where('status', 'queued')->where('current_step', 0)
             ->where(fn ($q) => $q->whereNull('account_id')->orWhere('account_id', $account->id))
-            ->whereHas('contact', fn ($c) => $c->sendable())->whereDoesntHave('messages', $noPending)->orderBy('id')->first();
+            ->whereHas('contact', fn ($c) => $c->sendable((bool) $campaign->allow_catch_all))->whereDoesntHave('messages', $noPending)->orderBy('id')->first();
         $first?->update(['account_id' => $account->id]);
 
         return $first;
@@ -120,7 +121,8 @@ class CampaignScheduler
         CampaignContact::where('campaign_id', $campaign->id)->where('status', 'queued')->where('current_step', 0)->whereNotNull('account_id')
             ->whereNotIn('account_id', $campaign->accounts->where('is_active', true)->pluck('id'))->update(['account_id' => null]);
         CampaignContact::where('campaign_id', $campaign->id)->where('status', 'queued')
-            ->whereHas('contact', fn ($c) => $c->whereIn('validation_status', CampaignService::BAD)->orWhereNotNull('suppressed_at'))
+            ->whereHas('contact', fn ($c) => $c->whereIn('validation_status', CampaignService::BAD)->orWhereNotNull('suppressed_at')
+                ->orWhereIn('verify_status', $campaign->allow_catch_all ? CampaignService::VERIFY_BAD : [...CampaignService::VERIFY_BAD, 'catch_all']))
             ->update(['status' => 'invalid']);
     }
 

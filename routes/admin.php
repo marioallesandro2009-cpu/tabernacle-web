@@ -156,6 +156,7 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::get('contacts', [Outreach\ContactController::class, 'index']);
             Route::post('contacts', [Outreach\ContactController::class, 'store']);
             Route::post('contacts/bulk', [Outreach\ContactController::class, 'bulk']);
+            Route::post('contacts/verify', [Outreach\ContactController::class, 'verify']);
             Route::get('contacts/{id}', [Outreach\ThreadController::class, 'contact'])->whereNumber('id');
             Route::put('contacts/{id}', [Outreach\ContactController::class, 'update'])->whereNumber('id');
             Route::delete('contacts/{id}', [Outreach\ContactController::class, 'destroy'])->whereNumber('id');

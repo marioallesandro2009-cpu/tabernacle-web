@@ -10,6 +10,7 @@ const c = props.campaign;
 const form = useForm({
     name: c?.name || '',
     subject_b: c?.subject_b || '',
+    allow_catch_all: c?.allow_catch_all || false,
     segment_id: c?.segment_id || '',
     account_ids: c?.account_ids || props.accounts.filter((a) => a.is_active).slice(0, 1).map((a) => a.id),
     window_start: c?.window_start || '08:00',
@@ -21,7 +22,8 @@ const form = useForm({
 });
 
 const segment = computed(() => props.segments.find((s) => String(s.id) === String(form.segment_id)));
-const audience = computed(() => (segment.value ? segment.value.sendable_count : props.segments.reduce((n, s) => n + s.sendable_count, 0)));
+const catchAll = computed(() => (segment.value ? segment.value.catch_all_count : props.segments.reduce((n, s) => n + (s.catch_all_count || 0), 0)));
+const audience = computed(() => (segment.value ? segment.value.sendable_count : props.segments.reduce((n, s) => n + s.sendable_count, 0)) + (form.allow_catch_all ? catchAll.value : 0));
 // templates written for the chosen segment first, then the general ones, then the rest
 const ordered = computed(() => {
     const id = form.segment_id ? Number(form.segment_id) : null;
@@ -52,6 +54,7 @@ function save() {
                 <div class="grid gap-4 sm:grid-cols-2">
                     <div><label class="o-label" for="f-name">Nama kampanye</label><input id="f-name" v-model="form.name" class="o-input" placeholder="Tur Turki, gereja Jabodetabek"><p v-if="form.errors.name" class="o-err">{{ form.errors.name }}</p></div>
                     <div><label class="o-label" for="f-seg">Segmen sasaran</label><select id="f-seg" v-model="form.segment_id" class="o-input"><option value="">Semua segmen</option><option v-for="s in segments" :key="s.id" :value="s.id">{{ s.name }} ({{ s.sendable_count }} siap kirim)</option></select></div>
+                    <label class="flex items-start gap-2.5 text-sm text-slate-700 sm:col-span-2"><input v-model="form.allow_catch_all" type="checkbox" class="mt-0.5 h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand"> <span>Kirim juga ke alamat <b>catch-all</b> ({{ catchAll }} kontak). Server domain catch-all menerima semua alamat, jadi belum pasti kotak emailnya ada. Bawaannya hanya alamat yang terverifikasi valid.</span></label>
                 </div>
             </section>
 

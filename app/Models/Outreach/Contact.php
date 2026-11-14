@@ -13,9 +13,9 @@ class Contact extends Model
 
     protected $guarded = ['id'];
 
-    protected $casts = ['validated_at' => 'datetime', 'suppressed_at' => 'datetime'];
+    protected $casts = ['validated_at' => 'datetime', 'suppressed_at' => 'datetime', 'verified_at' => 'datetime', 'is_role' => 'boolean'];
 
-    public const STATUSES = ['pending', 'valid', 'empty', 'invalid_format', 'no_mx'];
+    public const STATUSES = ['pending', 'valid', 'empty', 'invalid_format', 'disposable', 'no_mx'];
 
     protected static function booted(): void
     {
@@ -36,14 +36,21 @@ class Contact extends Model
         return $this->belongsTo(Segment::class, 'segment_id');
     }
 
-    /** Contacts that may be emailed: a valid address that has not opted out or bounced. @param Builder<Contact> $q */
-    public function scopeSendable(Builder $q): void
+    /**
+     * Contacts that may be emailed: a valid address that has not opted out or bounced and, when a
+     * verification service checked it, came back "valid" (or "catch_all" if the campaign allows it).
+     *
+     * @param  Builder<Contact>  $q
+     */
+    public function scopeSendable(Builder $q, bool $allowCatchAll = false): void
     {
-        $q->where('validation_status', 'valid')->whereNotNull('email')->whereNull('suppressed_at');
+        $q->where('validation_status', 'valid')->whereNotNull('email')->whereNull('suppressed_at')
+            ->where(fn ($w) => $w->whereNull('verify_status')->orWhereIn('verify_status', $allowCatchAll ? ['valid', 'catch_all'] : ['valid']));
     }
 
-    public function isSendable(): bool
+    public function isSendable(bool $allowCatchAll = false): bool
     {
-        return $this->validation_status === 'valid' && $this->email !== null && $this->suppressed_at === null;
+        return $this->validation_status === 'valid' && $this->email !== null && $this->suppressed_at === null
+            && ($this->verify_status === null || $this->verify_status === 'valid' || ($allowCatchAll && $this->verify_status === 'catch_all'));
     }
 }

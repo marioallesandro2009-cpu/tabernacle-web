@@ -29,6 +29,7 @@ function save() {
     if (editing.value) form.put(`/admin/outreach/segments/${editing.value}`, opts);
     else form.post('/admin/outreach/segments', opts);
 }
+const verifySegment = (s) => confirm(`Verifikasi ulang semua kontak di segmen "${s.name}"? Kalau layanan verifikasi aktif, ini memakai kredit layanan.`) && router.post('/admin/outreach/contacts/verify', { segment_id: s.id }, { preserveScroll: true });
 function remove(s) {
     if (confirm(`Hapus segmen "${s.name}"? Kontaknya tidak ikut terhapus, hanya menjadi tanpa segmen.`)) router.delete(`/admin/outreach/segments/${s.id}`, { preserveScroll: true });
 }
@@ -48,6 +49,7 @@ function remove(s) {
                     <p class="mt-0.5 line-clamp-2 min-h-[2.5rem] text-sm text-slate-500">{{ s.description || 'Tanpa deskripsi' }}</p>
                 </Link>
                 <div class="flex shrink-0 gap-1">
+                    <button class="o-btn o-btn-sm o-btn-ghost" aria-label="Verifikasi ulang segmen" title="Verifikasi ulang semua kontak" @click="verifySegment(s)"><Icon name="check" class="h-4 w-4" /></button>
                     <button class="o-btn o-btn-sm o-btn-ghost" aria-label="Ubah" @click="edit(s)"><Icon name="edit" class="h-4 w-4" /></button>
                     <button class="o-btn o-btn-sm o-btn-ghost o-btn-danger" aria-label="Hapus" @click="remove(s)"><Icon name="trash" class="h-4 w-4" /></button>
                 </div>

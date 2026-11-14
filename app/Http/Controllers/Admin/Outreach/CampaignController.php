@@ -172,12 +172,12 @@ class CampaignController extends Controller
 
         return Inertia::render('Admin/Outreach/CampaignForm', [
             'campaign' => $campaign ? [
-                'id' => $campaign->id, 'name' => $campaign->name, 'subject_b' => $campaign->subject_b, 'segment_id' => $campaign->segment_id, 'account_ids' => $campaign->accounts->pluck('id')->all(),
+                'id' => $campaign->id, 'name' => $campaign->name, 'subject_b' => $campaign->subject_b, 'allow_catch_all' => (bool) $campaign->allow_catch_all, 'segment_id' => $campaign->segment_id, 'account_ids' => $campaign->accounts->pluck('id')->all(),
                 'window_start' => $campaign->window_start, 'window_end' => $campaign->window_end, 'send_days' => $campaign->send_days,
                 'gap_min' => intdiv($campaign->gap_min_seconds, 60), 'gap_max' => (int) ceil($campaign->gap_max_seconds / 60),
                 'steps' => collect([1, 2, 3])->map(fn ($n) => ['template_id' => data_get($stepOf($n), 'template_id'), 'day_offset' => data_get($stepOf($n), 'day_offset', [1 => 0, 2 => 4, 3 => 10][$n])])->all(),
             ] : null,
-            'segments' => Segment::withCount(['contacts as sendable_count' => fn ($q) => $q->sendable()])->orderBy('name')->get(['id', 'name']),
+            'segments' => Segment::withCount(['contacts as sendable_count' => fn ($q) => $q->sendable(), 'contacts as catch_all_count' => fn ($q) => $q->sendable(true)->where('verify_status', 'catch_all')])->orderBy('name')->get(['id', 'name']),
             'accounts' => Account::orderBy('name')->get(['id', 'name', 'email', 'is_active', 'daily_limit', 'smtp_ok']),
             'templates' => Template::with('segment:id,name')->where('is_active', true)->orderBy('name')->get()->map(fn (Template $t) => ['id' => $t->id, 'name' => $t->name, 'segment_id' => $t->segment_id, 'segment' => $t->segment?->name]),
             'weekdays' => collect(self::WEEKDAYS)->map(fn ($label, $n) => ['n' => $n, 'label' => $label])->values(),
@@ -190,6 +190,7 @@ class CampaignController extends Controller
         $d = $request->validate([
             'name' => ['required', 'string', 'max:150'],
             'subject_b' => ['nullable', 'string', 'max:500'],
+            'allow_catch_all' => ['boolean'],
             'segment_id' => ['nullable', 'integer', 'exists:outreach_segments,id'],
             'account_ids' => ['required', 'array', 'min:1'], 'account_ids.*' => ['integer', 'exists:outreach_accounts,id'],
             'window_start' => ['required', 'date_format:H:i'], 'window_end' => ['required', 'date_format:H:i', 'after:window_start'],
@@ -226,7 +227,7 @@ class CampaignController extends Controller
 
         return [
             'campaign' => [
-                'name' => $d['name'], 'subject_b' => $subjectB, 'segment_id' => $d['segment_id'] ?? null, 'window_start' => $d['window_start'], 'window_end' => $d['window_end'],
+                'name' => $d['name'], 'subject_b' => $subjectB, 'allow_catch_all' => (bool) ($d['allow_catch_all'] ?? false), 'segment_id' => $d['segment_id'] ?? null, 'window_start' => $d['window_start'], 'window_end' => $d['window_end'],
                 'send_days' => array_values(array_unique(array_map('intval', $d['send_days']))), 'gap_min_seconds' => $d['gap_min'] * 60, 'gap_max_seconds' => $d['gap_max'] * 60,
             ],
             'account_ids' => array_map('intval', $d['account_ids']), 'steps' => $steps,

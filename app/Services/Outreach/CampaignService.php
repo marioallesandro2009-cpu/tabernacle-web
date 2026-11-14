@@ -11,7 +11,10 @@ use DomainException;
 class CampaignService
 {
     /** Contacts that already count as invalid when a campaign starts. */
-    public const BAD = ['invalid_format', 'no_mx', 'empty'];
+    public const BAD = ['invalid_format', 'no_mx', 'empty', 'disposable'];
+
+    /** Results of the verification service that are never mailed (catch_all only when the campaign allows it). */
+    public const VERIFY_BAD = ['invalid', 'unknown', 'disposable'];
 
     /**
      * Puts the campaign's contacts in line and starts it. Contacts added to the segment later
@@ -26,7 +29,7 @@ class CampaignService
             throw new DomainException($problem);
         }
         Contact::query()->when($c->segment_id, fn ($q) => $q->where('segment_id', $c->segment_id))
-            ->select(['id', 'email', 'validation_status', 'suppressed_at', 'suppressed_reason'])
+            ->select(['id', 'email', 'validation_status', 'verify_status', 'suppressed_at', 'suppressed_reason'])
             ->chunkById(500, function ($contacts) use ($c) {
                 $have = CampaignContact::where('campaign_id', $c->id)->whereIn('contact_id', $contacts->pluck('id'))->pluck('contact_id')->flip();
                 $rows = [];
@@ -35,7 +38,7 @@ class CampaignService
                         continue;
                     }
                     $rows[] = [
-                        'campaign_id' => $c->id, 'contact_id' => $contact->id, 'status' => $this->initialStatus($contact),
+                        'campaign_id' => $c->id, 'contact_id' => $contact->id, 'status' => $this->initialStatus($contact, (bool) $c->allow_catch_all),
                         'current_step' => 0, 'created_at' => now(), 'updated_at' => now(),
                     ];
                 }
@@ -77,12 +80,13 @@ class CampaignService
         return null;
     }
 
-    protected function initialStatus(Contact $contact): string
+    protected function initialStatus(Contact $contact, bool $allowCatchAll = false): string
     {
         if ($contact->suppressed_at) {
             return $contact->suppressed_reason === 'bounced' ? 'bounced' : 'unsubscribed';
         }
-        if ($contact->email === null || in_array($contact->validation_status, self::BAD, true)) {
+        if ($contact->email === null || in_array($contact->validation_status, self::BAD, true)
+            || in_array($contact->verify_status, self::VERIFY_BAD, true) || ($contact->verify_status === 'catch_all' && ! $allowCatchAll)) {
             return 'invalid';
         }
 

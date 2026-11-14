@@ -6,13 +6,16 @@ use App\Models\Post;
 use App\Services\DatabaseBackup;
 use App\Services\Outreach\CampaignScheduler;
 use App\Services\Outreach\Digest;
+use App\Services\Outreach\EmailChecks;
 use App\Services\Outreach\ReplyPoller;
 use App\Support\AnalyticsAggregator;
 use App\Support\Content;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schedule;
+use Illuminate\Support\Facades\Storage;
 
 /*
 | Everything runs from ONE cron line: * * * * * php /path/artisan schedule:run
@@ -80,6 +83,34 @@ Artisan::command('outreach:tick', function (CampaignScheduler $scheduler) {
     $this->info($scheduler->tick().' email dijadwalkan');
 })->purpose('Jadwalkan email berikutnya untuk kampanye Outreach yang berjalan');
 
+Artisan::command('outreach:disposable-update {url? : sumber daftar (teks, satu domain per baris)}', function () {
+    $url = $this->argument('url') ?: 'https://raw.githubusercontent.com/disposable-email-domains/disposable-email-domains/main/disposable_email_blocklist.conf';
+    try {
+        $res = Http::timeout(60)->get($url);
+    } catch (Throwable $e) {
+        $this->error('Tidak bisa mengunduh daftar: '.$e->getMessage());
+
+        return 1;
+    }
+    $list = EmailChecks::parse((string) $res->body());
+    if (! $res->successful() || count($list) < 500) {
+        $this->error('Daftar tidak dipakai: jawaban '.$res->status().', '.count($list).' domain (terlalu sedikit untuk dipercaya).');
+
+        return 1;
+    }
+    // the domains of the built-in list are always kept
+    $builtIn = EmailChecks::parse((string) @file_get_contents(resource_path('data/disposable_domains.txt')));
+    $all = array_keys($list + $builtIn);
+    sort($all);
+    Storage::disk('local')->put(EmailChecks::STORED_LIST, '# Diperbarui '.now()->toDateTimeString()." dari $url
+".implode('
+', $all).'
+');
+    $this->info(count($all).' domain email sekali pakai disimpan.');
+
+    return 0;
+})->purpose('Perbarui daftar domain email sekali pakai untuk validasi kontak Outreach');
+
 /*
 | Every task runs inside the schedule:run process (Schedule::call + Artisan::call).
 | Shared hosting such as Rumahweb disables proc_open, and Schedule::command() needs it
@@ -91,6 +122,7 @@ $task('analytics:aggregate')->hourly();
 Schedule::call(fn () => Artisan::call('analytics:aggregate', ['--day' => now()->subDay()->toDateString()]))->name('analytics:aggregate yesterday')->dailyAt('00:10');
 $task('posts:publish-due')->everyFiveMinutes();
 $task('outreach:weekly-digest')->weeklyOn(1, '07:00')->timezone('Asia/Jakarta'); // Monday summary email
+$task('outreach:disposable-update')->monthlyOn(1, '03:00')->timezone('Asia/Jakarta'); // refresh the throwaway-email domain list
 $task('outreach:tick')->everyMinute()->withoutOverlapping(5); // sends the next outreach emails inside each campaign's hours
 $task('outreach:poll-replies')->everyTenMinutes()->withoutOverlapping(15); // reads replies and bounces from each sender inbox
 $task('db:backup')->dailyAt('02:00')->timezone('Asia/Jakarta'); // every night, last 14 kept on the server

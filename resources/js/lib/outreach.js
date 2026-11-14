@@ -4,6 +4,7 @@ export const contactStatus = {
     pending: { label: 'Sedang dicek', tone: 'slate' },
     invalid_format: { label: 'Format salah', tone: 'red' },
     no_mx: { label: 'Domain tak aktif', tone: 'amber' },
+    disposable: { label: 'Email sekali pakai', tone: 'red' },
     empty: { label: 'Tanpa email', tone: 'slate' },
     suppressed: { label: 'Jangan dikirimi', tone: 'violet' },
 };
@@ -53,4 +54,13 @@ export const replyStatus = {
     sent: { tone: 'green' },
     failed: { tone: 'red' },
     bounced: { tone: 'violet' },
+};
+
+// result of the email verification service
+export const verifyStatus = {
+    valid: { label: 'Terverifikasi', tone: 'green' },
+    catch_all: { label: 'Catch-all', tone: 'amber' },
+    unknown: { label: 'Tidak pasti', tone: 'slate' },
+    invalid: { label: 'Tidak valid', tone: 'red' },
+    disposable: { label: 'Sekali pakai', tone: 'red' },
 };
