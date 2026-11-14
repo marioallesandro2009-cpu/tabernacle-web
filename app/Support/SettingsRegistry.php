@@ -53,6 +53,14 @@ class SettingsRegistry
                 F::textarea('tracking_head', 'Kode di dalam <head> (Google Analytics, Meta Pixel, Search Console)', ['max' => 20000]),
                 F::textarea('tracking_body', 'Kode tepat setelah <body> (Tag Manager noscript)', ['max' => 20000]),
             ]],
+            ['key' => 'penawaran', 'label' => 'Penawaran harga', 'fields' => [
+                F::text('quote_prefix', 'Awalan nomor penawaran (contoh TW/QUO, menjadi TW/QUO/2026/11/001)', ['max' => 30]),
+                F::number('quote_validity_days', 'Masa berlaku bawaan (hari)'),
+                F::text('quote_signatory_name', 'Nama penanda tangan bawaan'),
+                F::text('quote_signatory_title', 'Jabatan penanda tangan bawaan'),
+                F::textarea('quote_payment_info', 'Informasi pembayaran (rekening bank, dll.), tampil di PDF penawaran', ['max' => 3000]),
+                F::textarea('quote_terms', 'Syarat & ketentuan bawaan di penawaran baru', ['max' => 10000]),
+            ]],
             ['key' => 'sistem', 'label' => 'SEO & fitur', 'fields' => [
                 F::textarea('robots_txt', 'Isi robots.txt', ['max' => 5000]),
                 F::toggle('lead_notify_enabled', 'Kirim email notifikasi saat ada lead baru', ['default' => true]),

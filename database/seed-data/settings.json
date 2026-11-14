@@ -66,5 +66,11 @@
         }
     ],
     "backup_email": "",
-    "outreach_digest_email": ""
+    "outreach_digest_email": "",
+    "quote_prefix": "TW/QUO",
+    "quote_validity_days": 14,
+    "quote_signatory_name": "",
+    "quote_signatory_title": "",
+    "quote_payment_info": "",
+    "quote_terms": ""
 }

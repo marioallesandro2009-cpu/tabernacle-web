@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
             ['label' => null, 'items' => [['label' => 'Dashboard', 'url' => '/admin', 'can' => null, 'icon' => 'home']]],
             ['label' => 'Leads', 'items' => [
                 ['label' => 'Leads', 'url' => '/admin/leads', 'can' => 'leads.manage', 'icon' => 'inbox', 'badge' => 'leads'],
+                ['label' => 'Penawaran harga', 'url' => '/admin/quotations', 'can' => 'leads.manage', 'icon' => 'doc'],
                 ['label' => 'Penerima notifikasi', 'url' => '/admin/recipients', 'can' => 'leads.manage', 'icon' => 'mail'],
             ]],
             ['label' => 'Outreach', 'items' => [

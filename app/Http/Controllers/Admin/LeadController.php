@@ -7,6 +7,7 @@ use App\Exports\LeadsSheet;
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use App\Models\LeadEvent;
+use App\Models\Quotation;
 use App\Models\Tour;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -89,6 +90,10 @@ class LeadController extends Controller
             ]),
             'statuses' => collect(Lead::STATUSES)->map(fn ($l, $v) => ['value' => $v, 'label' => $l])->values(),
             'staff' => User::where('is_active', true)->orderBy('name')->get(['id', 'name']),
+            'quotations' => Quotation::where('lead_id', $lead->id)->latest('id')->get()->map(fn (Quotation $q) => [
+                'id' => $q->id, 'number' => $q->displayNumber(), 'status' => Quotation::STATUSES[$q->status] ?? $q->status,
+                'total' => Quotation::money($q->totals()['total'], $q->currency), 'issued' => $q->issued_on->locale('id')->isoFormat('D MMM YYYY'),
+            ]),
         ]);
     }
 

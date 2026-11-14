@@ -2,7 +2,7 @@
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
 
-const props = defineProps({ lead: Object, events: Array, statuses: Array, staff: Array });
+const props = defineProps({ lead: Object, events: Array, statuses: Array, staff: Array, quotations: { type: Array, default: () => [] } });
 
 const form = useForm({ status: props.lead.status, assigned_to: props.lead.assigned_to, notes: props.lead.notes || '' });
 const noteForm = useForm({ note: '' });
@@ -31,6 +31,7 @@ const rows = [
             <h1 class="text-2xl font-bold">{{ lead.name || 'Klik WhatsApp' }}</h1>
         </div>
         <div class="flex gap-2">
+            <Link :href="`/admin/quotations/create?lead=${lead.id}`" class="btn"><Icon name="doc" class="h-4 w-4" /> Buat penawaran</Link>
             <a v-if="lead.wa_url" :href="lead.wa_url" target="_blank" rel="noopener" class="btn btn-primary"><Icon name="phone" class="h-4 w-4" /> Chat WhatsApp</a>
             <button class="btn text-red-600" @click="remove">Hapus</button>
         </div>
@@ -47,6 +48,19 @@ const rows = [
                 </dl>
                 <div v-if="lead.tour" class="mt-3 text-sm">Paket di situs: <a :href="lead.tour.url" target="_blank" class="text-brand underline">{{ lead.tour.name }}</a></div>
                 <div v-if="lead.message" class="mt-4 rounded-lg bg-stone-50 p-3 text-sm"><div class="mb-1 text-xs text-stone-500">Pesan</div><p class="whitespace-pre-line">{{ lead.message }}</p></div>
+            </div>
+
+            <div v-if="quotations.length" class="card p-5">
+                <h2 class="mb-3 font-semibold">Penawaran harga</h2>
+                <ul class="divide-y divide-stone-100 text-sm">
+                    <li v-for="q in quotations" :key="q.id" class="flex flex-wrap items-center gap-x-4 gap-y-1 py-2">
+                        <Link :href="`/admin/quotations/${q.id}/edit`" class="font-medium text-brand hover:underline">{{ q.number }}</Link>
+                        <span class="text-stone-500">{{ q.issued }}</span>
+                        <span class="rounded-full bg-stone-100 px-2 py-0.5 text-xs">{{ q.status }}</span>
+                        <span class="ml-auto font-semibold tabular-nums">{{ q.total }}</span>
+                        <a :href="`/admin/quotations/${q.id}/pdf?download=1`" class="text-stone-500 hover:text-brand"><Icon name="download" class="h-4 w-4" /></a>
+                    </li>
+                </ul>
             </div>
 
             <div class="card p-5">

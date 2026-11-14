@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\Outreach;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\QuotationController;
 use App\Http\Controllers\Admin\RecipientController;
 use App\Http\Controllers\Admin\Resources;
 use App\Http\Controllers\Admin\SettingsController;
@@ -117,6 +118,17 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::put('leads/{id}', [LeadController::class, 'update'])->whereNumber('id');
             Route::post('leads/{id}/note', [LeadController::class, 'note'])->whereNumber('id');
             Route::delete('leads/{id}', [LeadController::class, 'destroy'])->whereNumber('id');
+            // price quotations (penawaran harga)
+            Route::get('quotations', [QuotationController::class, 'index']);
+            Route::get('quotations/create', [QuotationController::class, 'create']);
+            Route::post('quotations', [QuotationController::class, 'store']);
+            Route::get('quotations/{id}/edit', [QuotationController::class, 'edit'])->whereNumber('id');
+            Route::put('quotations/{id}', [QuotationController::class, 'update'])->whereNumber('id');
+            Route::post('quotations/{id}/status', [QuotationController::class, 'status'])->whereNumber('id');
+            Route::post('quotations/{id}/duplicate', [QuotationController::class, 'duplicate'])->whereNumber('id');
+            Route::delete('quotations/{id}', [QuotationController::class, 'destroy'])->whereNumber('id');
+            Route::get('quotations/{id}/pdf', [QuotationController::class, 'pdf'])->whereNumber('id');
+            Route::get('quotations/{id}/revisions/{revision}/pdf', [QuotationController::class, 'revisionPdf'])->whereNumber(['id', 'revision']);
 
             Route::get('recipients', [RecipientController::class, 'index']);
             Route::post('recipients', [RecipientController::class, 'store']);
