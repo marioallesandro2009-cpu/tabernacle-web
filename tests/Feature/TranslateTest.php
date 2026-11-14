@@ -84,3 +84,22 @@ it('passes the reason to the admin when the service fails', function () {
     $this->actingAs(adminUser());
     $this->postJson('/admin/translate', ['items' => [['text' => 'Gagal ya']]])->assertStatus(503)->assertJsonFragment(['message' => 'Terjemahan gagal (503). Coba lagi, atau terjemahkan manual.']);
 });
+
+it('does not trust a wrong top answer when the other matches agree on something else', function () {
+    $t = app(Translator::class);
+    $matches = [
+        ['translation' => 'What matters is heli', 'quality' => 74, 'match' => 0.99, 'created-by' => 'Public Web'],
+        ['translation' => 'Good morning. ', 'quality' => 74, 'match' => 0.99, 'created-by' => 'MateCat'],
+        ['translation' => 'Good morning.', 'quality' => 74, 'match' => 0.99, 'created-by' => 'MateCat'],
+    ];
+    expect($t->best($matches, 'What matters is heli'))->toBe('Good morning.');
+
+    // one human entry against the machine translation: the machine wins the tie
+    expect($t->best([['translation' => 'Odd text', 'match' => 1, 'quality' => 80, 'created-by' => 'Public Web'], ['translation' => 'Day 1: Arrival.', 'match' => 0.85, 'quality' => 70, 'created-by' => 'MT!']], 'Odd text'))->toBe('Day 1: Arrival.');
+    // fuzzy matches of other sentences are ignored
+    expect($t->best([['translation' => 'Something else', 'match' => 0.7, 'created-by' => 'Public Web']], 'Top answer'))->toBe('Top answer');
+    expect($t->best([], 'Top answer'))->toBe('Top answer');
+
+    Http::fake(['api.mymemory.translated.net/*' => Http::response(['responseData' => ['translatedText' => 'What matters is heli'], 'responseStatus' => 200, 'matches' => $matches])]);
+    expect($t->translate('Selamat pagi.'))->toBe('Good morning.');
+});

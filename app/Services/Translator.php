@@ -127,9 +127,39 @@ class Translator
         if ($status !== 200 || $out === '' || str_starts_with(strtoupper($out), 'MYMEMORY WARNING') || str_contains(strtoupper($out), 'QUERY LENGTH LIMIT')) {
             throw new RuntimeException('Terjemahan gagal ('.($status ?: 'tanpa jawaban').'). Coba lagi, atau terjemahkan manual.');
         }
-        $out = html_entity_decode($out, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $out = html_entity_decode($this->best((array) data_get($data, 'matches', []), $out), ENT_QUOTES | ENT_HTML5, 'UTF-8');
         Cache::put($key, $out, now()->addDays(60));
 
         return $out;
+    }
+
+    /**
+     * MyMemory's top answer is sometimes a wrong sentence someone once saved publicly ("Selamat
+     * pagi." → "What matters is heli"). Among the near-exact matches the answer most of them agree
+     * on wins; on a tie, the service's own machine translation, then the higher quality.
+     *
+     * @param  array<int, mixed>  $matches
+     */
+    public function best(array $matches, string $top): string
+    {
+        $votes = [];
+        foreach ($matches as $m) {
+            $text = trim((string) data_get($m, 'translation', ''));
+            $machine = data_get($m, 'created-by') === 'MT!';
+            if ($text === '' || ((float) data_get($m, 'match', 0) < 0.95 && ! $machine)) {
+                continue; // a fuzzy match belongs to a different sentence
+            }
+            $k = mb_strtolower(rtrim($text, ' .!?'));
+            $votes[$k] ??= ['text' => $text, 'n' => 0, 'mt' => false, 'q' => 0];
+            $votes[$k]['n']++;
+            $votes[$k]['mt'] = $votes[$k]['mt'] || $machine;
+            $votes[$k]['q'] = max($votes[$k]['q'], (int) data_get($m, 'quality', 0));
+        }
+        if (! $votes) {
+            return $top;
+        }
+        usort($votes, fn ($a, $b) => [$b['n'], $b['mt'], $b['q']] <=> [$a['n'], $a['mt'], $a['q']]);
+
+        return $votes[0]['text'];
     }
 }
