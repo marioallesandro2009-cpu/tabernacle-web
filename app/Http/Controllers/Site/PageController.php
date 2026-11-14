@@ -93,7 +93,10 @@ class PageController extends Controller
             Seo::breadcrumbs([['Home', lurl('/')], [t('dest.title'), lurl('/destinations')], [$name, url()->current()]]),
         ]);
 
-        return view('site.destination', ['dest' => $dest, 'cards' => $cards, 'seo' => $seo, 'bodyClass' => 'page-destination']);
+        // articles about this destination: more internal links, and a reason to stay
+        $posts = SiteData::postsAbout([$dest->name['id'] ?? '', $dest->name['en'] ?? '', str_replace('-', ' ', $dest->slug)]);
+
+        return view('site.destination', ['dest' => $dest, 'cards' => $cards, 'posts' => $posts, 'seo' => $seo, 'bodyClass' => 'page-destination']);
     }
 
     public function tour(string $slug, Request $request): View

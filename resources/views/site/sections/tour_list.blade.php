@@ -27,7 +27,7 @@
     </div>
     <div class="pkgs pk-grid">
       @foreach ($cards as $i => $c)
-        @include('site.partials.tour-tile', ['c' => $c, 'span' => $spans[$i % count($spans)]])
+        @include('site.partials.tour-tile', ['c' => $c, 'span' => $spans[$i % count($spans)], 'eager' => $i === 0])
       @endforeach
     </div>
     <p class="pk-empty" hidden>{{ t('pk.empty') }}</p>

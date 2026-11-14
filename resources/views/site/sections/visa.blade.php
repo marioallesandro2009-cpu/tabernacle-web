@@ -6,7 +6,7 @@
     <div class="board">
       <div class="board-head mono"><span>{{ tr($s['head_a'] ?? null) }}</span><span>{{ tr($s['head_b'] ?? null) }}</span></div>
       @foreach ($s['rows'] ?? [] as $row)
-        <div class="board-row"><img src="{{ media_url($row['flag'] ?? null, 480) }}" alt="" loading="lazy"><div class="flaps" data-flaps="{{ tr($row['country'] ?? null) }}"></div><span class="board-svc mono">{{ tr($s['doc_label'] ?? null) }}</span></div>
+        <div class="board-row"><img src="{{ media_url($row['flag'] ?? null, 480) }}" {!! media_dims($row['flag'] ?? null) !!} alt="" loading="lazy"><div class="flaps" data-flaps="{{ tr($row['country'] ?? null) }}"></div><span class="board-svc mono">{{ tr($s['doc_label'] ?? null) }}</span></div>
       @endforeach
     </div>
   </div>

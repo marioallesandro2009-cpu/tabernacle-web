@@ -1,3 +1,4 @@
+@push('head'){!! media_preload($s['image'] ?? null, '100vw') !!}@endpush
 <section class="hero">
   <div class="hero-bg"><img {!! media_attrs($s['image'] ?? null, '100vw', tr($s['image_alt'] ?? null) ?: null) !!} fetchpriority="high"></div>
   <div class="wrap hero-in">

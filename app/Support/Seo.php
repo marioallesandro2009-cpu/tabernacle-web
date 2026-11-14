@@ -2,8 +2,6 @@
 
 namespace App\Support;
 
-use Illuminate\Support\Str;
-
 /** Builds the head data of a public page: title, description, canonical, Open Graph and schema.org. */
 class Seo
 {
@@ -29,7 +27,7 @@ class Seo
 
         return [
             'title' => $title,
-            'description' => Str::limit($description, 300, ''),
+            'description' => self::trimDescription($description),
             'canonical' => Locale::canonical($canonical ?: url()->current()),
             'image' => $imageUrl,
             'type' => $type,
@@ -38,11 +36,25 @@ class Seo
         ];
     }
 
+    /** About 160 characters, cut at a word and ended with "…" (what search results show). */
+    public static function trimDescription(string $text, int $max = 160): string
+    {
+        $text = trim((string) preg_replace('/\s+/u', ' ', $text));
+        if (mb_strlen($text) <= $max) {
+            return $text;
+        }
+        $cut = mb_substr($text, 0, $max - 1);
+        $space = mb_strrpos($cut, ' ');
+
+        return rtrim($space > $max * 0.6 ? mb_substr($cut, 0, $space) : $cut, ' ,.;:-–').'…';
+    }
+
     /** @return array<string, mixed> */
     public static function organization(): array
     {
         $sameAs = array_values(array_filter([setting('social_instagram'), setting('social_tiktok'), setting('social_facebook'), setting('social_youtube')]));
         $logo = media_url(setting('logo_dark') ?: setting('logo_light'));
+        $phone = setting('wa_display') ?: (setting('wa_number') ? '+'.setting('wa_number') : null);
 
         return array_filter([
             '@context' => 'https://schema.org', '@type' => 'TravelAgency',
@@ -50,8 +62,12 @@ class Seo
             'legalName' => setting('company_name'), 'url' => url('/'), 'logo' => $logo,
             'image' => media_url(setting('og_default_image'), 1600),
             'description' => tr(setting('default_description')),
-            'email' => setting('contact_email'), 'telephone' => setting('wa_display') ?: ('+'.setting('wa_number')),
-            'address' => array_filter(['@type' => 'PostalAddress', 'streetAddress' => tr(setting('address')), 'addressCountry' => 'ID']),
+            'email' => setting('contact_email'), 'telephone' => $phone,
+            'foundingDate' => preg_match('/^(19|20)\d{2}$/', (string) setting('company_founded')) ? (string) setting('company_founded') : null,
+            'address' => array_filter(['@type' => 'PostalAddress', 'streetAddress' => tr(setting('address'), 'id') ?: null, 'addressLocality' => setting('address_city'),
+                'addressRegion' => setting('address_region'), 'postalCode' => setting('address_postal_code'), 'addressCountry' => 'ID']),
+            'contactPoint' => [array_filter(['@type' => 'ContactPoint', 'contactType' => 'customer service', 'telephone' => $phone, 'email' => setting('contact_email'),
+                'areaServed' => 'ID', 'availableLanguage' => ['Indonesian', 'English']])],
             'sameAs' => $sameAs ?: null, 'slogan' => tr(setting('tagline')),
         ]);
     }

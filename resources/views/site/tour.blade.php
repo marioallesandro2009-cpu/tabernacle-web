@@ -1,5 +1,7 @@
 @extends('site.layout', ['solidNav' => true])
 
+@push('head'){!! media_preload($tour->cover_id, '100vw') !!}@endpush
+
 @php
     $kind = $tour->category?->kind ?? ($tour->flights_included ? 'group' : 'fit');
     $price = $tour->fromPrice();

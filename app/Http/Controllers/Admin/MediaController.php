@@ -30,6 +30,9 @@ class MediaController extends Controller
         if ($term = trim((string) $request->query('q'))) {
             $q->where(fn ($w) => $w->where('name', 'like', "%$term%")->orWhere('alt', 'like', "%$term%"));
         }
+        if ($request->boolean('no_alt')) {
+            $q->where('kind', 'image')->where(fn ($w) => $w->whereNull('alt')->orWhere('alt', ''));
+        }
         if ($request->boolean('unused')) {
             $q->whereNotIn('id', MediaUsage::usedIds());
         }

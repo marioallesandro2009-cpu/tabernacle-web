@@ -11,6 +11,7 @@
     </div>
   </header>
   @if ($post->cover_id)
+    @push('head'){!! media_preload($post->cover_id, '(max-width: 1400px) 100vw, 1400px') !!}@endpush
     <div class="wrap"><div class="post-cover pic"><img {!! media_attrs($post->cover_id, '(max-width: 1400px) 100vw, 1400px', $post->title) !!} fetchpriority="high"></div></div>
   @endif
   <div class="wrap post-body">

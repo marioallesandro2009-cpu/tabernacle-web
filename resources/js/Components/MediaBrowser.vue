@@ -19,6 +19,7 @@ const total = ref(0);
 const loading = ref(false);
 const q = ref('');
 const onlyUnused = ref(false);
+const noAlt = ref(false);
 const folderFilter = ref('');
 const active = ref(null); // item shown in the detail pane
 const picked = ref([]);
@@ -32,7 +33,7 @@ const accept = computed(() => (props.kind === 'image' ? 'image/*' : props.kind =
 async function load(reset = true) {
     loading.value = true;
     try {
-        const params = { q: q.value || undefined, kind: props.kind || undefined, unused: onlyUnused.value ? 1 : undefined, folder: folderFilter.value || undefined };
+        const params = { q: q.value || undefined, kind: props.kind || undefined, unused: onlyUnused.value ? 1 : undefined, no_alt: noAlt.value ? 1 : undefined, folder: folderFilter.value || undefined };
         const url = reset || !next.value ? au('/admin/media/list') : next.value;
         const { data } = await axios.get(url, { params: reset || !next.value ? params : undefined });
         data.data.forEach(remember);
@@ -44,7 +45,7 @@ async function load(reset = true) {
     }
 }
 onMounted(() => load());
-watch([q, onlyUnused, folderFilter], () => {
+watch([q, onlyUnused, noAlt, folderFilter], () => {
     clearTimeout(timer);
     timer = setTimeout(() => load(), 250);
 });
@@ -191,6 +192,7 @@ defineExpose({ picked, reload: load });
                 <option v-for="f in folders" :key="f" :value="f">{{ f }}</option>
             </select>
             <label v-if="!select" class="flex items-center gap-2 text-sm"><input v-model="onlyUnused" type="checkbox"> Belum dipakai</label>
+            <label v-if="!select" class="flex items-center gap-2 text-sm" title="Gambar yang belum punya teks alternatif (penting untuk SEO dan aksesibilitas)"><input v-model="noAlt" type="checkbox"> Tanpa teks alt</label>
             <span class="text-xs text-stone-500">{{ total }} file</span>
         </div>
 

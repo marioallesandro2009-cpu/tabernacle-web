@@ -183,6 +183,30 @@ if (! function_exists('media_attrs')) {
     }
 }
 
+if (! function_exists('media_preload')) {
+    /** <link rel="preload"> for the main (LCP) image of a page, with the same srcset/sizes as its <img>. */
+    function media_preload(int|string|null $id, string $sizes = '100vw'): string
+    {
+        $m = $id ? (media_map()[(int) $id] ?? null) : null;
+        if (! $m || ($m['kind'] ?? 'image') !== 'image') {
+            return '';
+        }
+        $set = media_srcset($id);
+
+        return '<link rel="preload" as="image" href="'.e((string) media_url($id)).'"'.($set ? ' imagesrcset="'.e($set).'" imagesizes="'.e($sizes).'"' : '').' fetchpriority="high">';
+    }
+}
+
+if (! function_exists('media_dims')) {
+    /** width="…" height="…" of a media item, so the browser keeps its space before it loads. */
+    function media_dims(int|string|null $id): string
+    {
+        $m = $id ? (media_map()[(int) $id] ?? null) : null;
+
+        return $m && $m['w'] && $m['h'] ? 'width="'.(int) $m['w'].'" height="'.(int) $m['h'].'"' : '';
+    }
+}
+
 if (! function_exists('rupiah')) {
     function rupiah(int|float|null $n): string
     {

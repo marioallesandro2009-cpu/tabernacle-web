@@ -24,12 +24,22 @@
 @if ($faviconId)
 <link rel="icon" href="{{ media_url($faviconId) }}" type="{{ $faviconMime }}">
 @endif
+{{-- the two fonts of the first screen: found at once instead of after the stylesheet --}}
+<link rel="preload" href="{{ asset('assets/fonts/archivo.woff2') }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ asset('assets/fonts/newsreader.woff2') }}" as="font" type="font/woff2" crossorigin>
 @stack('head')
 <link rel="stylesheet" href="{{ asset_v('assets/css/style.css') }}">
 <link rel="stylesheet" href="{{ asset_v('assets/css/site.css') }}">
 <link rel="stylesheet" href="{{ asset_v('assets/css/corporate.css') }}">
 <style>:root{--navy:{{ setting('color_navy', '#0b1a5c') }};--navy-deep:{{ setting('color_navy_deep', '#071140') }};--amber:{{ setting('color_amber', '#e8973f') }};--amber-deep:{{ setting('color_amber_deep', '#b8661c') }};--cream:{{ setting('color_cream', '#ffffff') }};--sand:{{ setting('color_sand', '#f4f5f7') }};--paper:{{ setting('color_paper', '#ffffff') }};--teal:{{ setting('color_teal', '#17a08c') }}}</style>
 <noscript><style>.gates{display:none}</style></noscript>
+@if (filled(setting('google_site_verification')))
+<meta name="google-site-verification" content="{{ trim((string) setting('google_site_verification')) }}">
+@endif
+@if (preg_match('/^G-[A-Z0-9]{4,20}$/', (string) setting('ga4_id')))
+<script async nonce="{{ csp_nonce() }}" src="https://www.googletagmanager.com/gtag/js?id={{ setting('ga4_id') }}"></script>
+<script nonce="{{ csp_nonce() }}">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config',@json((string) setting('ga4_id')));</script>
+@endif
 {!! with_nonce(setting('tracking_head')) !!}
 </head>
 <body class="{{ $bodyClass }}">

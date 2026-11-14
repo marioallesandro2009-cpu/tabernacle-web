@@ -7,6 +7,7 @@ use App\Models\Faq;
 use App\Models\Gallery;
 use App\Models\MenuItem;
 use App\Models\Page;
+use App\Models\Post;
 use App\Models\TeamMember;
 use App\Models\Testimonial;
 use App\Models\Tour;
@@ -107,5 +108,30 @@ class SiteData
         $used = collect(self::tourCards())->pluck('region')->unique()->all();
 
         return array_values(array_filter(['asia', 'europe', 'america', 'oceania', 'middle-east', 'central-asia'], fn ($r) => in_array($r, $used, true)));
+    }
+
+    /**
+     * Published articles that talk about any of $terms (a destination's names): title, excerpt,
+     * text or tags, newest first, in the language being shown.
+     *
+     * @param  array<int, string>  $terms
+     * @return Collection<int, Post>
+     */
+    public static function postsAbout(array $terms, int $limit = 3): Collection
+    {
+        $terms = array_values(array_unique(array_filter(array_map(fn ($t) => trim((string) $t), $terms), fn ($t) => mb_strlen($t) >= 3)));
+        if (! $terms) {
+            return collect();
+        }
+
+        return Post::query()->live()
+            ->where(function ($q) use ($terms) {
+                foreach ($terms as $t) {
+                    $like = '%'.$t.'%';
+                    $q->orWhere('title', 'like', $like)->orWhere('excerpt', 'like', $like)->orWhere('content', 'like', $like)
+                        ->orWhere('title_en', 'like', $like)->orWhereHas('tags', fn ($g) => $g->where('name', 'like', $like));
+                }
+            })
+            ->orderByDesc('published_at')->limit($limit)->get()->each->localize();
     }
 }

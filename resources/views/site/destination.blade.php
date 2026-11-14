@@ -14,7 +14,7 @@
     @if (count($cards))
       <div class="pkgs">
         @foreach ($cards as $i => $c)
-          @include('site.partials.tour-tile', ['c' => $c, 'span' => \App\Support\SiteData::SPANS[$i % 10]])
+          @include('site.partials.tour-tile', ['c' => $c, 'span' => \App\Support\SiteData::SPANS[$i % 10], 'eager' => $i === 0])
         @endforeach
       </div>
     @else
@@ -22,4 +22,16 @@
     @endif
   </div>
 </section>
+@if ($posts->isNotEmpty())
+<section class="sec on-paper">
+  <div class="wrap">
+    <div class="chapter"><b>{{ t('blog.related') }}</b><a class="mono" href="{{ lurl('/blog') }}">{{ t('blog.all') }}</a></div>
+    <div class="post-grid">
+      @foreach ($posts as $p)
+        <a class="post-card" href="{{ lurl('/blog/'.$p->slug) }}"><div class="pic">@if ($p->cover_id)<img {!! media_attrs($p->cover_id, '(max-width: 860px) 100vw, 33vw', $p->title) !!} loading="lazy">@endif</div><p class="mono">{{ $p->published_at->locale(app()->getLocale())->translatedFormat('d M Y') }}</p><h3>{{ $p->title }}</h3></a>
+      @endforeach
+    </div>
+  </div>
+</section>
+@endif
 @endsection

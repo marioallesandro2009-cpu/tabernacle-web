@@ -40,6 +40,15 @@ class SettingsRegistry
                 F::t('hours', 'Jam operasional'),
                 F::text('maps_url', 'Tautan Google Maps', ['max' => 800]),
             ]],
+            ['key' => 'perusahaan', 'label' => 'Data perusahaan', 'fields' => [
+                F::text('company_founded', 'Tahun berdiri (contoh 2015). Tampil di footer dan data Google (schema)', ['max' => 4]),
+                F::text('legal_nib', 'Nomor Induk Berusaha (NIB)', ['max' => 40]),
+                F::text('legal_ahu', 'Nomor SK Kemenkumham (AHU)', ['max' => 80]),
+                F::text('legal_license', 'Izin usaha perjalanan wisata lainnya (opsional, contoh nomor PPIU/TDUP)', ['max' => 120]),
+                F::text('address_city', 'Kota / kabupaten (untuk data Google)', ['max' => 80]),
+                F::text('address_region', 'Provinsi (untuk data Google)', ['max' => 80]),
+                F::text('address_postal_code', 'Kode pos', ['max' => 10]),
+            ]],
             ['key' => 'kepercayaan', 'label' => 'Poin kepercayaan', 'fields' => [
                 F::repeat('trust_points', 'Poin singkat di kotak harga setiap paket (hanya fakta yang benar, maksimal 5)', [
                     F::t('text', 'Teks', ['required' => true]),
@@ -50,7 +59,9 @@ class SettingsRegistry
                 F::url('social_facebook', 'Facebook'), F::url('social_youtube', 'YouTube'),
             ]],
             ['key' => 'tracking', 'label' => 'Kode tracking', 'fields' => [
-                F::textarea('tracking_head', 'Kode di dalam <head> (Google Analytics, Meta Pixel, Search Console)', ['max' => 20000]),
+                F::text('ga4_id', 'Google Analytics 4: Measurement ID (contoh G-ABC123XYZ). Hanya dimuat di halaman publik', ['max' => 30]),
+                F::text('google_site_verification', 'Google Search Console: isi atribut content dari tag verifikasi HTML (tanpa tag <meta>)', ['max' => 120]),
+                F::textarea('tracking_head', 'Kode lain di dalam <head> (Meta Pixel, dll.). Tidak perlu lagi untuk GA4 dan Search Console', ['max' => 20000]),
                 F::textarea('tracking_body', 'Kode tepat setelah <body> (Tag Manager noscript)', ['max' => 20000]),
             ]],
             ['key' => 'penawaran', 'label' => 'Penawaran harga', 'fields' => [
