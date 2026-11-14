@@ -52,7 +52,7 @@ function oAccount(array $o = []): Account
     $n++;
 
     return Account::create($o + ['name' => "Pengirim $n", 'email' => "kirim$n@domain-kita.test", 'smtp_host' => 'smtp.domain-kita.test', 'smtp_port' => 465, 'smtp_encryption' => 'ssl',
-        'imap_host' => 'imap.domain-kita.test', 'imap_port' => 993, 'imap_encryption' => 'ssl', 'username' => "kirim$n@domain-kita.test", 'password' => 'rahasia-uji', 'daily_limit' => 30, 'is_active' => true]);
+        'imap_host' => 'imap.domain-kita.test', 'imap_port' => 993, 'imap_encryption' => 'ssl', 'username' => "kirim$n@domain-kita.test", 'password' => 'rahasia-uji', 'daily_limit' => 30, 'is_active' => true, 'warmup_enabled' => false]);
 }
 
 function oContact(string $email, array $o = []): Contact

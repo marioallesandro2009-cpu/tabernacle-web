@@ -3,6 +3,7 @@
 namespace App\Jobs\Outreach;
 
 use App\Models\Outreach\Account;
+use App\Models\Outreach\BlockedDomain;
 use App\Models\Outreach\Campaign;
 use App\Models\Outreach\CampaignContact;
 use App\Models\Outreach\Contact;
@@ -80,9 +81,10 @@ class SendOutreachMessage implements ShouldQueue
             ! $campaign->inWindow() => 'Di luar jam kirim.',
             ! in_array($cc->status, ['queued', 'sent', 'auto_replied'], true) => 'Kontak sudah tidak perlu dikirimi.',
             ! $contact->isSendable() => 'Email kontak tidak valid atau kontak berhenti.',
+            BlockedDomain::blocks($contact->email) => 'Domain kontak ada di daftar blokir.',
             $cc->current_step + 1 !== (int) $m->step => 'Langkah ini sudah terkirim atau berubah.',
             ! $account->is_active => 'Akun pengirim tidak aktif.',
-            $scheduler->sentToday($account) > $account->daily_limit => 'Batas kirim harian akun tercapai.',
+            $scheduler->sentToday($account) > $account->limitToday() => 'Batas kirim harian akun tercapai.',
             default => null,
         };
     }
@@ -90,6 +92,9 @@ class SendOutreachMessage implements ShouldQueue
     protected function sent(Message $message, CampaignContact $cc, Campaign $campaign, string $subject, string $body, string $messageId): void
     {
         $step = (int) $message->step;
+        if (! $message->account?->warmup_started_on) {
+            $message->account?->update(['warmup_started_on' => now()->timezone(Campaign::TIMEZONE)->toDateString()]); // warm-up week 1 starts today
+        }
         $message->update(['status' => 'sent', 'sent_at' => now(), 'subject' => $subject, 'body' => $body, 'message_id' => $messageId, 'error' => null]);
         $first = $cc->first_sent_at ?? now();
         $next = $campaign->steps->where('template_id', '!=', null)->firstWhere('step', $step + 1);

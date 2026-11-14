@@ -2,6 +2,7 @@
 
 namespace App\Services\Outreach;
 
+use App\Models\Outreach\BlockedDomain;
 use App\Models\Outreach\Contact;
 use App\Models\Outreach\ContactImport;
 use App\Models\Outreach\Segment;
@@ -104,6 +105,7 @@ class ContactImporter
         $emails = collect($rows)->map(fn ($r) => mb_strtolower($get($r, 'email')))->filter()->unique()->all();
         $existing = Contact::whereIn('email', $emails)->pluck('email')->flip()->all();
         $blocked = Suppression::whereIn('email', $emails)->pluck('reason', 'email')->all();
+        $domains = BlockedDomain::domains();
         $batch = [];
         $now = now();
         foreach ($rows as $r) {
@@ -126,7 +128,7 @@ class ContactImporter
             } else {
                 $import->empty_count++;
             }
-            $reason = $blocked[$email] ?? null;
+            $reason = $blocked[$email] ?? (BlockedDomain::blocks($email, $domains) ? BlockedDomain::REASON : null);
             if ($reason) {
                 $import->suppressed_count++;
             }

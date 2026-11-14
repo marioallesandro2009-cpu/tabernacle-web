@@ -48,6 +48,7 @@ class HandleInertiaRequests extends Middleware
                 ['label' => 'Template email', 'url' => '/admin/outreach/templates', 'can' => 'outreach.manage', 'icon' => 'text'],
                 ['label' => 'Kampanye', 'url' => '/admin/outreach/campaigns', 'can' => 'outreach.manage', 'icon' => 'plane'],
                 ['label' => 'Akun pengirim', 'url' => '/admin/outreach/accounts', 'can' => 'outreach.manage', 'icon' => 'mail'],
+                ['label' => 'Daftar blokir', 'url' => '/admin/outreach/blocklist', 'can' => 'outreach.manage', 'icon' => 'x'],
             ]],
             ['label' => 'Paket tour', 'items' => [
                 ['label' => 'Paket tour', 'url' => '/admin/tours', 'can' => 'tours.manage', 'icon' => 'plane'],

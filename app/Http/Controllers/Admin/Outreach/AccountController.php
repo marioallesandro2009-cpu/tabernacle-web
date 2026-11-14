@@ -22,6 +22,8 @@ class AccountController extends Controller
             'smtp_host' => $a->smtp_host, 'smtp_port' => $a->smtp_port, 'smtp_encryption' => $a->smtp_encryption,
             'imap_host' => $a->imap_host, 'imap_port' => $a->imap_port, 'imap_encryption' => $a->imap_encryption,
             'username' => $a->username, 'daily_limit' => $a->daily_limit, 'is_active' => $a->is_active,
+            'warmup_enabled' => $a->warmup_enabled, 'warmup_start' => $a->warmup_start, 'warmup_step' => $a->warmup_step,
+            'limit_today' => $a->limitToday(), 'warming_up' => $a->warmingUp(), 'warmup_week' => $a->warmupWeek(), 'warmup_started' => $a->warmup_started_on !== null,
             'smtp_ok' => $a->smtp_ok, 'smtp_error' => $a->smtp_error, 'smtp_tested_at' => $a->smtp_tested_at?->locale('id')->diffForHumans(),
             'imap_ok' => $a->imap_ok, 'imap_error' => $a->imap_error, 'imap_tested_at' => $a->imap_tested_at?->locale('id')->diffForHumans(),
             'imap_polled_at' => $a->imap_polled_at?->locale('id')->diffForHumans(),
@@ -96,9 +98,13 @@ class AccountController extends Controller
             'password' => [$account ? 'nullable' : 'required', 'string', 'max:500'],
             'daily_limit' => ['required', 'integer', 'between:1,500'],
             'is_active' => ['boolean'],
+            'warmup_enabled' => ['boolean'],
+            'warmup_start' => ['sometimes', 'integer', 'between:1,500'],
+            'warmup_step' => ['sometimes', 'integer', 'between:0,100'],
         ], [
             'email.unique' => 'Alamat email ini sudah terdaftar sebagai akun pengirim.',
             'password.required' => 'Password email wajib diisi.',
+            'warmup_start.between' => 'Angka awal warm-up antara 1 dan 500.',
         ]);
     }
 }

@@ -15,7 +15,7 @@ const editing = ref(null);
 const testing = ref(null);
 const blank = () => ({
     name: '', email: '', smtp_host: '', smtp_port: 465, smtp_encryption: 'ssl', imap_host: '', imap_port: 993, imap_encryption: 'ssl',
-    username: '', password: '', daily_limit: 30, is_active: true,
+    username: '', password: '', daily_limit: 40, is_active: true, warmup_enabled: true, warmup_start: 10, warmup_step: 5,
 });
 const form = useForm(blank());
 
@@ -57,6 +57,13 @@ function remove(a) {
     if (confirm(`Hapus akun ${a.email}? Kampanye yang memakainya tidak bisa lagi mengirim dari akun ini.`)) router.delete(`/admin/outreach/accounts/${a.id}`, { preserveScroll: true });
 }
 const tone = (ok) => (ok === null || ok === undefined ? 'slate' : ok ? 'green' : 'red');
+// the warm-up plan for the next weeks, e.g. 10 → 15 → 20 … up to the maximum
+const plan = computed(() => {
+    const start = Number(form.warmup_start) || 1, step = Number(form.warmup_step) || 0, max = Number(form.daily_limit) || 1;
+    const weeks = [];
+    for (let w = 1, n = Math.min(start, max); w <= 8; w++, n = Math.min(max, n + step)) { weeks.push(n); if (n >= max || !step) break; }
+    return weeks;
+});
 const word = (ok) => (ok === null || ok === undefined ? 'Belum dites' : ok ? 'Terhubung' : 'Gagal');
 </script>
 
@@ -69,7 +76,7 @@ const word = (ok) => (ok === null || ok === undefined ? 'Belum dites' : ok ? 'Te
     <div class="mb-5 flex gap-3 rounded-2xl bg-sky-50 p-4 text-sm leading-relaxed text-sky-900 ring-1 ring-sky-100">
         <Icon name="help" class="mt-0.5 h-4 w-4 shrink-0" />
         <p>
-            <b>Mulai pelan.</b> Batas harian awal 30 email per akun cukup untuk memanaskan reputasi domain. Naikkan sedikit demi sedikit setelah balasan mulai datang dan tidak ada bounce.
+            <b>Warm-up otomatis.</b> Akun baru mulai dari sedikit email per hari dan batasnya naik sendiri setiap minggu sampai batas maksimal, supaya email tidak dianggap spam. Minggu pertama dihitung sejak email pertama terkirim.
             Gunakan alamat khusus outreach, bukan <i>contact@</i> yang dipakai untuk notifikasi leads.
         </p>
     </div>
@@ -86,8 +93,8 @@ const word = (ok) => (ok === null || ok === undefined ? 'Belum dites' : ok ? 'Te
                     <p class="truncate text-sm text-slate-500">{{ a.email }}</p>
                 </div>
                 <div class="text-right">
-                    <div class="text-xl font-semibold tabular-nums text-slate-900">{{ a.daily_limit }}</div>
-                    <div class="text-[11px] uppercase tracking-wide text-slate-400">per hari</div>
+                    <div class="text-xl font-semibold tabular-nums text-slate-900">{{ a.limit_today }}<span v-if="a.warming_up" class="text-sm font-normal text-slate-400"> / {{ a.daily_limit }}</span></div>
+                    <div class="text-[11px] uppercase tracking-wide text-slate-400">hari ini</div>
                 </div>
             </div>
 
@@ -103,6 +110,11 @@ const word = (ok) => (ok === null || ok === undefined ? 'Belum dites' : ok ? 'Te
                     <div v-if="a.imap_error" class="mt-1 text-xs text-rose-600">{{ a.imap_error }}</div>
                 </div>
             </div>
+            <p v-if="a.warming_up" class="mt-3 flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-800 ring-1 ring-amber-100">
+                <Icon name="clock" class="h-3.5 w-3.5 shrink-0" />
+                <span v-if="a.warmup_started">Warm-up minggu ke-{{ a.warmup_week }}: boleh kirim {{ a.limit_today }} email hari ini, naik {{ a.warmup_step }} per minggu sampai {{ a.daily_limit }}.</span>
+                <span v-else>Warm-up dimulai saat email pertama terkirim: {{ a.limit_today }} email per hari, naik {{ a.warmup_step }} per minggu sampai {{ a.daily_limit }}.</span>
+            </p>
             <p v-if="a.smtp_tested_at || a.imap_polled_at" class="mt-2 text-xs text-slate-400"><span v-if="a.smtp_tested_at">Dites {{ a.smtp_tested_at }}</span><span v-if="a.smtp_tested_at && a.imap_polled_at"> · </span><span v-if="a.imap_polled_at">Balasan terakhir dicek {{ a.imap_polled_at }}</span></p>
 
             <div class="mt-4 flex flex-wrap gap-2 border-t border-slate-100 pt-4">
@@ -159,15 +171,37 @@ const word = (ok) => (ok === null || ok === undefined ? 'Belum dites' : ok ? 'Te
                 </div>
             </div>
 
-            <div class="grid items-end gap-4 sm:grid-cols-2">
-                <div>
-                    <label class="o-label" for="a-lim">Batas kirim per hari</label>
-                    <input id="a-lim" v-model="form.daily_limit" type="number" min="1" max="500" class="o-input">
-                    <p class="mt-1 text-xs text-slate-500">Mulai dari 30, naikkan bertahap.</p>
-                    <p v-if="form.errors.daily_limit" class="o-err">{{ form.errors.daily_limit }}</p>
+            <div class="rounded-2xl bg-slate-50 p-4">
+                <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-sm font-semibold text-slate-700">Batas kirim &amp; warm-up</span>
+                    <label class="flex items-center gap-2 text-sm text-slate-700"><input v-model="form.warmup_enabled" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand"> Warm-up otomatis</label>
                 </div>
-                <label class="flex h-10 items-center gap-2.5 text-sm text-slate-700"><input v-model="form.is_active" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand"> Akun aktif (boleh dipakai kampanye)</label>
+                <div class="grid gap-4 sm:grid-cols-3">
+                    <div>
+                        <label class="o-label" for="a-lim">{{ form.warmup_enabled ? 'Batas maksimal per hari' : 'Batas kirim per hari' }}</label>
+                        <input id="a-lim" v-model="form.daily_limit" type="number" min="1" max="500" class="o-input">
+                        <p v-if="form.errors.daily_limit" class="o-err">{{ form.errors.daily_limit }}</p>
+                    </div>
+                    <template v-if="form.warmup_enabled">
+                        <div>
+                            <label class="o-label" for="a-ws">Mulai dari (minggu 1)</label>
+                            <input id="a-ws" v-model="form.warmup_start" type="number" min="1" max="500" class="o-input">
+                            <p v-if="form.errors.warmup_start" class="o-err">{{ form.errors.warmup_start }}</p>
+                        </div>
+                        <div>
+                            <label class="o-label" for="a-wst">Naik per minggu</label>
+                            <input id="a-wst" v-model="form.warmup_step" type="number" min="0" max="100" class="o-input">
+                            <p v-if="form.errors.warmup_step" class="o-err">{{ form.errors.warmup_step }}</p>
+                        </div>
+                    </template>
+                </div>
+                <p v-if="form.warmup_enabled" class="mt-3 text-xs text-slate-500">
+                    Rencana: <span v-for="(n, i) in plan" :key="i"><span v-if="i"> → </span><b class="text-slate-700">{{ n }}</b></span> email per hari (minggu 1, 2, 3, …).
+                </p>
+                <p v-else class="mt-3 text-xs text-slate-500">Tanpa warm-up, akun langsung memakai batas ini. Cocok untuk akun lama yang sudah lama dipakai mengirim email.</p>
             </div>
+
+            <label class="flex items-center gap-2.5 text-sm text-slate-700"><input v-model="form.is_active" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand"> Akun aktif (boleh dipakai kampanye)</label>
         </form>
         <template #footer>
             <button type="button" class="o-btn" @click="open = false">Batal</button>

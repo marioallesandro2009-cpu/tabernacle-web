@@ -44,7 +44,7 @@ class CampaignScheduler
         $accounts = $campaign->accounts->where('is_active', true)->reject(fn (Account $a) => Cache::has('outreach:cooldown:'.$a->id))
             ->sortBy(fn (Account $a) => $this->sentToday($a, $now))->values(); // the least used account goes first
         foreach ($accounts as $account) {
-            if ($this->pending($account) || $this->sentToday($account, $now) >= $account->daily_limit) {
+            if ($this->pending($account) || $this->sentToday($account, $now) >= $account->limitToday($now)) {
                 continue;
             }
             $cc = $this->nextContact($campaign, $account, $steps->count(), $now);

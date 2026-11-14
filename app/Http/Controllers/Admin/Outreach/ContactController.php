@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Outreach;
 use App\Http\Controllers\Controller;
 use App\Jobs\Outreach\ValidateContactsJob;
 use App\Models\ActivityLog;
+use App\Models\Outreach\BlockedDomain;
 use App\Models\Outreach\Contact;
 use App\Models\Outreach\ContactImport;
 use App\Models\Outreach\Segment;
@@ -149,13 +150,15 @@ class ContactController extends Controller
         $contact->update(['validation_status' => 'pending', 'validation_note' => null, 'validated_at' => null]);
         if ($contact->email !== null && Suppression::where('email', $contact->email)->exists()) {
             $contact->update(['suppressed_at' => now(), 'suppressed_reason' => Suppression::where('email', $contact->email)->value('reason')]);
+        } elseif (BlockedDomain::blocks($contact->email)) {
+            $contact->update(['suppressed_at' => now(), 'suppressed_reason' => BlockedDomain::REASON]);
         }
         ValidateContactsJob::dispatch();
     }
 
     protected function reasonLabel(?string $reason): string
     {
-        return ['unsubscribed' => 'Berhenti berlangganan', 'bounced' => 'Email ditolak (bounce)', 'manual' => 'Ditandai manual'][$reason ?? ''] ?? 'Jangan dikirimi';
+        return ['unsubscribed' => 'Berhenti berlangganan', 'bounced' => 'Email ditolak (bounce)', 'manual' => 'Ditandai manual', BlockedDomain::REASON => 'Domain diblokir'][$reason ?? ''] ?? 'Jangan dikirimi';
     }
 
     /** @return array<string, mixed> */

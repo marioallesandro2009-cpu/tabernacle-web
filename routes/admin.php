@@ -156,6 +156,11 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::post('templates/preview', [Outreach\TemplateController::class, 'preview']);
             Route::put('templates/{id}', [Outreach\TemplateController::class, 'update'])->whereNumber('id');
             Route::delete('templates/{id}', [Outreach\TemplateController::class, 'destroy'])->whereNumber('id');
+            Route::get('blocklist', [Outreach\BlocklistController::class, 'index']);
+            Route::post('blocklist/domains', [Outreach\BlocklistController::class, 'storeDomain']);
+            Route::delete('blocklist/domains/{id}', [Outreach\BlocklistController::class, 'destroyDomain'])->whereNumber('id');
+            Route::post('blocklist/emails', [Outreach\BlocklistController::class, 'storeEmails']);
+            Route::delete('blocklist/emails/{id}', [Outreach\BlocklistController::class, 'destroyEmail'])->whereNumber('id');
             Route::get('campaigns', [Outreach\CampaignController::class, 'index']);
             Route::get('campaigns/create', [Outreach\CampaignController::class, 'create']);
             Route::post('campaigns', [Outreach\CampaignController::class, 'store']);

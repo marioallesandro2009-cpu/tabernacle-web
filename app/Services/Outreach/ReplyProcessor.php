@@ -2,6 +2,7 @@
 
 namespace App\Services\Outreach;
 
+use App\Jobs\Outreach\SendReplyAlert;
 use App\Models\Outreach\Account;
 use App\Models\Outreach\CampaignContact;
 use App\Models\Outreach\Contact;
@@ -41,7 +42,10 @@ class ReplyProcessor
             $cc->update(['status' => 'replied', 'next_send_at' => null]);
         }
 
-        return $this->store($account, $mail, 'reply', $cc, $this->stripQuoted($mail->body));
+        $message = $this->store($account, $mail, 'reply', $cc, $this->stripQuoted($mail->body));
+        SendReplyAlert::dispatch($message->id); // tell the team right away
+
+        return $message;
     }
 
     protected function autoReply(Account $account, InboundMail $mail): ?Message
