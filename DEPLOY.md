@@ -286,7 +286,130 @@ Mengubah tampilan/JS admin atau situs publik? Jalankan `npm run build` **di komp
 
 ## Keamanan yang sudah aktif
 
-CSRF di semua formulir, validasi input, pembersihan HTML (HTMLPurifier), validasi unggahan (file executable ditolak),
-header keamanan, batas percobaan login 5 per menit, batas kirim formulir per IP, honeypot anti-spam, sesi otomatis
-berakhir, kata sandi di-hash, IP pengunjung tidak disimpan mentah, dan `APP_DEBUG=false`.
-Aktifkan **2FA** untuk akun super admin di menu *Profil & keamanan*.
+* CSRF di semua formulir, validasi input, pembersihan HTML (HTMLPurifier), dan validasi unggahan (file executable ditolak).
+* Header keamanan: HSTS, X-Frame-Options, nosniff, Referrer-Policy, dan Content-Security-Policy dengan nonce.
+* Perlindungan login yang tidak pernah mengunci pemilik akun. Rinciannya ada di bagian "Keamanan login".
+* Notifikasi email untuk login dari perangkat atau IP baru, dan sesi admin berakhir setelah 2 jam tidak aktif.
+* Password admin minimal 12 karakter. 2FA tetap opsional (menu *Profil & keamanan*).
+* Batas kirim formulir per IP, honeypot anti-spam, password di-hash, IP pengunjung tidak disimpan mentah, dan `APP_DEBUG=false`.
+
+---
+
+## Alamat panel admin (`ADMIN_PATH`)
+
+Bawaannya panel admin ada di `/admin`. Untuk memindahkannya:
+
+1. Di `.env` server isi misalnya `ADMIN_PATH=ruang-kerja-tw`. Hanya huruf, angka, `-`, `_`, atau `/`. Pilih kata yang tidak mudah ditebak.
+2. Jalankan `bash deploy.sh`, atau `php83 artisan config:cache && php83 artisan route:cache`.
+3. Panel sekarang ada di `https://domain-anda.com/ruang-kerja-tw`. Alamat `/admin` dan semua di bawahnya menjawab 404.
+4. Simpan alamat baru itu di bookmark. Link di email (reset password, notifikasi balasan, dll.) otomatis memakai alamat baru.
+
+Kalau `ADMIN_PATH` dikosongkan atau berisi karakter yang tidak diizinkan, panel tetap di `/admin`.
+
+---
+
+## Keamanan login
+
+Pemilik akun tidak akan pernah terkunci (pendekatan *device cookie* dari OWASP):
+
+| Pembatasan | Aturan |
+|---|---|
+| Per alamat IP | 5 gagal dalam 15 menit → IP diblokir 15 menit. Berikutnya 30 menit, 1 jam, … sampai maksimal 24 jam. |
+| Per akun + IP | Sama, tetapi hanya untuk kombinasi akun dan IP itu. |
+| Perangkat tepercaya | Browser yang pernah berhasil masuk mendapat cookie 90 hari (HttpOnly, Secure, SameSite=Strict). Perangkat ini hanya dibatasi 10 gagal per 15 menit dan tidak terkena pembatasan akun. |
+| Mode terlindungi | Lebih dari 20 gagal per jam pada satu akun → akun **tidak** dikunci. Login dari perangkat baru wajib lolos Turnstile **dan** klik link konfirmasi yang dikirim ke email akun (berlaku 15 menit, sekali pakai). Pemilik akun mendapat email peringatan. Mode ini berakhir sendiri setelah 24 jam tanpa percobaan gagal. |
+| Reset password lewat email | Membuka semua pembatasan untuk akun itu, dengan pilihan untuk mencabut semua sesi dan perangkat tepercaya. |
+
+Perangkat tepercaya, blokir, dan mode terlindungi terlihat di **Riwayat login**. Dari halaman itu perangkat bisa dicabut dan blokir bisa dibuka lebih awal.
+
+### Mengaktifkan Cloudflare Turnstile
+
+1. Masuk ke https://dash.cloudflare.com → **Turnstile** → *Add widget*. Akun gratis cukup, dan domain tidak harus memakai DNS Cloudflare.
+2. Isi nama widget dan tambahkan domain `tabernaclewaystour.com`. Mode: *Managed*.
+3. Salin **Site Key** dan **Secret Key** ke `.env` server:
+   ```
+   TURNSTILE_SITE_KEY=0x4AAAA...
+   TURNSTILE_SECRET_KEY=0x4AAAA...
+   ```
+4. Jalankan `php83 artisan config:cache`.
+5. Buka halaman login: kotak Turnstile muncul di atas tombol Masuk. Dari perangkat tepercaya pun kotak itu tetap tampil, tetapi pemeriksaannya hanya wajib untuk perangkat baru.
+
+Kalau kedua key kosong, Turnstile nonaktif dan login tetap berjalan normal.
+
+### Content-Security-Policy
+
+`CSP_MODE=enforce` (bawaan) memblokir script yang tidak diizinkan. Yang diizinkan:
+- script dari situs ini sendiri;
+- GA4/Google Tag Manager, Meta Pixel, YouTube, dan Turnstile;
+- kode yang ditempel di Pengaturan → Kode tracking (otomatis diberi nonce).
+
+Kalau setelah menambah layanan pihak ketiga baru ada yang tidak jalan, sementara isi `CSP_MODE=report` (masalah hanya dilaporkan di console browser), lalu hubungi pengembang untuk menambahkan domain layanan itu.
+
+---
+
+## Outreach: terusan dan balasan dari email pribadi
+
+Balasan prospek tetap masuk ke kotak email akun pengirim dan dibaca sistem lewat IMAP, termasuk dari folder Spam/Junk. Pengaturannya ada di **Outreach → Akun pengirim → Ubah**, bagian "Balasan prospek":
+
+1. **Teruskan balasan asli ke email pribadi**: centang, lalu isi satu alamat per baris (maksimal 10). Setiap balasan asli (bukan bounce, bukan balasan otomatis) diteruskan dengan subjek `[Balasan] … – Nama [#KODE]`. Isinya: data prospek, kampanye, segmen, isi balasan, kutipan email terakhir kita, dan tombol "Buka di website".
+2. **Izinkan balas dari email pribadi** (butuh terusan aktif): isi email pribadi yang boleh membalas, lalu pilih mode:
+   * **Tinjau dulu**: balasan dari email pribadi disimpan sebagai draf, untuk dicek dan dikirim dari website;
+   * **Langsung kirim**: balasan langsung dikirim ke prospek dari akun pengirim, di thread yang sama.
+3. Cara membalas dari email pribadi: cukup **Reply** pada email terusan. Jangan ubah kode `[#…]` di subjek. Kutipan dan tanda tangan bawaan aplikasi email dibuang otomatis. Lampiran belum ikut dikirim, dan hal ini disebutkan di email konfirmasi.
+4. Balasan dari email pribadi hanya diteruskan kalau ketiga syarat ini terpenuhi:
+   * pengirimnya ada di daftar;
+   * kode `[#…]` valid untuk akun itu;
+   * server email penerima mencatat SPF atau DKIM *pass* untuk domain pengirim (Gmail, Outlook, dan Yahoo selalu lolos).
+
+   Kalau salah satu tidak terpenuhi, balasan ditolak dan alasannya dicatat. Pengirim yang ada di daftar mendapat email "Ditolak: alasan".
+5. Semua balasan kita terlihat di **Balasan → Balasan kita** dengan status (draf, diterima, ditolak, antre, terkirim, gagal, bounce), sumber (website / email pribadi), dan riwayat statusnya. Yang gagal bisa dikirim ulang.
+
+Membalas dari website: buka balasan → **Buka percakapan & balas**, atau buka profil kontak. Draf tersimpan otomatis saat mengetik.
+
+---
+
+## Outreach: API verifikasi email
+
+Tanpa layanan API pun sistem tetap mengecek format, domain, MX, email sekali pakai, dan alamat peran (info@, sales@, …). Untuk verifikasi kotak email yang lebih akurat:
+
+1. Buat akun di **ZeroBounce** (https://www.zerobounce.net) atau **Reoon** (https://www.reoon.com/email-verifier/), lalu beli kredit sesuai jumlah kontak.
+2. Ambil API key dari dashboard layanan itu.
+3. Di admin: **Pengaturan → SEO & fitur**. Pilih *Layanan verifikasi email*, tempel API key (disimpan terenkripsi dan tidak pernah ditampilkan lagi), lalu simpan.
+4. Verifikasi dijalankan lewat tombol **Verifikasi ulang**: satu kontak (ikon centang), kontak terpilih, atau satu segmen (halaman Segmen). Prosesnya lewat antrean. Opsi "Verifikasi otomatis setiap kali kontak diimpor" memakai kredit untuk setiap impor.
+5. Hasilnya: valid, catch-all, tidak pasti, tidak valid, atau sekali pakai. Kampanye hanya mengirim ke yang valid, atau yang belum diverifikasi lewat API. Catch-all bisa diizinkan per kampanye.
+6. Kalau kredit habis atau key salah, muncul pesan di halaman Kontak dan hasil cek dasar tetap tersimpan.
+
+Server ini tidak pernah mengetes kotak email penerima secara langsung (tanpa SMTP probing).
+
+---
+
+## Google Search Console dan Google Analytics 4
+
+**Search Console**
+
+1. Buka https://search.google.com/search-console → *Tambahkan properti* → **Awalan URL** → `https://tabernaclewaystour.com`.
+2. Pilih metode verifikasi **Tag HTML**. Salin hanya nilai `content="…"` dari tag yang diberikan.
+3. Di admin: **Pengaturan → Kode tracking → Google Search Console**, tempel nilainya, lalu simpan.
+4. Kembali ke Search Console dan klik *Verifikasi*.
+5. Di menu *Sitemap*, kirim `sitemap.xml`. Sitemap sudah berisi versi Indonesia dan Inggris.
+
+Alternatif tanpa tag: verifikasi lewat DNS (properti *Domain*) dengan menambah record TXT di DNS Rumahweb.
+
+**Google Analytics 4**
+
+1. Buka https://analytics.google.com → *Admin* → buat properti dan **aliran data Web** untuk `https://tabernaclewaystour.com`.
+2. Salin **Measurement ID** (`G-XXXXXXX`).
+3. Di admin: **Pengaturan → Kode tracking → Google Analytics 4**, tempel ID-nya, lalu simpan.
+4. GA4 hanya dimuat di halaman publik, tidak di panel admin, dan sudah diizinkan oleh CSP. Tidak perlu menempel kode gtag manual.
+5. Hubungkan GA4 dengan Search Console di GA4 → *Admin* → *Penautan Search Console*.
+
+---
+
+## Versi bahasa Inggris
+
+Situs Indonesia ada di alamat biasa, situs Inggris di bawah `/en` (contoh `/en/packages/...`).
+
+* **Tag bahasa:** setiap halaman punya hreflang `id`, `en`, dan `x-default`, plus canonical per bahasa.
+* **Konten yang belum diterjemahkan** tetap tampil di `/en` (dalam bahasa Indonesia). Canonical-nya menunjuk ke versi Indonesia, dan halamannya tidak masuk sitemap Inggris.
+* **Daftar terjemahan yang belum lengkap** ada di **Konten situs → Terjemahan belum lengkap**.
+* **Link lama** dengan `?lang=en` otomatis dipindahkan (301) ke alamat `/en`.
