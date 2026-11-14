@@ -38,22 +38,22 @@ class ImportController extends Controller
         $path = $file->storeAs('outreach-imports', Str::random(24).'.'.$file->getClientOriginalExtension(), 'local');
         $import = ContactImport::create(['user_id' => $request->user()->id, 'filename' => mb_substr($file->getClientOriginalName(), 0, 250), 'path' => $path]);
 
-        return redirect('/admin/outreach/import/'.$import->id.'/mapping');
+        return redirect(admin_path().'/outreach/import/'.$import->id.'/mapping');
     }
 
     public function mapping(string $id, ContactImporter $importer, SheetReader $reader): Response|RedirectResponse
     {
         $import = ContactImport::findOrFail($id);
         if ($import->status !== 'uploaded') {
-            return redirect('/admin/outreach/import/'.$import->id);
+            return redirect(admin_path().'/outreach/import/'.$import->id);
         }
         try {
             $preview = $reader->preview(Storage::disk('local')->path($import->path));
         } catch (Throwable) {
-            return redirect('/admin/outreach/import')->with('error', 'File tidak bisa dibaca. Pastikan formatnya Excel (.xlsx) atau CSV yang benar.');
+            return redirect(admin_path().'/outreach/import')->with('error', 'File tidak bisa dibaca. Pastikan formatnya Excel (.xlsx) atau CSV yang benar.');
         }
         if (empty($preview['headers'])) {
-            return redirect('/admin/outreach/import')->with('error', 'File kosong atau baris pertama (judul kolom) tidak ada.');
+            return redirect(admin_path().'/outreach/import')->with('error', 'File kosong atau baris pertama (judul kolom) tidak ada.');
         }
 
         return Inertia::render('Admin/Outreach/ImportMapping', [
@@ -81,7 +81,7 @@ class ImportController extends Controller
         ActivityLog::record('create', 'Impor kontak', $import->id, $import->filename);
         ImportContactsJob::dispatch($import->id);
 
-        return redirect('/admin/outreach/import/'.$import->id);
+        return redirect(admin_path().'/outreach/import/'.$import->id);
     }
 
     /** Progress and result. The page reloads itself while the import is still running. */

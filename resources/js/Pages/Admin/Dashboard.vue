@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../lib/admin';
 import { computed, reactive, ref } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import LineChart from '../../Components/LineChart.vue';
@@ -6,11 +7,11 @@ import LineChart from '../../Components/LineChart.vue';
 const props = defineProps({ range: String, stats: Object, recent_leads: Array, counts: Object, analytics_enabled: Boolean, can_reset: Boolean });
 const resetOpen = ref(false);
 const resetForm = useForm({ confirm: '' });
-const doReset = () => resetForm.post('/admin/stats/reset', { preserveScroll: true, onSuccess: () => { resetOpen.value = false; resetForm.reset(); } });
+const doReset = () => resetForm.post(au('/admin/stats/reset'), { preserveScroll: true, onSuccess: () => { resetOpen.value = false; resetForm.reset(); } });
 
 const ranges = [['today', 'Hari ini'], ['yesterday', 'Kemarin'], ['7d', '7 hari'], ['30d', '30 hari'], ['90d', '90 hari'], ['custom', 'Kustom']];
 const custom = reactive({ from: props.stats?.from || '', to: props.stats?.to || '' });
-const setRange = (r) => (r !== 'custom' ? router.get('/admin', { range: r }, { preserveScroll: true }) : router.get('/admin', { range: 'custom', ...custom }, { preserveScroll: true }));
+const setRange = (r) => (r !== 'custom' ? router.get(au('/admin'), { range: r }, { preserveScroll: true }) : router.get(au('/admin'), { range: 'custom', ...custom }, { preserveScroll: true }));
 
 const num = (n) => new Intl.NumberFormat('id-ID').format(n || 0);
 const s = computed(() => props.stats);
@@ -58,10 +59,10 @@ const maxOf = (rows) => Math.max(1, ...rows.map((r) => r.views));
     </div>
 
     <div class="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4">
-        <Link v-if="counts.new_leads !== null" href="/admin/leads?status=baru" class="card p-4 hover:border-brand"><div class="text-3xl font-bold text-accent-deep">{{ counts.new_leads }}</div><div class="text-sm text-stone-600">Lead baru menunggu</div></Link>
-        <Link v-if="counts.tours !== null" href="/admin/tours" class="card p-4 hover:border-brand"><div class="text-3xl font-bold text-brand">{{ counts.tours }}</div><div class="text-sm text-stone-600">Paket tour aktif</div></Link>
-        <Link v-if="counts.posts !== null" href="/admin/posts" class="card p-4 hover:border-brand"><div class="text-3xl font-bold text-brand">{{ counts.posts }}</div><div class="text-sm text-stone-600">Artikel terbit</div></Link>
-        <Link v-if="counts.drafts !== null" href="/admin/posts?status=draft" class="card p-4 hover:border-brand"><div class="text-3xl font-bold text-stone-700">{{ counts.drafts }}</div><div class="text-sm text-stone-600">Artikel draft</div></Link>
+        <Link v-if="counts.new_leads !== null" :href="au('/admin/leads?status=baru')" class="card p-4 hover:border-brand"><div class="text-3xl font-bold text-accent-deep">{{ counts.new_leads }}</div><div class="text-sm text-stone-600">Lead baru menunggu</div></Link>
+        <Link v-if="counts.tours !== null" :href="au('/admin/tours')" class="card p-4 hover:border-brand"><div class="text-3xl font-bold text-brand">{{ counts.tours }}</div><div class="text-sm text-stone-600">Paket tour aktif</div></Link>
+        <Link v-if="counts.posts !== null" :href="au('/admin/posts')" class="card p-4 hover:border-brand"><div class="text-3xl font-bold text-brand">{{ counts.posts }}</div><div class="text-sm text-stone-600">Artikel terbit</div></Link>
+        <Link v-if="counts.drafts !== null" :href="au('/admin/posts?status=draft')" class="card p-4 hover:border-brand"><div class="text-3xl font-bold text-stone-700">{{ counts.drafts }}</div><div class="text-sm text-stone-600">Artikel draft</div></Link>
     </div>
 
     <template v-if="stats">
@@ -117,11 +118,11 @@ const maxOf = (rows) => Math.max(1, ...rows.map((r) => r.views));
     <div v-if="recent_leads.length" class="card">
         <div class="flex items-center justify-between border-b border-stone-200 px-4 py-3">
             <h2 class="font-semibold">Lead terbaru</h2>
-            <Link href="/admin/leads" class="text-sm text-brand hover:underline">Lihat semua</Link>
+            <Link :href="au('/admin/leads')" class="text-sm text-brand hover:underline">Lihat semua</Link>
         </div>
         <ul class="divide-y divide-stone-100">
             <li v-for="l in recent_leads" :key="l.id">
-                <Link :href="`/admin/leads/${l.id}`" class="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3 hover:bg-stone-50">
+                <Link :href="au(`/admin/leads/${l.id}`)" class="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3 hover:bg-stone-50">
                     <span class="font-medium">{{ l.name }}</span><span class="text-sm text-stone-500">{{ l.phone }}</span>
                     <span class="flex-1 truncate text-sm text-stone-600">{{ l.tour }}</span>
                     <span class="badge">{{ statusLabel[l.status] || l.status }}</span><span class="text-xs text-stone-400">{{ l.at }}</span>

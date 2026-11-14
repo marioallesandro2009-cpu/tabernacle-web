@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -13,13 +14,13 @@ import { contactStatus, verifyStatus } from '../../../lib/outreach';
 const props = defineProps({ contacts: Object, filters: Object, segments: Array, organizations: Array, counts: Object, recentImports: Array, verifier: String, verifyError: String });
 
 const f = reactive({ q: '', segment: '', status: '', org: '', verify: '', role: '', ...props.filters });
-const verifyOne = (c) => router.post('/admin/outreach/contacts/verify', { contact_id: c.id }, { preserveScroll: true });
+const verifyOne = (c) => router.post(au('/admin/outreach/contacts/verify'), { contact_id: c.id }, { preserveScroll: true });
 const selected = ref([]);
 const bulkSegment = ref('');
 const newSegment = ref('');
 
 const params = () => Object.fromEntries(Object.entries(f).filter(([, v]) => v !== '' && v != null));
-const apply = () => router.get('/admin/outreach/contacts', params(), { preserveState: true, replace: true });
+const apply = () => router.get(au('/admin/outreach/contacts'), params(), { preserveState: true, replace: true });
 let typing;
 watch(() => f.q, () => { clearTimeout(typing); typing = setTimeout(apply, 350); });
 const reset = () => { Object.keys(f).forEach((k) => (f[k] = '')); apply(); };
@@ -37,7 +38,7 @@ function bulk(action) {
         body.segment_id = bulkSegment.value && bulkSegment.value !== 'none' ? bulkSegment.value : null;
         body.new_segment = newSegment.value || null;
     }
-    router.post('/admin/outreach/contacts/bulk', body, { preserveScroll: true, onSuccess: () => { selected.value = []; newSegment.value = ''; bulkSegment.value = ''; } });
+    router.post(au('/admin/outreach/contacts/bulk'), body, { preserveScroll: true, onSuccess: () => { selected.value = []; newSegment.value = ''; bulkSegment.value = ''; } });
 }
 
 // contact form
@@ -55,11 +56,11 @@ function edit(c) {
 function save() {
     form.transform((d) => ({ ...d, segment_id: d.segment_id || null }));
     const opts = { preserveScroll: true, onSuccess: () => (open.value = false) };
-    if (editing.value) form.put(`/admin/outreach/contacts/${editing.value}`, opts);
-    else form.post('/admin/outreach/contacts', opts);
+    if (editing.value) form.put(au(`/admin/outreach/contacts/${editing.value}`), opts);
+    else form.post(au('/admin/outreach/contacts'), opts);
 }
 function remove(c) {
-    if (confirm(`Hapus ${c.name || c.email}?`)) router.delete(`/admin/outreach/contacts/${c.id}`, { preserveScroll: true });
+    if (confirm(`Hapus ${c.name || c.email}?`)) router.delete(au(`/admin/outreach/contacts/${c.id}`), { preserveScroll: true });
 }
 
 // while addresses are still being checked, refresh the numbers by themselves
@@ -73,7 +74,7 @@ onBeforeUnmount(() => clearInterval(poll));
 <template>
     <Head title="Kontak Outreach" />
     <PageHeader title="Kontak" subtitle="Daftar calon penerima email. Alamat dicek otomatis: yang kosong, salah format, atau domainnya tidak bisa menerima email tidak akan pernah dikirimi.">
-        <Link href="/admin/outreach/import" class="o-btn"><Icon name="upload" class="h-4 w-4" /> Impor Excel / CSV</Link>
+        <Link :href="au('/admin/outreach/import')" class="o-btn"><Icon name="upload" class="h-4 w-4" /> Impor Excel / CSV</Link>
         <button class="o-btn o-btn-primary" @click="add"><Icon name="plus" class="h-4 w-4" /> Tambah kontak</button>
     </PageHeader>
 
@@ -136,7 +137,7 @@ onBeforeUnmount(() => clearInterval(poll));
                 <tbody class="divide-y divide-slate-100">
                     <tr v-for="c in contacts.data" :key="c.id" class="hover:bg-slate-50/60" :class="{ 'bg-brand/[0.03]': selected.includes(c.id) }">
                         <td class="o-td"><input v-model="selected" type="checkbox" :value="c.id" class="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand" :aria-label="`Pilih ${c.name || c.email}`"></td>
-                        <td class="o-td"><Link :href="`/admin/outreach/contacts/${c.id}`" class="font-medium text-slate-900 hover:text-brand hover:underline">{{ c.name || c.email || '—' }}</Link><div v-if="c.title" class="text-xs text-slate-500">{{ c.title }}</div></td>
+                        <td class="o-td"><Link :href="au(`/admin/outreach/contacts/${c.id}`)" class="font-medium text-slate-900 hover:text-brand hover:underline">{{ c.name || c.email || '—' }}</Link><div v-if="c.title" class="text-xs text-slate-500">{{ c.title }}</div></td>
                         <td class="o-td text-slate-600">{{ c.organization || '—' }}</td>
                         <td class="o-td"><div class="text-slate-700">{{ c.email || '—' }}</div><div v-if="c.phone" class="text-xs text-slate-400">{{ c.phone }}</div></td>
                         <td class="o-td"><span v-if="c.segment" class="rounded-lg bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600">{{ c.segment }}</span><span v-else class="text-xs text-slate-400">—</span></td>
@@ -155,7 +156,7 @@ onBeforeUnmount(() => clearInterval(poll));
             <button class="o-btn" @click="reset">Reset filter</button>
         </Empty>
         <Empty v-else icon="users" title="Belum ada kontak" text="Impor dari file Excel atau CSV, atau tambahkan satu per satu.">
-            <Link href="/admin/outreach/import" class="o-btn o-btn-primary"><Icon name="upload" class="h-4 w-4" /> Impor Excel / CSV</Link>
+            <Link :href="au('/admin/outreach/import')" class="o-btn o-btn-primary"><Icon name="upload" class="h-4 w-4" /> Impor Excel / CSV</Link>
             <button class="o-btn" @click="add"><Icon name="plus" class="h-4 w-4" /> Tambah kontak</button>
         </Empty>
         <div v-if="contacts.data.length" class="flex items-center justify-between border-t border-slate-100 px-4 py-2 text-xs text-slate-500">
@@ -167,7 +168,7 @@ onBeforeUnmount(() => clearInterval(poll));
     <div v-if="recentImports.length" class="mt-6">
         <h2 class="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500">Impor terakhir</h2>
         <div class="o-card divide-y divide-slate-100">
-            <Link v-for="i in recentImports" :key="i.id" :href="`/admin/outreach/import/${i.id}`" class="flex items-center justify-between gap-3 px-4 py-3 text-sm hover:bg-slate-50">
+            <Link v-for="i in recentImports" :key="i.id" :href="au(`/admin/outreach/import/${i.id}`)" class="flex items-center justify-between gap-3 px-4 py-3 text-sm hover:bg-slate-50">
                 <span class="min-w-0 truncate font-medium text-slate-700">{{ i.filename }}</span>
                 <span class="shrink-0 text-xs text-slate-500">{{ i.created }} baru · {{ i.duplicates }} dobel · {{ i.at }}</span>
             </Link>

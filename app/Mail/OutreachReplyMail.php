@@ -29,7 +29,7 @@ class OutreachReplyMail extends Mailable
             'contact' => $this->reply->contact,
             'campaign' => $this->reply->campaign,
             'snippet' => mb_strlen($body) > 800 ? mb_substr($body, 0, 800).'…' : $body,
-            'repliesUrl' => url('/admin/outreach/replies'),
+            'repliesUrl' => url(admin_path().'/outreach/replies'),
         ]);
     }
 }

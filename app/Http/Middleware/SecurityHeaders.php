@@ -20,7 +20,7 @@ class SecurityHeaders
         if ($request->isSecure()) {
             $h->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
         }
-        if (str_starts_with($request->path(), 'admin')) {
+        if ($request->is(trim(admin_path(), '/'), trim(admin_path(), '/').'/*')) {
             $h->set('Cache-Control', 'no-store, private');
         }
 

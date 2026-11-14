@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../lib/admin';
 import { reactive, ref } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
 import Icon from '../../Components/Icon.vue';
@@ -9,10 +10,10 @@ const f = reactive({ q: '', user_id: '', action: '', from: '', to: '', ...props.
 const open = ref(null);
 
 const params = () => Object.fromEntries(Object.entries(f).filter(([, v]) => v !== '' && v != null));
-const apply = () => router.get('/admin/logins', params(), { preserveState: true, replace: true });
+const apply = () => router.get(au('/admin/logins'), params(), { preserveState: true, replace: true });
 const reset = () => { Object.keys(f).forEach((k) => (f[k] = '')); apply(); };
 const showUser = (id) => { f.user_id = String(id); apply(); };
-const exportUrl = () => '/admin/logins/export?' + new URLSearchParams(params()).toString();
+const exportUrl = () => au('/admin/logins/export?') + new URLSearchParams(params()).toString();
 const tone = (r) => (r.warning ? 'bg-red-100 text-red-800' : r.action === 'login' ? 'bg-emerald-100 text-emerald-800' : r.action === 'logout' ? 'bg-stone-100 text-stone-700' : 'bg-blue-100 text-blue-800');
 </script>
 

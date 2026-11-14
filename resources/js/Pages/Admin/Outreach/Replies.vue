@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -25,17 +26,17 @@ const tabs = [
 const ourFilter = (params) => go({ tab: 'ours', status: props.ourStatus || undefined, source: props.ourSource || undefined, ...params });
 const polling = ref(false);
 
-const go = (params) => router.get('/admin/outreach/replies', params, { preserveState: true, preserveScroll: true });
+const go = (params) => router.get(au('/admin/outreach/replies'), params, { preserveState: true, preserveScroll: true });
 const open = (id) => go({ tab: props.tab, label: props.label || undefined, id });
 const setTab = (tab) => go({ tab });
 const setLabel = (label) => go({ tab: props.tab, label: label || undefined });
 
 function setMessageLabel(label) {
     if (label === 'not_interested' && !confirm('Tandai "tidak tertarik"? Kontak ini juga dimasukkan ke daftar jangan dikirimi, jadi tidak akan menerima kampanye apa pun lagi.')) return;
-    router.post(`/admin/outreach/replies/${props.selected.id}/label`, { label: props.selected.label === label ? null : label }, { preserveScroll: true });
+    router.post(au(`/admin/outreach/replies/${props.selected.id}/label`), { label: props.selected.label === label ? null : label }, { preserveScroll: true });
 }
-const makeLead = () => router.post(`/admin/outreach/replies/${props.selected.id}/lead`);
-const poll = () => { polling.value = true; router.post('/admin/outreach/replies/poll', {}, { preserveScroll: true, onFinish: () => (polling.value = false) }); };
+const makeLead = () => router.post(au(`/admin/outreach/replies/${props.selected.id}/lead`));
+const poll = () => { polling.value = true; router.post(au('/admin/outreach/replies/poll'), {}, { preserveScroll: true, onFinish: () => (polling.value = false) }); };
 </script>
 
 <template>
@@ -86,7 +87,7 @@ const poll = () => { polling.value = true; router.post('/admin/outreach/replies/
                     <p v-if="m.reason && ['rejected', 'failed', 'bounced'].includes(m.reply_status)" class="mt-1 text-xs text-rose-600">{{ m.reason }}</p>
                     <p class="mt-1 text-xs text-slate-400">{{ m.at }}<span v-if="m.by"> · {{ m.by }}</span><span v-if="m.campaign"> · {{ m.campaign }}</span></p>
                 </div>
-                <Link v-if="m.thread_id" :href="`/admin/outreach/threads/${m.thread_id}`" class="o-btn o-btn-sm">Buka percakapan</Link>
+                <Link v-if="m.thread_id" :href="au(`/admin/outreach/threads/${m.thread_id}`)" class="o-btn o-btn-sm">Buka percakapan</Link>
             </li>
         </ul>
         <Empty v-else icon="mail" title="Belum ada balasan kita" text="Balasan yang Anda kirim dari website atau dari email pribadi muncul di sini beserta statusnya." />
@@ -123,8 +124,8 @@ const poll = () => { polling.value = true; router.post('/admin/outreach/replies/
                 <span class="mr-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Label</span>
                 <button v-for="(l, key) in labels" :key="key" class="o-btn o-btn-sm" :class="selected.label === key ? 'o-btn-primary' : ''" @click="setMessageLabel(key)">{{ l.text }}</button>
                 <span class="flex-1" />
-                <Link v-if="selected.thread_id" :href="`/admin/outreach/threads/${selected.thread_id}`" class="o-btn o-btn-sm"><Icon name="mail" class="h-3.5 w-3.5" /> Buka percakapan &amp; balas</Link>
-                <Link v-if="selected.lead_id" :href="`/admin/leads/${selected.lead_id}`" class="o-btn o-btn-sm"><Icon name="check" class="h-3.5 w-3.5" /> Lihat lead</Link>
+                <Link v-if="selected.thread_id" :href="au(`/admin/outreach/threads/${selected.thread_id}`)" class="o-btn o-btn-sm"><Icon name="mail" class="h-3.5 w-3.5" /> Buka percakapan &amp; balas</Link>
+                <Link v-if="selected.lead_id" :href="au(`/admin/leads/${selected.lead_id}`)" class="o-btn o-btn-sm"><Icon name="check" class="h-3.5 w-3.5" /> Lihat lead</Link>
                 <button v-else class="o-btn o-btn-sm o-btn-primary" @click="makeLead"><Icon name="plus" class="h-3.5 w-3.5" /> Jadikan lead</button>
             </div>
 

@@ -76,7 +76,7 @@ class PageController extends Controller
         $page->sections()->create(['type' => 'text_block', 'name' => 'Isi halaman', 'sort' => 1, 'is_visible' => true,
             'data' => ['kicker' => null, 'title_a' => $title, 'title_b' => null, 'body' => null]]);
 
-        return redirect('/admin/pages/'.$page->id.'/edit')->with('success', 'Halaman dibuat (belum aktif). Isi kontennya, pratinjau, lalu aktifkan.');
+        return redirect(admin_path().'/pages/'.$page->id.'/edit')->with('success', 'Halaman dibuat (belum aktif). Isi kontennya, pratinjau, lalu aktifkan.');
     }
 
     public function destroy(string $id): RedirectResponse
@@ -87,7 +87,7 @@ class PageController extends Controller
         }
         $page->delete();
 
-        return redirect('/admin/pages')->with('success', 'Halaman dihapus.');
+        return redirect(admin_path().'/pages')->with('success', 'Halaman dihapus.');
     }
 
     /** Shows a custom page as visitors would see it, even while inactive. Never indexed. */
@@ -120,7 +120,7 @@ class PageController extends Controller
         return Inertia::render('Admin/Pages/Edit', [
             'page' => [
                 'id' => $page->id, 'key' => $page->key, 'url' => $this->publicUrl($page), 'is_system' => $page->is_system, 'is_active' => $page->is_active,
-                'title' => tr($page->title) ?: $page->key, 'preview_url' => $page->is_system ? null : url('/admin/pages/'.$page->id.'/preview'),
+                'title' => tr($page->title) ?: $page->key, 'preview_url' => $page->is_system ? null : url(admin_path().'/pages/'.$page->id.'/preview'),
             ],
             'fields' => $fields,
             'values' => $values,
@@ -158,7 +158,7 @@ class PageController extends Controller
             'sort' => (int) $page->sections()->max('sort') + 1,
         ]);
 
-        return redirect('/admin/sections/'.$section->id.'/edit')->with('success', 'Section ditambahkan. Isi kontennya di bawah.');
+        return redirect(admin_path().'/sections/'.$section->id.'/edit')->with('success', 'Section ditambahkan. Isi kontennya di bawah.');
     }
 
     public function sectionEdit(string $id): Response
@@ -171,7 +171,7 @@ class PageController extends Controller
             'section' => ['id' => $section->id, 'type' => $section->type, 'label' => SectionRegistry::types()[$section->type]['label'] ?? $section->type, 'name' => $section->name, 'is_visible' => $section->is_visible],
             'page' => ['id' => $section->page->id, 'key' => $section->page->key,
                 // an inactive custom page is only reachable through the admin preview
-                'url' => ($section->page->is_active || $section->page->is_system) ? $this->publicUrl($section->page) : url('/admin/pages/'.$section->page->id.'/preview')],
+                'url' => ($section->page->is_active || $section->page->is_system) ? $this->publicUrl($section->page) : url(admin_path().'/pages/'.$section->page->id.'/preview')],
             'fields' => $fields,
             'values' => $values,
             'media' => MediaInfo::for($fields, $values),
@@ -206,7 +206,7 @@ class PageController extends Controller
         $pageId = $s->page_id;
         $s->delete();
 
-        return redirect('/admin/pages/'.$pageId.'/edit')->with('success', 'Section dihapus.');
+        return redirect(admin_path().'/pages/'.$pageId.'/edit')->with('success', 'Section dihapus.');
     }
 
     public function sectionReorder(Request $request, string $pageId): JsonResponse

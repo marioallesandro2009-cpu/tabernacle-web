@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import FormRenderer from '../../../Components/FormRenderer.vue';
 import Icon from '../../../Components/Icon.vue';
@@ -8,14 +9,14 @@ const props = defineProps({ section: Object, page: Object, fields: Array, values
 rememberAll(props.media);
 
 const form = useForm({ ...JSON.parse(JSON.stringify(props.values)), name: props.section.name || '', is_visible: props.section.is_visible });
-const save = () => form.put(`/admin/sections/${props.section.id}`, { preserveScroll: true });
+const save = () => form.put(au(`/admin/sections/${props.section.id}`), { preserveScroll: true });
 </script>
 
 <template>
     <Head :title="section.label" />
     <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
-            <Link :href="`/admin/pages/${page.id}/edit`" class="text-sm text-stone-500 hover:text-brand">← Halaman {{ page.key }}</Link>
+            <Link :href="au(`/admin/pages/${page.id}/edit`)" class="text-sm text-stone-500 hover:text-brand">← Halaman {{ page.key }}</Link>
             <h1 class="text-2xl font-bold">{{ section.label }}</h1>
         </div>
         <div class="flex gap-2">

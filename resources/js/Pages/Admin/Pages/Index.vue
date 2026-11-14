@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { ref } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -8,8 +9,8 @@ defineProps({ pages: Array });
 const adding = ref(false);
 const form = useForm({ title: { id: '', en: '' }, slug: '' });
 const slugify = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-const create = () => form.post('/admin/pages', { preserveScroll: true });
-const remove = (p) => confirm(`Hapus halaman "${p.title}" beserta isinya? Tidak bisa dibatalkan.`) && router.delete(`/admin/pages/${p.id}`, { preserveScroll: true });
+const create = () => form.post(au('/admin/pages'), { preserveScroll: true });
+const remove = (p) => confirm(`Hapus halaman "${p.title}" beserta isinya? Tidak bisa dibatalkan.`) && router.delete(au(`/admin/pages/${p.id}`), { preserveScroll: true });
 </script>
 
 <template>
@@ -48,14 +49,14 @@ const remove = (p) => confirm(`Hapus halaman "${p.title}" beserta isinya? Tidak 
     <div class="card divide-y divide-stone-100">
         <div v-for="p in pages" :key="p.id" class="flex flex-wrap items-center gap-3 px-4 py-3">
             <div class="min-w-0 flex-1">
-                <Link :href="`/admin/pages/${p.id}/edit`" class="font-medium text-brand hover:underline">{{ p.title }}</Link>
+                <Link :href="au(`/admin/pages/${p.id}/edit`)" class="font-medium text-brand hover:underline">{{ p.title }}</Link>
                 <div class="text-xs text-stone-500">{{ p.sections }} section · {{ p.url }}</div>
             </div>
             <span v-if="p.is_system" class="badge">Bawaan</span>
             <span v-if="!p.is_active" class="badge bg-amber-100 text-amber-800">Nonaktif</span>
             <a v-if="p.is_active" :href="p.url" target="_blank" class="btn btn-ghost btn-sm" aria-label="Lihat"><Icon name="external" class="h-4 w-4" /></a>
-            <a v-else-if="!p.is_system" :href="`/admin/pages/${p.id}/preview`" target="_blank" class="btn btn-ghost btn-sm" aria-label="Pratinjau"><Icon name="eye" class="h-4 w-4" /></a>
-            <Link :href="`/admin/pages/${p.id}/edit`" class="btn btn-sm"><Icon name="edit" class="h-4 w-4" /> Ubah</Link>
+            <a v-else-if="!p.is_system" :href="au(`/admin/pages/${p.id}/preview`)" target="_blank" class="btn btn-ghost btn-sm" aria-label="Pratinjau"><Icon name="eye" class="h-4 w-4" /></a>
+            <Link :href="au(`/admin/pages/${p.id}/edit`)" class="btn btn-sm"><Icon name="edit" class="h-4 w-4" /> Ubah</Link>
             <button v-if="!p.is_system" class="btn btn-sm text-red-600" aria-label="Hapus" @click="remove(p)"><Icon name="trash" class="h-4 w-4" /></button>
         </div>
     </div>

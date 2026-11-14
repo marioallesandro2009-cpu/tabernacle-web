@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { computed } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -47,20 +48,20 @@ function pickTour() {
 
 function save() {
     const opts = { preserveScroll: true, onSuccess: () => form.defaults() };
-    if (q.value) form.put(`/admin/quotations/${q.value.id}`, opts);
-    else form.post('/admin/quotations', opts);
+    if (q.value) form.put(au(`/admin/quotations/${q.value.id}`), opts);
+    else form.post(au('/admin/quotations'), opts);
 }
-const setStatus = (status) => router.post(`/admin/quotations/${q.value.id}/status`, { status }, { preserveScroll: true });
-const duplicate = () => router.post(`/admin/quotations/${q.value.id}/duplicate`);
-const remove = () => confirm(`Hapus penawaran ${q.value.number}? Riwayat revisinya ikut terhapus.`) && router.delete(`/admin/quotations/${q.value.id}`);
+const setStatus = (status) => router.post(au(`/admin/quotations/${q.value.id}/status`), { status }, { preserveScroll: true });
+const duplicate = () => router.post(au(`/admin/quotations/${q.value.id}/duplicate`));
+const remove = () => confirm(`Hapus penawaran ${q.value.number}? Riwayat revisinya ikut terhapus.`) && router.delete(au(`/admin/quotations/${q.value.id}`));
 const err = (k) => form.errors[k];
 </script>
 
 <template>
     <Head :title="q ? q.number : 'Penawaran baru'" />
     <PageHeader :title="q ? q.number : 'Penawaran baru'" :subtitle="q ? `Penawaran untuk ${data.client_name}` : 'Isi data klien dan item. Nomor penawaran dibuat otomatis saat disimpan.'">
-        <Link v-if="q?.lead" :href="`/admin/leads/${q.lead.id}`" class="o-btn"><Icon name="inbox" class="h-4 w-4" /> Lead: {{ q.lead.name }}</Link>
-        <Link href="/admin/quotations" class="o-btn">Kembali</Link>
+        <Link v-if="q?.lead" :href="au(`/admin/leads/${q.lead.id}`)" class="o-btn"><Icon name="inbox" class="h-4 w-4" /> Lead: {{ q.lead.name }}</Link>
+        <Link :href="au('/admin/quotations')" class="o-btn">Kembali</Link>
     </PageHeader>
 
     <div v-if="q && q.status !== 'draft'" class="mb-4 rounded-2xl bg-sky-50 px-4 py-3 text-sm text-sky-900 ring-1 ring-sky-100">
@@ -157,8 +158,8 @@ const err = (k) => form.errors[k];
                 <template v-if="q">
                     <p v-if="form.isDirty" class="text-center text-xs text-amber-600">Ada perubahan yang belum disimpan. Simpan dulu sebelum membuka PDF.</p>
                     <div class="grid grid-cols-2 gap-2">
-                        <a :href="`/admin/quotations/${q.id}/pdf`" target="_blank" rel="noopener" class="o-btn justify-center" :class="{ 'pointer-events-none opacity-50': form.isDirty }"><Icon name="eye" class="h-4 w-4" /> Pratinjau</a>
-                        <a :href="`/admin/quotations/${q.id}/pdf?download=1`" class="o-btn justify-center" :class="{ 'pointer-events-none opacity-50': form.isDirty }"><Icon name="download" class="h-4 w-4" /> Unduh PDF</a>
+                        <a :href="au(`/admin/quotations/${q.id}/pdf`)" target="_blank" rel="noopener" class="o-btn justify-center" :class="{ 'pointer-events-none opacity-50': form.isDirty }"><Icon name="eye" class="h-4 w-4" /> Pratinjau</a>
+                        <a :href="au(`/admin/quotations/${q.id}/pdf?download=1`)" class="o-btn justify-center" :class="{ 'pointer-events-none opacity-50': form.isDirty }"><Icon name="download" class="h-4 w-4" /> Unduh PDF</a>
                     </div>
                 </template>
             </div>
@@ -181,7 +182,7 @@ const err = (k) => form.errors[k];
                     <li v-for="r in q.revisions" :key="r.revision" class="flex items-center gap-2">
                         <span class="font-medium text-slate-800">{{ r.label }}</span>
                         <span class="truncate text-xs text-slate-500">{{ r.at }}<span v-if="r.by"> · {{ r.by }}</span></span>
-                        <a :href="`/admin/quotations/${q.id}/revisions/${r.revision}/pdf`" target="_blank" rel="noopener" class="ml-auto text-slate-500 hover:text-brand" aria-label="Lihat PDF"><Icon name="eye" class="h-4 w-4" /></a>
+                        <a :href="au(`/admin/quotations/${q.id}/revisions/${r.revision}/pdf`)" target="_blank" rel="noopener" class="ml-auto text-slate-500 hover:text-brand" aria-label="Lihat PDF"><Icon name="eye" class="h-4 w-4" /></a>
                     </li>
                 </ul>
             </div>

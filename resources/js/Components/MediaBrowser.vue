@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../lib/admin';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import axios from 'axios';
 import Icon from './Icon.vue';
@@ -32,7 +33,7 @@ async function load(reset = true) {
     loading.value = true;
     try {
         const params = { q: q.value || undefined, kind: props.kind || undefined, unused: onlyUnused.value ? 1 : undefined, folder: folderFilter.value || undefined };
-        const url = reset || !next.value ? '/admin/media/list' : next.value;
+        const url = reset || !next.value ? au('/admin/media/list') : next.value;
         const { data } = await axios.get(url, { params: reset || !next.value ? params : undefined });
         data.data.forEach(remember);
         items.value = reset ? data.data : [...items.value, ...data.data];
@@ -53,7 +54,7 @@ function show(m) {
     detail.alt = m.alt || '';
     detail.usage = null;
     detail.error = '';
-    if (!props.select) axios.get(`/admin/media/${m.id}/usage`).then((r) => (detail.usage = r.data.usage));
+    if (!props.select) axios.get(au(`/admin/media/${m.id}/usage`)).then((r) => (detail.usage = r.data.usage));
 }
 
 function toggle(m) {
@@ -90,7 +91,7 @@ async function send(files) {
     if (upload.alt.trim()) fd.append('alt', upload.alt.trim());
     fd.append('folder', upload.folder || 'umum');
     try {
-        const { data } = await axios.post('/admin/media', fd);
+        const { data } = await axios.post(au('/admin/media'), fd);
         data.data.forEach(remember);
         items.value = [...data.data, ...items.value];
         total.value += data.data.length;
@@ -122,7 +123,7 @@ async function saveAlt() {
     detail.saving = true;
     detail.error = '';
     try {
-        const { data } = await axios.put(`/admin/media/${active.value.id}`, { alt: detail.alt });
+        const { data } = await axios.put(au(`/admin/media/${active.value.id}`), { alt: detail.alt });
         remember(data);
         Object.assign(active.value, data);
         const i = items.value.findIndex((x) => x.id === data.id);
@@ -137,7 +138,7 @@ async function saveAlt() {
 async function remove() {
     if (!confirm('Hapus file ini permanen?')) return;
     try {
-        await axios.delete(`/admin/media/${active.value.id}`);
+        await axios.delete(au(`/admin/media/${active.value.id}`));
         items.value = items.value.filter((x) => x.id !== active.value.id);
         picked.value = picked.value.filter((x) => x.id !== active.value.id);
         active.value = null;

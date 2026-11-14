@@ -131,7 +131,7 @@ class LeadController extends Controller
     {
         Lead::findOrFail($id)->delete();
 
-        return redirect('/admin/leads')->with('success', 'Lead dihapus.');
+        return redirect(admin_path().'/leads')->with('success', 'Lead dihapus.');
     }
 
     public function bulk(Request $request): RedirectResponse

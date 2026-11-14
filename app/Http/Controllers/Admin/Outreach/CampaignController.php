@@ -53,7 +53,7 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::findOrFail($id);
         if ($campaign->status === 'running') {
-            return redirect('/admin/outreach/campaigns/'.$campaign->id)->with('error', 'Jeda kampanye dulu sebelum mengubah pengaturannya.');
+            return redirect(admin_path().'/outreach/campaigns/'.$campaign->id)->with('error', 'Jeda kampanye dulu sebelum mengubah pengaturannya.');
         }
 
         return $this->form($campaign);
@@ -70,7 +70,7 @@ class CampaignController extends Controller
         });
         ActivityLog::record('create', 'Kampanye Outreach', $campaign->id, $campaign->name);
 
-        return redirect('/admin/outreach/campaigns/'.$campaign->id)->with('success', 'Kampanye dibuat. Periksa pengaturannya lalu klik Mulai.');
+        return redirect(admin_path().'/outreach/campaigns/'.$campaign->id)->with('success', 'Kampanye dibuat. Periksa pengaturannya lalu klik Mulai.');
     }
 
     public function update(Request $request, string $id): RedirectResponse
@@ -86,7 +86,7 @@ class CampaignController extends Controller
         });
         ActivityLog::record('update', 'Kampanye Outreach', $campaign->id, $campaign->name);
 
-        return redirect('/admin/outreach/campaigns/'.$campaign->id)->with('success', 'Kampanye disimpan.');
+        return redirect(admin_path().'/outreach/campaigns/'.$campaign->id)->with('success', 'Kampanye disimpan.');
     }
 
     public function show(Request $request, string $id, CampaignService $service, CampaignScheduler $scheduler): Response
@@ -149,7 +149,7 @@ class CampaignController extends Controller
         ActivityLog::record('delete', 'Kampanye Outreach', $campaign->id, $campaign->name);
         $campaign->delete();
 
-        return redirect('/admin/outreach/campaigns')->with('success', 'Kampanye dihapus.');
+        return redirect(admin_path().'/outreach/campaigns')->with('success', 'Kampanye dihapus.');
     }
 
     protected function run(string $id, callable $action, string $ok): RedirectResponse

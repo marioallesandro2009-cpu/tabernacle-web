@@ -21,6 +21,6 @@ class OutreachDigestMail extends Mailable
 
     public function content(): Content
     {
-        return new Content(view: 'mail.outreach-digest', with: ['d' => $this->digest, 'adminUrl' => url('/admin/outreach/campaigns'), 'repliesUrl' => url('/admin/outreach/replies')]);
+        return new Content(view: 'mail.outreach-digest', with: ['d' => $this->digest, 'adminUrl' => url(admin_path().'/outreach/campaigns'), 'repliesUrl' => url(admin_path().'/outreach/replies')]);
     }
 }

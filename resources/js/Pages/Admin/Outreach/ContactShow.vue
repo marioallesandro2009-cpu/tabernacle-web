@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { Head, Link, router } from '@inertiajs/vue3';
 import PageHeader from '../../../Components/ui/PageHeader.vue';
 import Chip from '../../../Components/ui/Chip.vue';
@@ -7,13 +8,13 @@ import ThreadView from '../../../Components/outreach/ThreadView.vue';
 import { sendStatus } from '../../../lib/outreach';
 
 const props = defineProps({ contact: Object, threads: Array, statuses: Object, filter: String });
-const setFilter = (s) => router.get(`/admin/outreach/contacts/${props.contact.id}`, s ? { status: s } : {}, { preserveState: true, preserveScroll: true, replace: true });
+const setFilter = (s) => router.get(au(`/admin/outreach/contacts/${props.contact.id}`), s ? { status: s } : {}, { preserveState: true, preserveScroll: true, replace: true });
 </script>
 
 <template>
     <Head :title="contact.name || contact.email" />
     <PageHeader :title="contact.name || contact.email || 'Kontak'" :subtitle="[contact.title, contact.organization, contact.segment && 'Segmen ' + contact.segment].filter(Boolean).join(' · ')">
-        <Link href="/admin/outreach/contacts" class="o-btn">Semua kontak</Link>
+        <Link :href="au('/admin/outreach/contacts')" class="o-btn">Semua kontak</Link>
     </PageHeader>
 
     <div class="mb-4 flex flex-wrap items-center gap-2 text-sm">
@@ -30,7 +31,7 @@ const setFilter = (s) => router.get(`/admin/outreach/contacts/${props.contact.id
                 <h2 class="text-base font-semibold text-slate-900">{{ t.campaign || 'Percakapan' }}</h2>
                 <Chip :tone="sendStatus[t.status]?.tone">{{ sendStatus[t.status]?.label || t.status }}</Chip>
                 <span class="text-xs text-slate-500">via {{ t.account?.email || 'akun dihapus' }}</span>
-                <Link :href="`/admin/outreach/threads/${t.id}`" class="ml-auto text-sm text-brand hover:underline">Buka percakapan</Link>
+                <Link :href="au(`/admin/outreach/threads/${t.id}`)" class="ml-auto text-sm text-brand hover:underline">Buka percakapan</Link>
             </div>
             <ThreadView :thread="t" :statuses="statuses" />
         </section>

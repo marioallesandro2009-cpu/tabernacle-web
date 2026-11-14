@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { Head, Link } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
 import PageHeader from '../../../Components/ui/PageHeader.vue';
@@ -13,11 +14,11 @@ const pct = (c) => (c.contacts ? Math.min(100, Math.round((c.started / c.contact
 <template>
     <Head title="Kampanye Outreach" />
     <PageHeader title="Kampanye" subtitle="Rangkaian email ke satu segmen: email pertama, lalu follow-up otomatis sampai orangnya membalas, bounce, atau berhenti berlangganan.">
-        <Link href="/admin/outreach/campaigns/create" class="o-btn o-btn-primary"><Icon name="plus" class="h-4 w-4" /> Kampanye baru</Link>
+        <Link :href="au('/admin/outreach/campaigns/create')" class="o-btn o-btn-primary"><Icon name="plus" class="h-4 w-4" /> Kampanye baru</Link>
     </PageHeader>
 
     <div v-if="campaigns.length" class="grid gap-4 lg:grid-cols-2">
-        <Link v-for="c in campaigns" :key="c.id" :href="`/admin/outreach/campaigns/${c.id}`" class="o-card group block p-5 transition hover:shadow-md">
+        <Link v-for="c in campaigns" :key="c.id" :href="au(`/admin/outreach/campaigns/${c.id}`)" class="o-card group block p-5 transition hover:shadow-md">
             <div class="flex items-start justify-between gap-3">
                 <div class="min-w-0">
                     <h3 class="truncate text-base font-semibold text-slate-900 group-hover:text-brand">{{ c.name }}</h3>
@@ -39,7 +40,7 @@ const pct = (c) => (c.contacts ? Math.min(100, Math.round((c.started / c.contact
     </div>
     <div v-else class="o-card">
         <Empty icon="plane" title="Belum ada kampanye" text="Siapkan dulu akun pengirim, kontak, dan template. Setelah itu buat kampanye pertama.">
-            <Link href="/admin/outreach/campaigns/create" class="o-btn o-btn-primary"><Icon name="plus" class="h-4 w-4" /> Buat kampanye</Link>
+            <Link :href="au('/admin/outreach/campaigns/create')" class="o-btn o-btn-primary"><Icon name="plus" class="h-4 w-4" /> Buat kampanye</Link>
         </Empty>
     </div>
 </template>

@@ -1,9 +1,10 @@
 <script setup>
+import { au } from '../../lib/admin';
 import { Head, router } from '@inertiajs/vue3';
 import MediaBrowser from '../../Components/MediaBrowser.vue';
 
 defineProps({ folders: Array });
-const purge = () => confirm('Hapus SEMUA media yang belum dipakai di mana pun? Tidak bisa dibatalkan.') && router.post('/admin/media/purge-unused');
+const purge = () => confirm('Hapus SEMUA media yang belum dipakai di mana pun? Tidak bisa dibatalkan.') && router.post(au('/admin/media/purge-unused'));
 </script>
 
 <template>

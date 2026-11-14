@@ -84,7 +84,7 @@ class ReplyController extends Controller
     {
         $m = Message::where('direction', 'in')->with(['contact', 'campaign'])->findOrFail($id);
         if ($m->lead_id && Lead::whereKey($m->lead_id)->exists()) {
-            return redirect('/admin/leads/'.$m->lead_id)->with('success', 'Balasan ini sudah dijadikan lead.');
+            return redirect(admin_path().'/leads/'.$m->lead_id)->with('success', 'Balasan ini sudah dijadikan lead.');
         }
         $c = $m->contact;
         $lead = Lead::create([
@@ -99,7 +99,7 @@ class ReplyController extends Controller
         }
         ActivityLog::record('create', 'Lead dari Outreach', $lead->id, (string) ($c?->email ?: $c?->name));
 
-        return redirect('/admin/leads/'.$lead->id)->with('success', 'Lead dibuat dari balasan ini.');
+        return redirect(admin_path().'/leads/'.$lead->id)->with('success', 'Lead dibuat dari balasan ini.');
     }
 
     /**

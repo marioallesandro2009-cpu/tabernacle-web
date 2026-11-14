@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { nextTick, onMounted, ref, watch } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
@@ -11,7 +12,7 @@ const props = defineProps({ page: Object, fields: Array, values: Object, media: 
 rememberAll(props.media);
 
 const form = useForm(JSON.parse(JSON.stringify(props.values)));
-const save = () => form.put(`/admin/pages/${props.page.id}`, { preserveScroll: true });
+const save = () => form.put(au(`/admin/pages/${props.page.id}`), { preserveScroll: true });
 
 const list = ref(null);
 const items = ref([]);
@@ -25,23 +26,23 @@ onMounted(() =>
             onEnd: async (e) => {
                 const m = items.value.splice(e.oldIndex, 1)[0];
                 items.value.splice(e.newIndex, 0, m);
-                await axios.post(`/admin/pages/${props.page.id}/sections/reorder`, { ids: items.value.map((x) => x.id) });
+                await axios.post(au(`/admin/pages/${props.page.id}/sections/reorder`), { ids: items.value.map((x) => x.id) });
             },
         }),
     ),
 );
 
-const add = () => newType.value && router.post(`/admin/pages/${props.page.id}/sections`, { type: newType.value });
-const toggle = (s) => router.post(`/admin/sections/${s.id}/toggle`, {}, { preserveScroll: true });
-const removePage = () => confirm('Hapus halaman ini beserta semua section-nya? Tidak bisa dibatalkan.') && router.delete(`/admin/pages/${props.page.id}`);
-const remove = (s) => confirm('Hapus section ini beserta isinya?') && router.delete(`/admin/sections/${s.id}`, { preserveScroll: true });
+const add = () => newType.value && router.post(au(`/admin/pages/${props.page.id}/sections`), { type: newType.value });
+const toggle = (s) => router.post(au(`/admin/sections/${s.id}/toggle`), {}, { preserveScroll: true });
+const removePage = () => confirm('Hapus halaman ini beserta semua section-nya? Tidak bisa dibatalkan.') && router.delete(au(`/admin/pages/${props.page.id}`));
+const remove = (s) => confirm('Hapus section ini beserta isinya?') && router.delete(au(`/admin/sections/${s.id}`), { preserveScroll: true });
 </script>
 
 <template>
     <Head title="Ubah halaman" />
     <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
-            <Link href="/admin/pages" class="text-sm text-stone-500 hover:text-brand">← Halaman</Link>
+            <Link :href="au('/admin/pages')" class="text-sm text-stone-500 hover:text-brand">← Halaman</Link>
             <h1 class="text-2xl font-bold">Halaman: {{ page.title }}</h1>
             <p v-if="!page.is_active" class="text-sm text-amber-700">Belum aktif: pengunjung belum bisa membuka halaman ini.</p>
         </div>
@@ -60,11 +61,11 @@ const remove = (s) => confirm('Hapus section ini beserta isinya?') && router.del
             <div v-for="s in items" :key="s.id" class="flex items-center gap-2 px-3 py-2.5" :class="s.is_visible ? '' : 'bg-stone-50 opacity-70'">
                 <span class="drag cursor-grab p-1 text-stone-400"><Icon name="drag" class="h-4 w-4" /></span>
                 <div class="min-w-0 flex-1">
-                    <Link :href="`/admin/sections/${s.id}/edit`" class="block truncate font-medium text-brand hover:underline">{{ s.name || s.label }}</Link>
+                    <Link :href="au(`/admin/sections/${s.id}/edit`)" class="block truncate font-medium text-brand hover:underline">{{ s.name || s.label }}</Link>
                     <div class="text-xs text-stone-500">{{ s.label }}</div>
                 </div>
                 <button class="btn btn-sm" @click="toggle(s)">{{ s.is_visible ? 'Sembunyikan' : 'Tampilkan' }}</button>
-                <Link :href="`/admin/sections/${s.id}/edit`" class="btn btn-sm"><Icon name="edit" class="h-4 w-4" /></Link>
+                <Link :href="au(`/admin/sections/${s.id}/edit`)" class="btn btn-sm"><Icon name="edit" class="h-4 w-4" /></Link>
                 <button class="btn btn-sm text-red-600" aria-label="Hapus" @click="remove(s)"><Icon name="trash" class="h-4 w-4" /></button>
             </div>
             <div v-if="!items.length" class="p-6 text-center text-sm text-stone-500">Belum ada section.</div>

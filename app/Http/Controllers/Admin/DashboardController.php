@@ -41,7 +41,7 @@ class DashboardController extends Controller
             ],
             'analytics_enabled' => (bool) setting('analytics_enabled', true),
             'can_reset' => $user->can('settings.manage'),
-            'export_url' => '/admin/leads/export/',
+            'export_url' => admin_path().'/leads/export/',
         ]);
     }
 
@@ -58,6 +58,6 @@ class DashboardController extends Controller
         Content::bump();
         ActivityLog::record('reset', 'Statistik', null, 'Reset statistik pengunjung ('.$views.' tayangan dihapus)');
 
-        return redirect('/admin')->with('success', 'Statistik pengunjung direset. Penghitungan dimulai dari nol. Data leads tidak berubah.');
+        return redirect(admin_path())->with('success', 'Statistik pengunjung direset. Penghitungan dimulai dari nol. Data leads tidak berubah.');
     }
 }

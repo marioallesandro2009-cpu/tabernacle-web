@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { computed, onBeforeUnmount, onMounted } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import PageHeader from '../../../Components/ui/PageHeader.vue';
@@ -21,7 +22,7 @@ onBeforeUnmount(() => clearInterval(timer));
     <Head title="Hasil impor" />
     <PageHeader title="Hasil impor" :subtitle="batch.filename">
         <Chip :tone="importStatus[batch.status]?.tone">{{ importStatus[batch.status]?.label }}</Chip>
-        <Link href="/admin/outreach/contacts" class="o-btn o-btn-primary">Lihat kontak</Link>
+        <Link :href="au('/admin/outreach/contacts')" class="o-btn o-btn-primary">Lihat kontak</Link>
     </PageHeader>
 
     <div v-if="running" class="o-card mb-5 flex items-center gap-4 p-5">
@@ -30,7 +31,7 @@ onBeforeUnmount(() => clearInterval(timer));
     </div>
     <div v-else-if="batch.status === 'failed'" class="mb-5 rounded-2xl bg-rose-50 p-5 text-sm text-rose-800 ring-1 ring-rose-100">
         <div class="font-semibold">Impor gagal</div><div class="mt-1">{{ batch.error || 'File tidak bisa diproses.' }}</div>
-        <Link href="/admin/outreach/import" class="o-btn mt-3">Coba file lain</Link>
+        <Link :href="au('/admin/outreach/import')" class="o-btn mt-3">Coba file lain</Link>
     </div>
     <div v-else-if="batch.status === 'done'" class="mb-5 rounded-2xl bg-emerald-50 p-5 text-sm text-emerald-900 ring-1 ring-emerald-100">
         <div class="font-semibold">Impor selesai</div>

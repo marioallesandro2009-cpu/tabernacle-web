@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { computed } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import PageHeader from '../../../Components/ui/PageHeader.vue';
@@ -23,14 +24,14 @@ function run() {
     form.transform((d) => ({
         mapping: Object.fromEntries(Object.entries(d.mapping).map(([k, v]) => [k, v === '' || v === undefined ? null : Number(v)])),
         default_segment_id: d.default_segment_id || null,
-    })).post(`/admin/outreach/import/${props.batch.id}/run`);
+    })).post(au(`/admin/outreach/import/${props.batch.id}/run`));
 }
 </script>
 
 <template>
     <Head title="Cocokkan kolom" />
     <PageHeader title="Cocokkan kolom" :subtitle="`File ${batch.filename}. Pilih kolom mana yang berisi nama, email, dan seterusnya. Tebakan otomatis sudah diisi, silakan periksa.`">
-        <Link href="/admin/outreach/import" class="o-btn">Ganti file</Link>
+        <Link :href="au('/admin/outreach/import')" class="o-btn">Ganti file</Link>
     </PageHeader>
 
     <div class="grid gap-5 xl:grid-cols-[360px_1fr]">

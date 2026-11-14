@@ -20,7 +20,7 @@ class EnsureActiveAdmin
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return redirect('/admin/login')->withErrors(['email' => 'Akun ini dinonaktifkan.']);
+            return redirect(admin_path().'/login')->withErrors(['email' => 'Akun ini dinonaktifkan.']);
         }
 
         return $next($request);

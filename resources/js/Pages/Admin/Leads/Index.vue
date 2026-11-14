@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { computed, reactive, ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -11,16 +12,16 @@ const selected = ref([]);
 const bulkStatus = ref('');
 
 const params = () => Object.fromEntries(Object.entries(f).filter(([, v]) => v !== '' && v != null));
-const apply = () => router.get('/admin/leads', params(), { preserveState: true, replace: true });
+const apply = () => router.get(au('/admin/leads'), params(), { preserveState: true, replace: true });
 const reset = () => { Object.keys(f).forEach((k) => (f[k] = '')); apply(); };
-const exportUrl = (fmt) => `/admin/leads/export/${fmt}?` + new URLSearchParams(params()).toString();
+const exportUrl = (fmt) => au(`/admin/leads/export/${fmt}?`) + new URLSearchParams(params()).toString();
 
 const allOnPage = computed(() => props.leads.data.length > 0 && props.leads.data.every((l) => selected.value.includes(l.id)));
 const toggleAll = () => (selected.value = allOnPage.value ? [] : props.leads.data.map((l) => l.id));
 const bulk = (action) => {
     if (!selected.value.length) return;
     if (action === 'delete' && !confirm(`Hapus ${selected.value.length} lead? Tidak bisa dibatalkan.`)) return;
-    router.post('/admin/leads/bulk', { ids: selected.value, action, status: bulkStatus.value }, { preserveScroll: true, onSuccess: () => (selected.value = []) });
+    router.post(au('/admin/leads/bulk'), { ids: selected.value, action, status: bulkStatus.value }, { preserveScroll: true, onSuccess: () => (selected.value = []) });
 };
 const label = (s) => props.statuses.find((x) => x.value === s)?.label || s;
 const tone = { baru: 'bg-blue-100 text-blue-800', dihubungi: 'bg-sky-100 text-sky-800', negosiasi: 'bg-amber-100 text-amber-800', dp: 'bg-violet-100 text-violet-800', lunas: 'bg-emerald-100 text-emerald-800', batal: 'bg-stone-200 text-stone-600' };
@@ -70,7 +71,7 @@ const tone = { baru: 'bg-blue-100 text-blue-800', dihubungi: 'bg-sky-100 text-sk
                     <td class="td"><input v-model="selected" type="checkbox" :value="l.id" :aria-label="'Pilih ' + l.name"></td>
                     <td class="td whitespace-nowrap text-xs text-stone-500">{{ l.created_at }}</td>
                     <td class="td">
-                        <Link :href="`/admin/leads/${l.id}`" class="font-medium text-brand hover:underline">{{ l.name || '(klik WhatsApp)' }}</Link>
+                        <Link :href="au(`/admin/leads/${l.id}`)" class="font-medium text-brand hover:underline">{{ l.name || '(klik WhatsApp)' }}</Link>
                         <div class="text-xs text-stone-500">{{ l.phone }}<span v-if="l.email"> · {{ l.email }}</span></div>
                     </td>
                     <td class="td"><span class="line-clamp-2">{{ l.tour || '–' }}</span><span v-if="l.pax" class="text-xs text-stone-500">{{ l.pax }} orang</span></td>

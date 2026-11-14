@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -15,7 +16,7 @@ const input = ref(null);
 function pick(file) {
     if (!file) return;
     form.file = file;
-    form.post('/admin/outreach/import', { forceFormData: true });
+    form.post(au('/admin/outreach/import'), { forceFormData: true });
 }
 function drop(e) {
     over.value = false;
@@ -26,7 +27,7 @@ function drop(e) {
 <template>
     <Head title="Impor kontak" />
     <PageHeader title="Impor kontak" subtitle="Unggah file Excel atau CSV. Di langkah berikutnya Anda mencocokkan kolom file dengan data kontak, jadi urutan kolom boleh berbeda-beda.">
-        <Link href="/admin/outreach/contacts" class="o-btn">Kembali ke kontak</Link>
+        <Link :href="au('/admin/outreach/contacts')" class="o-btn">Kembali ke kontak</Link>
     </PageHeader>
 
     <div class="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
@@ -59,7 +60,7 @@ function drop(e) {
             </div>
             <div v-if="recent.length" class="o-card p-5">
                 <h3 class="mb-3 text-sm font-semibold text-slate-900">Impor terakhir</h3>
-                <Link v-for="i in recent" :key="i.id" :href="`/admin/outreach/import/${i.id}`" class="-mx-2 flex items-center justify-between gap-3 rounded-lg px-2 py-2 text-sm hover:bg-slate-50">
+                <Link v-for="i in recent" :key="i.id" :href="au(`/admin/outreach/import/${i.id}`)" class="-mx-2 flex items-center justify-between gap-3 rounded-lg px-2 py-2 text-sm hover:bg-slate-50">
                     <span class="min-w-0"><span class="block truncate font-medium text-slate-700">{{ i.filename }}</span><span class="text-xs text-slate-400">{{ i.at }}</span></span>
                     <Chip :tone="importStatus[i.status]?.tone">{{ importStatus[i.status]?.label }}</Chip>
                 </Link>

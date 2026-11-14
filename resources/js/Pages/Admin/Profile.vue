@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../lib/admin';
 import { Head, router, useForm } from '@inertiajs/vue3';
 import MediaPicker from '../../Components/MediaPicker.vue';
 
@@ -9,11 +10,11 @@ const pw = useForm({ current_password: '', password: '', password_confirmation: 
 const code = useForm({ code: '' });
 const off = useForm({ password: '' });
 
-const saveInfo = () => info.put('/admin/profile', { preserveScroll: true });
-const savePw = () => pw.put('/admin/profile/password', { preserveScroll: true, onSuccess: () => pw.reset() });
-const start = () => router.post('/admin/profile/2fa', {}, { preserveScroll: true });
-const confirm2fa = () => code.post('/admin/profile/2fa/confirm', { preserveScroll: true, onSuccess: () => code.reset() });
-const disable2fa = () => off.delete('/admin/profile/2fa', { preserveScroll: true, onSuccess: () => off.reset() });
+const saveInfo = () => info.put(au('/admin/profile'), { preserveScroll: true });
+const savePw = () => pw.put(au('/admin/profile/password'), { preserveScroll: true, onSuccess: () => pw.reset() });
+const start = () => router.post(au('/admin/profile/2fa'), {}, { preserveScroll: true });
+const confirm2fa = () => code.post(au('/admin/profile/2fa/confirm'), { preserveScroll: true, onSuccess: () => code.reset() });
+const disable2fa = () => off.delete(au('/admin/profile/2fa'), { preserveScroll: true, onSuccess: () => off.reset() });
 </script>
 
 <template>

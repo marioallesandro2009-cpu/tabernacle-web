@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../lib/admin';
 import { onBeforeUnmount, ref, watch } from 'vue';
 import axios from 'axios';
 import { router } from '@inertiajs/vue3';
@@ -28,7 +29,7 @@ async function save() {
     if (!props.thread.can_reply || (!body.value.trim() && !draftId.value)) return;
     saving.value = true;
     try {
-        const { data } = await axios.put(`/admin/outreach/threads/${props.thread.id}/draft`, { body: body.value, draft_id: draftId.value });
+        const { data } = await axios.put(au(`/admin/outreach/threads/${props.thread.id}/draft`), { body: body.value, draft_id: draftId.value });
         draftId.value = data.id;
         savedAt.value = data.saved_at;
     } catch {
@@ -41,16 +42,16 @@ function send() {
     if (!body.value.trim()) return;
     clearTimeout(timer);
     sending.value = true;
-    router.post(`/admin/outreach/threads/${props.thread.id}/send`, { body: body.value, draft_id: draftId.value }, {
+    router.post(au(`/admin/outreach/threads/${props.thread.id}/send`), { body: body.value, draft_id: draftId.value }, {
         preserveScroll: true,
         onSuccess: () => { body.value = ''; draftId.value = null; savedAt.value = null; },
         onFinish: () => (sending.value = false),
     });
 }
 const startEdit = (m) => (editing.value[m.id] = m.body || '');
-const sendDraft = (m) => router.post(`/admin/outreach/manual-replies/${m.id}/send`, { body: editing.value[m.id] ?? m.body }, { preserveScroll: true, onSuccess: () => delete editing.value[m.id] });
-const retry = (m) => router.post(`/admin/outreach/manual-replies/${m.id}/retry`, {}, { preserveScroll: true });
-const discard = (m) => confirm('Hapus draf ini?') && router.delete(`/admin/outreach/manual-replies/${m.id}`, { preserveScroll: true });
+const sendDraft = (m) => router.post(au(`/admin/outreach/manual-replies/${m.id}/send`), { body: editing.value[m.id] ?? m.body }, { preserveScroll: true, onSuccess: () => delete editing.value[m.id] });
+const retry = (m) => router.post(au(`/admin/outreach/manual-replies/${m.id}/retry`), {}, { preserveScroll: true });
+const discard = (m) => confirm('Hapus draf ini?') && router.delete(au(`/admin/outreach/manual-replies/${m.id}`), { preserveScroll: true });
 
 const who = (m) => {
     if (m.direction === 'in') return m.kind === 'bounce' ? 'Laporan bounce' : m.kind === 'auto_reply' ? 'Balasan otomatis' : 'Prospek';

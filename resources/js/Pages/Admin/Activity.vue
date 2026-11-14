@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../lib/admin';
 import { reactive, ref } from 'vue';
 import { Head, router } from '@inertiajs/vue3';
 import Pagination from '../../Components/Pagination.vue';
@@ -7,7 +8,7 @@ const props = defineProps({ logs: Object, query: Object, users: Array, actions: 
 const f = reactive({ q: '', user_id: '', action: '', subject_type: '', ...props.query });
 const open = ref(null);
 
-const apply = () => router.get('/admin/activity', Object.fromEntries(Object.entries(f).filter(([, v]) => v !== '' && v != null)), { preserveState: true, replace: true });
+const apply = () => router.get(au('/admin/activity'), Object.fromEntries(Object.entries(f).filter(([, v]) => v !== '' && v != null)), { preserveState: true, replace: true });
 const actionLabel = { created: 'Membuat', updated: 'Mengubah', deleted: 'Menghapus', login: 'Masuk', login_failed: 'Gagal masuk', login_blocked: 'Ditolak (nonaktif)', login_throttled: 'Diblokir sementara', two_factor_failed: 'Kode 2FA salah', forced_logout: 'Dikeluarkan', logout: 'Keluar', password_reset_requested: 'Minta reset password', password_reset: 'Reset password', password_changed: 'Ganti password', two_factor_enabled: '2FA aktif', two_factor_disabled: '2FA mati', reset_link_sent: 'Kirim tautan reset', backup: 'Backup', download: 'Unduh', export: 'Ekspor', update: 'Mengubah', reset: 'Reset statistik' };
 const pretty = (v) => (typeof v === 'object' ? JSON.stringify(v) : String(v));
 </script>

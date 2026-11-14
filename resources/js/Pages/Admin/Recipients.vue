@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../lib/admin';
 import { computed } from 'vue';
 import { Head, router, useForm } from '@inertiajs/vue3';
 import Icon from '../../Components/Icon.vue';
@@ -7,10 +8,10 @@ const props = defineProps({ recipients: Array, max: Number, enabled: Boolean, ma
 
 const form = useForm({ email: '', name: '' });
 const left = computed(() => props.max - props.recipients.length);
-const add = () => form.post('/admin/recipients', { preserveScroll: true, onSuccess: () => form.reset() });
-const patch = (r, data) => router.put(`/admin/recipients/${r.id}`, { email: r.email, name: r.name, is_active: r.is_active, ...data }, { preserveScroll: true });
-const test = (r) => router.post(`/admin/recipients/${r.id}/test`, {}, { preserveScroll: true });
-const remove = (r) => confirm(`Hapus ${r.email} dari daftar penerima?`) && router.delete(`/admin/recipients/${r.id}`, { preserveScroll: true });
+const add = () => form.post(au('/admin/recipients'), { preserveScroll: true, onSuccess: () => form.reset() });
+const patch = (r, data) => router.put(au(`/admin/recipients/${r.id}`), { email: r.email, name: r.name, is_active: r.is_active, ...data }, { preserveScroll: true });
+const test = (r) => router.post(au(`/admin/recipients/${r.id}/test`), {}, { preserveScroll: true });
+const remove = (r) => confirm(`Hapus ${r.email} dari daftar penerima?`) && router.delete(au(`/admin/recipients/${r.id}`), { preserveScroll: true });
 </script>
 
 <template>

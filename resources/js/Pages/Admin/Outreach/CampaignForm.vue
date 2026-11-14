@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { computed } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import PageHeader from '../../../Components/ui/PageHeader.vue';
@@ -36,15 +37,15 @@ const label = (t) => `${t.name}${t.segment ? ` (${t.segment})` : ' (umum)'}`;
 
 function save() {
     form.transform((d) => ({ ...d, segment_id: d.segment_id || null, steps: d.steps.map((s, i) => ({ template_id: s.template_id || null, day_offset: i === 0 ? 0 : Number(s.day_offset) })) }));
-    if (c) form.put(`/admin/outreach/campaigns/${c.id}`);
-    else form.post('/admin/outreach/campaigns');
+    if (c) form.put(au(`/admin/outreach/campaigns/${c.id}`));
+    else form.post(au('/admin/outreach/campaigns'));
 }
 </script>
 
 <template>
     <Head :title="c ? 'Ubah kampanye' : 'Kampanye baru'" />
     <PageHeader :title="c ? 'Ubah kampanye' : 'Kampanye baru'" subtitle="Kampanye belum mengirim apa pun sampai Anda menekan Mulai di halaman berikutnya.">
-        <Link :href="c ? `/admin/outreach/campaigns/${c.id}` : '/admin/outreach/campaigns'" class="o-btn">Batal</Link>
+        <Link :href="c ? au(`/admin/outreach/campaigns/${c.id}`) : au('/admin/outreach/campaigns')" class="o-btn">Batal</Link>
     </PageHeader>
 
     <form class="grid gap-5 xl:grid-cols-[1fr_300px]" @submit.prevent="save">
@@ -84,7 +85,7 @@ function save() {
                     <p class="mt-1 text-xs text-slate-500">Kalau diisi, separuh kontak menerima subjek dari template (A) dan separuhnya subjek ini (B). Isi emailnya sama. Hasilnya, mana yang lebih banyak dibalas, tampil di halaman kampanye. Variabel seperti {nama} boleh dipakai.</p>
                     <p v-if="form.errors.subject_b" class="o-err">{{ form.errors.subject_b }}</p>
                 </div>
-                <p v-if="!templates.length" class="mt-3 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800">Belum ada template. <Link href="/admin/outreach/templates" class="font-semibold underline">Buat template dulu</Link>.</p>
+                <p v-if="!templates.length" class="mt-3 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800">Belum ada template. <Link :href="au('/admin/outreach/templates')" class="font-semibold underline">Buat template dulu</Link>.</p>
             </section>
 
             <section class="o-card p-5">
@@ -97,7 +98,7 @@ function save() {
                             <span class="mt-1.5 flex flex-wrap gap-1.5"><Chip tone="slate" :dot="false">{{ a.daily_limit }} / hari</Chip><Chip v-if="a.smtp_ok === false" tone="red">SMTP gagal</Chip><Chip v-else-if="a.smtp_ok === null" tone="amber">Belum dites</Chip><Chip v-if="!a.is_active" tone="slate" :dot="false">Nonaktif</Chip></span></span>
                     </label>
                 </div>
-                <p v-if="!accounts.length" class="mt-1 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800">Belum ada akun. <Link href="/admin/outreach/accounts" class="font-semibold underline">Tambah akun pengirim</Link>.</p>
+                <p v-if="!accounts.length" class="mt-1 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800">Belum ada akun. <Link :href="au('/admin/outreach/accounts')" class="font-semibold underline">Tambah akun pengirim</Link>.</p>
                 <p v-if="form.errors.account_ids" class="o-err mt-2">{{ form.errors.account_ids }}</p>
             </section>
 

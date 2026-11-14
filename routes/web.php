@@ -37,9 +37,14 @@ Route::get('/feed.xml', [SeoController::class, 'feed']);
 
 require __DIR__.'/admin.php';
 
+// the panel moved (ADMIN_PATH): the old address must not even hint that something is there
+if (config('admin.path') !== 'admin') {
+    Route::any('/admin/{any?}', fn () => abort(404))->where('any', '.*');
+}
+
 // Pages created in the admin (e.g. /syarat-ketentuan). Registered last so it never shadows the routes above.
 Route::get('/{slug}', [PageController::class, 'custom'])
-    ->where('slug', '(?!admin$)[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('track')->name('page.custom');
+    ->where('slug', '(?!admin$)(?!'.preg_quote(explode('/', config('admin.path'))[0], '/').'$)[a-z0-9]+(?:-[a-z0-9]+)*')->middleware('track')->name('page.custom');
 
 // Unknown URLs still pass through the web middleware, so the redirect manager can catch old links.
 Route::fallback(fn () => abort(404));

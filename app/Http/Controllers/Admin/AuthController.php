@@ -53,7 +53,7 @@ class AuthController extends Controller
             $request->session()->put('2fa.user', $user->id);
             $request->session()->put('2fa.remember', $request->boolean('remember'));
 
-            return redirect('/admin/two-factor');
+            return redirect(admin_path().'/two-factor');
         }
 
         return $this->finish($request, $user, $request->boolean('remember'));
@@ -62,7 +62,7 @@ class AuthController extends Controller
     public function showTwoFactor(Request $request): Response|RedirectResponse
     {
         if (! $request->session()->has('2fa.user')) {
-            return redirect('/admin/login');
+            return redirect(admin_path().'/login');
         }
 
         return Inertia::render('Admin/Auth/TwoFactor');
@@ -73,7 +73,7 @@ class AuthController extends Controller
         $request->validate(['code' => ['required', 'string']]);
         $user = User::find($request->session()->get('2fa.user'));
         if (! $user) {
-            return redirect('/admin/login');
+            return redirect(admin_path().'/login');
         }
         $key = '2fa|'.$user->id.'|'.$request->ip();
         if (RateLimiter::tooManyAttempts($key, 5)) {
@@ -99,7 +99,7 @@ class AuthController extends Controller
         $user->forceFill(['last_login_at' => now()])->saveQuietly();
         ActivityLog::auth('login', $user, $user->email.($user->hasTwoFactor() ? ' (dengan 2FA)' : ''));
 
-        return redirect()->intended('/admin');
+        return redirect()->intended(admin_path());
     }
 
     public function logout(Request $request): RedirectResponse
@@ -109,7 +109,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/admin/login');
+        return redirect(admin_path().'/login');
     }
 
     public function showForgot(): Response
@@ -152,6 +152,6 @@ class AuthController extends Controller
             throw ValidationException::withMessages(['email' => 'Tautan tidak valid atau sudah kedaluwarsa.']);
         }
 
-        return redirect('/admin/login')->with('success', 'Password berhasil diubah. Silakan masuk.');
+        return redirect(admin_path().'/login')->with('success', 'Password berhasil diubah. Silakan masuk.');
     }
 }

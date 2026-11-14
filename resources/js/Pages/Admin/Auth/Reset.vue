@@ -1,9 +1,10 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { Head, useForm } from '@inertiajs/vue3';
 
 const props = defineProps({ token: String, email: String });
 const form = useForm({ token: props.token, email: props.email || '', password: '', password_confirmation: '' });
-const submit = () => form.post('/admin/reset-password', { onFinish: () => form.reset('password', 'password_confirmation') });
+const submit = () => form.post(au('/admin/reset-password'), { onFinish: () => form.reset('password', 'password_confirmation') });
 </script>
 
 <template>

@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { computed, ref, watch } from 'vue';
 import { Head, router, useForm } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -25,11 +26,11 @@ function copy(t) { editing.value = null; form.defaults({ name: `${t.name} (salin
 function save() {
     form.transform((d) => ({ ...d, segment_id: d.segment_id || null }));
     const opts = { preserveScroll: true, onSuccess: () => (open.value = false) };
-    if (editing.value) form.put(`/admin/outreach/templates/${editing.value}`, opts);
-    else form.post('/admin/outreach/templates', opts);
+    if (editing.value) form.put(au(`/admin/outreach/templates/${editing.value}`), opts);
+    else form.post(au('/admin/outreach/templates'), opts);
 }
 function remove(t) {
-    if (confirm(`Hapus template "${t.name}"?${t.used_in ? ` Template ini dipakai di ${t.used_in} langkah kampanye, langkah itu akan kosong.` : ''}`)) router.delete(`/admin/outreach/templates/${t.id}`, { preserveScroll: true });
+    if (confirm(`Hapus template "${t.name}"?${t.used_in ? ` Template ini dipakai di ${t.used_in} langkah kampanye, langkah itu akan kosong.` : ''}`)) router.delete(au(`/admin/outreach/templates/${t.id}`), { preserveScroll: true });
 }
 
 function insert(key) {
@@ -48,7 +49,7 @@ const preview = ref({ subject: '', body: '', to: '' });
 let timer;
 async function refresh() {
     try {
-        const r = await fetch('/admin/outreach/templates/preview', {
+        const r = await fetch(au('/admin/outreach/templates/preview'), {
             method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-XSRF-TOKEN': xsrf() },
             body: JSON.stringify({ subject: form.subject, body: form.body, contact_id: sample.value || null, account_id: sender.value || null }),
         });

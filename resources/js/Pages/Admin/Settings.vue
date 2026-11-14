@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../lib/admin';
 import { ref } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import FormRenderer from '../../Components/FormRenderer.vue';
@@ -9,7 +10,7 @@ rememberAll(props.media);
 
 const form = useForm(JSON.parse(JSON.stringify(props.values)));
 const tab = ref(props.groups[0].key);
-const save = () => form.put('/admin/settings', { preserveScroll: true });
+const save = () => form.put(au('/admin/settings'), { preserveScroll: true });
 const hasError = (g) => g.fields.some((f) => Object.keys(form.errors).some((k) => k === f.key || k.startsWith(f.key + '.')));
 </script>
 

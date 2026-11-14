@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { computed, ref } from 'vue';
 import { Head, router, useForm } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -47,15 +48,15 @@ let lastEmail = '';
 
 function save() {
     const opts = { preserveScroll: true, onSuccess: () => (open.value = false) };
-    if (isEdit.value) form.put(`/admin/outreach/accounts/${editing.value}`, opts);
-    else form.post('/admin/outreach/accounts', opts);
+    if (isEdit.value) form.put(au(`/admin/outreach/accounts/${editing.value}`), opts);
+    else form.post(au('/admin/outreach/accounts'), opts);
 }
 function test(a) {
     testing.value = a.id;
-    router.post(`/admin/outreach/accounts/${a.id}/test`, {}, { preserveScroll: true, onFinish: () => (testing.value = null) });
+    router.post(au(`/admin/outreach/accounts/${a.id}/test`), {}, { preserveScroll: true, onFinish: () => (testing.value = null) });
 }
 function remove(a) {
-    if (confirm(`Hapus akun ${a.email}? Kampanye yang memakainya tidak bisa lagi mengirim dari akun ini.`)) router.delete(`/admin/outreach/accounts/${a.id}`, { preserveScroll: true });
+    if (confirm(`Hapus akun ${a.email}? Kampanye yang memakainya tidak bisa lagi mengirim dari akun ini.`)) router.delete(au(`/admin/outreach/accounts/${a.id}`), { preserveScroll: true });
 }
 const tone = (ok) => (ok === null || ok === undefined ? 'slate' : ok ? 'green' : 'red');
 // the warm-up plan for the next weeks, e.g. 10 → 15 → 20 … up to the maximum

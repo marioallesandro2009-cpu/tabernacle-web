@@ -115,7 +115,7 @@ abstract class ResourceController extends Controller
     {
         return [
             'slug' => $this->slug, 'title' => $this->title, 'singular' => $this->singular, 'sortable' => $this->sortable,
-            'hasActive' => $this->hasActive, 'url' => '/admin/'.$this->slug,
+            'hasActive' => $this->hasActive, 'url' => admin_path().'/'.$this->slug,
         ];
     }
 
@@ -235,7 +235,7 @@ abstract class ResourceController extends Controller
         $model = new $this->model;
         $this->persist($model, $request);
 
-        return redirect('/admin/'.$this->slug.'/'.$model->getKey().'/edit')->with('success', $this->singular.' dibuat.');
+        return redirect(admin_path().'/'.$this->slug.'/'.$model->getKey().'/edit')->with('success', $this->singular.' dibuat.');
     }
 
     public function update(Request $request, string $id): RedirectResponse
@@ -298,7 +298,7 @@ abstract class ResourceController extends Controller
         }
         $model->delete();
 
-        return redirect('/admin/'.$this->slug)->with('success', $this->singular.' dihapus.');
+        return redirect(admin_path().'/'.$this->slug)->with('success', $this->singular.' dihapus.');
     }
 
     public function toggle(string $id): RedirectResponse

@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { ref } from 'vue';
 import { Head, router, useForm } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -17,19 +18,19 @@ const q = ref(props.filters.q || '');
 const reasonTone = { unsubscribed: 'violet', bounced: 'red', manual: 'slate' };
 
 function addDomain() {
-    domainForm.post('/admin/outreach/blocklist/domains', { preserveScroll: true, onSuccess: () => domainForm.reset() });
+    domainForm.post(au('/admin/outreach/blocklist/domains'), { preserveScroll: true, onSuccess: () => domainForm.reset() });
 }
 function removeDomain(d) {
-    if (confirm(`Buka blokir ${d.domain}? Kontak dari domain ini bisa dimasukkan ke kampanye baru lagi.`)) router.delete(`/admin/outreach/blocklist/domains/${d.id}`, { preserveScroll: true });
+    if (confirm(`Buka blokir ${d.domain}? Kontak dari domain ini bisa dimasukkan ke kampanye baru lagi.`)) router.delete(au(`/admin/outreach/blocklist/domains/${d.id}`), { preserveScroll: true });
 }
 function addEmails() {
-    emailForm.post('/admin/outreach/blocklist/emails', { preserveScroll: true, onSuccess: () => { emailForm.reset(); emailOpen.value = false; } });
+    emailForm.post(au('/admin/outreach/blocklist/emails'), { preserveScroll: true, onSuccess: () => { emailForm.reset(); emailOpen.value = false; } });
 }
 function removeEmail(e) {
-    if (confirm(`Keluarkan ${e.email} dari daftar blokir?`)) router.delete(`/admin/outreach/blocklist/emails/${e.id}`, { preserveScroll: true });
+    if (confirm(`Keluarkan ${e.email} dari daftar blokir?`)) router.delete(au(`/admin/outreach/blocklist/emails/${e.id}`), { preserveScroll: true });
 }
 function filter(extra = {}) {
-    router.get('/admin/outreach/blocklist', { ...props.filters, q: q.value || undefined, ...extra }, { preserveState: true, preserveScroll: true, replace: true });
+    router.get(au('/admin/outreach/blocklist'), { ...props.filters, q: q.value || undefined, ...extra }, { preserveState: true, preserveScroll: true, replace: true });
 }
 </script>
 

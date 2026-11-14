@@ -1,10 +1,11 @@
 <script setup>
+import { au } from '../../lib/admin';
 import { Head, router } from '@inertiajs/vue3';
 import Icon from '../../Components/Icon.vue';
 
 defineProps({ files: Array });
-const make = () => router.post('/admin/backup', {}, { preserveScroll: true });
-const remove = (f) => confirm(`Hapus ${f.name}?`) && router.delete(`/admin/backup/${f.name}`, { preserveScroll: true });
+const make = () => router.post(au('/admin/backup'), {}, { preserveScroll: true });
+const remove = (f) => confirm(`Hapus ${f.name}?`) && router.delete(au(`/admin/backup/${f.name}`), { preserveScroll: true });
 </script>
 
 <template>
@@ -19,7 +20,7 @@ const remove = (f) => confirm(`Hapus ${f.name}?`) && router.delete(`/admin/backu
     <div class="card divide-y divide-stone-100">
         <div v-for="f in files" :key="f.name" class="flex flex-wrap items-center gap-3 px-4 py-3">
             <div class="min-w-0 flex-1"><div class="truncate font-medium">{{ f.name }}</div><div class="text-xs text-stone-500">{{ f.at }} · {{ f.size }}</div></div>
-            <a :href="`/admin/backup/${f.name}/download`" class="btn btn-sm"><Icon name="download" class="h-4 w-4" /> Unduh</a>
+            <a :href="au(`/admin/backup/${f.name}/download`)" class="btn btn-sm"><Icon name="download" class="h-4 w-4" /> Unduh</a>
             <button class="btn btn-sm text-red-600" aria-label="Hapus" @click="remove(f)"><Icon name="trash" class="h-4 w-4" /></button>
         </div>
         <div v-if="!files.length" class="px-4 py-10 text-center text-sm text-stone-500">Belum ada backup.</div>

@@ -67,7 +67,7 @@ class QuotationController extends Controller
             LeadEvent::create(['lead_id' => $quote->lead_id, 'user_id' => $request->user()->id, 'event' => 'note', 'note' => 'Penawaran '.$quote->number.' dibuat.']);
         }
 
-        return redirect('/admin/quotations/'.$quote->id.'/edit')->with('success', 'Penawaran '.$quote->number.' dibuat. Cek pratinjaunya lalu unduh PDF.');
+        return redirect(admin_path().'/quotations/'.$quote->id.'/edit')->with('success', 'Penawaran '.$quote->number.' dibuat. Cek pratinjaunya lalu unduh PDF.');
     }
 
     public function edit(string $id): Response
@@ -122,7 +122,7 @@ class QuotationController extends Controller
             'issued_on' => today(), 'valid_until' => today()->addDays($this->validityDays())]);
         $copy->save();
 
-        return redirect('/admin/quotations/'.$copy->id.'/edit')->with('success', 'Salinan dibuat sebagai '.$copy->number.'.');
+        return redirect(admin_path().'/quotations/'.$copy->id.'/edit')->with('success', 'Salinan dibuat sebagai '.$copy->number.'.');
     }
 
     public function destroy(string $id): RedirectResponse
@@ -130,7 +130,7 @@ class QuotationController extends Controller
         $quote = Quotation::findOrFail($id);
         $quote->delete();
 
-        return redirect('/admin/quotations')->with('success', 'Penawaran '.$quote->number.' dihapus.');
+        return redirect(admin_path().'/quotations')->with('success', 'Penawaran '.$quote->number.' dihapus.');
     }
 
     /** The PDF. ?download=1 saves it, otherwise it opens in the browser as a preview. */

@@ -122,7 +122,7 @@ class PostController extends ResourceController
             'site_url' => url('/blog'),
             'all_tags' => Tag::orderBy('name')->pluck('name'),
             'preview_url' => $model && $model->status === 'published' ? url('/blog/'.$model->slug) : null,
-            'draft_preview_url' => $model ? url('/admin/posts/'.$model->getKey().'/preview') : null,
+            'draft_preview_url' => $model ? url(admin_path().'/posts/'.$model->getKey().'/preview') : null,
         ]);
     }
 

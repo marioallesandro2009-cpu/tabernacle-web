@@ -37,6 +37,23 @@ if (! function_exists('tr')) {
     }
 }
 
+if (! function_exists('admin_path')) {
+    /** "/admin" — or whatever ADMIN_PATH says — plus an optional sub path: admin_path('/leads') → "/admin/leads". */
+    function admin_path(string $path = ''): string
+    {
+        $base = '/'.trim((string) (function_exists('config') && app()->bound('config') ? config('admin.path', 'admin') : 'admin'), '/');
+
+        return $path === '' ? $base : $base.'/'.ltrim($path, '/');
+    }
+}
+
+if (! function_exists('admin_url')) {
+    function admin_url(string $path = ''): string
+    {
+        return url(admin_path($path));
+    }
+}
+
 if (! function_exists('setting')) {
     function setting(string $key, mixed $default = null): mixed
     {

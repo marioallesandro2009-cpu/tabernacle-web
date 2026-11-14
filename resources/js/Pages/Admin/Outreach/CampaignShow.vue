@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { onBeforeUnmount, onMounted } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -13,12 +14,12 @@ const props = defineProps({ campaign: Object, stats: Object, variants: { type: A
 
 const post = (action, confirmText) => {
     if (confirmText && !confirm(confirmText)) return;
-    router.post(`/admin/outreach/campaigns/${props.campaign.id}/${action}`, {}, { preserveScroll: true });
+    router.post(au(`/admin/outreach/campaigns/${props.campaign.id}/${action}`), {}, { preserveScroll: true });
 };
 const remove = () => {
-    if (confirm(`Hapus kampanye "${props.campaign.name}" beserta riwayatnya?`)) router.delete(`/admin/outreach/campaigns/${props.campaign.id}`);
+    if (confirm(`Hapus kampanye "${props.campaign.name}" beserta riwayatnya?`)) router.delete(au(`/admin/outreach/campaigns/${props.campaign.id}`));
 };
-const setFilter = (s) => router.get(`/admin/outreach/campaigns/${props.campaign.id}`, s ? { status: s } : {}, { preserveState: true, replace: true });
+const setFilter = (s) => router.get(au(`/admin/outreach/campaigns/${props.campaign.id}`), s ? { status: s } : {}, { preserveState: true, replace: true });
 
 // numbers move while it runs, so look again every few seconds
 let timer;
@@ -35,12 +36,12 @@ const filters = ['queued', 'sent', 'replied', 'bounced', 'auto_replied', 'unsubs
         <button v-if="campaign.status === 'running'" class="o-btn" @click="post('pause')">Jeda</button>
         <button v-if="campaign.status === 'paused'" class="o-btn o-btn-primary" @click="post('resume')">Lanjutkan</button>
         <button v-if="campaign.status === 'draft'" class="o-btn o-btn-primary" @click="post('start', 'Mulai kampanye ini? Email pertama dikirim bertahap di dalam jam kirim.')">Mulai kampanye</button>
-        <a :href="`/admin/outreach/campaigns/${campaign.id}/export`" class="o-btn"><Icon name="download" class="h-4 w-4" /> Unduh Excel</a>
-        <Link v-if="campaign.status !== 'running'" :href="`/admin/outreach/campaigns/${campaign.id}/edit`" class="o-btn">Ubah</Link>
+        <a :href="au(`/admin/outreach/campaigns/${campaign.id}/export`)" class="o-btn"><Icon name="download" class="h-4 w-4" /> Unduh Excel</a>
+        <Link v-if="campaign.status !== 'running'" :href="au(`/admin/outreach/campaigns/${campaign.id}/edit`)" class="o-btn">Ubah</Link>
         <button v-if="campaign.status !== 'running'" class="o-btn o-btn-danger" aria-label="Hapus" @click="remove"><Icon name="trash" class="h-4 w-4" /></button>
     </PageHeader>
 
-    <div v-if="campaign.problem && campaign.status !== 'completed'" class="mb-4 rounded-2xl bg-amber-50 px-4 py-3 text-sm text-amber-900 ring-1 ring-amber-100">{{ campaign.problem }} <Link :href="`/admin/outreach/campaigns/${campaign.id}/edit`" class="font-semibold underline">Ubah kampanye</Link></div>
+    <div v-if="campaign.problem && campaign.status !== 'completed'" class="mb-4 rounded-2xl bg-amber-50 px-4 py-3 text-sm text-amber-900 ring-1 ring-amber-100">{{ campaign.problem }} <Link :href="au(`/admin/outreach/campaigns/${campaign.id}/edit`)" class="font-semibold underline">Ubah kampanye</Link></div>
     <div v-else-if="campaign.status === 'running'" class="mb-4 flex items-center gap-3 rounded-2xl px-4 py-3 text-sm ring-1" :class="campaign.in_window ? 'bg-emerald-50 text-emerald-900 ring-emerald-100' : 'bg-slate-100 text-slate-700 ring-slate-200'">
         <span class="h-2 w-2 shrink-0 rounded-full" :class="campaign.in_window ? 'animate-pulse bg-emerald-500' : 'bg-slate-400'" />
         {{ campaign.in_window ? 'Sedang di dalam jam kirim. Email berikutnya dikirim bertahap.' : 'Di luar jam kirim. Pengiriman berlanjut otomatis pada jadwal berikutnya.' }}

@@ -23,6 +23,6 @@ class NewLeadMail extends Mailable
 
     public function content(): Content
     {
-        return new Content(view: 'mail.new-lead', with: ['lead' => $this->lead, 'adminUrl' => url('/admin/leads/'.$this->lead->id)]);
+        return new Content(view: 'mail.new-lead', with: ['lead' => $this->lead, 'adminUrl' => url(admin_path().'/leads/'.$this->lead->id)]);
     }
 }

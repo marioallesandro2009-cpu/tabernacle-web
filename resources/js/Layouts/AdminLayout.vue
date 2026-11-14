@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../lib/admin';
 import { computed, ref, watch } from 'vue';
 import { Link, router, usePage } from '@inertiajs/vue3';
 import Icon from '../Components/Icon.vue';
@@ -11,7 +12,7 @@ let timer;
 
 const user = computed(() => page.props.auth);
 const path = computed(() => page.url.split('?')[0]);
-const isActive = (url) => (url === '/admin' ? path.value === '/admin' : path.value === url || path.value.startsWith(url + '/'));
+const isActive = (url) => (url === au('/admin') ? path.value === au('/admin') : path.value === url || path.value.startsWith(url + '/'));
 
 watch(
     () => page.props.flash,
@@ -27,7 +28,7 @@ watch(
 );
 watch(path, () => (open.value = false));
 
-const logout = () => router.post('/admin/logout');
+const logout = () => router.post(au('/admin/logout'));
 </script>
 
 <template>
@@ -79,7 +80,7 @@ const logout = () => router.post('/admin/logout');
                         </span>
                     </button>
                     <div v-if="menu" class="absolute bottom-full left-0 mb-1 w-full rounded-lg bg-white py-1 text-sm text-stone-800 shadow-lg">
-                        <Link href="/admin/profile" class="block px-3 py-2 hover:bg-stone-100" @click="menu = false">Profil & keamanan</Link>
+                        <Link :href="au('/admin/profile')" class="block px-3 py-2 hover:bg-stone-100" @click="menu = false">Profil & keamanan</Link>
                         <button class="block w-full px-3 py-2 text-left hover:bg-stone-100" @click="logout">Keluar</button>
                     </div>
                 </div>

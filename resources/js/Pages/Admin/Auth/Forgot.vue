@@ -1,8 +1,9 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({ email: '' });
-const submit = () => form.post('/admin/forgot-password');
+const submit = () => form.post(au('/admin/forgot-password'));
 </script>
 
 <template>
@@ -15,6 +16,6 @@ const submit = () => form.post('/admin/forgot-password');
             <p v-if="form.errors.email" class="err">{{ form.errors.email }}</p>
         </div>
         <button class="btn btn-primary w-full" :disabled="form.processing">Kirim tautan</button>
-        <div class="text-center text-sm"><Link href="/admin/login" class="text-brand hover:underline">Kembali ke halaman masuk</Link></div>
+        <div class="text-center text-sm"><Link :href="au('/admin/login')" class="text-brand hover:underline">Kembali ke halaman masuk</Link></div>
     </form>
 </template>

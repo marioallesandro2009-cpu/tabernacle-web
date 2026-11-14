@@ -1,4 +1,5 @@
 <script setup>
+import { au } from '../../../lib/admin';
 import { ref } from 'vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import Icon from '../../../Components/Icon.vue';
@@ -26,12 +27,12 @@ function edit(s) {
 }
 function save() {
     const opts = { preserveScroll: true, onSuccess: () => (open.value = false) };
-    if (editing.value) form.put(`/admin/outreach/segments/${editing.value}`, opts);
-    else form.post('/admin/outreach/segments', opts);
+    if (editing.value) form.put(au(`/admin/outreach/segments/${editing.value}`), opts);
+    else form.post(au('/admin/outreach/segments'), opts);
 }
-const verifySegment = (s) => confirm(`Verifikasi ulang semua kontak di segmen "${s.name}"? Kalau layanan verifikasi aktif, ini memakai kredit layanan.`) && router.post('/admin/outreach/contacts/verify', { segment_id: s.id }, { preserveScroll: true });
+const verifySegment = (s) => confirm(`Verifikasi ulang semua kontak di segmen "${s.name}"? Kalau layanan verifikasi aktif, ini memakai kredit layanan.`) && router.post(au('/admin/outreach/contacts/verify'), { segment_id: s.id }, { preserveScroll: true });
 function remove(s) {
-    if (confirm(`Hapus segmen "${s.name}"? Kontaknya tidak ikut terhapus, hanya menjadi tanpa segmen.`)) router.delete(`/admin/outreach/segments/${s.id}`, { preserveScroll: true });
+    if (confirm(`Hapus segmen "${s.name}"? Kontaknya tidak ikut terhapus, hanya menjadi tanpa segmen.`)) router.delete(au(`/admin/outreach/segments/${s.id}`), { preserveScroll: true });
 }
 </script>
 
@@ -44,7 +45,7 @@ function remove(s) {
     <div v-if="segments.length || unassigned" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <div v-for="s in segments" :key="s.id" class="o-card group flex flex-col p-5">
             <div class="flex items-start justify-between gap-3">
-                <Link :href="`/admin/outreach/contacts?segment=${s.id}`" class="min-w-0">
+                <Link :href="au(`/admin/outreach/contacts?segment=${s.id}`)" class="min-w-0">
                     <h3 class="truncate text-base font-semibold text-slate-900 group-hover:text-brand">{{ s.name }}</h3>
                     <p class="mt-0.5 line-clamp-2 min-h-[2.5rem] text-sm text-slate-500">{{ s.description || 'Tanpa deskripsi' }}</p>
                 </Link>
@@ -60,7 +61,7 @@ function remove(s) {
             </div>
         </div>
 
-        <Link v-if="unassigned" href="/admin/outreach/contacts?segment=none" class="o-card flex flex-col justify-between border-dashed p-5 hover:bg-slate-50">
+        <Link v-if="unassigned" :href="au('/admin/outreach/contacts?segment=none')" class="o-card flex flex-col justify-between border-dashed p-5 hover:bg-slate-50">
             <div><h3 class="text-base font-semibold text-slate-700">Tanpa segmen</h3><p class="mt-0.5 text-sm text-slate-500">Kontak yang belum dimasukkan ke segmen mana pun.</p></div>
             <div class="mt-3 border-t border-slate-100 pt-4"><div class="text-3xl font-semibold tabular-nums text-slate-900">{{ unassigned }}</div><div class="text-xs text-slate-500">kontak</div></div>
         </Link>
@@ -68,7 +69,7 @@ function remove(s) {
     <div v-else class="o-card">
         <Empty icon="tag" title="Belum ada segmen" text="Segmen bisa dibuat di sini, atau otomatis dari kolom Segmen saat Anda mengimpor file Excel.">
             <button class="o-btn o-btn-primary" @click="add"><Icon name="plus" class="h-4 w-4" /> Buat segmen</button>
-            <Link href="/admin/outreach/import" class="o-btn"><Icon name="upload" class="h-4 w-4" /> Impor kontak</Link>
+            <Link :href="au('/admin/outreach/import')" class="o-btn"><Icon name="upload" class="h-4 w-4" /> Impor kontak</Link>
         </Empty>
     </div>
 

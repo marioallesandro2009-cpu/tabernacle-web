@@ -40,7 +40,7 @@ class RelayConfirmationMail extends Mailable
 
         return new Content(view: 'mail.outreach-relay-confirmation', with: [
             'word' => $word, 'sentence' => $sentence, 'm' => $this->m, 'attachmentsIgnored' => $this->attachmentsIgnored,
-            'threadUrl' => $this->m->campaign_contact_id ? url('/admin/outreach/threads/'.$this->m->campaign_contact_id) : url('/admin/outreach/replies?tab=ours'),
+            'threadUrl' => $this->m->campaign_contact_id ? url(admin_path().'/outreach/threads/'.$this->m->campaign_contact_id) : url(admin_path().'/outreach/replies?tab=ours'),
         ]);
     }
 }

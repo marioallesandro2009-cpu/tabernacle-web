@@ -14,7 +14,7 @@ class HandleRedirects
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->isMethod('GET') || str_starts_with($request->path(), 'admin')) {
+        if (! $request->isMethod('GET') || $request->is(trim(admin_path(), '/'), trim(admin_path(), '/').'/*')) {
             return $next($request);
         }
         try {

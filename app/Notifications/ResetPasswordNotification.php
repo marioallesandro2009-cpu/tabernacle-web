@@ -17,7 +17,7 @@ class ResetPasswordNotification extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
-        $url = url('/admin/reset-password/'.$this->token.'?email='.urlencode($notifiable->email));
+        $url = url(admin_path().'/reset-password/'.$this->token.'?email='.urlencode($notifiable->email));
         $minutes = (int) config('auth.passwords.users.expire', 60);
 
         return (new MailMessage)

@@ -40,7 +40,7 @@ class ForwardedReplyMail extends Mailable
             'r' => $r, 'contact' => $r->contact, 'campaign' => $r->campaign, 'segment' => $r->contact?->segment?->name,
             'last' => $last, 'lastBody' => $last ? Str::limit(trim((string) $last->body), 1500) : null,
             'relay' => (bool) $r->account?->relay_enabled, 'token' => $this->token,
-            'threadUrl' => url('/admin/outreach/threads/'.$r->campaign_contact_id),
+            'threadUrl' => url(admin_path().'/outreach/threads/'.$r->campaign_contact_id),
         ]);
     }
 }

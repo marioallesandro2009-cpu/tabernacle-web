@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 | Admin panel (Inertia + Vue). No public registration: the first super admin is made
 | with "php artisan app:create-super-admin", the rest by a super admin inside the panel.
 */
-Route::prefix('admin')->middleware('inertia.admin')->group(function () {
+Route::prefix(config('admin.path'))->middleware('inertia.admin')->group(function () {
     // --- guests ---
     Route::middleware('guest')->group(function () {
         Route::get('login', [AuthController::class, 'showLogin'])->name('login');
