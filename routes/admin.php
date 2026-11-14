@@ -32,10 +32,14 @@ Route::prefix(config('admin.path'))->middleware('inertia.admin')->group(function
         Route::post('forgot-password', [AuthController::class, 'forgot']);
         Route::get('reset-password/{token}', [AuthController::class, 'showReset']);
         Route::post('reset-password', [AuthController::class, 'reset']);
+        Route::get('login/confirm/{token}', [AuthController::class, 'confirm'])->where('token', '[A-Za-z0-9]{64}')->middleware('throttle:20,1');
     });
 
+    // "not me: end every session" link of the new-login e-mail
+    Route::get('sessions/end/{user}', [AuthController::class, 'endSessions'])->whereNumber('user')->middleware(['signed', 'throttle:10,1'])->name('admin.sessions.end');
+
     // --- signed in ---
-    Route::middleware(['auth', 'active.admin'])->group(function () {
+    Route::middleware(['auth', 'active.admin', 'admin.idle'])->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::get('/', [DashboardController::class, 'index']);
 
@@ -207,6 +211,8 @@ Route::prefix(config('admin.path'))->middleware('inertia.admin')->group(function
         Route::get('activity', [ActivityController::class, 'index'])->middleware('can:logs.view');
         Route::get('logins', [LoginHistoryController::class, 'index'])->middleware('can:logs.view');
         Route::get('logins/export', [LoginHistoryController::class, 'export'])->middleware('can:logs.view');
+        Route::post('logins/devices/{id}/revoke', [LoginHistoryController::class, 'revokeDevice'])->middleware('can:logs.view')->whereNumber('id');
+        Route::post('logins/blocks/{id}/lift', [LoginHistoryController::class, 'liftBlock'])->middleware('can:logs.view')->whereNumber('id');
         Route::middleware('can:backup.manage')->prefix('backup')->group(function () {
             Route::get('/', [BackupController::class, 'index']);
             Route::post('/', [BackupController::class, 'store']);

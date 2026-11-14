@@ -33,7 +33,7 @@ const disable2fa = () => off.delete(au('/admin/profile/2fa'), { preserveScroll: 
         <form class="card space-y-4 p-5" @submit.prevent="savePw">
             <h2 class="font-semibold">Ganti password</h2>
             <div><label class="label" for="cp">Password saat ini</label><input id="cp" v-model="pw.current_password" type="password" class="input" autocomplete="current-password" required><p v-if="pw.errors.current_password" class="err">{{ pw.errors.current_password }}</p></div>
-            <div><label class="label" for="np">Password baru (minimal 10 karakter)</label><input id="np" v-model="pw.password" type="password" class="input" autocomplete="new-password" required><p v-if="pw.errors.password" class="err">{{ pw.errors.password }}</p></div>
+            <div><label class="label" for="np">Password baru (minimal 12 karakter)</label><input id="np" v-model="pw.password" type="password" class="input" autocomplete="new-password" required><p v-if="pw.errors.password" class="err">{{ pw.errors.password }}</p></div>
             <div><label class="label" for="np2">Ulangi password baru</label><input id="np2" v-model="pw.password_confirmation" type="password" class="input" autocomplete="new-password" required></div>
             <button class="btn btn-primary" :disabled="pw.processing">Ganti password</button>
         </form>

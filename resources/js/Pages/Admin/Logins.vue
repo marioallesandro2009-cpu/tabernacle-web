@@ -5,7 +5,9 @@ import { Head, router } from '@inertiajs/vue3';
 import Icon from '../../Components/Icon.vue';
 import Pagination from '../../Components/Pagination.vue';
 
-const props = defineProps({ logs: Object, query: Object, actions: Array, stats: Object, accounts: Array });
+const props = defineProps({ logs: Object, query: Object, actions: Array, stats: Object, accounts: Array, devices: { type: Array, default: () => [] }, blocks: { type: Array, default: () => [] }, protected: { type: Array, default: () => [] } });
+const revoke = (d) => confirm(`Cabut perangkat ini (${d.browser})? Login berikutnya dari sana dianggap perangkat baru.`) && router.post(au(`/admin/logins/devices/${d.id}/revoke`), {}, { preserveScroll: true });
+const lift = (b) => confirm('Buka blokir ini sekarang?') && router.post(au(`/admin/logins/blocks/${b.id}/lift`), {}, { preserveScroll: true });
 const f = reactive({ q: '', user_id: '', action: '', from: '', to: '', ...props.query });
 const open = ref(null);
 
@@ -35,6 +37,39 @@ const tone = (r) => (r.warning ? 'bg-red-100 text-red-800' : r.action === 'login
             <div class="text-2xl font-bold" :class="stats.warnings_7d ? 'text-red-600' : ''">{{ stats.warnings_7d }}</div>
             <div class="text-xs text-stone-500">Peringatan 7 hari (gagal masuk, diblokir, 2FA salah)</div>
         </button>
+    </div>
+
+    <div v-if="protected.length" class="mb-5 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+        <b>Mode terlindungi aktif</b> untuk {{ protected.map((p) => p.name + ' (sejak ' + p.since + ')').join(', ') }}: banyak percobaan masuk gagal dari banyak IP. Login dari perangkat tepercaya tetap normal; perangkat baru wajib konfirmasi lewat email. Berakhir sendiri setelah 24 jam tanpa percobaan gagal.
+    </div>
+
+    <div class="mb-5 grid gap-5 lg:grid-cols-2">
+        <div class="card overflow-x-auto">
+            <div class="border-b border-stone-100 px-4 py-3"><h2 class="font-semibold">Perangkat tepercaya</h2><p class="text-xs text-stone-500">Browser yang pernah berhasil masuk (90 hari). Tidak ikut terkena pembatasan akun.</p></div>
+            <table class="w-full text-sm">
+                <tbody>
+                    <tr v-for="d in devices" :key="d.id" class="border-t border-stone-100">
+                        <td class="px-4 py-2"><div class="font-medium">{{ d.browser }}</div><div class="text-xs text-stone-500">{{ d.account }} · IP terakhir {{ d.ip || '–' }}<span v-if="d.two_factor_until"> · tanpa kode 2FA s/d {{ d.two_factor_until }}</span></div></td>
+                        <td class="whitespace-nowrap px-2 py-2 text-xs text-stone-500">Terakhir {{ d.last_used || '–' }}</td>
+                        <td class="px-4 py-2 text-right"><button class="btn btn-sm text-red-600" @click="revoke(d)">Cabut</button></td>
+                    </tr>
+                    <tr v-if="!devices.length"><td class="px-4 py-3 text-stone-500">Belum ada perangkat tepercaya.</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card overflow-x-auto">
+            <div class="border-b border-stone-100 px-4 py-3"><h2 class="font-semibold">Blokir login (7 hari terakhir)</h2><p class="text-xs text-stone-500">Durasi naik bertahap: 15 menit, 30 menit, 1 jam, … maksimal 24 jam.</p></div>
+            <table class="w-full text-sm">
+                <tbody>
+                    <tr v-for="b in blocks" :key="b.id" class="border-t border-stone-100">
+                        <td class="px-4 py-2"><div class="font-medium">{{ b.scope }}<span v-if="b.ip"> · {{ b.ip }}</span></div><div class="text-xs text-stone-500">{{ b.at }} · {{ b.duration }}<span v-if="b.account"> · {{ b.account }}</span></div></td>
+                        <td class="whitespace-nowrap px-2 py-2 text-xs"><span v-if="b.active" class="rounded bg-red-100 px-2 py-0.5 text-red-800">aktif s/d {{ b.until }}</span><span v-else-if="b.lifted" class="text-stone-500">dibuka manual</span><span v-else class="text-stone-500">selesai</span></td>
+                        <td class="px-4 py-2 text-right"><button v-if="b.active" class="btn btn-sm" @click="lift(b)">Buka</button></td>
+                    </tr>
+                    <tr v-if="!blocks.length"><td class="px-4 py-3 text-stone-500">Tidak ada blokir.</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="card mb-5 overflow-x-auto">

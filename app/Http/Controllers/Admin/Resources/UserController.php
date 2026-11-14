@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Resources;
 
+use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ResourceController;
 use App\Models\ActivityLog;
 use App\Models\User;
@@ -38,7 +39,7 @@ class UserController extends ResourceController
             F::text('name', 'Nama lengkap', ['required' => true]),
             F::email('email', 'Email login', ['required' => true]),
             F::select('role', 'Peran', $roles, ['required' => true, 'default' => 'admin']),
-            F::text('password', $model ? 'Password baru (kosongkan jika tidak diubah)' : 'Password (minimal 10 karakter)', ['input' => 'password', 'required' => ! $model, 'max' => 100]),
+            F::text('password', $model ? 'Password baru (kosongkan jika tidak diubah)' : 'Password (minimal 12 karakter)', ['input' => 'password', 'required' => ! $model, 'max' => 100]),
             F::toggle('is_active', 'Akun aktif', ['default' => true]),
         ];
     }
@@ -69,7 +70,7 @@ class UserController extends ResourceController
     {
         return [
             'email' => ['required', 'email', 'max:190', Rule::unique('users', 'email')->ignore($model?->getKey())],
-            'password' => [$model ? 'nullable' : 'required', 'string', 'min:10', 'max:100'],
+            'password' => [$model ? 'nullable' : 'required', 'string', 'min:'.AuthController::PASSWORD_MIN, 'max:100'],
         ];
     }
 

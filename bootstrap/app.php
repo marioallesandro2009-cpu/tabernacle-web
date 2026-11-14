@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminIdleTimeout;
 use App\Http\Middleware\EnsureActiveAdmin;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\HandleRedirects;
@@ -25,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectUsersTo(fn () => admin_path());
         $middleware->alias([
             'active.admin' => EnsureActiveAdmin::class,
+            'admin.idle' => AdminIdleTimeout::class,
             'inertia.admin' => HandleInertiaRequests::class,
             'track' => TrackVisit::class,
         ]);

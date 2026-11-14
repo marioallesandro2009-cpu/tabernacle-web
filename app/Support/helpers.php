@@ -4,6 +4,7 @@ use App\Models\Media;
 use App\Support\Content;
 use App\Support\Settings;
 use App\Support\Ui;
+use Illuminate\Support\Facades\Vite;
 use Mews\Purifier\Facades\Purifier;
 
 if (! function_exists('lang_id')) {
@@ -44,6 +45,27 @@ if (! function_exists('admin_path')) {
         $base = '/'.trim((string) (function_exists('config') && app()->bound('config') ? config('admin.path', 'admin') : 'admin'), '/');
 
         return $path === '' ? $base : $base.'/'.ltrim($path, '/');
+    }
+}
+
+if (! function_exists('csp_nonce')) {
+    /** The nonce of this request's Content-Security-Policy ('' when CSP is off). */
+    function csp_nonce(): string
+    {
+        return (string) Vite::cspNonce();
+    }
+}
+
+if (! function_exists('with_nonce')) {
+    /** Gives every <script> in pasted HTML (tracking codes) this request's CSP nonce. */
+    function with_nonce(?string $html): string
+    {
+        $nonce = csp_nonce();
+        if ($nonce === '' || ! $html) {
+            return (string) $html;
+        }
+
+        return (string) preg_replace('/<script\b(?![^>]*\bnonce=)/i', '<script nonce="'.$nonce.'"', $html);
     }
 }
 

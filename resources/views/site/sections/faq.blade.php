@@ -1,7 +1,7 @@
 @php $faqs = \App\Support\SiteData::faqs(); @endphp
 @if ($faqs->isNotEmpty())
 @push('head')
-<script type="application/ld+json">{!! json_encode(['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => $faqs->map(fn ($f) => ['@type' => 'Question', 'name' => tr($f->question), 'acceptedAnswer' => ['@type' => 'Answer', 'text' => strip_tags(tr($f->answer))]])->all()], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>
+<script type="application/ld+json" nonce="{{ csp_nonce() }}">{!! json_encode(['@context' => 'https://schema.org', '@type' => 'FAQPage', 'mainEntity' => $faqs->map(fn ($f) => ['@type' => 'Question', 'name' => tr($f->question), 'acceptedAnswer' => ['@type' => 'Answer', 'text' => strip_tags(tr($f->answer))]])->all()], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>
 @endpush
 <section class="sec faq-sec">
   <div class="wrap grid">

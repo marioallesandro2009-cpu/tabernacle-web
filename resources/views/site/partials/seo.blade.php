@@ -24,5 +24,5 @@
 @endif
 <link rel="alternate" type="application/rss+xml" title="{{ setting('site_name') }} Blog" href="{{ url('/feed.xml') }}">
 @foreach ($seo['schema'] ?? [] as $schema)
-<script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>
+<script type="application/ld+json" nonce="{{ csp_nonce() }}">{!! json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>
 @endforeach

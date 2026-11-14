@@ -31,14 +31,14 @@ class CreateSuperAdmin extends Command
 
             return self::FAILURE;
         }
-        $pass = password('Password (minimal 10 karakter)', required: true, validate: fn ($v) => strlen($v) < 10 ? 'Minimal 10 karakter.' : null);
+        $pass = password('Password (minimal 12 karakter)', required: true, validate: fn ($v) => strlen($v) < 12 ? 'Minimal 12 karakter.' : null);
         $confirm = password('Ulangi password', required: true);
         if ($pass !== $confirm) {
             $this->error('Konfirmasi password tidak sama.');
 
             return self::FAILURE;
         }
-        $v = Validator::make(['password' => $pass], ['password' => ['string', 'min:10']]);
+        $v = Validator::make(['password' => $pass], ['password' => ['string', 'min:12']]);
         if ($v->fails()) {
             $this->error($v->errors()->first());
 

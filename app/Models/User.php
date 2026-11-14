@@ -14,6 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * @property Carbon|null $last_login_at
  * @property Carbon|null $two_factor_confirmed_at
+ * @property Carbon|null $protected_at
  */
 class User extends Authenticatable
 {
@@ -34,6 +35,7 @@ class User extends Authenticatable
             'two_factor_secret' => 'encrypted',
             'two_factor_confirmed_at' => 'datetime',
             'last_login_at' => 'datetime',
+            'protected_at' => 'datetime',
         ];
     }
 

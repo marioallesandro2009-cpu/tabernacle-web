@@ -53,7 +53,7 @@ class ProfileController extends Controller
     {
         $data = $request->validate([
             'current_password' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:10', 'confirmed', 'different:current_password'],
+            'password' => ['required', 'string', 'min:'.AuthController::PASSWORD_MIN, 'confirmed', 'different:current_password'],
         ]);
         if (! Hash::check($data['current_password'], $request->user()->password)) {
             throw ValidationException::withMessages(['current_password' => 'Password saat ini salah.']);

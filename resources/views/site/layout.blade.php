@@ -30,14 +30,14 @@
 <link rel="stylesheet" href="{{ asset_v('assets/css/corporate.css') }}">
 <style>:root{--navy:{{ setting('color_navy', '#0b1a5c') }};--navy-deep:{{ setting('color_navy_deep', '#071140') }};--amber:{{ setting('color_amber', '#e8973f') }};--amber-deep:{{ setting('color_amber_deep', '#b8661c') }};--cream:{{ setting('color_cream', '#ffffff') }};--sand:{{ setting('color_sand', '#f4f5f7') }};--paper:{{ setting('color_paper', '#ffffff') }};--teal:{{ setting('color_teal', '#17a08c') }}}</style>
 <noscript><style>.gates{display:none}</style></noscript>
-{!! setting('tracking_head') !!}
+{!! with_nonce(setting('tracking_head')) !!}
 </head>
 <body class="{{ $bodyClass }}">
 @if (! empty($preview))
   {{-- admin-only notice, never shown to visitors --}}
   <div role="status" style="position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:9999;background:#111;color:#fff;font:600 13px/1.3 system-ui,sans-serif;padding:10px 16px;border-radius:999px;box-shadow:0 6px 24px rgba(0,0,0,.3)">Pratinjau admin: halaman ini belum tentu terlihat oleh pengunjung</div>
 @endif
-{!! setting('tracking_body') !!}
+{!! with_nonce(setting('tracking_body')) !!}
 <a class="skip" href="#main">{{ t('nav.skip') }}</a>
 
 <svg style="position:absolute;width:0;height:0" aria-hidden="true">
@@ -139,9 +139,9 @@
   <video controls playsinline preload="none"></video>
 </div>
 
-<script>window.TW = @json($tw);</script>
+<script nonce="{{ csp_nonce() }}">window.TW = @json($tw);</script>
 {{-- calm corporate look: the motion libraries (GSAP, Lenis) are no longer loaded; main.js then runs without animations --}}
-<script src="{{ asset_v('assets/js/main.js') }}"></script>
+<script nonce="{{ csp_nonce() }}" src="{{ asset_v('assets/js/main.js') }}"></script>
 @if (is_file(public_path('build/manifest.json')))
   @vite(['resources/js/site.js'])
 @endif

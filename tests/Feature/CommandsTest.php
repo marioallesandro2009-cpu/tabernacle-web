@@ -11,7 +11,7 @@ it('creates the first super admin interactively and never from a seeder', functi
     $this->artisan('app:create-super-admin')
         ->expectsQuestion('Nama lengkap', 'Pemilik Situs')
         ->expectsQuestion('Email login', 'owner@example.test')
-        ->expectsQuestion('Password (minimal 10 karakter)', 'kata-sandi-panjang-1')
+        ->expectsQuestion('Password (minimal 12 karakter)', 'kata-sandi-panjang-1')
         ->expectsQuestion('Ulangi password', 'kata-sandi-panjang-1')
         ->assertSuccessful();
 
@@ -22,7 +22,7 @@ it('creates the first super admin interactively and never from a seeder', functi
 it('refuses mismatching or short passwords and duplicate emails', function () {
     $this->seed(RolesSeeder::class);
     $this->artisan('app:create-super-admin', ['--name' => 'A', '--email' => 'a@example.test'])
-        ->expectsQuestion('Password (minimal 10 karakter)', 'kata-sandi-panjang-1')
+        ->expectsQuestion('Password (minimal 12 karakter)', 'kata-sandi-panjang-1')
         ->expectsQuestion('Ulangi password', 'beda-sandi-panjang-2')
         ->assertFailed();
     expect(User::count())->toBe(0);

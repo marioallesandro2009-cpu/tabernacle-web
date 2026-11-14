@@ -32,10 +32,18 @@ class ActivityLog extends Model
         'two_factor_enabled' => '2FA diaktifkan',
         'two_factor_disabled' => '2FA dimatikan',
         'reset_link_sent' => 'Tautan reset dikirim oleh super admin',
+        'login_protected' => 'Mode terlindungi aktif (banyak percobaan gagal)',
+        'login_protection_ended' => 'Mode terlindungi berakhir',
+        'login_confirm_sent' => 'Link konfirmasi login dikirim',
+        'login_confirmed' => 'Login dikonfirmasi lewat email',
+        'sessions_ended' => 'Semua sesi diakhiri',
+        'device_revoked' => 'Perangkat tepercaya dicabut',
+        'block_lifted' => 'Blokir dibuka manual',
+        'idle_logout' => 'Keluar otomatis (2 jam tidak aktif)',
     ];
 
     /** Actions that point at a possible attack or misuse. */
-    public const WARNING_ACTIONS = ['login_failed', 'login_blocked', 'login_throttled', 'two_factor_failed', 'forced_logout'];
+    public const WARNING_ACTIONS = ['login_failed', 'login_blocked', 'login_throttled', 'two_factor_failed', 'forced_logout', 'login_protected', 'sessions_ended'];
 
     /** Manual entry for actions that are not a single model save. */
     public static function record(string $action, string $type, ?int $id, string $label, ?array $changes = null): void

@@ -44,7 +44,8 @@ it('records blocked, throttled and wrong 2FA attempts', function () {
 
     $g = new Google2FA;
     $tfa = adminUser('admin', ['password' => 'a-long-test-password', 'two_factor_secret' => $g->generateSecretKey(), 'two_factor_confirmed_at' => now()]);
-    $this->post('/admin/login', ['email' => $tfa->email, 'password' => 'a-long-test-password'])->assertRedirect('/admin/two-factor');
+    // the failures above blocked that IP for 15 minutes; this sign-in comes from another network
+    $this->withServerVariables(['REMOTE_ADDR' => '10.9.9.9'])->post('/admin/login', ['email' => $tfa->email, 'password' => 'a-long-test-password'])->assertRedirect('/admin/two-factor');
     $this->post('/admin/two-factor', ['code' => '000000']);
     expect(lastAuth('two_factor_failed')->subject_id)->toBe($tfa->id);
 });
@@ -96,6 +97,7 @@ it('shows the login history to super admins only, with filters and CSV export', 
 });
 
 it('offers no way to edit or delete audit entries', function () {
-    $routes = collect(Route::getRoutes())->filter(fn ($r) => str_contains($r->uri(), 'activity') || str_contains($r->uri(), 'logins'));
+    // revoking a trusted device or lifting a block changes no audit entry (and is itself logged)
+    $routes = collect(Route::getRoutes())->filter(fn ($r) => (str_contains($r->uri(), 'activity') || str_contains($r->uri(), 'logins')) && ! preg_match('#logins/(devices|blocks)/#', $r->uri()));
     expect($routes->flatMap(fn ($r) => $r->methods())->unique()->values()->all())->each->toBeIn(['GET', 'HEAD']);
 });
