@@ -29,8 +29,11 @@ class SendReplyAlert implements ShouldQueue
         if (! $reply || $reply->direction !== 'in' || $reply->kind !== 'reply') {
             return;
         }
-        $emails = self::recipients($digest);
+        $emails = array_values(array_diff(self::recipients($digest), $reply->account?->forwardList() ?? [])); // they get the forwarded copy instead
         if (! $emails) {
+            if ($reply->account?->forwardList()) {
+                return;
+            }
             Log::warning('Balasan Outreach #'.$reply->id.' masuk, tapi tidak ada email penerima notifikasi.');
 
             return;

@@ -156,6 +156,7 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::get('contacts', [Outreach\ContactController::class, 'index']);
             Route::post('contacts', [Outreach\ContactController::class, 'store']);
             Route::post('contacts/bulk', [Outreach\ContactController::class, 'bulk']);
+            Route::get('contacts/{id}', [Outreach\ThreadController::class, 'contact'])->whereNumber('id');
             Route::put('contacts/{id}', [Outreach\ContactController::class, 'update'])->whereNumber('id');
             Route::delete('contacts/{id}', [Outreach\ContactController::class, 'destroy'])->whereNumber('id');
             Route::get('import', [Outreach\ImportController::class, 'create']);
@@ -164,6 +165,12 @@ Route::prefix('admin')->middleware('inertia.admin')->group(function () {
             Route::post('import/{id}/run', [Outreach\ImportController::class, 'run'])->whereNumber('id');
             Route::get('import/{id}', [Outreach\ImportController::class, 'show'])->whereNumber('id');
             Route::get('replies', [Outreach\ReplyController::class, 'index']);
+            Route::get('threads/{id}', [Outreach\ThreadController::class, 'show'])->whereNumber('id');
+            Route::put('threads/{id}/draft', [Outreach\ThreadController::class, 'draft'])->whereNumber('id');
+            Route::post('threads/{id}/send', [Outreach\ThreadController::class, 'send'])->whereNumber('id');
+            Route::post('manual-replies/{id}/send', [Outreach\ThreadController::class, 'sendDraft'])->whereNumber('id');
+            Route::post('manual-replies/{id}/retry', [Outreach\ThreadController::class, 'retry'])->whereNumber('id');
+            Route::delete('manual-replies/{id}', [Outreach\ThreadController::class, 'discard'])->whereNumber('id');
             Route::post('replies/poll', [Outreach\ReplyController::class, 'poll']);
             Route::post('replies/{id}/label', [Outreach\ReplyController::class, 'label'])->whereNumber('id');
             Route::post('replies/{id}/lead', [Outreach\ReplyController::class, 'lead'])->whereNumber('id');

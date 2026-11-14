@@ -27,8 +27,16 @@ class ReplyController extends Controller
 
     public function index(Request $request): Response
     {
-        $tab = in_array($request->query('tab'), ['auto', 'bounce'], true) ? $request->query('tab') : 'reply';
+        $tab = in_array($request->query('tab'), ['auto', 'bounce', 'ours'], true) ? $request->query('tab') : 'reply';
         $label = $request->query('label');
+        $summary = [
+            'draft' => Message::where('kind', Message::MANUAL)->where('reply_status', 'draft')->count(),
+            'failed' => Message::where('kind', Message::MANUAL)->where('reply_status', 'failed')->count(),
+            'rejected' => Message::where('kind', Message::MANUAL)->where('reply_status', 'rejected')->count(),
+        ];
+        if ($tab === 'ours') {
+            return $this->ours($request, $summary);
+        }
         $kind = ['reply' => 'reply', 'auto' => 'auto_reply', 'bounce' => 'bounce'][$tab];
         $list = Message::where('direction', 'in')->where('kind', $kind)
             ->when($label === 'none', fn ($q) => $q->whereNull('label'))
@@ -49,7 +57,9 @@ class ReplyController extends Controller
                 'unlabeled' => Message::where('direction', 'in')->where('kind', 'reply')->whereNull('label')->count(),
                 'auto' => Message::where('direction', 'in')->where('kind', 'auto_reply')->count(),
                 'bounce' => Message::where('direction', 'in')->where('kind', 'bounce')->count(),
+                'ours' => Message::where('kind', Message::MANUAL)->count(),
             ],
+            'summary' => $summary, 'statuses' => Message::REPLY_STATUSES,
             'polled' => ($p = Account::where('is_active', true)->whereNotNull('imap_polled_at')->max('imap_polled_at')) ? Carbon::parse($p)->locale('id')->diffForHumans() : null,
         ]);
     }
@@ -92,6 +102,38 @@ class ReplyController extends Controller
         return redirect('/admin/leads/'.$lead->id)->with('success', 'Lead dibuat dari balasan ini.');
     }
 
+    /**
+     * "Balasan kita": every reply we wrote (from the website or a personal mailbox), with its status.
+     *
+     * @param  array<string, int>  $summary
+     */
+    protected function ours(Request $request, array $summary): Response
+    {
+        $status = $request->query('status');
+        $status = is_string($status) && isset(Message::REPLY_STATUSES[$status]) ? $status : null;
+        $source = in_array($request->query('source'), ['website', 'email'], true) ? $request->query('source') : null;
+        $list = Message::where('kind', Message::MANUAL)->when($status, fn ($q) => $q->where('reply_status', $status))->when($source, fn ($q) => $q->where('source', $source))
+            ->with(['contact:id,name,organization,email', 'campaign:id,name', 'user:id,name'])->orderByDesc('updated_at')->orderByDesc('id')->paginate(30)->withQueryString()
+            ->through(fn (Message $m) => [
+                'id' => $m->id, 'thread_id' => $m->campaign_contact_id, 'name' => $m->contact?->name ?: ($m->contact?->email ?: ($m->relay_from ?: 'Tidak dikenal')),
+                'organization' => $m->contact?->organization, 'campaign' => $m->campaign?->name, 'preview' => mb_substr(preg_replace('/\s+/', ' ', (string) $m->body) ?? '', 0, 140),
+                'reply_status' => $m->reply_status, 'source' => $m->source, 'source_label' => Message::SOURCES[$m->source ?? ''] ?? null,
+                'by' => $m->user?->name ?: $m->relay_from, 'reason' => $m->error, 'at' => ($m->sent_at ?? $m->updated_at)?->timezone(Campaign::TIMEZONE)->locale('id')->isoFormat('D MMM YYYY, HH:mm'),
+            ]);
+
+        return Inertia::render('Admin/Outreach/Replies', [
+            'messages' => ['data' => [], 'links' => []], 'tab' => 'ours', 'label' => null, 'selected' => null, 'ours' => $list,
+            'ourStatus' => $status, 'ourSource' => $source, 'summary' => $summary, 'statuses' => Message::REPLY_STATUSES,
+            'counts' => [
+                'reply' => Message::where('direction', 'in')->where('kind', 'reply')->count(), 'unlabeled' => 0,
+                'auto' => Message::where('direction', 'in')->where('kind', 'auto_reply')->count(),
+                'bounce' => Message::where('direction', 'in')->where('kind', 'bounce')->count(),
+                'ours' => Message::where('kind', Message::MANUAL)->count(),
+            ],
+            'polled' => null,
+        ]);
+    }
+
     /** "Cek sekarang": reads the inboxes right away instead of waiting for the 10-minute schedule. */
     public function poll(ReplyPoller $poller): RedirectResponse
     {
@@ -113,14 +155,14 @@ class ReplyController extends Controller
         if (! $m) {
             return null;
         }
-        $thread = $m->campaign_contact_id ? Message::where('campaign_contact_id', $m->campaign_contact_id)->where('id', '!=', $m->id)->where('status', '!=', 'cancelled')
-            ->whereIn('status', ['sent', 'received'])->orderBy('sent_at')->get() : collect();
+        $thread = $m->campaign_contact_id ? Message::where('campaign_contact_id', $m->campaign_contact_id)->where('id', '!=', $m->id)
+            ->where(fn ($q) => $q->whereIn('status', ['sent', 'received'])->orWhere('reply_status', 'sent'))->orderByRaw('coalesce(sent_at, created_at)')->get() : collect();
 
         return [
-            'id' => $m->id, 'subject' => $m->subject, 'body' => $m->body, 'label' => $m->label, 'lead_id' => $m->lead_id, 'kind' => $m->kind,
+            'id' => $m->id, 'subject' => $m->subject, 'body' => $m->body, 'label' => $m->label, 'lead_id' => $m->lead_id, 'kind' => $m->kind, 'thread_id' => $m->campaign_contact_id,
             'at' => $this->when($m), 'account' => $m->account ? $m->account->name.' · '.$m->account->email : null, 'campaign' => $m->campaign?->name,
             'contact' => $m->contact ? ['id' => $m->contact->id, 'name' => $m->contact->name, 'title' => $m->contact->title, 'organization' => $m->contact->organization, 'email' => $m->contact->email, 'phone' => $m->contact->phone] : null,
-            'thread' => $thread->map(fn (Message $t) => ['id' => $t->id, 'direction' => $t->direction, 'subject' => $t->subject, 'body' => mb_substr((string) $t->body, 0, 1500), 'at' => $this->when($t), 'step' => $t->step])->values(),
+            'thread' => $thread->map(fn (Message $t) => ['id' => $t->id, 'direction' => $t->direction, 'kind' => $t->kind, 'subject' => $t->subject, 'body' => mb_substr((string) $t->body, 0, 1500), 'at' => $this->when($t), 'step' => $t->step, 'reply_status' => $t->reply_status, 'source_label' => Message::SOURCES[$t->source ?? ''] ?? null])->values(),
         ];
     }
 

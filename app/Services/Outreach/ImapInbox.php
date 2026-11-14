@@ -87,6 +87,7 @@ class ImapInbox
             body: $text,
             headers: $this->parseHeaders((string) ($m->getHeader()->raw ?? '')),
             dsn: mb_substr($m->getRawBody(), 0, 60000),
+            hasAttachments: $m->hasAttachments(),
         );
     }
 

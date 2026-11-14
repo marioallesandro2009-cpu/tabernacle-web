@@ -16,6 +16,7 @@ const testing = ref(null);
 const blank = () => ({
     name: '', email: '', smtp_host: '', smtp_port: 465, smtp_encryption: 'ssl', imap_host: '', imap_port: 993, imap_encryption: 'ssl',
     username: '', password: '', daily_limit: 40, is_active: true, warmup_enabled: true, warmup_start: 10, warmup_step: 5,
+    forward_enabled: false, forward_to: '', relay_enabled: false, relay_senders: '', relay_mode: 'review',
 });
 const form = useForm(blank());
 
@@ -115,6 +116,7 @@ const word = (ok) => (ok === null || ok === undefined ? 'Belum dites' : ok ? 'Te
                 <span v-if="a.warmup_started">Warm-up minggu ke-{{ a.warmup_week }}: boleh kirim {{ a.limit_today }} email hari ini, naik {{ a.warmup_step }} per minggu sampai {{ a.daily_limit }}.</span>
                 <span v-else>Warm-up dimulai saat email pertama terkirim: {{ a.limit_today }} email per hari, naik {{ a.warmup_step }} per minggu sampai {{ a.daily_limit }}.</span>
             </p>
+            <p v-if="a.forward_enabled" class="mt-2 text-xs text-slate-500">Balasan diteruskan ke {{ a.forward_to.split('\n').filter(Boolean).join(', ') }}<span v-if="a.relay_enabled"> · boleh dibalas dari email pribadi ({{ a.relay_mode === 'direct' ? 'langsung kirim' : 'tinjau dulu' }})</span></p>
             <p v-if="a.smtp_tested_at || a.imap_polled_at" class="mt-2 text-xs text-slate-400"><span v-if="a.smtp_tested_at">Dites {{ a.smtp_tested_at }}</span><span v-if="a.smtp_tested_at && a.imap_polled_at"> · </span><span v-if="a.imap_polled_at">Balasan terakhir dicek {{ a.imap_polled_at }}</span></p>
 
             <div class="mt-4 flex flex-wrap gap-2 border-t border-slate-100 pt-4">
@@ -199,6 +201,32 @@ const word = (ok) => (ok === null || ok === undefined ? 'Belum dites' : ok ? 'Te
                     Rencana: <span v-for="(n, i) in plan" :key="i"><span v-if="i"> → </span><b class="text-slate-700">{{ n }}</b></span> email per hari (minggu 1, 2, 3, …).
                 </p>
                 <p v-else class="mt-3 text-xs text-slate-500">Tanpa warm-up, akun langsung memakai batas ini. Cocok untuk akun lama yang sudah lama dipakai mengirim email.</p>
+            </div>
+
+            <div class="rounded-2xl bg-slate-50 p-4">
+                <div class="mb-1 text-sm font-semibold text-slate-700">Balasan prospek</div>
+                <p class="mb-3 text-xs text-slate-500">Balasan tetap masuk ke kotak email akun ini dan dibaca sistem. Di sini Anda bisa meneruskannya ke email pribadi, dan membalas langsung dari email pribadi itu.</p>
+                <label class="flex items-center gap-2.5 text-sm text-slate-700"><input v-model="form.forward_enabled" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand"> Teruskan balasan asli ke email pribadi</label>
+                <div v-if="form.forward_enabled" class="mt-3">
+                    <label class="o-label" for="a-fwd">Teruskan balasan ke (satu alamat per baris)</label>
+                    <textarea id="a-fwd" v-model="form.forward_to" rows="2" class="o-input" placeholder="nama@gmail.com" />
+                    <p v-if="form.errors.forward_to" class="o-err">{{ form.errors.forward_to }}</p>
+                </div>
+
+                <label class="mt-4 flex items-center gap-2.5 text-sm text-slate-700"><input v-model="form.relay_enabled" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand" :disabled="!form.forward_enabled"> Izinkan balas dari email pribadi</label>
+                <p v-if="form.errors.relay_enabled" class="o-err">{{ form.errors.relay_enabled }}</p>
+                <div v-if="form.relay_enabled" class="mt-3 grid gap-4 sm:grid-cols-2">
+                    <div>
+                        <label class="o-label" for="a-rel">Email pribadi yang boleh membalas</label>
+                        <textarea id="a-rel" v-model="form.relay_senders" rows="2" class="o-input" placeholder="nama@gmail.com" />
+                        <p v-if="form.errors.relay_senders" class="o-err">{{ form.errors.relay_senders }}</p>
+                    </div>
+                    <div>
+                        <label class="o-label" for="a-mode">Balasan dari email pribadi</label>
+                        <select id="a-mode" v-model="form.relay_mode" class="o-input"><option value="review">Tinjau dulu (simpan sebagai draf)</option><option value="direct">Langsung kirim ke prospek</option></select>
+                        <p class="mt-1 text-xs text-slate-500">Hanya diteruskan kalau pengirimnya ada di daftar, kode [#…] di subjek benar, dan lolos SPF/DKIM.</p>
+                    </div>
+                </div>
             </div>
 
             <label class="flex items-center gap-2.5 text-sm text-slate-700"><input v-model="form.is_active" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand"> Akun aktif (boleh dipakai kampanye)</label>

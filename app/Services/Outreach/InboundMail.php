@@ -24,6 +24,7 @@ class InboundMail
         public string $body,
         public array $headers = [],
         public string $dsn = '',
+        public bool $hasAttachments = false,
     ) {}
 
     /** Message-ID, trimmed of < >. */

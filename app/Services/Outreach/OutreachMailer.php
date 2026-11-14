@@ -52,4 +52,29 @@ class OutreachMailer
 
         $this->transport($a)->send($email);
     }
+
+    /**
+     * A reply written by a person (from the website or a personal mailbox): same account, same thread,
+     * no unsubscribe footer or header.
+     *
+     * @param  array<int, string>  $references  Message-IDs without angle brackets, oldest first
+     */
+    public function sendReply(Account $a, Contact $to, string $subject, string $body, string $messageId, ?string $inReplyTo, array $references): void
+    {
+        $email = (new Email)
+            ->from(new Address($a->email, $a->name))
+            ->to(new Address((string) $to->email, (string) $to->name))
+            ->subject($subject)
+            ->text($body);
+        $h = $email->getHeaders();
+        $h->addIdHeader('Message-ID', $messageId);
+        if ($inReplyTo) {
+            $h->addIdHeader('In-Reply-To', $inReplyTo);
+        }
+        if ($references) {
+            $h->addIdHeader('References', $references);
+        }
+
+        $this->transport($a)->send($email);
+    }
 }

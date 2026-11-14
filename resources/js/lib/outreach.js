@@ -43,3 +43,14 @@ export const sendStatus = {
 
 // the CSRF cookie Laravel sets, for the few requests made with fetch()
 export const xsrf = () => decodeURIComponent((document.cookie.split('; ').find((c) => c.startsWith('XSRF-TOKEN=')) || '').split('=')[1] || '');
+
+// our own replies (from the website or a personal mailbox)
+export const replyStatus = {
+    draft: { tone: 'slate' },
+    received: { tone: 'blue' },
+    rejected: { tone: 'red' },
+    queued: { tone: 'amber' },
+    sent: { tone: 'green' },
+    failed: { tone: 'red' },
+    bounced: { tone: 'violet' },
+};

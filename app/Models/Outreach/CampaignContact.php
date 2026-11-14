@@ -18,6 +18,25 @@ class CampaignContact extends Model
     /** Statuses after which no further email is ever sent. */
     public const STOPPED = ['replied', 'bounced', 'unsubscribed', 'invalid', 'failed'];
 
+    /** Letters and digits that cannot be mistaken for each other (no 0/O, 1/I/L). */
+    public const TOKEN_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+
+    /** The thread's random code, used as [#CODE] in forwarded subjects. Made the first time it is needed. */
+    public function token(): string
+    {
+        if (! $this->thread_token) {
+            do {
+                $token = '';
+                for ($i = 0; $i < 10; $i++) {
+                    $token .= self::TOKEN_ALPHABET[random_int(0, strlen(self::TOKEN_ALPHABET) - 1)];
+                }
+            } while (static::where('thread_token', $token)->exists());
+            $this->forceFill(['thread_token' => $token])->save();
+        }
+
+        return (string) $this->thread_token;
+    }
+
     /** @return BelongsTo<Campaign, $this> */
     public function campaign(): BelongsTo
     {

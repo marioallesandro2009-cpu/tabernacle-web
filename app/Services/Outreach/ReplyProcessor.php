@@ -2,6 +2,7 @@
 
 namespace App\Services\Outreach;
 
+use App\Jobs\Outreach\ForwardReply;
 use App\Jobs\Outreach\SendReplyAlert;
 use App\Models\Outreach\Account;
 use App\Models\Outreach\CampaignContact;
@@ -15,13 +16,17 @@ use App\Models\Outreach\Suppression;
  */
 class ReplyProcessor
 {
-    public function __construct(protected ReplyClassifier $classifier = new ReplyClassifier) {}
+    public function __construct(protected ReplyClassifier $classifier = new ReplyClassifier, protected RelayProcessor $relay = new RelayProcessor) {}
 
     /** @return Message|null null when the message was already seen or has nothing to do with our emails */
     public function process(Account $account, InboundMail $mail): ?Message
     {
         if ($mail->messageId && Message::where('direction', 'in')->where('account_id', $account->id)->where('message_id', $mail->messageId)->exists()) {
             return null; // seen before
+        }
+        // an answer from one of our own personal mailboxes is never a prospect's reply
+        if ($this->relay->isCandidate($account, $mail) && ! $this->classifier->isBounce($mail)) {
+            return $this->relay->process($account, $mail);
         }
         $class = $this->classifier->classify($mail);
 
@@ -44,6 +49,9 @@ class ReplyProcessor
 
         $message = $this->store($account, $mail, 'reply', $cc, $this->stripQuoted($mail->body));
         SendReplyAlert::dispatch($message->id); // tell the team right away
+        if ($account->forwardList()) {
+            ForwardReply::dispatch($message->id); // and the personal mailboxes set on this account
+        }
 
         return $message;
     }
@@ -64,7 +72,10 @@ class ReplyProcessor
     /** @param  array{hard: bool, recipients: array<int, string>}  $class */
     protected function bounce(Account $account, InboundMail $mail, array $class): ?Message
     {
-        $cc = $this->threadFromReport($account, $mail);
+        [$cc, $bounced] = $this->threadFromReport($account, $mail);
+        if ($bounced && $bounced->kind === Message::MANUAL && $bounced->reply_status === 'sent') {
+            $bounced->moveTo('bounced', mb_substr(trim(preg_replace('/\s+/', ' ', $mail->subject) ?? ''), 0, 200) ?: 'Email ditolak server tujuan');
+        }
         $emails = $class['recipients'];
         if ($cc && ! $emails && $cc->contact?->email) {
             $emails = [$cc->contact->email];
@@ -101,18 +112,23 @@ class ReplyProcessor
         return $contact ? CampaignContact::with('contact')->where('contact_id', $contact->id)->where('account_id', $account->id)->whereNotNull('first_sent_at')->orderByDesc('last_sent_at')->first() : null;
     }
 
-    /** A bounce quotes our original email, so its Message-ID leads back to the right person. */
-    protected function threadFromReport(Account $account, InboundMail $mail): ?CampaignContact
+    /**
+     * A bounce quotes our original email, so its Message-ID leads back to the right person (and to
+     * the exact email that bounced).
+     *
+     * @return array{0: ?CampaignContact, 1: ?Message}
+     */
+    protected function threadFromReport(Account $account, InboundMail $mail): array
     {
         preg_match_all('/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}@[A-Za-z0-9.\-]+/', $mail->dsn."\n".$mail->body, $m);
         if ($m[0]) {
             $out = Message::where('direction', 'out')->where('account_id', $account->id)->whereIn('message_id', array_unique($m[0]))->whereNotNull('campaign_contact_id')->first();
             if ($out) {
-                return CampaignContact::with('contact')->find($out->campaign_contact_id);
+                return [CampaignContact::with('contact')->find($out->campaign_contact_id), $out];
             }
         }
 
-        return null;
+        return [null, null];
     }
 
     protected function store(Account $account, InboundMail $mail, string $kind, ?CampaignContact $cc, string $body, ?string $forEmail = null): Message

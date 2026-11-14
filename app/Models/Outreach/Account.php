@@ -16,7 +16,7 @@ class Account extends Model
 
     protected $casts = [
         'password' => 'encrypted',
-        'is_active' => 'boolean', 'warmup_enabled' => 'boolean', 'warmup_started_on' => 'date', 'smtp_ok' => 'boolean', 'imap_ok' => 'boolean',
+        'is_active' => 'boolean', 'warmup_enabled' => 'boolean', 'forward_enabled' => 'boolean', 'relay_enabled' => 'boolean', 'warmup_started_on' => 'date', 'smtp_ok' => 'boolean', 'imap_ok' => 'boolean',
         'smtp_tested_at' => 'datetime', 'imap_tested_at' => 'datetime', 'imap_polled_at' => 'datetime',
     ];
 
@@ -27,6 +27,27 @@ class Account extends Model
     ];
 
     public const ENCRYPTIONS = ['ssl', 'tls', 'none'];
+
+    public const RELAY_MODES = ['review' => 'Tinjau dulu', 'direct' => 'Langsung kirim'];
+
+    /** "a@x.com, b@y.com\nc@z.com" → ['a@x.com', 'b@y.com', 'c@z.com'] */
+    public static function emailList(?string $text): array
+    {
+        return collect(preg_split('/[\s,;]+/', mb_strtolower((string) $text)) ?: [])
+            ->map(fn ($e) => trim($e))->filter(fn ($e) => filter_var($e, FILTER_VALIDATE_EMAIL))->unique()->values()->all();
+    }
+
+    /** Where a prospect's reply is forwarded, when forwarding is on. @return array<int, string> */
+    public function forwardList(): array
+    {
+        return $this->forward_enabled ? self::emailList($this->forward_to) : [];
+    }
+
+    /** Personal addresses that may answer a prospect through this account. @return array<int, string> */
+    public function relaySenderList(): array
+    {
+        return self::emailList($this->relay_senders);
+    }
 
     /**
      * How many emails this account may send today. During warm-up the limit starts low and grows

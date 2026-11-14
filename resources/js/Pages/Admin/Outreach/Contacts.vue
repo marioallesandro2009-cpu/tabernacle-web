@@ -129,7 +129,7 @@ onBeforeUnmount(() => clearInterval(poll));
                 <tbody class="divide-y divide-slate-100">
                     <tr v-for="c in contacts.data" :key="c.id" class="hover:bg-slate-50/60" :class="{ 'bg-brand/[0.03]': selected.includes(c.id) }">
                         <td class="o-td"><input v-model="selected" type="checkbox" :value="c.id" class="h-4 w-4 rounded border-slate-300 text-brand focus:ring-brand" :aria-label="`Pilih ${c.name || c.email}`"></td>
-                        <td class="o-td"><div class="font-medium text-slate-900">{{ c.name || '—' }}</div><div v-if="c.title" class="text-xs text-slate-500">{{ c.title }}</div></td>
+                        <td class="o-td"><Link :href="`/admin/outreach/contacts/${c.id}`" class="font-medium text-slate-900 hover:text-brand hover:underline">{{ c.name || c.email || '—' }}</Link><div v-if="c.title" class="text-xs text-slate-500">{{ c.title }}</div></td>
                         <td class="o-td text-slate-600">{{ c.organization || '—' }}</td>
                         <td class="o-td"><div class="text-slate-700">{{ c.email || '—' }}</div><div v-if="c.phone" class="text-xs text-slate-400">{{ c.phone }}</div></td>
                         <td class="o-td"><span v-if="c.segment" class="rounded-lg bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600">{{ c.segment }}</span><span v-else class="text-xs text-slate-400">—</span></td>
