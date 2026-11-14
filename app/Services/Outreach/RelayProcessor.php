@@ -53,7 +53,7 @@ class RelayProcessor
             'channel' => 'email', 'campaign_id' => $cc?->campaign_id, 'campaign_contact_id' => $cc?->id, 'contact_id' => $cc?->contact_id,
             'account_id' => $account->id, 'direction' => 'out', 'kind' => Message::MANUAL, 'status' => 'manual', 'source' => 'email',
             'relay_from' => $from, 'inbound_message_id' => $mail->messageId, 'subject' => $cc ? $this->threads->subject($cc) : mb_substr($mail->subject, 0, 500),
-            'body' => mb_substr($body !== '' ? $body : $mail->body, 0, 20000), 'imap_uid' => $mail->uid,
+            'body' => mb_substr($body !== '' ? $body : $mail->body, 0, 20000), 'imap_uid' => $mail->uid, 'folder' => $mail->folder,
         ]);
         $m->moveTo('received');
 

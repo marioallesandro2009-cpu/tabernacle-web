@@ -17,7 +17,7 @@ class Account extends Model
     protected $casts = [
         'password' => 'encrypted',
         'is_active' => 'boolean', 'warmup_enabled' => 'boolean', 'forward_enabled' => 'boolean', 'relay_enabled' => 'boolean', 'warmup_started_on' => 'date', 'smtp_ok' => 'boolean', 'imap_ok' => 'boolean',
-        'smtp_tested_at' => 'datetime', 'imap_tested_at' => 'datetime', 'imap_polled_at' => 'datetime',
+        'imap_folder_uids' => 'array', 'smtp_tested_at' => 'datetime', 'imap_tested_at' => 'datetime', 'imap_polled_at' => 'datetime',
     ];
 
     /** Ready-made server settings, so a new account needs only the address and password. */

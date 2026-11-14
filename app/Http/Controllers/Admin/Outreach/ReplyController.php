@@ -45,7 +45,7 @@ class ReplyController extends Controller
         $items = $list->through(fn (Message $m) => [
             'id' => $m->id, 'name' => $m->contact?->name ?: $m->contact?->email ?: ($m->error ?: 'Tidak dikenal'), 'organization' => $m->contact?->organization,
             'subject' => $m->subject, 'preview' => mb_substr(preg_replace('/\s+/', ' ', (string) $m->body) ?? '', 0, 110),
-            'label' => $m->label, 'at' => $this->when($m), 'campaign' => $m->campaign?->name, 'lead_id' => $m->lead_id,
+            'label' => $m->label, 'at' => $this->when($m), 'campaign' => $m->campaign?->name, 'lead_id' => $m->lead_id, 'spam' => self::isSpam($m->folder),
         ]);
         $selectedId = (int) $request->query('id', $list->first()['id'] ?? 0);
 
@@ -159,11 +159,16 @@ class ReplyController extends Controller
             ->where(fn ($q) => $q->whereIn('status', ['sent', 'received'])->orWhere('reply_status', 'sent'))->orderByRaw('coalesce(sent_at, created_at)')->get() : collect();
 
         return [
-            'id' => $m->id, 'subject' => $m->subject, 'body' => $m->body, 'label' => $m->label, 'lead_id' => $m->lead_id, 'kind' => $m->kind, 'thread_id' => $m->campaign_contact_id,
+            'id' => $m->id, 'subject' => $m->subject, 'body' => $m->body, 'label' => $m->label, 'lead_id' => $m->lead_id, 'kind' => $m->kind, 'thread_id' => $m->campaign_contact_id, 'folder' => $m->folder, 'spam' => self::isSpam($m->folder),
             'at' => $this->when($m), 'account' => $m->account ? $m->account->name.' · '.$m->account->email : null, 'campaign' => $m->campaign?->name,
             'contact' => $m->contact ? ['id' => $m->contact->id, 'name' => $m->contact->name, 'title' => $m->contact->title, 'organization' => $m->contact->organization, 'email' => $m->contact->email, 'phone' => $m->contact->phone] : null,
             'thread' => $thread->map(fn (Message $t) => ['id' => $t->id, 'direction' => $t->direction, 'kind' => $t->kind, 'subject' => $t->subject, 'body' => mb_substr((string) $t->body, 0, 1500), 'at' => $this->when($t), 'step' => $t->step, 'reply_status' => $t->reply_status, 'source_label' => Message::SOURCES[$t->source ?? ''] ?? null])->values(),
         ];
+    }
+
+    public static function isSpam(?string $folder): bool
+    {
+        return $folder !== null && strtoupper($folder) !== 'INBOX';
     }
 
     protected function when(Message $m): ?string

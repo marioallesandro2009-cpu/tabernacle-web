@@ -42,7 +42,11 @@ class ReplyPoller
                     $stored++;
                 }
             }
-            $account->update(['imap_last_uid' => max((int) $account->imap_last_uid, $r['last_uid']), 'imap_polled_at' => now(), 'imap_ok' => true, 'imap_error' => null]);
+            $uids = (array) ($account->imap_folder_uids ?? []);
+            foreach ($r['uids'] ?? ['INBOX' => $r['last_uid']] as $folder => $uid) {
+                $uids[$folder] = max((int) ($uids[$folder] ?? 0), (int) $uid);
+            }
+            $account->update(['imap_last_uid' => max((int) $account->imap_last_uid, $r['last_uid']), 'imap_folder_uids' => $uids, 'imap_polled_at' => now(), 'imap_ok' => true, 'imap_error' => null]);
 
             return $stored;
         } catch (Throwable $e) {

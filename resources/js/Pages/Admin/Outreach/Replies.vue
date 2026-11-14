@@ -101,7 +101,7 @@ const poll = () => { polling.value = true; router.post('/admin/outreach/replies/
                         <div class="flex items-center justify-between gap-2"><span class="truncate text-sm font-semibold text-slate-900">{{ m.name }}</span><span class="shrink-0 text-[11px] text-slate-400">{{ m.at }}</span></div>
                         <div v-if="m.organization" class="truncate text-xs text-slate-500">{{ m.organization }}</div>
                         <div class="mt-1 line-clamp-2 text-sm text-slate-600">{{ m.preview }}</div>
-                        <div class="mt-1.5 flex flex-wrap items-center gap-1.5"><Chip v-if="m.label" :tone="labels[m.label].tone">{{ labels[m.label].text }}</Chip><Chip v-if="m.lead_id" tone="blue" :dot="false">Jadi lead</Chip><span v-if="m.campaign" class="truncate text-[11px] text-slate-400">{{ m.campaign }}</span></div>
+                        <div class="mt-1.5 flex flex-wrap items-center gap-1.5"><Chip v-if="m.label" :tone="labels[m.label].tone">{{ labels[m.label].text }}</Chip><Chip v-if="m.lead_id" tone="blue" :dot="false">Jadi lead</Chip><Chip v-if="m.spam" tone="amber" :dot="false">Folder Spam</Chip><span v-if="m.campaign" class="truncate text-[11px] text-slate-400">{{ m.campaign }}</span></div>
                     </button>
                 </li>
             </ul>
@@ -118,6 +118,7 @@ const poll = () => { polling.value = true; router.post('/admin/outreach/replies/
                 <div class="text-right text-xs text-slate-400"><div>{{ selected.at }}</div><div v-if="selected.campaign">Kampanye: {{ selected.campaign }}</div><div v-if="selected.account">Ke: {{ selected.account }}</div></div>
             </div>
 
+            <p v-if="selected.spam" class="mt-3 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800 ring-1 ring-amber-100">Pesan ini ditemukan di folder <b>{{ selected.folder }}</b>, bukan di kotak masuk. Tandai "bukan spam" di kotak email supaya balasan berikutnya dari orang ini tidak masuk Spam.</p>
             <div v-if="selected.kind === 'reply'" class="mt-4 flex flex-wrap items-center gap-2 border-y border-slate-100 py-3">
                 <span class="mr-1 text-xs font-semibold uppercase tracking-wider text-slate-500">Label</span>
                 <button v-for="(l, key) in labels" :key="key" class="o-btn o-btn-sm" :class="selected.label === key ? 'o-btn-primary' : ''" @click="setMessageLabel(key)">{{ l.text }}</button>

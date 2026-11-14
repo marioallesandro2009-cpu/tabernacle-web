@@ -138,7 +138,7 @@ class ReplyProcessor
             'account_id' => $account->id, 'direction' => 'in', 'kind' => $kind, 'subject' => mb_substr($mail->subject, 0, 500),
             'body' => mb_substr($body, 0, 20000), 'message_id' => $mail->messageId, 'in_reply_to' => $mail->inReplyTo,
             'references' => $mail->references ? implode(' ', $mail->references) : null, 'status' => 'received',
-            'sent_at' => $mail->date ?? now(), 'imap_uid' => $mail->uid, 'error' => $forEmail,
+            'sent_at' => $mail->date ?? now(), 'imap_uid' => $mail->uid, 'folder' => $mail->folder, 'error' => $forEmail,
         ]);
     }
 

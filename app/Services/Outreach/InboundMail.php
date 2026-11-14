@@ -25,7 +25,14 @@ class InboundMail
         public array $headers = [],
         public string $dsn = '',
         public bool $hasAttachments = false,
+        public string $folder = 'INBOX',
     ) {}
+
+    /** Found in the Spam/Junk folder rather than the inbox. */
+    public function inSpam(): bool
+    {
+        return strtoupper($this->folder) !== 'INBOX';
+    }
 
     /** Message-ID, trimmed of < >. */
     public static function cleanId(?string $id): ?string
