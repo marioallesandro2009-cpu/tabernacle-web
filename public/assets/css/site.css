@@ -227,3 +227,36 @@
 .e404-find input { flex: 1; min-width: 0; padding: 12px 14px; border: 1px solid rgba(11, 26, 92, .2); border-radius: 10px; font: inherit; background: #fff; }
 .e404-links { display: flex; flex-wrap: wrap; gap: 8px 18px; list-style: none; padding: 0; margin: 0 0 20px; }
 .e404-links a { color: var(--navy); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+/* footer: services, company & trust pages, contact, legal line */
+.foot-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 28px var(--gap); margin-top: clamp(36px, 4vw, 56px); padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, .12); }
+.foot-col a { display: block; padding: 3px 0; color: rgba(255, 255, 255, .86); font-size: 14.5px; transition: color .3s; }
+.foot-col a:hover { color: var(--amber); }
+.foot-h { margin: 0 0 8px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .55); }
+.foot-legal { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 28px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, .12); font-size: 12px; color: rgba(255, 255, 255, .62); }
+
+/* visible breadcrumb, in the empty space under the fixed navigation */
+main { position: relative; }
+.crumbs-bar { position: absolute; top: 84px; left: 0; right: 0; z-index: 3; font-size: 12px; }
+.crumbs-bar ol { display: flex; flex-wrap: wrap; gap: 4px; list-style: none; margin: 0; padding: 0; color: rgba(11, 26, 92, .62); }
+.crumbs-bar li + li::before { content: "/"; margin-right: 4px; opacity: .6; }
+.crumbs-bar a { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+.crumbs-bar [aria-current] { color: rgba(11, 26, 92, .7); }
+@media (max-width: 860px) { .crumbs-bar { top: 72px; } }
+
+/* service pillars and case studies */
+.pillar-hero .pillar-cover { grid-column: 1 / -1; margin-top: 28px; border-radius: 14px; overflow: hidden; }
+.pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--gap); margin-top: 24px; }
+.pillar-card { display: block; padding: 0 0 18px; border-bottom: 2px solid var(--navy); color: inherit; }
+.pillar-card .pic { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 10px; margin-bottom: 14px; }
+.pillar-card .pic img { width: 100%; height: 100%; object-fit: cover; }
+.pillar-card h3 { margin: 0 0 6px; font-size: 20px; color: var(--navy); }
+.pillar-card p { margin: 0; font-size: 15px; line-height: 1.5; opacity: .8; }
+.pillar-cta { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between; padding: 28px 0; border-top: 2px solid var(--navy); }
+.case-facts { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px var(--gap); margin: 22px 0 0; }
+.case-facts dt { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; opacity: .6; }
+.case-facts dd { margin: 4px 0 0; font-weight: 600; }
+.case-logo { display: block; max-height: 40px; width: auto; margin-bottom: 6px; }
+.case-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 18px; }
+.case-gallery .tile { padding: 0; border: 0; background: none; cursor: zoom-in; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 8px; }
+.case-gallery img { width: 100%; height: 100%; object-fit: cover; }

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CaseStudy;
 use App\Models\Destination;
 use App\Models\Faq;
 use App\Models\Page;
+use App\Models\Pillar;
 use App\Models\Post;
 use App\Models\TeamMember;
 use App\Models\Testimonial;
@@ -67,6 +69,14 @@ class TranslationStatusController extends Controller
             }
             $add($pg->is_system ? 'Halaman' : 'Halaman buatan', tr($pg->title, 'id') ?: $pg->key, $missing, admin_path('/pages/'.$pg->id.'/edit'),
                 $pg->is_active ? Locale::path($pg->key === 'home' ? '/' : '/'.$pg->slug, 'en') : null, ! $pg->hasEnglish());
+        }
+        foreach (Pillar::orderBy('sort')->get() as $p) {
+            $missing = array_keys(array_filter(['Nama' => $this->gap($p->title), 'Penjelasan' => $this->gap($p->intro), 'SEO judul' => $this->gap($p->meta_title), 'SEO deskripsi' => $this->gap($p->meta_description)]));
+            $add('Halaman layanan', tr($p->title, 'id'), $missing, admin_path('/pillars/'.$p->id.'/edit'), $p->is_active ? Locale::path('/layanan/'.$p->slug, 'en') : null, ! $p->hasEnglish());
+        }
+        foreach (CaseStudy::orderBy('sort')->get() as $c) {
+            $missing = array_keys(array_filter(['Judul' => $this->gap($c->title), 'Tujuan' => $this->gap($c->objective), 'Hasil' => $this->gap($c->results), 'Waktu' => $this->gap($c->period)]));
+            $add('Studi kasus', tr($c->title, 'id'), $missing, admin_path('/case-studies/'.$c->id.'/edit'), $c->is_active ? Locale::path('/studi-kasus/'.$c->slug, 'en') : null, ! $c->hasEnglish());
         }
         foreach ([[TourCategory::class, 'Kategori paket', 'name', '/tour-categories'], [Faq::class, 'FAQ', 'question', '/faqs'], [Testimonial::class, 'Testimoni', 'content', '/testimonials'], [TeamMember::class, 'Tim', 'role', '/team']] as [$model, $type, $field, $path]) {
             foreach ($model::query()->get() as $m) {

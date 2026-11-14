@@ -1,4 +1,4 @@
-@extends('site.layout', ['solidNav' => true])
+@extends('site.layout', ['solidNav' => true, 'ownCrumbs' => true])
 
 @push('head'){!! media_preload($tour->cover_id, '100vw') !!}@endpush
 

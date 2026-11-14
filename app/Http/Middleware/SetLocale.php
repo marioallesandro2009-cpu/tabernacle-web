@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SetLocale
 {
     /** Public page routes (both languages) that may be redirected to the other language. */
-    public const PAGE_ROUTES = ['home', 'about', 'contact', 'packages', 'tour', 'destinations', 'destination', 'blog', 'post', 'page.custom'];
+    public const PAGE_ROUTES = ['home', 'about', 'contact', 'packages', 'tour', 'destinations', 'destination', 'blog', 'post', 'page.custom', 'pillars', 'pillar', 'cases', 'case'];
 
     public function handle(Request $request, Closure $next): Response
     {

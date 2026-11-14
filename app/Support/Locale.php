@@ -18,6 +18,7 @@ class Locale
     public static function reset(): void
     {
         self::$translated = null;
+        Seo::resetTrail();
     }
 
     public static function translated(bool $yes): void

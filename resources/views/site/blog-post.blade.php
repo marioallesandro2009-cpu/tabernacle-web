@@ -1,4 +1,4 @@
-@extends('site.layout', ['solidNav' => true])
+@extends('site.layout', ['solidNav' => true, 'ownCrumbs' => true])
 
 @section('content')
 <article class="post">

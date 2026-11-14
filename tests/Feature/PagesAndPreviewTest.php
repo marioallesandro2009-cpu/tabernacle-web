@@ -13,7 +13,7 @@ function systemPage(string $key): Page
 it('lets an admin create a custom page that starts inactive with a text section', function () {
     $this->actingAs(adminUser('admin'));
     $this->post('/admin/pages', ['title' => ['en' => 'Terms & Conditions', 'id' => 'Syarat & Ketentuan'], 'slug' => ''])->assertRedirect();
-    $page = Page::where('is_system', false)->first();
+    $page = Page::where('is_system', false)->latest('id')->first(); // the newest, after the empty trust-page templates
     expect($page->slug)->toBe('terms-conditions')->and($page->is_active)->toBeFalse()->and($page->sections()->count())->toBe(1)
         ->and($page->sections()->first()->type)->toBe('text_block');
 
@@ -26,6 +26,7 @@ it('lets an admin create a custom page that starts inactive with a text section'
 
 it('serves an active custom page to visitors and counts the view', function () {
     systemPage('home');
+    Page::where('slug', 'kebijakan-privasi')->delete(); // the empty template from the install
     $page = Page::create(['key' => 'c-privasi', 'slug' => 'kebijakan-privasi', 'title' => ['en' => 'Privacy', 'id' => 'Privasi'], 'is_active' => true, 'is_system' => false]);
     $page->sections()->create(['type' => 'text_block', 'sort' => 1, 'is_visible' => true, 'data' => ['title_a' => ['en' => 'Privacy policy', 'id' => 'Kebijakan privasi'], 'body' => ['en' => '<p>We keep your data safe.</p>', 'id' => '<p>Data Anda aman.</p>']]]);
     $this->get('/en/kebijakan-privasi')->assertOk()->assertSee('We keep your data safe.');
@@ -41,7 +42,7 @@ it('refuses addresses the site already uses and duplicates', function () {
     $this->post('/admin/pages', ['title' => ['en' => 'Faq Visa'], 'slug' => 'faq-visa'])->assertSessionHasNoErrors();
     $this->post('/admin/pages', ['title' => ['en' => 'Faq Visa'], 'slug' => 'faq-visa'])->assertSessionHasErrors('slug');
     $this->post('/admin/pages', ['title' => ['en' => ''], 'slug' => 'kosong'])->assertSessionHasErrors('title.en');
-    expect(Page::where('is_system', false)->count())->toBe(1);
+    expect(Page::where('is_system', false)->where('key', 'not like', 'trust-%')->count())->toBe(1);
 });
 
 it('keeps the built-in pages and the admin area safe from the custom page route', function () {

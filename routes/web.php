@@ -5,6 +5,7 @@ use App\Http\Controllers\Site\LangController;
 use App\Http\Controllers\Site\LeadController;
 use App\Http\Controllers\Site\PageController;
 use App\Http\Controllers\Site\SeoController;
+use App\Http\Controllers\Site\ServiceController;
 use App\Http\Controllers\Site\UnsubscribeController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,10 @@ $pages = function (string $prefix, string $name) {
         Route::get('/destinations/{slug}', [PageController::class, 'destination'])->where('slug', '[a-z0-9\-]+')->defaults('track_type', 'destination')->name('destination');
         Route::get('/blog', [BlogController::class, 'index'])->name('blog');
         Route::get('/blog/{slug}', [BlogController::class, 'show'])->where('slug', '[a-z0-9\-]+')->defaults('track_type', 'post')->name('post');
+        Route::get('/layanan', [ServiceController::class, 'pillars'])->name('pillars');
+        Route::get('/layanan/{slug}', [ServiceController::class, 'pillar'])->where('slug', '[a-z0-9\-]+')->defaults('track_type', 'pillar')->name('pillar');
+        Route::get('/studi-kasus', [ServiceController::class, 'cases'])->name('cases');
+        Route::get('/studi-kasus/{slug}', [ServiceController::class, 'case'])->where('slug', '[a-z0-9\-]+')->defaults('track_type', 'case')->name('case');
     });
 };
 $pages('', '');

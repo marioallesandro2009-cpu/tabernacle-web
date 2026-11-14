@@ -72,9 +72,25 @@ class Seo
         ]);
     }
 
+    /** @var array<int, array{0: string, 1: string}> the trail of the page being rendered, also shown on the page */
+    protected static array $trail = [];
+
+    public static function resetTrail(): void
+    {
+        self::$trail = [];
+    }
+
+    /** @return array<int, array{0: string, 1: string}> */
+    public static function trail(): array
+    {
+        return self::$trail;
+    }
+
     /** @param array<int, array{0: string, 1: string}> $items [[name, url], ...] @return array<string, mixed> */
     public static function breadcrumbs(array $items): array
     {
+        self::$trail = array_values($items);
+
         return [
             '@context' => 'https://schema.org', '@type' => 'BreadcrumbList',
             'itemListElement' => collect($items)->values()->map(fn ($i, $n) => ['@type' => 'ListItem', 'position' => $n + 1, 'name' => $i[0], 'item' => $i[1]])->all(),

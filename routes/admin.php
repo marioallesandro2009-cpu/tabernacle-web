@@ -67,6 +67,8 @@ Route::prefix(config('admin.path'))->middleware('inertia.admin')->group(function
             'galleries' => [Resources\GalleryController::class, 'content.manage'],
             'faqs' => [Resources\FaqController::class, 'content.manage'],
             'team' => [Resources\TeamMemberController::class, 'content.manage'],
+            'pillars' => [Resources\PillarController::class, 'content.manage'],
+            'case-studies' => [Resources\CaseStudyController::class, 'content.manage'],
             'menu-items' => [Resources\MenuItemController::class, 'content.manage'],
             'ui-strings' => [Resources\UiStringController::class, 'content.manage'],
             'redirects' => [Resources\RedirectController::class, 'content.manage'],

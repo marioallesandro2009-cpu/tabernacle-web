@@ -48,7 +48,7 @@ class SiteData
                     ...($t->highlights ?: []), ...collect($t->itinerary ?: [])->pluck('title')->all()];
 
                 return [
-                    'id' => $t->id, 'slug' => $t->slug, 'name' => ['id' => $t->name, 'en' => $t->name_en ?: $t->name], 'duration' => $t->duration, 'area' => $t->area_label,
+                    'id' => $t->id, 'category_id' => $t->category_id, 'slug' => $t->slug, 'name' => ['id' => $t->name, 'en' => $t->name_en ?: $t->name], 'duration' => $t->duration, 'area' => $t->area_label,
                     'kind' => ($t->category_id ? $t->category->kind : null) ?? ($t->flights_included ? 'group' : 'fit'), 'region' => $t->region,
                     'countries' => $countries, 'search' => self::norm(implode(' ', $searchParts)),
                     'price' => $t->fromPrice(), 'min_pax' => $t->min_pax, 'flights' => (bool) $t->flights_included,

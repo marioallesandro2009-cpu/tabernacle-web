@@ -67,14 +67,14 @@ class PageController extends Controller
     public function show(Page $page, string $view = 'site.page', array $schema = [], bool $crumbs = false, bool $preview = false): View
     {
         $key = $page->key;
-        if (! $page->is_system) {
+        if ($key !== 'home') {
             $crumbs = true;
         }
         if ($key === 'destinations') {
             $view = 'site.destinations';
         }
         if ($crumbs) {
-            $schema[] = Seo::breadcrumbs([[tr(SiteData::page('home')?->title) ?: 'Home', lurl('/')], [tr($page->title), $page->publicUrl()]]);
+            $schema[] = Seo::breadcrumbs([[t('common.home'), lurl('/')], [tr($page->title), lurl($page->key === 'home' ? '/' : '/'.ltrim($page->slug, '/'))]]);
         }
         $seo = Seo::make(tr($page->meta_title) ?: tr($page->title), tr($page->meta_description), $page->og_image_id, $page->publicUrl(),
             noindex: $preview || (bool) $page->noindex, schema: $schema, titleIsFinal: (bool) tr($page->meta_title));
@@ -90,7 +90,7 @@ class PageController extends Controller
         $cards = collect(SiteData::tourCards())->filter(fn ($c) => in_array($dest->slug, $c['countries'], true))->values()->all();
         $name = tr($dest->name);
         $seo = Seo::make(tr($dest->meta_title) ?: t('dest.tours', ['name' => $name]), tr($dest->meta_description) ?: strip_tags(tr($dest->intro)), $dest->cover_id, lurl('/destinations/'.$dest->slug), titleIsFinal: (bool) tr($dest->meta_title), schema: [
-            Seo::breadcrumbs([['Home', lurl('/')], [t('dest.title'), lurl('/destinations')], [$name, url()->current()]]),
+            Seo::breadcrumbs([[t('common.home'), lurl('/')], [t('dest.title'), lurl('/destinations')], [$name, url()->current()]]),
         ]);
 
         // articles about this destination: more internal links, and a reason to stay
@@ -113,7 +113,7 @@ class PageController extends Controller
         $name = $tour->displayName();
         $price = $tour->fromPrice();
         $schema = [
-            Seo::breadcrumbs([['Home', lurl('/')], [t('tour.crumb'), lurl('/packages')], [$name, url()->current()]]),
+            Seo::breadcrumbs([[t('common.home'), lurl('/')], [t('tour.crumb'), lurl('/packages')], [$name, url()->current()]]),
             array_filter([
                 '@context' => 'https://schema.org', '@type' => 'TouristTrip', 'name' => trim($tour->duration.' '.$name), 'description' => tr($tour->description) ?: ($tour->route ?: $name),
                 'image' => media_url($tour->cover_id, 1600), 'url' => url()->current(), 'touristType' => $tour->flights_included ? 'Group tour' : 'FIT',

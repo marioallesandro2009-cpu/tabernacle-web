@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Models\CaseStudy;
 use App\Models\Destination;
 use App\Models\Page;
+use App\Models\Pillar;
 use App\Models\Post;
 use App\Models\Tour;
 use App\Support\Content;
@@ -32,6 +34,12 @@ class SeoController extends Controller
             }
             foreach (Post::live()->get() as $p) {
                 $items[] = ['/blog/'.$p->slug, $p->updated_at, '0.7', $p->hasEnglish()];
+            }
+            foreach (Pillar::where('is_active', true)->get() as $p) {
+                $items[] = ['/layanan/'.$p->slug, $p->updated_at, '0.8', $p->hasEnglish()];
+            }
+            foreach (CaseStudy::where('is_active', true)->get() as $c) {
+                $items[] = ['/studi-kasus/'.$c->slug, $c->updated_at, '0.6', $c->hasEnglish()];
             }
             $out = '<?xml version="1.0" encoding="UTF-8"?>'."\n".'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'."\n";
             foreach ($items as [$path, $mod, $prio, $en]) {

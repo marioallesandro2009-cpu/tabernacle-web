@@ -13,7 +13,7 @@ class Page extends Model
 
     /** Addresses already used by the site itself; a custom page cannot take them. */
     public const RESERVED_SLUGS = [
-        'about', 'contact', 'packages', 'destinations', 'blog', 'admin', 'lang', 'leads', 'track', 'up', 'en', 'id', 'u',
+        'about', 'contact', 'packages', 'destinations', 'blog', 'admin', 'lang', 'leads', 'track', 'up', 'en', 'id', 'u', 'layanan', 'studi-kasus',
         'uploads', 'assets', 'build', 'storage', 'sitemap', 'robots', 'feed', 'index', 'home', 'login', 'register',
     ];
 

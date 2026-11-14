@@ -64,6 +64,8 @@ class HandleInertiaRequests extends Middleware
             ['label' => 'Konten situs', 'items' => [
                 ['label' => 'Halaman & section', 'url' => admin_path().'/pages', 'can' => 'content.manage', 'icon' => 'layout'],
                 ['label' => 'Menu navigasi', 'url' => admin_path().'/menu-items', 'can' => 'content.manage', 'icon' => 'menu'],
+                ['label' => 'Halaman layanan', 'url' => admin_path().'/pillars', 'can' => 'content.manage', 'icon' => 'layout'],
+                ['label' => 'Studi kasus', 'url' => admin_path().'/case-studies', 'can' => 'content.manage', 'icon' => 'star'],
                 ['label' => 'Testimoni', 'url' => admin_path().'/testimonials', 'can' => 'content.manage', 'icon' => 'star'],
                 ['label' => 'Galeri trip', 'url' => admin_path().'/galleries', 'can' => 'content.manage', 'icon' => 'image'],
                 ['label' => 'FAQ', 'url' => admin_path().'/faqs', 'can' => 'content.manage', 'icon' => 'help'],

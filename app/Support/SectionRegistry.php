@@ -114,6 +114,8 @@ class SectionRegistry
             'testimonials' => ['label' => 'Testimoni (otomatis dari modul Testimoni)', 'fields' => [...$heads()]],
             'albums' => ['label' => 'Album galeri (otomatis dari modul Galeri)', 'fields' => [...$heads()]],
             'team' => ['label' => 'Tim (otomatis dari modul Tim)', 'fields' => [...$heads()]],
+            'case_studies' => ['label' => 'Studi kasus (otomatis dari modul Studi kasus; tersembunyi selama kosong)', 'fields' => [...$heads(), F::number('limit', 'Jumlah yang ditampilkan', ['default' => 3])]],
+            'pillars' => ['label' => 'Daftar layanan (otomatis dari Halaman layanan yang aktif)', 'fields' => [...$heads()]],
         ];
     }
 

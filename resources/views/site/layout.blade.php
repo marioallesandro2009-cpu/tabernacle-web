@@ -117,6 +117,14 @@
 </div>
 
 <main id="main">
+@php($trail = \App\Support\Seo::trail())
+@if (count($trail) > 1 && empty($ownCrumbs) && ! empty($solidNav))
+<nav class="crumbs-bar mono" aria-label="Breadcrumb"><div class="wrap"><ol>
+  @foreach ($trail as [$label, $href])
+    <li>@if ($loop->last)<span aria-current="page">{{ \Illuminate\Support\Str::limit($label, 60) }}</span>@else<a href="{{ $href }}">{{ $label }}</a>@endif</li>
+  @endforeach
+</ol></div></nav>
+@endif
 @yield('content')
 </main>
 
@@ -134,8 +142,8 @@
         @endforeach
       </div>
     </div>
+    @include('site.partials.footer-extra')
     <div class="foot-word">{{ $siteName }}</div>
-    <div class="foot-base mono"><span>{{ setting('company_name') }}</span><span>{{ setting('wa_display') }}</span></div>
   </div>
 </footer>
 
