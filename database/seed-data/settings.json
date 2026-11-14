@@ -65,5 +65,6 @@
             }
         }
     ],
-    "backup_email": ""
+    "backup_email": "",
+    "outreach_digest_email": ""
 }

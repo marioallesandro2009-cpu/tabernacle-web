@@ -1,9 +1,11 @@
 <?php
 
 use App\Mail\BackupMail;
+use App\Mail\OutreachDigestMail;
 use App\Models\Post;
 use App\Services\DatabaseBackup;
 use App\Services\Outreach\CampaignScheduler;
+use App\Services\Outreach\Digest;
 use App\Services\Outreach\ReplyPoller;
 use App\Support\AnalyticsAggregator;
 use App\Support\Content;
@@ -57,6 +59,23 @@ Artisan::command('outreach:poll-replies', function (ReplyPoller $poller) {
     $this->info("{$r['accounts']} akun dicek, {$r['stored']} pesan baru, {$r['errors']} gagal dibaca");
 })->purpose('Baca balasan dan bounce dari kotak masuk akun pengirim Outreach');
 
+Artisan::command('outreach:weekly-digest {--force : kirim walau minggu ini tidak ada aktivitas}', function (Digest $digest) {
+    $data = $digest->build(now()->subDays(7), now());
+    if (! $this->option('force') && ! $digest->hasActivity($data)) {
+        $this->info('Tidak ada aktivitas Outreach minggu ini, ringkasan tidak dikirim.');
+
+        return;
+    }
+    $to = $digest->recipients();
+    if (! $to) {
+        $this->warn('Tidak ada penerima: isi di Pengaturan, atau buat akun Super Admin.');
+
+        return;
+    }
+    Mail::to($to)->send(new OutreachDigestMail($data));
+    $this->info('Ringkasan dikirim ke '.implode(', ', $to));
+})->purpose('Kirim ringkasan mingguan Outreach (terkirim, balasan, bounce, leads baru, per segmen)');
+
 Artisan::command('outreach:tick', function (CampaignScheduler $scheduler) {
     $this->info($scheduler->tick().' email dijadwalkan');
 })->purpose('Jadwalkan email berikutnya untuk kampanye Outreach yang berjalan');
@@ -71,6 +90,7 @@ $task = fn (string $name, array $args = []) => Schedule::call(fn () => Artisan::
 $task('analytics:aggregate')->hourly();
 Schedule::call(fn () => Artisan::call('analytics:aggregate', ['--day' => now()->subDay()->toDateString()]))->name('analytics:aggregate yesterday')->dailyAt('00:10');
 $task('posts:publish-due')->everyFiveMinutes();
+$task('outreach:weekly-digest')->weeklyOn(1, '07:00')->timezone('Asia/Jakarta'); // Monday summary email
 $task('outreach:tick')->everyMinute()->withoutOverlapping(5); // sends the next outreach emails inside each campaign's hours
 $task('outreach:poll-replies')->everyTenMinutes()->withoutOverlapping(15); // reads replies and bounces from each sender inbox
 $task('db:backup')->dailyAt('02:00')->timezone('Asia/Jakarta'); // every night, last 14 kept on the server
