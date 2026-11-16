@@ -4569,5 +4569,553 @@
   "is_featured": false,
   "featured_sort": 0,
   "available_until": "2026-12-14"
+ },
+ {
+  "region": "asia",
+  "route": "Hanoi – Bac Ninh – Ha Long",
+  "has_shopping": false,
+  "is_featured": false,
+  "featured_sort": 0,
+  "sort": 0,
+  "flights_included": false,
+  "dp_min": 5000000,
+  "min_pax": 2,
+  "no": 44,
+  "type": "fit",
+  "name": "Heritage Rails & Halong Sails",
+  "slug": "4d3n-heritage-rails-and-halong-sails",
+  "duration": "4D3N",
+  "area_label": {
+   "en": "Vietnam",
+   "id": "Vietnam"
+  },
+  "description": {
+   "en": "<p>Ride the 5 Gates Heritage Train from Hanoi, then sail through Ha Long Bay and explore Thien Cung Cave, on a private tour.</p>",
+   "id": "<p>Naik 5 Gates Heritage Train dari Hanoi, lalu berlayar di Ha Long Bay dan menjelajahi Thien Cung Cave, dengan private tour.</p>"
+  },
+  "highlights": [
+   "Do Temple",
+   "Ho Chi Minh Mausoleum",
+   "Hoan Kiem Lake",
+   "Hanoi Old Quarter",
+   "Ha Long Bay",
+   "Thien Cung Cave"
+  ],
+  "cover": "tours/4d3n-heritage-rails-and-halong-sails.webp",
+  "cover_alt": "Kapal wisata di Ha Long Bay saat matahari terbenam",
+  "cover_credit": "Ha Long Bay, Vietnam, Sunset in Ha Long Bay (Vyacheslav Argenberg, CC BY 4.0) | https://commons.wikimedia.org/wiki/File:Ha_Long_Bay,_Vietnam,_Sunset_in_Ha_Long_Bay.jpg",
+  "pdf": "pdf/4d3n-heritage-rails-and-halong-sails.pdf",
+  "itinerary": [
+   {
+    "n": 1,
+    "title": "ARRIVAL IN HANOI",
+    "meals": "",
+    "hotel": "",
+    "text": "Setibanya di Hanoi, Anda dijemput perwakilan kami dan diantar ke hotel untuk check-in. Setelah itu waktu bebas untuk beristirahat sebelum perjalanan wisata esok hari."
+   },
+   {
+    "n": 2,
+    "title": "HANOI CITY TOUR",
+    "meals": "MP, MS, MM",
+    "hotel": "",
+    "text": "Setelah sarapan, naik 5 Gates Heritage Train pulang-pergi Hanoi – Bac Ninh sekitar 3,5 jam. Kunjungi Do Temple yang didedikasikan untuk raja-raja Dinasti Ly, nikmati pertunjukan musik tradisional Quan Ho Folk Music, kenali lukisan Dong Ho dan pembuatan kue tradisional Phu The, serta light refreshments di atas kereta. Kembali ke Hanoi, makan siang Pho. Lanjut photo stop di Ba Dinh Square, Ho Chi Minh Mausoleum dan One Pillar Pagoda, melewati Hoan Kiem Lake, lalu waktu bebas berbelanja di Hanoi Old Quarter. Malam hari makan malam khas Hanoi sebelum kembali ke hotel."
+   },
+   {
+    "n": 3,
+    "title": "HANOI – HALONG – HANOI",
+    "meals": "MP, MS, MM",
+    "hotel": "",
+    "text": "Setelah sarapan, menuju Ha Long Bay. Berlayar sekitar 4 jam dengan Scenic Cruise melewati formasi batu kapur seperti Incense Burner Islet, Fighting Cocks Islet, Stone Dog Islet dan Dinh Huong Islet, lalu kunjungi Thien Cung Cave dengan stalaktit dan stalagmitnya. Makan siang seafood di kapal, termasuk Cha Muc Ha Long (kue cumi khas Ha Long). Kembali ke Hanoi, makan malam khas Vietnam, lalu kembali ke hotel."
+   },
+   {
+    "n": 4,
+    "title": "HANOI – DEPARTURE",
+    "meals": "MP",
+    "hotel": "",
+    "text": "Setelah sarapan dan check-out, Anda diantar ke Bandara Internasional Hanoi untuk penerbangan kembali ke kota asal. Terima kasih telah mempercayakan Tabernacle Ways Tour and Travel."
+   }
+  ],
+  "dates_label": "1 Oktober – 31 Desember 2026",
+  "price_from": 5100000,
+  "includes": [
+   "Akomodasi hotel berbintang selama 3 malam sesuai program",
+   "Makan sesuai itinerary (MP = makan pagi, MS = makan siang, MM = makan malam), non-pork",
+   "Private transfer in & transfer out",
+   "Private tour",
+   "Tiket masuk objek wisata sesuai program",
+   "Tour guide berbahasa Indonesia",
+   "2 botol air mineral/orang/hari",
+   "PPh 2%"
+  ],
+  "excludes": [
+   "Tiket penerbangan internasional PP",
+   "Pengeluaran pribadi seperti mini bar, telepon, layanan kamar, laundry, tambahan makan di luar acara perjalanan, dan pengeluaran pribadi lainnya",
+   "Anak-anak maupun bayi yang menempati kursi sendiri wajib membayar biaya layanan",
+   "Tiket masuk objek wisata atau tour opsional di luar program (harga dapat berubah, dibeli melalui pemandu)",
+   "Biaya pembuatan visa dan paspor",
+   "Asuransi perjalanan",
+   "Tipping driver & guide USD 20/orang (grup 2–5 orang) atau USD 12/orang (grup 6 orang ke atas)"
+  ],
+  "terms": "<p>Harga per orang (twin/triple, dewasa) menurut hotel dan jumlah peserta:</p><ul><li>Hanoi 20 Hotel & Apartment / 22Land Classic Suite (3*): 2 orang Rp8.600.000, 4 orang Rp6.450.000, 6 orang Rp5.550.000, 8 orang Rp5.100.000, single supplement Rp2.450.000</li><li>La Sante Hotel Spa / Hotel De La Seine / Rising Dragon Palace (3.5*): 2 orang Rp8.900.000, 4 orang Rp6.700.000, 6 orang Rp5.800.000, 8 orang Rp5.350.000, single supplement Rp2.700.000</li><li>22Land Cloud Hotel (4*): 2 orang Rp9.100.000, 4 orang Rp6.950.000, 6 orang Rp6.050.000, 8 orang Rp5.600.000, single supplement Rp2.900.000</li><li>Grand View Hotel & Residence Hanoi (4*): 2 orang Rp9.300.000, 4 orang Rp7.150.000, 6 orang Rp6.200.000, 8 orang Rp5.750.000, single supplement Rp3.050.000</li><li>Nesta Hotel / The Grand Hao Nam / La Passion Classic (4*): 2 orang Rp9.400.000, 4 orang Rp7.250.000, 6 orang Rp6.350.000, 8 orang Rp5.930.000, single supplement Rp3.200.000</li></ul><ul><li>Minimum keberangkatan 2 orang</li><li>Belum ada reservasi yang dilakukan; ketersediaan dan harga dapat berubah sewaktu-waktu mengikuti hotel (dynamic rate), kurs, dan jumlah peserta</li><li>Harga berlaku untuk pasar Indonesia</li><li>Blackout date: 24–25 Des (Natal) dan 31 Des 2026 – 1 Jan 2027 (Tahun Baru), berlaku surcharge</li><li>DP Rp5.000.000/orang, tidak dapat dikembalikan, dan wajib melampirkan tiket pesawat saat reservasi</li><li>Pelunasan paling lambat 30 hari sebelum keberangkatan, walaupun visa masih diproses</li><li>Pembatalan: 30% (60–46 hari), 50% (45–30 hari), 100% (kurang dari 30 hari); DP tidak dikembalikan</li><li>Makan non-pork</li></ul>",
+  "countries": [
+   "vietnam"
+  ],
+  "available_until": "2026-12-31"
+ },
+ {
+  "region": "asia",
+  "route": "Hanoi – Sapa",
+  "has_shopping": false,
+  "is_featured": false,
+  "featured_sort": 0,
+  "sort": 0,
+  "flights_included": false,
+  "dp_min": 5000000,
+  "min_pax": 2,
+  "no": 45,
+  "type": "fit",
+  "name": "Hanoi – Sapa by Sleeper Train & Limousine Bus",
+  "slug": "5d4n-hanoi-sapa-by-sleeper-train-and-limousine-bus",
+  "duration": "5D4N",
+  "area_label": {
+   "en": "Vietnam",
+   "id": "Vietnam"
+  },
+  "description": {
+   "en": "<p>Overnight sleeper train to Sapa, Fansipan by cable car and Cat Cat Village, then a limousine bus back for a Hanoi city tour, on a private tour.</p>",
+   "id": "<p>Kereta tidur ke Sapa, Fansipan dengan cable car dan Cat Cat Village, lalu limousine bus kembali ke Hanoi untuk city tour, dengan private tour.</p>"
+  },
+  "highlights": [
+   "Fansipan",
+   "Cat Cat Village",
+   "Ho Chi Minh Mausoleum",
+   "One Pillar Pagoda",
+   "St. Joseph's Cathedral",
+   "Hanoi Old Quarter"
+  ],
+  "cover": "tours/5d4n-hanoi-sapa-by-sleeper-train-and-limousine-bus.webp",
+  "cover_alt": "Sawah terasering dan pegunungan di Sapa",
+  "cover_credit": "Rice terraces in Sapa, Vietnam (Eerin25, CC0) | https://commons.wikimedia.org/wiki/File:Rice_terraces_in_Sapa,_Vietnam.jpg",
+  "pdf": "pdf/5d4n-hanoi-sapa-by-sleeper-train-and-limousine-bus.pdf",
+  "itinerary": [
+   {
+    "n": 1,
+    "title": "HANOI – SAPA – OVERNIGHT ON TRAIN",
+    "meals": "MM",
+    "hotel": "",
+    "text": "Setibanya di Hanoi, disambut perwakilan lokal dan makan malam Pho. Lalu menuju Hanoi Railway Station untuk naik Sapaly Express – Deluxe Sleeper Train; tiket diserahkan petugas kami. Kereta berangkat dari Hanoi pukul 22.00 dan tiba di Lao Cai pukul 05.55 esok harinya."
+   },
+   {
+    "n": 2,
+    "title": "SAPA",
+    "meals": "MP, MS",
+    "hotel": "",
+    "text": "Tiba di Lao Cai pagi hari, dijemput tour guide dan driver menuju Sapa. Sarapan di Viettrekking Cafe, lalu naik Muong Hoa Funicular Train dengan pemandangan sawah terasering, dilanjutkan cable car ke Fansipan Peak (3.143 mdpl), atap Indochina, dengan kompleks pagoda dan patung Buddha raksasa. Makan siang buffet di Van Sam Restaurant, check-in hotel, lalu waktu bebas di Sapa Town."
+   },
+   {
+    "n": 3,
+    "title": "SAPA – HANOI",
+    "meals": "MP, MS",
+    "hotel": "",
+    "text": "Setelah sarapan, kunjungi Cat Cat Village, desa tradisional suku H'Mong, dengan rumah tradisional, kerajinan tangan dan Cat Cat Waterfall. Makan siang hidangan khas Sapa. Dengan shuttle menuju terminal limousine bus untuk kembali ke Hanoi. Tiba di Hanoi, driver mengantar ke hotel untuk check-in dan istirahat."
+   },
+   {
+    "n": 4,
+    "title": "HANOI",
+    "meals": "MP, MS, MM",
+    "hotel": "",
+    "text": "Setelah sarapan, jelajahi Hanoi: Ho Chi Minh Mausoleum, Ba Dinh Square, House on Stilts, One Pillar Pagoda dan Temple of Literature. Makan siang khas Vietnam. Sore hari photo stop di Hoan Kiem Lake, Ngoc Son Temple dan St. Joseph's Cathedral, lalu waktu bebas berbelanja di Hanoi Old Quarter. Makan malam khas Hanoi sebelum kembali ke hotel."
+   },
+   {
+    "n": 5,
+    "title": "HANOI – DEPARTURE",
+    "meals": "MP",
+    "hotel": "",
+    "text": "Setelah sarapan dan check-out, Anda diantar ke Bandara Internasional Hanoi untuk penerbangan kembali ke kota asal. Terima kasih telah mempercayakan Tabernacle Ways Tour and Travel."
+   }
+  ],
+  "dates_label": "1 Oktober – 31 Desember 2026",
+  "price_from": 6500000,
+  "includes": [
+   "Akomodasi hotel berbintang 3 malam dan 1 malam di kereta",
+   "Makan sesuai itinerary (MP = makan pagi, MS = makan siang, MM = makan malam), non-pork",
+   "Private transfer in & transfer out",
+   "Private tour",
+   "Tiket masuk objek wisata sesuai program",
+   "Tour guide berbahasa Inggris selama tour dan transfer pada hari ke-2, 3 dan 4",
+   "Tiket kereta tidur sekali jalan Sapaly (shared cabin, 4 bed per kabin) dengan bagasi",
+   "Limousine bus sekali jalan Sapa – Hanoi",
+   "2 botol air mineral/orang/hari",
+   "PPh 2%"
+  ],
+  "excludes": [
+   "Tiket penerbangan internasional PP",
+   "Pengeluaran pribadi seperti mini bar, telepon, layanan kamar, laundry, tambahan makan di luar acara perjalanan, dan pengeluaran pribadi lainnya",
+   "Anak-anak maupun bayi yang menempati kursi sendiri wajib membayar biaya layanan",
+   "Tiket masuk objek wisata atau tour opsional di luar program (harga dapat berubah, dibeli melalui pemandu)",
+   "Biaya pembuatan visa dan paspor",
+   "Asuransi perjalanan",
+   "Biaya tambahan jika memakai guide berbahasa Indonesia",
+   "Tipping driver & guide USD 15/orang (grup 2–5 orang) atau USD 9/orang (grup 6 orang ke atas)"
+  ],
+  "terms": "<p>Harga per orang (twin/triple, dewasa) menurut hotel dan jumlah peserta:</p><ul><li>Hanoi 20 Hotel & Apartment / 22Land Classic Suite (3*); Sapa: Panorama Sapa / Bora Hotel: 2 orang Rp8.900.000, 4 orang Rp7.350.000, 6 orang Rp6.900.000, 8 orang Rp6.500.000, single supplement Rp2.400.000, surcharge akhir pekan di Sapa (Jumat, Sabtu) Rp1.400.000</li><li>La Sante Hotel Spa / Hotel De La Seine / Rising Dragon Palace (3.5*); Sapa: Azure Sapa / Babeeni Sapa: 2 orang Rp9.150.000, 4 orang Rp7.600.000, 6 orang Rp7.100.000, 8 orang Rp6.750.000, single supplement Rp2.600.000, surcharge akhir pekan di Sapa (Jumat, Sabtu) Rp1.350.000</li><li>Grand View Hotel & Residence Hanoi / 22Land Cloud Hotel (4*); Sapa: Chau Long Sapa / Canvas Sapa Legend: 2 orang Rp9.450.000, 4 orang Rp7.900.000, 6 orang Rp7.400.000, 8 orang Rp7.050.000, single supplement Rp2.900.000, surcharge akhir pekan di Sapa (Jumat, Sabtu) Rp1.400.000</li></ul><ul><li>Minimum keberangkatan 2 orang</li><li>Belum ada reservasi yang dilakukan; ketersediaan dan harga dapat berubah sewaktu-waktu mengikuti hotel (dynamic rate), kurs, dan jumlah peserta</li><li>Harga berlaku untuk pasar Indonesia</li><li>Blackout date: 24–25 Des (Natal) dan 31 Des 2026 – 1 Jan 2027 (Tahun Baru), berlaku surcharge</li><li>DP Rp5.000.000/orang, tidak dapat dikembalikan, dan wajib melampirkan tiket pesawat saat reservasi</li><li>Pelunasan paling lambat 30 hari sebelum keberangkatan, walaupun visa masih diproses</li><li>Pembatalan: 30% (60–46 hari), 50% (45–30 hari), 100% (kurang dari 30 hari); DP tidak dikembalikan</li><li>Makan non-pork</li></ul>",
+  "countries": [
+   "vietnam"
+  ],
+  "available_until": "2026-12-31"
+ },
+ {
+  "region": "asia",
+  "route": "Bangkok – Pattaya",
+  "has_shopping": true,
+  "is_featured": false,
+  "featured_sort": 0,
+  "sort": 0,
+  "flights_included": true,
+  "dp_min": 4000000,
+  "min_pax": 20,
+  "no": 46,
+  "type": "group",
+  "name": "Year End Bangkok Pattaya",
+  "slug": "5d4n-year-end-bangkok-pattaya",
+  "duration": "5D4N",
+  "area_label": {
+   "en": "Thailand",
+   "id": "Thailand"
+  },
+  "description": {
+   "en": "<p>A year-end holiday in Bangkok and Pattaya with Asiatique Night Market, Nongnooch Village, Wat Arun and shopping, flying Malaysia Airlines or AirAsia.</p>",
+   "id": "<p>Liburan akhir tahun di Bangkok dan Pattaya dengan Asiatique Night Market, Nongnooch Village, Wat Arun dan wisata belanja, dengan penerbangan Malaysia Airlines atau AirAsia.</p>"
+  },
+  "highlights": [
+   "Asiatique Night Market",
+   "Nongnooch Village",
+   "Wat Arun Temple",
+   "Platinum Fashion Mall"
+  ],
+  "cover": "tours/5d4n-year-end-bangkok-pattaya.webp",
+  "cover_alt": "Wat Arun di Bangkok saat matahari terbenam dengan perahu tradisional",
+  "cover_credit": "Wat Arun Ratchawararam and the Royal Barge Procession (Tee-12838, CC BY-SA 4.0) | https://commons.wikimedia.org/wiki/File:Wat_Arun_Ratchawararam_and_the_Royal_Barge_Procession.jpg",
+  "pdf": "pdf/5d4n-year-end-bangkok-pattaya.pdf",
+  "itinerary": [
+   {
+    "n": 1,
+    "title": "JAKARTA – BANGKOK",
+    "meals": "Meals on board",
+    "hotel": "Hotel lokal 3* / setaraf",
+    "text": "Peserta berkumpul di bandara untuk berangkat ke Bangkok (Malaysia Airlines via Kuala Lumpur, atau AirAsia langsung ke Don Mueang untuk keberangkatan 29 dan 30 Desember). Setibanya di Bangkok, proses imigrasi dan bagasi, lalu kunjungi Asiatique Night Market. Check-in hotel dan bermalam di Bangkok."
+   },
+   {
+    "n": 2,
+    "title": "BANGKOK – PATTAYA",
+    "meals": "MP, MS",
+    "hotel": "Hotel lokal 3* / setaraf",
+    "text": "Setelah sarapan, perjalanan 2 jam ke Pattaya. Kunjungi Erawadee Herb Shop, Laser Buddha Hill (tebing batu kapur dengan ukiran Buddha raksasa berlapis emas), lalu Nongnooch Village dengan kebudayaan khas Thailand dan Elephant Show. Makan siang, dilanjutkan ke Gem's Factory dan Pantai Pattaya. Check-in hotel dan bermalam di Pattaya. (Opsional: Central Festival Mall, Alcazar Cabaret Show)"
+   },
+   {
+    "n": 3,
+    "title": "PATTAYA – BANGKOK",
+    "meals": "MP, MS",
+    "hotel": "Hotel lokal 3* / setaraf",
+    "text": "Setelah sarapan, kunjungi Honey Bee Farm, Great and Grand Sweet Destination, dan belanja Dried Food. Makan siang di restoran lokal, lalu susuri Sungai Chao Phraya dengan tourist boat menuju Wat Arun (Temple of Dawn) di tepi barat sungai, kemudian Iconsiam Mall. Check-in hotel dan bermalam di Bangkok."
+   },
+   {
+    "n": 4,
+    "title": "BANGKOK",
+    "meals": "MP",
+    "hotel": "Hotel lokal 3* / setaraf",
+    "text": "Setelah sarapan, wisata belanja di Platinum Fashion Mall, Leather Shop Bangkok dan MBK Shopping Center, dilanjutkan berburu oleh-oleh di Big C Supermarket dan menikmati Chinatown Bangkok dengan kuliner dan toko tradisionalnya, sebelum kembali ke hotel."
+   },
+   {
+    "n": 5,
+    "title": "BANGKOK – DEPARTURE",
+    "meals": "MP",
+    "hotel": "",
+    "text": "Setelah sarapan, menuju bandara untuk penerbangan kembali ke Jakarta. Terima kasih telah mempercayakan Tabernacle Ways Tour and Travel untuk perjalanan Anda."
+   }
+  ],
+  "dates_label": "Desember 2026: 20, 21, 22, 23, 25, 29, 30, 31",
+  "price_from": 11050000,
+  "departures": [
+   {
+    "date": "2026-12-20",
+    "price_adult": 11050000,
+    "price_child": 10700000,
+    "single_supp": 3600000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": "Malaysia Airlines (bagasi 30 kg)"
+   },
+   {
+    "date": "2026-12-21",
+    "price_adult": 11500000,
+    "price_child": 11200000,
+    "single_supp": 3600000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": "Malaysia Airlines (bagasi 30 kg)"
+   },
+   {
+    "date": "2026-12-22",
+    "price_adult": 11500000,
+    "price_child": 11200000,
+    "single_supp": 3600000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": "Malaysia Airlines (bagasi 30 kg)"
+   },
+   {
+    "date": "2026-12-23",
+    "price_adult": 11500000,
+    "price_child": 11200000,
+    "single_supp": 3600000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": "Malaysia Airlines (bagasi 30 kg)"
+   },
+   {
+    "date": "2026-12-25",
+    "price_adult": 11500000,
+    "price_child": 11200000,
+    "single_supp": 3600000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": "Malaysia Airlines (bagasi 30 kg)"
+   },
+   {
+    "date": "2026-12-29",
+    "price_adult": 11500000,
+    "price_child": 11200000,
+    "single_supp": 3600000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": "AirAsia (bagasi 20 kg)"
+   },
+   {
+    "date": "2026-12-30",
+    "price_adult": 11500000,
+    "price_child": 11200000,
+    "single_supp": 3600000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": "AirAsia (bagasi 20 kg)"
+   },
+   {
+    "date": "2026-12-31",
+    "price_adult": 11500000,
+    "price_child": 11200000,
+    "single_supp": 3600000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": "Malaysia Airlines (bagasi 30 kg)"
+   }
+  ],
+  "includes": [
+   "Tiket internasional ekonomi termasuk pajak internasional (non refund, non endorsable, non reroutable)",
+   "Bagasi sesuai ketentuan maskapai (MH 30 kg, QZ 20 kg)",
+   "Hotel lokal bintang 3 atau setaraf",
+   "Transportasi bus pariwisata dan tiket masuk objek wisata",
+   "Acara tour dan makan sesuai program",
+   "Tour guide",
+   "Tour leader",
+   "1 botol air mineral/orang/hari",
+   "Travel insurance hingga usia 82 tahun",
+   "PPh 2%"
+  ],
+  "excludes": [
+   "Pengeluaran pribadi seperti mini bar, telepon, layanan kamar, laundry, tambahan makan di luar acara perjalanan, dan pengeluaran pribadi lainnya",
+   "Tour tambahan di luar program (optional tour)",
+   "Biaya kelebihan bagasi",
+   "Bea masuk barang di Indonesia dan negara yang dikunjungi",
+   "Biaya pembuatan dokumen perjalanan seperti paspor",
+   "Biaya tambahan menempati 1 kamar sendiri (single supplement)",
+   "Rental WiFi portable dan Alcazar Cabaret Show (opsional)",
+   "Tipping tour leader, guide dan driver Rp600.000/orang"
+  ],
+  "terms": "<ul><li>Minimum keberangkatan 20 peserta dewasa</li><li>Kolom Anak pada jadwal: anak dengan extra bed (maks. 12 tahun) dan anak tanpa kasur (maks. 6 tahun). Bayi (di bawah 23 bulan) Rp6.200.000</li><li>Penerbangan: 20–23, 25 dan 31 Des dengan Malaysia Airlines via Kuala Lumpur; 29–30 Des dengan AirAsia langsung ke Don Mueang</li><li>Program series group tour (konsorsium) gabungan beberapa biro perjalanan, reservasi first come first served</li><li>DP Rp4.000.000/orang disertai salinan paspor berlaku minimal 6 bulan sejak tanggal kepulangan</li><li>Pelunasan rute Asia peak season (Tahun Baru) paling lambat H-25 sebelum keberangkatan</li><li>Peserta di atas 69 tahun atau dengan keterbatasan fisik/mental wajib didampingi, dan membayar premi asuransi tambahan</li><li>Tour memuat kunjungan toko (shopping stop); penalti wajib dikenakan bagi peserta yang tidak mengikutinya</li><li>Airport tax, fuel surcharge, tipping, jadwal dan harga dapat berubah sewaktu-waktu</li></ul>",
+  "countries": [
+   "thailand"
+  ],
+  "available_until": "2026-12-31"
+ },
+ {
+  "region": "asia",
+  "route": "Irkutsk – Listvyanka – Olkhon Island – Beijing",
+  "has_shopping": false,
+  "is_featured": false,
+  "featured_sort": 0,
+  "sort": 0,
+  "flights_included": true,
+  "dp_min": 10000000,
+  "min_pax": 20,
+  "no": 47,
+  "type": "group",
+  "name": "Magical Winter Lake Baikal + Beijing",
+  "slug": "10d8n-magical-winter-lake-baikal-beijing",
+  "duration": "10D8N",
+  "area_label": {
+   "en": "Russia & China",
+   "id": "Rusia & China"
+  },
+  "description": {
+   "en": "<p>Hovercraft, ice grottoes and the frozen Lake Baikal: Irkutsk, Listvyanka, Olkhon and Ogoy islands, with a stop in Beijing, flying Air China.</p>",
+   "id": "<p>Hovercraft, ice grottoes dan Danau Baikal yang membeku: Irkutsk, Listvyanka, Pulau Olkhon dan Ogoy, dengan transit di Beijing, menggunakan Air China.</p>"
+  },
+  "highlights": [
+   "Kazan Church",
+   "Chersky Mountain Ski Resort",
+   "Lake Baikal",
+   "Olkhon Island",
+   "Ogoy Island",
+   "Buryat Village",
+   "Volkonsky House Museum",
+   "Irkutsk Sloboda"
+  ],
+  "cover": "tours/10d8n-magical-winter-lake-baikal-beijing.webp",
+  "cover_alt": "Es retak Danau Baikal di musim dingin dengan pegunungan bersalju",
+  "cover_credit": "Lake Baikal in winter (Sergey Pesterev, CC BY-SA 4.0) | https://commons.wikimedia.org/wiki/File:Lake_Baikal_in_winter.jpg",
+  "pdf": "pdf/10d8n-magical-winter-lake-baikal-beijing.pdf",
+  "itinerary": [
+   {
+    "n": 1,
+    "title": "JAKARTA – IRKUTSK",
+    "meals": "",
+    "hotel": "",
+    "text": "Peserta berkumpul di Bandara Internasional Soekarno-Hatta Terminal 3 untuk penerbangan menuju Irkutsk via Beijing."
+   },
+   {
+    "n": 2,
+    "title": "TIBA DI IRKUTSK",
+    "meals": "",
+    "hotel": "Irkutsk Hotel / setaraf",
+    "text": "CGK 01:45 – PEK 09:55 (CA978); PEK 12:55 – IKT 16:00 (CA869). Tiba di Irkutsk, Anda diantar ke hotel untuk beristirahat."
+   },
+   {
+    "n": 3,
+    "title": "IRKUTSK",
+    "meals": "MP",
+    "hotel": "Irkutsk Hotel / setaraf",
+    "text": "Setelah sarapan, kunjungi Kazan Church, gereja ortodoks abad ke-19 yang berbentuk seperti menara negeri dongeng. Lanjut ke Kirov Square, Alexander II Monument dan Moscow Gate, salah satu landmark bersejarah Irkutsk, lalu kembali ke hotel."
+   },
+   {
+    "n": 4,
+    "title": "IRKUTSK – LISTVYANKA",
+    "meals": "MP",
+    "hotel": "Baikal Manor Hotel / setaraf",
+    "text": "Setelah sarapan, menuju Listvyanka, kota kecil di tepi Lake Baikal. Kunjungi Fish Market dengan ikan dari daerah kutub utara, lalu Chersky Mountain Ski Resort (termasuk cable car); bermain ski dengan biaya sendiri. Setelah itu diantar ke hotel."
+   },
+   {
+    "n": 5,
+    "title": "LISTVYANKA – PESCHANAYA BAY – OLKHON ISLAND",
+    "meals": "MP",
+    "hotel": "Complex Baikalov Ostrog Hotel / setaraf",
+    "text": "Setelah sarapan, perjalanan dengan hovercraft menyusuri Lake Baikal, singgah di Peschanaya Bay, Observation Rock dan Malaya Kolokolnaya Cape, lalu menuju Olkhon Island, salah satu pulau terbesar dan paling terkenal di Lake Baikal. Diantar ke hotel untuk beristirahat."
+   },
+   {
+    "n": 6,
+    "title": "NORTHERN OLKHON ISLAND",
+    "meals": "MP",
+    "hotel": "Complex Baikalov Ostrog Hotel / setaraf",
+    "text": "Setelah sarapan, berkendara dengan 4WD UAZ ke bagian utara Olkhon Island: Ice Grottoes, Cape Three Brothers dan pengalaman unik \"A Kiss of Lake Baikal\", lalu Shaman Rock, tempat sakral di Olkhon. Setelah itu diantar ke hotel."
+   },
+   {
+    "n": 7,
+    "title": "SOUTHERN OLKHON ISLAND – OGOY ISLAND – IRKUTSK",
+    "meals": "MP",
+    "hotel": "Irkutsk Hotel / setaraf",
+    "text": "Setelah sarapan, jelajahi bagian selatan Olkhon Island dengan hovercraft, kunjungi Ogoy Island, lalu singgah di Buryat Village untuk mengenal budaya masyarakat lokal. Kembali ke Irkutsk dan check-in hotel."
+   },
+   {
+    "n": 8,
+    "title": "IRKUTSK CITY TOUR",
+    "meals": "MP",
+    "hotel": "Irkutsk Hotel / setaraf",
+    "text": "Setelah sarapan, Irkutsk City Tour: Znamensky Monastery, Volkonsky House Museum (rumah kayu bersejarah keluarga bangsawan Decembrist di pengasingan Siberia), photo stop di Epiphany Cathedral dan Church of the Savior (gereja batu tertua di Irkutsk), tepi Sungai Angara (Lower Embankment) dan Central Market Irkutsk untuk produk lokal dan oleh-oleh. Kembali ke hotel."
+   },
+   {
+    "n": 9,
+    "title": "IRKUTSK – BEIJING",
+    "meals": "MP",
+    "hotel": "Beijing Hotel / setaraf",
+    "text": "IKT 18:00 – PEK 20:55 (CA870). Setelah sarapan, waktu untuk menjelajahi Irkutsk Sloboda (130th Quarter), kawasan bangunan kayu di tengah kota dengan toko suvenir, galeri foto dan kafe. Lalu diantar ke bandara untuk penerbangan ke Beijing. Tiba di Beijing, diantar ke hotel untuk beristirahat."
+   },
+   {
+    "n": 10,
+    "title": "BEIJING – TIBA DI JAKARTA",
+    "meals": "MP",
+    "hotel": "",
+    "text": "PEK 17:25 – CGK 00:15 (CA977). Setelah sarapan, waktu bebas berbelanja di Beijing sampai waktunya diantar ke bandara untuk penerbangan ke Jakarta. Terima kasih telah mempercayakan Tabernacle Ways Tour and Travel."
+   }
+  ],
+  "dates_label": "Maret 2027: 12, 13, 14",
+  "price_from": 70700000,
+  "departures": [
+   {
+    "date": "2027-03-12",
+    "price_adult": 70700000,
+    "price_child": 69050000,
+    "single_supp": 16650000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   },
+   {
+    "date": "2027-03-13",
+    "price_adult": 70700000,
+    "price_child": 69050000,
+    "single_supp": 16650000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   },
+   {
+    "date": "2027-03-14",
+    "price_adult": 70700000,
+    "price_child": 69050000,
+    "single_supp": 16650000,
+    "quota": null,
+    "remaining": null,
+    "status": "available",
+    "note": ""
+   }
+  ],
+  "includes": [
+   "Tiket internasional Air China kelas ekonomi (non refund, non endorsable, non reroutable), airport tax internasional/YQ tax",
+   "Bagasi 23 kg",
+   "Hotel lokal bintang 3 atau 4",
+   "Acara tour, transportasi dan makan sesuai itinerary",
+   "Tour guide berbahasa Inggris",
+   "Tour leader",
+   "Visa transit China 240 jam",
+   "Air mineral harian",
+   "PPh 2%"
+  ],
+  "excludes": [
+   "Pengeluaran pribadi seperti mini bar, telepon, layanan kamar, laundry, tambahan makan di luar acara perjalanan, dan pengeluaran pribadi lainnya",
+   "Tour tambahan di luar program (optional tour), termasuk ski",
+   "Biaya kelebihan bagasi",
+   "Bea masuk barang di Indonesia dan negara yang dikunjungi",
+   "Biaya pembuatan dokumen perjalanan seperti paspor",
+   "Biaya tambahan menempati 1 kamar sendiri (single supplement)",
+   "E-visa Rusia Rp1.800.000/orang",
+   "Asuransi perjalanan (disarankan) Rp800.000/orang",
+   "Tipping tour leader, guide dan driver Rp1.600.000/orang"
+  ],
+  "terms": "<ul><li>Minimum keberangkatan 20 peserta dewasa</li><li>Kolom Anak pada jadwal = anak tanpa kasur (Rp69.050.000)</li><li>Paspor berlaku minimal 7 bulan sejak tanggal kepulangan</li><li>Program series group tour (konsorsium) gabungan beberapa biro perjalanan, reservasi first come first served</li><li>Deposit Rp10.000.000/orang disertai salinan paspor</li><li>Peserta di atas 69 tahun atau dengan keterbatasan fisik/mental wajib didampingi, dan membayar premi asuransi tambahan</li><li>Airport tax, fuel surcharge, tipping, visa, jadwal dan harga dapat berubah sewaktu-waktu</li></ul>",
+  "countries": [
+   "china",
+   "russia"
+  ],
+  "available_until": "2027-03-14"
  }
 ]

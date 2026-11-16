@@ -2500,5 +2500,238 @@
         ],
         "dates_label": "1 July – 14 December 2026 (daily departures)",
         "terms": "<p>Price per person: quad IDR 11,750,000, triple IDR 12,750,000, double IDR 14,400,000, single IDR 21,200,000.</p><ul><li>Minimum departure 2 people</li><li>Down payment of IDR 5,000,000/person, and flight tickets must be attached when booking</li><li>A valid United States visa is required before departure</li><li>Hotel prices are dynamic and may change with occupancy; prices also depend on group size and high-season surcharges</li><li>Confirmation of the first night's hotel and the guide's contact is given 1–2 days before; later hotels are announced during the tour</li><li>If the pick-up cannot take place because of a flight delay or change, transport to the hotel is at the participant's own cost</li><li>No refunds for unused services</li></ul>"
+    },
+    "4d3n-heritage-rails-and-halong-sails": {
+        "name": "Heritage Rails & Halong Sails",
+        "dates_label": "1 October – 31 December 2026",
+        "itinerary": [
+            {
+                "title": "ARRIVAL IN HANOI",
+                "text": "On arrival in Hanoi you are met by our representative and taken to the hotel to check in. The rest of the day is free before sightseeing begins tomorrow.",
+                "hotel": ""
+            },
+            {
+                "title": "HANOI CITY TOUR",
+                "text": "After breakfast, ride the 5 Gates Heritage Train from Hanoi to Bac Ninh and back, about 3.5 hours. Visit Do Temple, dedicated to the kings of the Ly Dynasty, enjoy Quan Ho folk music, learn about Dong Ho painting and how Phu The cake is made, with light refreshments on the train. Back in Hanoi, lunch with Pho. Then photo stops at Ba Dinh Square, Ho Chi Minh Mausoleum and One Pillar Pagoda, a pass by Hoan Kiem Lake, and free time to shop in the Hanoi Old Quarter. Dinner with Hanoi specialities before returning to the hotel.",
+                "hotel": ""
+            },
+            {
+                "title": "HANOI – HALONG – HANOI",
+                "text": "After breakfast, drive to Ha Long Bay. Sail about 4 hours on a scenic cruise past limestone formations such as Incense Burner Islet, Fighting Cocks Islet, Stone Dog Islet and Dinh Huong Islet, then visit Thien Cung Cave with its stalactites and stalagmites. Seafood lunch on board, including Cha Muc Ha Long, the local squid cake. Return to Hanoi for dinner, then back to the hotel.",
+                "hotel": ""
+            },
+            {
+                "title": "HANOI – DEPARTURE",
+                "text": "After breakfast and check-out, you are taken to Hanoi International Airport for your flight home. Thank you for trusting Tabernacle Ways Tour and Travel.",
+                "hotel": ""
+            }
+        ],
+        "includes": [
+            "Star-rated hotel for 3 nights as per the programme",
+            "Meals as per itinerary (B = breakfast, L = lunch, D = dinner), non-pork",
+            "Private transfer in & out",
+            "Private tour",
+            "Entrance tickets as per the programme",
+            "Indonesian-speaking tour guide",
+            "2 bottles of mineral water per person per day",
+            "2% income tax (PPh)"
+        ],
+        "excludes": [
+            "International return flights",
+            "Personal expenses such as minibar, telephone, room service, laundry, extra meals outside the programme and other personal costs",
+            "Children and infants occupying their own seat must pay the service fee",
+            "Entrance tickets or optional tours outside the programme (prices may change, bought through the guide)",
+            "Visa and passport fees",
+            "Travel insurance",
+            "Driver & guide tipping USD 20 per person (groups of 2–5) or USD 12 per person (groups of 6 or more)"
+        ],
+        "terms": "<p>Price per person (twin/triple, adult) by hotel and group size:</p><ul><li>Hanoi 20 Hotel & Apartment / 22Land Classic Suite (3*): 2 pax Rp8.600.000, 4 pax Rp6.450.000, 6 pax Rp5.550.000, 8 pax Rp5.100.000, single supplement Rp2.450.000</li><li>La Sante Hotel Spa / Hotel De La Seine / Rising Dragon Palace (3.5*): 2 pax Rp8.900.000, 4 pax Rp6.700.000, 6 pax Rp5.800.000, 8 pax Rp5.350.000, single supplement Rp2.700.000</li><li>22Land Cloud Hotel (4*): 2 pax Rp9.100.000, 4 pax Rp6.950.000, 6 pax Rp6.050.000, 8 pax Rp5.600.000, single supplement Rp2.900.000</li><li>Grand View Hotel & Residence Hanoi (4*): 2 pax Rp9.300.000, 4 pax Rp7.150.000, 6 pax Rp6.200.000, 8 pax Rp5.750.000, single supplement Rp3.050.000</li><li>Nesta Hotel / The Grand Hao Nam / La Passion Classic (4*): 2 pax Rp9.400.000, 4 pax Rp7.250.000, 6 pax Rp6.350.000, 8 pax Rp5.930.000, single supplement Rp3.200.000</li></ul><ul><li>Minimum departure 2 participants</li><li>No reservation has been made yet; availability and prices may change at any time with hotel dynamic rates, exchange rates and group size</li><li>Prices apply to the Indonesian market</li><li>Blackout dates: 24–25 Dec (Christmas) and 31 Dec 2026 – 1 Jan 2027 (New Year), surcharge applies</li><li>Deposit IDR 5,000,000 per person, non-refundable, with the flight ticket attached at booking</li><li>Full payment at the latest 30 days before departure, even if the visa is still in process</li><li>Cancellation: 30% (60–46 days), 50% (45–30 days), 100% (under 30 days); the deposit is not refunded</li><li>Meals are non-pork</li></ul>"
+    },
+    "5d4n-hanoi-sapa-by-sleeper-train-and-limousine-bus": {
+        "name": "Hanoi – Sapa by Sleeper Train & Limousine Bus",
+        "dates_label": "1 October – 31 December 2026",
+        "itinerary": [
+            {
+                "title": "HANOI – SAPA – OVERNIGHT ON TRAIN",
+                "text": "On arrival in Hanoi you are welcomed by a local representative and have a Pho dinner. Then go to Hanoi Railway Station for the Sapaly Express Deluxe Sleeper Train; our staff hand over the tickets. The train leaves Hanoi at 22:00 and arrives in Lao Cai at 05:55 the next morning.",
+                "hotel": ""
+            },
+            {
+                "title": "SAPA",
+                "text": "On arrival at Lao Cai in the morning, the tour guide and driver take you to Sapa. Breakfast at Viettrekking Cafe, then the Muong Hoa Funicular Train over the terraced rice fields and a cable car to Fansipan Peak (3,143 m), the Roof of Indochina, with its pagoda complex and giant Buddha statue. Buffet lunch at Van Sam Restaurant, hotel check-in, then free time in Sapa Town.",
+                "hotel": ""
+            },
+            {
+                "title": "SAPA – HANOI",
+                "text": "After breakfast, visit Cat Cat Village, a traditional H'Mong village with traditional houses, handicrafts and Cat Cat Waterfall. Lunch with Sapa specialities. A shuttle takes you to the limousine bus terminal for the ride back to Hanoi, where the driver takes you to the hotel to check in and rest.",
+                "hotel": ""
+            },
+            {
+                "title": "HANOI",
+                "text": "After breakfast, explore Hanoi: Ho Chi Minh Mausoleum, Ba Dinh Square, House on Stilts, One Pillar Pagoda and Temple of Literature. Vietnamese lunch. In the afternoon photo stops at Hoan Kiem Lake, Ngoc Son Temple and St. Joseph's Cathedral, then free time to shop in the Hanoi Old Quarter. Dinner with Hanoi specialities before returning to the hotel.",
+                "hotel": ""
+            },
+            {
+                "title": "HANOI – DEPARTURE",
+                "text": "After breakfast and check-out, you are taken to Hanoi International Airport for your flight home. Thank you for trusting Tabernacle Ways Tour and Travel.",
+                "hotel": ""
+            }
+        ],
+        "includes": [
+            "Star-rated hotel for 3 nights plus 1 night on the train",
+            "Meals as per itinerary (B = breakfast, L = lunch, D = dinner), non-pork",
+            "Private transfer in & out",
+            "Private tour",
+            "Entrance tickets as per the programme",
+            "English-speaking tour guide during the tour and transfers on days 2, 3 and 4",
+            "One-way Sapaly sleeper train ticket (shared cabin, 4 beds per cabin) with luggage",
+            "One-way limousine bus Sapa – Hanoi",
+            "2 bottles of mineral water per person per day",
+            "2% income tax (PPh)"
+        ],
+        "excludes": [
+            "International return flights",
+            "Personal expenses such as minibar, telephone, room service, laundry, extra meals outside the programme and other personal costs",
+            "Children and infants occupying their own seat must pay the service fee",
+            "Entrance tickets or optional tours outside the programme (prices may change, bought through the guide)",
+            "Visa and passport fees",
+            "Travel insurance",
+            "Extra charge for an Indonesian-speaking guide",
+            "Driver & guide tipping USD 15 per person (groups of 2–5) or USD 9 per person (groups of 6 or more)"
+        ],
+        "terms": "<p>Price per person (twin/triple, adult) by hotel and group size:</p><ul><li>Hanoi 20 Hotel & Apartment / 22Land Classic Suite (3*); Sapa: Panorama Sapa / Bora Hotel: 2 pax Rp8.900.000, 4 pax Rp7.350.000, 6 pax Rp6.900.000, 8 pax Rp6.500.000, single supplement Rp2.400.000, Sapa weekend surcharge (Fri, Sat) Rp1.400.000</li><li>La Sante Hotel Spa / Hotel De La Seine / Rising Dragon Palace (3.5*); Sapa: Azure Sapa / Babeeni Sapa: 2 pax Rp9.150.000, 4 pax Rp7.600.000, 6 pax Rp7.100.000, 8 pax Rp6.750.000, single supplement Rp2.600.000, Sapa weekend surcharge (Fri, Sat) Rp1.350.000</li><li>Grand View Hotel & Residence Hanoi / 22Land Cloud Hotel (4*); Sapa: Chau Long Sapa / Canvas Sapa Legend: 2 pax Rp9.450.000, 4 pax Rp7.900.000, 6 pax Rp7.400.000, 8 pax Rp7.050.000, single supplement Rp2.900.000, Sapa weekend surcharge (Fri, Sat) Rp1.400.000</li></ul><ul><li>Minimum departure 2 participants</li><li>No reservation has been made yet; availability and prices may change at any time with hotel dynamic rates, exchange rates and group size</li><li>Prices apply to the Indonesian market</li><li>Blackout dates: 24–25 Dec (Christmas) and 31 Dec 2026 – 1 Jan 2027 (New Year), surcharge applies</li><li>Deposit IDR 5,000,000 per person, non-refundable, with the flight ticket attached at booking</li><li>Full payment at the latest 30 days before departure, even if the visa is still in process</li><li>Cancellation: 30% (60–46 days), 50% (45–30 days), 100% (under 30 days); the deposit is not refunded</li><li>Meals are non-pork</li></ul>"
+    },
+    "5d4n-year-end-bangkok-pattaya": {
+        "name": "Year End Bangkok Pattaya",
+        "dates_label": "December 2026: 20, 21, 22, 23, 25, 29, 30, 31",
+        "itinerary": [
+            {
+                "title": "JAKARTA – BANGKOK",
+                "text": "Meet at the airport to fly to Bangkok (Malaysia Airlines via Kuala Lumpur, or AirAsia direct to Don Mueang for the 29 and 30 December departures). After immigration and baggage claim in Bangkok, visit Asiatique Night Market. Check in at the hotel and stay overnight in Bangkok.",
+                "hotel": "Local 3* hotel or similar"
+            },
+            {
+                "title": "BANGKOK – PATTAYA",
+                "text": "After breakfast, a 2-hour drive to Pattaya. Visit Erawadee Herb Shop and Laser Buddha Hill, a limestone cliff carved with a giant gold-plated Buddha, then Nongnooch Village for Thai culture and the Elephant Show. Lunch, then Gem's Factory and Pattaya Beach. Check in at the hotel and stay overnight in Pattaya. (Optional: Central Festival Mall, Alcazar Cabaret Show)",
+                "hotel": "Local 3* hotel or similar"
+            },
+            {
+                "title": "PATTAYA – BANGKOK",
+                "text": "After breakfast, visit Honey Bee Farm, Great and Grand Sweet Destination and shop for dried food. Lunch at a local restaurant, then cruise the Chao Phraya River on a tourist boat to Wat Arun (Temple of Dawn) on the river's west bank, followed by Iconsiam Mall. Check in at the hotel and stay overnight in Bangkok.",
+                "hotel": "Local 3* hotel or similar"
+            },
+            {
+                "title": "BANGKOK",
+                "text": "After breakfast, shopping at Platinum Fashion Mall, a Bangkok leather shop and MBK Shopping Center, then souvenir hunting at Big C Supermarket and a visit to Bangkok's Chinatown with its street food and traditional shops, before returning to the hotel.",
+                "hotel": "Local 3* hotel or similar"
+            },
+            {
+                "title": "BANGKOK – DEPARTURE",
+                "text": "After breakfast, transfer to the airport for your flight back to Jakarta. Thank you for trusting Tabernacle Ways Tour and Travel.",
+                "hotel": ""
+            }
+        ],
+        "includes": [
+            "Economy international flights including international taxes (non-refundable, non-endorsable, non-reroutable)",
+            "Baggage as per airline rules (MH 30 kg, QZ 20 kg)",
+            "Local 3* hotel or similar",
+            "Tourist coach and entrance tickets",
+            "Tour programme and meals as per the itinerary",
+            "Tour guide",
+            "Tour leader",
+            "1 bottle of mineral water per person per day",
+            "Travel insurance up to age 82",
+            "2% income tax (PPh)"
+        ],
+        "excludes": [
+            "Personal expenses such as minibar, telephone, room service, laundry, extra meals outside the programme and other personal costs",
+            "Additional tours outside the programme (optional tours)",
+            "Excess baggage fees",
+            "Customs duty on goods in Indonesia and the countries visited",
+            "Travel document fees such as passport",
+            "Extra cost for a single room (single supplement)",
+            "Portable WiFi rental and Alcazar Cabaret Show (optional)",
+            "Tipping for tour leader, guide and driver IDR 600,000 per person"
+        ],
+        "terms": "<ul><li>Minimum departure 20 adult participants</li><li>The Child columns in the schedule: child with extra bed (up to 12 years) and child without a bed (up to 6 years). Infant (under 23 months) IDR 6,200,000</li><li>Flights: 20–23, 25 and 31 Dec on Malaysia Airlines via Kuala Lumpur; 29–30 Dec on AirAsia direct to Don Mueang</li><li>Series group tour programme (consortium) of several travel agents, bookings are first come first served</li><li>Deposit IDR 4,000,000 per person with a passport copy valid at least 6 months after the return date</li><li>Full payment for Asia routes in peak season (New Year) at the latest 25 days before departure</li><li>Participants over 69 or with physical or mental limitations must be accompanied and pay an extra insurance premium</li><li>The tour includes shopping stops; a mandatory penalty applies to participants who skip them</li><li>Airport tax, fuel surcharge, tipping, schedules and prices may change at any time</li></ul>"
+    },
+    "10d8n-magical-winter-lake-baikal-beijing": {
+        "name": "Magical Winter Lake Baikal + Beijing",
+        "dates_label": "March 2027: 12, 13, 14",
+        "itinerary": [
+            {
+                "title": "JAKARTA – IRKUTSK",
+                "text": "Meet at Soekarno-Hatta International Airport Terminal 3 for the flight to Irkutsk via Beijing.",
+                "hotel": ""
+            },
+            {
+                "title": "ARRIVAL IN IRKUTSK",
+                "text": "CGK 01:45 – PEK 09:55 (CA978); PEK 12:55 – IKT 16:00 (CA869). On arrival in Irkutsk you are taken to the hotel to rest.",
+                "hotel": "Irkutsk Hotel or similar"
+            },
+            {
+                "title": "IRKUTSK",
+                "text": "After breakfast, visit Kazan Church, a 19th-century Orthodox church shaped like a fairytale tower. Continue to Kirov Square, the Alexander II Monument and the Moscow Gate, a historic Irkutsk landmark, then return to the hotel.",
+                "hotel": "Irkutsk Hotel or similar"
+            },
+            {
+                "title": "IRKUTSK – LISTVYANKA",
+                "text": "After breakfast, go to Listvyanka, a small town on the shore of Lake Baikal. Visit the Fish Market with fish from the Arctic, then Chersky Mountain Ski Resort (cable car included); skiing is at your own cost. Then transfer to the hotel.",
+                "hotel": "Baikal Manor Hotel or similar"
+            },
+            {
+                "title": "LISTVYANKA – PESCHANAYA BAY – OLKHON ISLAND",
+                "text": "After breakfast, travel by hovercraft across Lake Baikal with stops at Peschanaya Bay, Observation Rock and Malaya Kolokolnaya Cape, then on to Olkhon Island, one of the largest and best-known islands in Lake Baikal. Transfer to the hotel to rest.",
+                "hotel": "Complex Baikalov Ostrog Hotel or similar"
+            },
+            {
+                "title": "NORTHERN OLKHON ISLAND",
+                "text": "After breakfast, ride a 4WD UAZ to the northern part of Olkhon Island: Ice Grottoes, Cape Three Brothers and the unique \"A Kiss of Lake Baikal\" experience, then Shaman Rock, a sacred site on Olkhon. Then transfer to the hotel.",
+                "hotel": "Complex Baikalov Ostrog Hotel or similar"
+            },
+            {
+                "title": "SOUTHERN OLKHON ISLAND – OGOY ISLAND – IRKUTSK",
+                "text": "After breakfast, explore southern Olkhon Island by hovercraft, visit Ogoy Island, then stop at a Buryat village to learn about local culture. Return to Irkutsk and check in at the hotel.",
+                "hotel": "Irkutsk Hotel or similar"
+            },
+            {
+                "title": "IRKUTSK CITY TOUR",
+                "text": "After breakfast, Irkutsk City Tour: Znamensky Monastery, Volkonsky House Museum (the historic wooden home of a Decembrist noble family in Siberian exile), photo stops at Epiphany Cathedral and the Church of the Saviour (the oldest stone church in Irkutsk), the Lower Embankment of the Angara River and Irkutsk Central Market for local products and souvenirs. Return to the hotel.",
+                "hotel": "Irkutsk Hotel or similar"
+            },
+            {
+                "title": "IRKUTSK – BEIJING",
+                "text": "IKT 18:00 – PEK 20:55 (CA870). After breakfast, time to explore Irkutsk Sloboda (the 130th Quarter), a district of wooden buildings in the city centre with souvenir shops, photo galleries and cafes. Then transfer to the airport for the flight to Beijing. On arrival, transfer to the hotel to rest.",
+                "hotel": "Beijing Hotel or similar"
+            },
+            {
+                "title": "BEIJING – ARRIVE IN JAKARTA",
+                "text": "PEK 17:25 – CGK 00:15 (CA977). After breakfast, free time to shop in Beijing until the transfer to the airport for the flight to Jakarta. Thank you for trusting Tabernacle Ways Tour and Travel.",
+                "hotel": ""
+            }
+        ],
+        "includes": [
+            "Air China economy international flights (non-refundable, non-endorsable, non-reroutable), international airport tax / YQ tax",
+            "23 kg baggage",
+            "Local 3* or 4* hotel",
+            "Tour programme, transport and meals as per the itinerary",
+            "English-speaking tour guide",
+            "Tour leader",
+            "China 240-hour transit visa",
+            "Daily mineral water",
+            "2% income tax (PPh)"
+        ],
+        "excludes": [
+            "Personal expenses such as minibar, telephone, room service, laundry, extra meals outside the programme and other personal costs",
+            "Additional tours outside the programme (optional tours), including skiing",
+            "Excess baggage fees",
+            "Customs duty on goods in Indonesia and the countries visited",
+            "Travel document fees such as passport",
+            "Extra cost for a single room (single supplement)",
+            "Russian e-visa IDR 1,800,000 per person",
+            "Travel insurance (recommended) IDR 800,000 per person",
+            "Tipping for tour leader, guide and driver IDR 1,600,000 per person"
+        ],
+        "terms": "<ul><li>Minimum departure 20 adult participants</li><li>The Child column in the schedule = child without a bed (IDR 69,050,000)</li><li>Passport valid at least 7 months after the return date</li><li>Series group tour programme (consortium) of several travel agents, bookings are first come first served</li><li>Deposit IDR 10,000,000 per person with a passport copy</li><li>Participants over 69 or with physical or mental limitations must be accompanied and pay an extra insurance premium</li><li>Airport tax, fuel surcharge, tipping, visa, schedules and prices may change at any time</li></ul>"
     }
 }

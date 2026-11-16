@@ -277,5 +277,14 @@
   "slug": "saudi-arabia",
   "region": "middle-east",
   "sort": 31
+ },
+ {
+  "name": {
+   "en": "Russia",
+   "id": "Rusia"
+  },
+  "slug": "russia",
+  "region": "asia",
+  "sort": 41
  }
 ]
