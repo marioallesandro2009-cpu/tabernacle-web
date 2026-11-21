@@ -6,16 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Jobs\Outreach\ValidateContactsJob;
 use App\Jobs\Outreach\VerifyContactsJob;
 use App\Models\ActivityLog;
+use App\Models\Outreach\Account;
 use App\Models\Outreach\BlockedDomain;
+use App\Models\Outreach\Campaign;
+use App\Models\Outreach\CampaignContact;
 use App\Models\Outreach\Contact;
 use App\Models\Outreach\ContactImport;
 use App\Models\Outreach\Segment;
 use App\Models\Outreach\Suppression;
+use App\Models\Outreach\Template;
+use App\Services\Outreach\CampaignService;
 use App\Services\Outreach\Verification\VerifierFactory;
+use DomainException;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -41,6 +49,9 @@ class ContactController extends Controller
             'filters' => $request->only(['q', 'segment', 'status', 'org', 'verify', 'role']),
             'verifier' => app(VerifierFactory::class)->make()?->name(), 'verifyError' => Cache::get('outreach:verify-error'),
             'segments' => Segment::orderBy('name')->get(['id', 'name']),
+            // for "Kirim email" on ticked contacts: who sends and which text
+            'senders' => Account::where('is_active', true)->orderBy('name')->get()->map(fn (Account $a) => ['id' => $a->id, 'name' => $a->name, 'email' => $a->email, 'limit_today' => $a->limitToday()]),
+            'templates' => Template::with('segment:id,name')->where('is_active', true)->orderBy('name')->get()->map(fn (Template $t) => ['id' => $t->id, 'name' => $t->name, 'segment_id' => $t->segment_id, 'segment' => $t->segment?->name, 'subject' => $t->subject, 'body' => $t->body]),
             'organizations' => Contact::whereNotNull('organization')->distinct()->orderBy('organization')->limit(300)->pluck('organization'),
             'counts' => [
                 'total' => Contact::count(),
@@ -85,6 +96,65 @@ class ContactController extends Controller
     }
 
     /** Actions on several ticked contacts at once. */
+    /**
+     * Before "Kirim email" on ticked contacts: how many will really get it, how many are left out
+     * because their address may not be mailed, and how many are already in another campaign.
+     */
+    public function sendCheck(Request $request): JsonResponse
+    {
+        $data = $request->validate(['ids' => ['required', 'array', 'min:1', 'max:500'], 'ids.*' => ['integer']]);
+        $ids = Contact::whereIn('id', $data['ids'])->pluck('id');
+        $busy = CampaignContact::whereIn('contact_id', $ids)->whereIn('status', CampaignService::ALREADY_IN)->distinct()->pluck('contact_id');
+        $free = $ids->diff($busy);
+        $sendable = Contact::whereIn('id', $free)->sendable()->count();
+        $pending = Contact::whereIn('id', $free)->whereNull('suppressed_at')->where('validation_status', 'pending')->count();
+
+        return response()->json([
+            'total' => $ids->count(), 'sendable' => $sendable, 'pending' => $pending,
+            'invalid' => $free->count() - $sendable - $pending, 'busy' => $busy->count(),
+        ]);
+    }
+
+    /**
+     * "Kirim email" on ticked contacts: makes a small campaign with exactly those people, one
+     * sender account and one template, and starts it. The emails still go out one by one inside
+     * the sending hours and the account's daily limit (warm-up), never all at once.
+     */
+    public function send(Request $request, CampaignService $service): RedirectResponse
+    {
+        $data = $request->validate([
+            'ids' => ['required', 'array', 'min:1', 'max:500'], 'ids.*' => ['integer'],
+            'account_id' => ['required', 'integer', Rule::exists('outreach_accounts', 'id')->where('is_active', true)],
+            'template_id' => ['required', 'integer', Rule::exists('outreach_templates', 'id')->where('is_active', true)],
+        ], ['account_id.required' => 'Pilih email pengirim.', 'account_id.exists' => 'Akun pengirim tidak aktif.', 'template_id.required' => 'Pilih template.']);
+        $template = Template::findOrFail($data['template_id']);
+        try {
+            [$campaign, $result] = DB::transaction(function () use ($data, $template, $request, $service) {
+                $campaign = Campaign::create([
+                    'name' => 'Kirim manual – '.$template->name.' – '.now(Campaign::TIMEZONE)->locale('id')->isoFormat('D MMM YYYY HH:mm'),
+                    'channel' => 'email', 'manual' => true, 'segment_id' => null, 'status' => 'draft', 'allow_catch_all' => false,
+                    'window_start' => '08:00', 'window_end' => '16:00', 'send_days' => [1, 2, 3, 4, 5],
+                    'gap_min_seconds' => 180, 'gap_max_seconds' => 480, 'created_by' => $request->user()->id,
+                ]);
+                $campaign->accounts()->sync([$data['account_id']]);
+                $campaign->steps()->create(['step' => 1, 'template_id' => $template->id, 'day_offset' => 0]);
+
+                return [$campaign, $service->startManual($campaign, array_map('intval', $data['ids']))];
+            });
+        } catch (DomainException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+        if ($result['added'] === 0) {
+            $campaign->delete();
+
+            return back()->with('error', 'Tidak ada yang bisa dikirimi: '.$result['busy'].' kontak sudah ada di kampanye lain dan '.$result['invalid'].' alamat tidak boleh dikirimi.');
+        }
+        ActivityLog::record('create', 'Kampanye Outreach', $campaign->id, $campaign->name);
+        $skipped = array_filter([$result['busy'] ? $result['busy'].' sudah ada di kampanye lain' : null, $result['invalid'] ? $result['invalid'].' alamat tidak boleh dikirimi' : null]);
+
+        return redirect(admin_path().'/outreach/campaigns/'.$campaign->id)->with('success', $result['added'].' email masuk antrean dan dikirim bertahap pada jam kirim.'.($skipped ? ' Dilewati: '.implode(', ', $skipped).'.' : ''));
+    }
+
     public function bulk(Request $request): RedirectResponse
     {
         $data = $request->validate([

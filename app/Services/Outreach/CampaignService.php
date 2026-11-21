@@ -28,6 +28,12 @@ class CampaignService
         if ($problem) {
             throw new DomainException($problem);
         }
+        if ($c->manual) {
+            // a hand-picked list: its people were added by startManual(), nobody else joins
+            $c->update(['status' => 'running', 'started_at' => $c->started_at ?? now(), 'completed_at' => null]);
+
+            return;
+        }
         Contact::query()->when($c->segment_id, fn ($q) => $q->where('segment_id', $c->segment_id))
             ->select(['id', 'email', 'validation_status', 'verify_status', 'suppressed_at', 'suppressed_reason'])
             ->chunkById(500, function ($contacts) use ($c) {
@@ -47,6 +53,48 @@ class CampaignService
                 }
             });
         $c->update(['status' => 'running', 'started_at' => $c->started_at ?? now(), 'completed_at' => null]);
+    }
+
+    /** Statuses that mean the person is already being written to, or was written to, by another campaign. */
+    public const ALREADY_IN = ['queued', 'sent', 'auto_replied', 'replied', 'bounced', 'unsubscribed'];
+
+    /**
+     * Starts a hand-picked ("manual") campaign with exactly these contacts. People who are already
+     * in line or were already emailed in another campaign are left out, so nobody gets the same
+     * offer twice; addresses that may not be mailed are added as "invalid" and never get an email.
+     *
+     * @param  array<int, int>  $contactIds
+     * @return array{added: int, invalid: int, busy: int}
+     *
+     * @throws DomainException with a message meant for the admin
+     */
+    public function startManual(Campaign $c, array $contactIds): array
+    {
+        $problem = $this->problem($c);
+        if ($problem) {
+            throw new DomainException($problem);
+        }
+        $busy = CampaignContact::whereIn('contact_id', $contactIds)->where('campaign_id', '!=', $c->id)
+            ->whereIn('status', self::ALREADY_IN)->distinct()->pluck('contact_id')->flip();
+        $have = CampaignContact::where('campaign_id', $c->id)->pluck('contact_id')->flip();
+        $added = $invalid = 0;
+        $rows = [];
+        foreach (Contact::whereIn('id', $contactIds)->get(['id', 'email', 'validation_status', 'verify_status', 'suppressed_at', 'suppressed_reason']) as $contact) {
+            if (isset($busy[$contact->id]) || isset($have[$contact->id])) {
+                continue;
+            }
+            $status = $this->initialStatus($contact, (bool) $c->allow_catch_all);
+            $status === 'queued' ? $added++ : $invalid++;
+            $rows[] = ['campaign_id' => $c->id, 'contact_id' => $contact->id, 'status' => $status, 'current_step' => 0, 'created_at' => now(), 'updated_at' => now()];
+        }
+        foreach (array_chunk($rows, 500) as $part) {
+            CampaignContact::insert($part);
+        }
+        if ($added > 0) {
+            $c->update(['status' => 'running', 'started_at' => $c->started_at ?? now(), 'completed_at' => null]);
+        }
+
+        return ['added' => $added, 'invalid' => $invalid, 'busy' => count($busy)];
     }
 
     public function pause(Campaign $c): void

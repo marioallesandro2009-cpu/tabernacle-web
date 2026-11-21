@@ -164,6 +164,8 @@ Route::prefix(config('admin.path'))->middleware('inertia.admin')->group(function
             Route::get('contacts', [Outreach\ContactController::class, 'index']);
             Route::post('contacts', [Outreach\ContactController::class, 'store']);
             Route::post('contacts/bulk', [Outreach\ContactController::class, 'bulk']);
+            Route::post('contacts/send-check', [Outreach\ContactController::class, 'sendCheck']);
+            Route::post('contacts/send', [Outreach\ContactController::class, 'send']);
             Route::post('contacts/verify', [Outreach\ContactController::class, 'verify']);
             Route::get('contacts/{id}', [Outreach\ThreadController::class, 'contact'])->whereNumber('id');
             Route::put('contacts/{id}', [Outreach\ContactController::class, 'update'])->whereNumber('id');

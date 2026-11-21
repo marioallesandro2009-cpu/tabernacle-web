@@ -35,7 +35,7 @@ class CampaignController extends Controller
             $s = $service->stats($c);
 
             return [
-                'id' => $c->id, 'name' => $c->name, 'status' => $c->status, 'segment' => $c->segment?->name,
+                'id' => $c->id, 'name' => $c->name, 'status' => $c->status, 'segment' => $c->manual ? 'Kontak pilihan (kirim manual)' : $c->segment?->name,
                 'contacts' => $s['contacts'], 'started' => $s['started'], 'replied' => $s['replied'], 'bounced' => $s['bounced'],
                 'reply_rate' => $s['reply_rate'], 'sent' => $s['sent_messages'], 'at' => $c->created_at?->locale('id')->diffForHumans(),
             ];
@@ -105,7 +105,7 @@ class CampaignController extends Controller
 
         return Inertia::render('Admin/Outreach/CampaignShow', [
             'campaign' => [
-                'id' => $campaign->id, 'name' => $campaign->name, 'status' => $campaign->status, 'segment' => $campaign->segment?->name,
+                'id' => $campaign->id, 'name' => $campaign->name, 'status' => $campaign->status, 'segment' => $campaign->manual ? 'Kontak pilihan (kirim manual)' : $campaign->segment?->name,
                 'window' => $campaign->window_start.'–'.$campaign->window_end, 'days' => collect($campaign->send_days)->map(fn ($d) => self::WEEKDAYS[$d] ?? $d)->implode(', '),
                 'gap' => intdiv($campaign->gap_min_seconds, 60).'–'.ceil($campaign->gap_max_seconds / 60).' menit',
                 'in_window' => $campaign->inWindow(), 'problem' => app(CampaignService::class)->problem($campaign),
